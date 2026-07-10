@@ -1,0 +1,56 @@
+[
+  {
+    "id": "electricity-magnetism",
+    "slug": "electricity-magnetism",
+    "name": "Electricity & Magnetism",
+    "description": "Explore circuits, current, resistance, and magnetic fields.",
+    "categoryId": "physics",
+    "icon": "zap",
+    "color": "blue"
+  },
+  {
+    "id": "acids-bases-titration",
+    "slug": "acids-bases-titration",
+    "name": "Acids, Bases & Titration",
+    "description": "Investigate pH, neutralization, and volumetric analysis.",
+    "categoryId": "chemistry",
+    "icon": "test-tube",
+    "color": "emerald"
+  },
+  {
+    "id": "cell-biology",
+    "slug": "cell-biology",
+    "name": "Cell Biology",
+    "description": "Examine cell structure, organelles, and microscopy technique.",
+    "categoryId": "biology",
+    "icon": "microscope",
+    "color": "green"
+  },
+  {
+    "id": "basic-circuits",
+    "slug": "basic-circuits",
+    "name": "Basic Circuits",
+    "description": "Build and analyze logic gates and simple digital circuits.",
+    "categoryId": "electronics",
+    "icon": "cpu",
+    "color": "amber"
+  },
+  {
+    "id": "simple-machines",
+    "slug": "simple-machines",
+    "name": "Simple Machines",
+    "description": "Levers, pulleys, and mechanical advantage in everyday machines.",
+    "categoryId": "mechanical",
+    "icon": "cog",
+    "color": "slate"
+  },
+  {
+    "id": "geometry-graphs",
+    "slug": "geometry-graphs",
+    "name": "Geometry & Graphs",
+    "description": "Visualize linear equations, functions, and geometric transformations.",
+    "categoryId": "mathematics",
+    "icon": "line-chart",
+    "color": "violet"
+  }
+]

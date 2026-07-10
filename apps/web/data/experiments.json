@@ -1,0 +1,431 @@
+[
+  {
+    "id": "ohms-law",
+    "slug": "ohms-law",
+    "title": "Verifying Ohm's Law",
+    "subjectId": "electricity-magnetism",
+    "categoryId": "physics",
+    "difficulty": "beginner",
+    "summary": "Measure voltage and current across a resistor to verify that V = IR.",
+    "theory": "Ohm's Law states that the current through a conductor between two points is directly proportional to the voltage across the two points, provided temperature stays constant. Mathematically, **V = IR**, where V is voltage (volts), I is current (amperes), and R is resistance (ohms). The constant of proportionality, R, is a property of the conductor itself.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Build the circuit",
+        "description": "Connect a resistor, ammeter, and voltmeter in the simulated circuit as shown."
+      },
+      {
+        "order": 2,
+        "title": "Vary the supply voltage",
+        "description": "Increase the source voltage in five equal steps, recording the ammeter reading at each step."
+      },
+      {
+        "order": 3,
+        "title": "Tabulate results",
+        "description": "Record each (V, I) pair in the observation table provided by the simulation."
+      },
+      {
+        "order": 4,
+        "title": "Plot V vs I",
+        "description": "Plot voltage against current; the slope of the resulting straight line is the resistance."
+      }
+    ],
+    "observation": "The V-I graph should be a straight line through the origin. The slope (V/I) should match the labelled resistance value within experimental error.",
+    "simulationEntry": "index.html",
+    "videoIds": ["vid-ohms-law-1"],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "According to Ohm's Law, if voltage doubles while resistance stays constant, current will:",
+        "options": [
+          { "id": "a", "text": "Double" },
+          { "id": "b", "text": "Halve" },
+          { "id": "c", "text": "Stay the same" },
+          { "id": "d", "text": "Quadruple" }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Since I = V/R, doubling V with R constant doubles I."
+      },
+      {
+        "id": "q2",
+        "question": "What does the slope of a V-I graph represent?",
+        "options": [
+          { "id": "a", "text": "Power" },
+          { "id": "b", "text": "Resistance" },
+          { "id": "c", "text": "Charge" },
+          { "id": "d", "text": "Conductance" }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Slope = ΔV/ΔI = R by definition of Ohm's Law."
+      }
+    ],
+    "tags": ["circuits", "voltage", "current", "resistance"],
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-01-10T00:00:00.000Z",
+    "updatedAt": "2026-01-10T00:00:00.000Z"
+  },
+  {
+    "id": "series-parallel-circuits",
+    "slug": "series-parallel-circuits",
+    "title": "Series and Parallel Resistor Networks",
+    "subjectId": "electricity-magnetism",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Compare equivalent resistance and current distribution in series versus parallel circuits.",
+    "theory": "In a **series** circuit, resistors share the same current and total resistance is the sum of individual resistances (R_eq = R1 + R2 + ...). In a **parallel** circuit, resistors share the same voltage and the reciprocal of total resistance is the sum of reciprocals (1/R_eq = 1/R1 + 1/R2 + ...).",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Build a series circuit",
+        "description": "Connect three resistors end-to-end with a single ammeter and measure total current."
+      },
+      {
+        "order": 2,
+        "title": "Build a parallel circuit",
+        "description": "Reconnect the same resistors in parallel and measure the current through each branch."
+      },
+      {
+        "order": 3,
+        "title": "Compare equivalent resistance",
+        "description": "Calculate R_eq for both configurations and compare with the simulation's multimeter reading."
+      }
+    ],
+    "observation": "Series current is identical through every component; parallel branch currents sum to the total supply current, and parallel R_eq is always less than the smallest branch resistance.",
+    "simulationEntry": "index.html",
+    "videoIds": ["vid-series-parallel-1"],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Adding another resistor in parallel to an existing network will:",
+        "options": [
+          { "id": "a", "text": "Increase total resistance" },
+          { "id": "b", "text": "Decrease total resistance" },
+          { "id": "c", "text": "Leave total resistance unchanged" },
+          { "id": "d", "text": "Increase total resistance to infinity" }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Each additional parallel path provides an extra route for current, lowering the equivalent resistance."
+      }
+    ],
+    "tags": ["circuits", "series", "parallel", "resistance"],
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-01-12T00:00:00.000Z",
+    "updatedAt": "2026-01-12T00:00:00.000Z"
+  },
+  {
+    "id": "acid-base-titration",
+    "slug": "acid-base-titration",
+    "title": "Acid-Base Titration",
+    "subjectId": "acids-bases-titration",
+    "categoryId": "chemistry",
+    "difficulty": "intermediate",
+    "summary": "Determine the concentration of an unknown acid by titrating it against a standard base.",
+    "theory": "Titration is a volumetric technique used to determine the concentration of an analyte by reacting it with a titrant of known concentration. At the **equivalence point**, moles of acid equal moles of base, indicated by a colour change in the chosen indicator (e.g. phenolphthalein).",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Prepare the burette",
+        "description": "Fill the burette with standardized NaOH solution and record the initial reading."
+      },
+      {
+        "order": 2,
+        "title": "Add indicator",
+        "description": "Add 2-3 drops of phenolphthalein to the acid solution in the conical flask."
+      },
+      {
+        "order": 3,
+        "title": "Titrate to the endpoint",
+        "description": "Add base drop-wise while swirling until a persistent faint pink colour appears."
+      },
+      {
+        "order": 4,
+        "title": "Calculate concentration",
+        "description": "Use the titrant volume and the neutralization equation to compute the acid's molarity."
+      }
+    ],
+    "observation": "The solution turns from colourless to a persistent light pink at the endpoint. Repeat titrations should agree within 0.1 mL (concordant readings).",
+    "simulationEntry": "index.html",
+    "videoIds": ["vid-titration-1"],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "At the equivalence point of a strong acid-strong base titration, the pH is approximately:",
+        "options": [
+          { "id": "a", "text": "3" },
+          { "id": "b", "text": "7" },
+          { "id": "c", "text": "10" },
+          { "id": "d", "text": "14" }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Strong acid-strong base neutralization produces a neutral salt solution, pH ≈ 7."
+      }
+    ],
+    "tags": ["titration", "acid", "base", "pH"],
+    "estimatedDurationMinutes": 35,
+    "createdAt": "2026-01-14T00:00:00.000Z",
+    "updatedAt": "2026-01-14T00:00:00.000Z"
+  },
+  {
+    "id": "cell-structure-observation",
+    "slug": "cell-structure-observation",
+    "title": "Observing Plant and Animal Cell Structure",
+    "subjectId": "cell-biology",
+    "categoryId": "biology",
+    "difficulty": "beginner",
+    "summary": "Use a virtual microscope to compare the structure of plant and animal cells.",
+    "theory": "All cells share common features such as a plasma membrane, cytoplasm, and genetic material, but plant cells additionally have a **cell wall**, **chloroplasts**, and a large central **vacuole**, which animal cells lack.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Load the onion cell slide",
+        "description": "Select the prepared onion epidermis slide in the virtual microscope."
+      },
+      {
+        "order": 2,
+        "title": "Identify structures",
+        "description": "Label the cell wall, nucleus, and cytoplasm using the annotation tool."
+      },
+      {
+        "order": 3,
+        "title": "Switch to the cheek cell slide",
+        "description": "Repeat identification for the human cheek cell sample and note the differences."
+      }
+    ],
+    "observation": "Plant cells appear as regular, brick-like shapes with a visible cell wall; animal cells are irregular in outline and lack a cell wall.",
+    "simulationEntry": "index.html",
+    "videoIds": ["vid-cell-structure-1"],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Which organelle is found in plant cells but not typical animal cells?",
+        "options": [
+          { "id": "a", "text": "Mitochondrion" },
+          { "id": "b", "text": "Nucleus" },
+          { "id": "c", "text": "Chloroplast" },
+          { "id": "d", "text": "Ribosome" }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Chloroplasts, used for photosynthesis, are unique to plant (and some protist) cells."
+      }
+    ],
+    "tags": ["cells", "microscopy", "plant", "animal"],
+    "estimatedDurationMinutes": 20,
+    "createdAt": "2026-01-16T00:00:00.000Z",
+    "updatedAt": "2026-01-16T00:00:00.000Z"
+  },
+  {
+    "id": "logic-gates-basics",
+    "slug": "logic-gates-basics",
+    "title": "Exploring Basic Logic Gates",
+    "subjectId": "basic-circuits",
+    "categoryId": "electronics",
+    "difficulty": "beginner",
+    "summary": "Build AND, OR, and NOT gates and verify their truth tables.",
+    "theory": "Logic gates are the building blocks of digital circuits. **AND** outputs true only when all inputs are true, **OR** outputs true when at least one input is true, and **NOT** inverts its single input.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Wire an AND gate",
+        "description": "Connect two switches to an AND gate and observe the output LED for all input combinations."
+      },
+      {
+        "order": 2,
+        "title": "Wire an OR gate",
+        "description": "Replace the AND gate with an OR gate and repeat the observations."
+      },
+      {
+        "order": 3,
+        "title": "Wire a NOT gate",
+        "description": "Connect a single switch through a NOT gate and observe the inverted output."
+      },
+      {
+        "order": 4,
+        "title": "Complete the truth tables",
+        "description": "Fill in the truth table for each gate based on your observations."
+      }
+    ],
+    "observation": "The AND gate LED lights only when both switches are on; the OR gate LED lights when either switch is on; the NOT gate LED is always opposite the switch state.",
+    "simulationEntry": "index.html",
+    "videoIds": ["vid-logic-gates-1"],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "An OR gate with both inputs LOW (0) outputs:",
+        "options": [
+          { "id": "a", "text": "1" },
+          { "id": "b", "text": "0" },
+          { "id": "c", "text": "Undefined" },
+          { "id": "d", "text": "Depends on power supply" }
+        ],
+        "correctOptionId": "b",
+        "explanation": "OR outputs 1 only when at least one input is 1; with both inputs 0 the output is 0."
+      }
+    ],
+    "tags": ["logic gates", "digital", "AND", "OR", "NOT"],
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-01-18T00:00:00.000Z",
+    "updatedAt": "2026-01-18T00:00:00.000Z"
+  },
+  {
+    "id": "lever-mechanical-advantage",
+    "slug": "lever-mechanical-advantage",
+    "title": "Mechanical Advantage of a Lever",
+    "subjectId": "simple-machines",
+    "categoryId": "mechanical",
+    "difficulty": "beginner",
+    "summary": "Investigate how effort, load, and fulcrum position affect a lever's mechanical advantage.",
+    "theory": "A lever's **mechanical advantage (MA)** is the ratio of load arm to effort arm distances from the fulcrum: MA = effort arm length / load arm length. Moving the fulcrum closer to the load increases MA, making it easier to lift heavy loads with less effort.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Set the fulcrum at the midpoint",
+        "description": "Place the fulcrum at the centre of the lever and hang a fixed load."
+      },
+      {
+        "order": 2,
+        "title": "Measure required effort",
+        "description": "Increase the applied effort force until the lever balances; record the value."
+      },
+      {
+        "order": 3,
+        "title": "Move the fulcrum",
+        "description": "Shift the fulcrum closer to the load and repeat the effort measurement."
+      },
+      {
+        "order": 4,
+        "title": "Calculate MA",
+        "description": "Compute mechanical advantage for each fulcrum position and compare."
+      }
+    ],
+    "observation": "As the fulcrum moves closer to the load, the effort required to balance the lever decreases, confirming that mechanical advantage increases.",
+    "simulationEntry": "index.html",
+    "videoIds": ["vid-lever-1"],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Moving the fulcrum closer to the load will generally:",
+        "options": [
+          { "id": "a", "text": "Increase the effort needed" },
+          { "id": "b", "text": "Decrease the effort needed" },
+          { "id": "c", "text": "Have no effect on effort" },
+          { "id": "d", "text": "Reverse the direction of the load" }
+        ],
+        "correctOptionId": "b",
+        "explanation": "A longer effort arm relative to the load arm increases mechanical advantage, reducing required effort."
+      }
+    ],
+    "tags": ["levers", "mechanical advantage", "simple machines"],
+    "estimatedDurationMinutes": 20,
+    "createdAt": "2026-01-20T00:00:00.000Z",
+    "updatedAt": "2026-01-20T00:00:00.000Z"
+  },
+  {
+    "id": "inclined-plane-friction",
+    "slug": "inclined-plane-friction",
+    "title": "Friction on an Inclined Plane",
+    "subjectId": "simple-machines",
+    "categoryId": "mechanical",
+    "difficulty": "intermediate",
+    "summary": "Measure the coefficient of friction by sliding a block down inclined planes of varying angle.",
+    "theory": "A block on an incline experiences gravity, a normal force, and friction. The block begins to slide when the component of gravity along the incline exceeds the maximum static friction force, giving **tan(θ) = μ_s** at the critical angle.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Set a shallow angle",
+        "description": "Start with a low incline angle and place the block at the top."
+      },
+      {
+        "order": 2,
+        "title": "Increase the angle gradually",
+        "description": "Slowly raise the incline until the block just begins to slide; record this critical angle."
+      },
+      {
+        "order": 3,
+        "title": "Repeat with different surfaces",
+        "description": "Switch the block's surface material and repeat to compare friction coefficients."
+      },
+      {
+        "order": 4,
+        "title": "Calculate μ_s",
+        "description": "Use μ_s = tan(θ) to compute the coefficient of static friction for each surface."
+      }
+    ],
+    "observation": "Rougher surfaces require a steeper critical angle before sliding begins, corresponding to a higher coefficient of static friction.",
+    "simulationEntry": "index.html",
+    "videoIds": ["vid-inclined-plane-1"],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "At the critical sliding angle θ, the coefficient of static friction μ_s equals:",
+        "options": [
+          { "id": "a", "text": "sin(θ)" },
+          { "id": "b", "text": "cos(θ)" },
+          { "id": "c", "text": "tan(θ)" },
+          { "id": "d", "text": "1/tan(θ)" }
+        ],
+        "correctOptionId": "c",
+        "explanation": "At the point of sliding, gravity's component along the incline equals the maximum friction force, giving μ_s = tan(θ)."
+      }
+    ],
+    "tags": ["friction", "inclined plane", "forces"],
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-01-22T00:00:00.000Z",
+    "updatedAt": "2026-01-22T00:00:00.000Z"
+  },
+  {
+    "id": "graphing-linear-equations",
+    "slug": "graphing-linear-equations",
+    "title": "Graphing Linear Equations",
+    "subjectId": "geometry-graphs",
+    "categoryId": "mathematics",
+    "difficulty": "beginner",
+    "summary": "Visualize how slope and intercept shape the graph of y = mx + c.",
+    "theory": "A linear equation in the form **y = mx + c** graphs as a straight line, where m is the slope (rate of change) and c is the y-intercept (where the line crosses the y-axis). Changing m rotates the line; changing c shifts it vertically.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Set m = 1, c = 0",
+        "description": "Plot the baseline y = x and observe the 45° line through the origin."
+      },
+      {
+        "order": 2,
+        "title": "Vary the slope",
+        "description": "Change m to different positive and negative values and observe the line's rotation."
+      },
+      {
+        "order": 3,
+        "title": "Vary the intercept",
+        "description": "Keep m fixed and change c, observing the vertical shift of the line."
+      }
+    ],
+    "observation": "Increasing |m| makes the line steeper; a negative m flips its direction. Changing c translates the line up or down without altering its slope.",
+    "simulationEntry": "index.html",
+    "videoIds": ["vid-graphing-1"],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "In y = mx + c, increasing c while keeping m constant will:",
+        "options": [
+          { "id": "a", "text": "Rotate the line" },
+          { "id": "b", "text": "Shift the line vertically" },
+          { "id": "c", "text": "Shift the line horizontally" },
+          { "id": "d", "text": "Have no visible effect" }
+        ],
+        "correctOptionId": "b",
+        "explanation": "c is the y-intercept; changing it moves the line up or down while its slope stays the same."
+      }
+    ],
+    "tags": ["algebra", "graphing", "linear equations"],
+    "estimatedDurationMinutes": 20,
+    "createdAt": "2026-01-24T00:00:00.000Z",
+    "updatedAt": "2026-01-24T00:00:00.000Z"
+  }
+]

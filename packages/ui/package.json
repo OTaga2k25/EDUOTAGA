@@ -1,0 +1,22 @@
+{
+  "name": "@eduotaga/ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared design tokens (all platforms) and React DOM components (web) for EDUOTAGA",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./web": "./src/web/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.2",
+    "typescript": "^5.7.2"
+  }
+}

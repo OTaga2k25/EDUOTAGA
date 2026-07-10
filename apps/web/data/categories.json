@@ -1,0 +1,44 @@
+[
+  {
+    "id": "physics",
+    "name": "Physics",
+    "description": "Mechanics, optics, electricity, and waves.",
+    "icon": "atom",
+    "color": "blue"
+  },
+  {
+    "id": "chemistry",
+    "name": "Chemistry",
+    "description": "Reactions, titrations, and molecular structure.",
+    "icon": "flask-conical",
+    "color": "emerald"
+  },
+  {
+    "id": "biology",
+    "name": "Biology",
+    "description": "Cells, physiology, and ecosystems.",
+    "icon": "leaf",
+    "color": "green"
+  },
+  {
+    "id": "electronics",
+    "name": "Electronics",
+    "description": "Circuits, semiconductors, and digital logic.",
+    "icon": "circuit-board",
+    "color": "amber"
+  },
+  {
+    "id": "mechanical",
+    "name": "Mechanical",
+    "description": "Forces, machines, and material properties.",
+    "icon": "cog",
+    "color": "slate"
+  },
+  {
+    "id": "mathematics",
+    "name": "Mathematics",
+    "description": "Geometry, calculus, and statistics visualized.",
+    "icon": "sigma",
+    "color": "violet"
+  }
+]

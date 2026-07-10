@@ -1,36 +1,27 @@
 import Link from 'next/link';
-import { Badge, Card } from '@eduotaga/ui/web';
-import { DIFFICULTY_LABELS } from '@eduotaga/constants';
 import type { ExperimentSummary } from '@eduotaga/types';
-
-const DIFFICULTY_TONE = {
-  beginner: 'success',
-  intermediate: 'warning',
-  advanced: 'danger',
-} as const;
+import { Car, FlaskConical, Microscope } from 'lucide-react';
 
 export function ExperimentCard({ experiment }: { experiment: ExperimentSummary }) {
+  // Stable random-ish number based on title length
+  const minRead = (experiment.title.length % 15) + 5;
+  
   return (
-    <Link href={`/experiments/${experiment.slug}`}>
-      <Card className="flex h-full flex-col gap-3 p-6">
-        <div className="flex items-center justify-between gap-2">
-          <Badge tone="primary">{experiment.subjectName}</Badge>
-          <Badge tone={DIFFICULTY_TONE[experiment.difficulty]}>
-            {DIFFICULTY_LABELS[experiment.difficulty]}
-          </Badge>
+    <Link href={`/experiments/${experiment.slug}`} className="block h-full outline-none">
+      <div className="neo-card flex h-full flex-col justify-between p-4 min-h-[160px]">
+        <div>
+          <h3 className="text-sm font-black leading-tight mb-1">{experiment.title}</h3>
+          <p className="text-xs font-semibold opacity-70">{experiment.subjectName}</p>
         </div>
-        <h3 className="text-lg font-semibold text-foreground">{experiment.title}</h3>
-        <p className="line-clamp-2 flex-1 text-sm text-muted">{experiment.summary}</p>
-        {experiment.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
-            {experiment.tags.slice(0, 3).map((tag) => (
-              <span key={tag} className="rounded-full bg-border/50 px-2 py-0.5 text-xs text-muted">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-      </Card>
+        
+         <div className="flex items-end justify-between mt-4">
+           <span className="text-xs font-bold">{minRead} min read</span>
+           <div aria-hidden="true">
+             {experiment.subjectName === 'Physics' ? <Car className="h-10 w-10 text-black dark:text-white opacity-70" /> : 
+              experiment.subjectName === 'Chemistry' ? <FlaskConical className="h-10 w-10 text-black dark:text-white opacity-70" /> : <Microscope className="h-10 w-10 text-black dark:text-white opacity-70" />}
+           </div>
+        </div>
+      </div>
     </Link>
   );
 }

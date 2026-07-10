@@ -1,6 +1,15 @@
 'use client';
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
 
@@ -14,39 +23,38 @@ const STORAGE_KEY = 'eduotaga-theme';
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
+function readStoredTheme(): Theme {
+  if (typeof window === 'undefined') return 'system';
+  return (localStorage.getItem(STORAGE_KEY) as Theme | null) ?? 'system';
+}
+
+function subscribeToSystemTheme(callback: () => void) {
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+  media.addEventListener('change', callback);
+  return () => media.removeEventListener('change', callback);
+}
+
 function getSystemTheme(): 'light' | 'dark' {
-  if (typeof window === 'undefined') return 'light';
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
-function applyTheme(resolved: 'light' | 'dark') {
-  document.documentElement.classList.toggle('dark', resolved === 'dark');
+/** Matches the light-mode default already baked into globals.css `:root`. */
+function getSystemThemeServerSnapshot(): 'light' | 'dark' {
+  return 'light';
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('system');
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setThemeState] = useState<Theme>(readStoredTheme);
+  const systemTheme = useSyncExternalStore(
+    subscribeToSystemTheme,
+    getSystemTheme,
+    getSystemThemeServerSnapshot,
+  );
+  const resolvedTheme = theme === 'system' ? systemTheme : theme;
 
-  useEffect(() => {
-    const stored = (localStorage.getItem(STORAGE_KEY) as Theme | null) ?? 'system';
-    setThemeState(stored);
-  }, []);
-
-  useEffect(() => {
-    const resolved = theme === 'system' ? getSystemTheme() : theme;
-    setResolvedTheme(resolved);
-    applyTheme(resolved);
-
-    if (theme !== 'system') return;
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const onChange = () => {
-      const next = getSystemTheme();
-      setResolvedTheme(next);
-      applyTheme(next);
-    };
-    media.addEventListener('change', onChange);
-    return () => media.removeEventListener('change', onChange);
-  }, [theme]);
+  useLayoutEffect(() => {
+    document.documentElement.classList.toggle('dark', resolvedTheme === 'dark');
+  }, [resolvedTheme]);
 
   const setTheme = useCallback((next: Theme) => {
     localStorage.setItem(STORAGE_KEY, next);

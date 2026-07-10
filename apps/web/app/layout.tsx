@@ -3,8 +3,8 @@ import { Inter } from 'next/font/google';
 import { SITE_DESCRIPTION, SITE_NAME } from '@eduotaga/constants';
 import { QueryProvider } from '@/providers/query-provider';
 import { ThemeProvider, themeInitScript } from '@/providers/theme-provider';
-import { Navbar } from '@/components/layout/navbar';
-import { Footer } from '@/components/layout/footer';
+import { AppShell } from '@/components/layout/app-shell';
+import Script from 'next/script';
 import './globals.css';
 
 const inter = Inter({
@@ -39,14 +39,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <Script id="theme-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <ThemeProvider>
           <QueryProvider>
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
+            <AppShell>{children}</AppShell>
           </QueryProvider>
         </ThemeProvider>
       </body>

@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
+import { Search, SlidersHorizontal } from 'lucide-react';
 import { cn } from '@eduotaga/ui/web';
 
 export function SearchBar({ className }: { className?: string }) {
@@ -20,21 +21,24 @@ export function SearchBar({ className }: { className?: string }) {
       <label htmlFor="site-search" className="sr-only">
         Search experiments, subjects, and videos
       </label>
-      <input
-        id="site-search"
-        type="search"
-        value={value}
-        onChange={(event) => setValue(event.target.value)}
-        placeholder="Search experiments, subjects, videos…"
-        className="h-12 w-full rounded-full border border-border bg-surface px-5 pr-12 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/50"
-      />
-      <button
-        type="submit"
-        aria-label="Search"
-        className="absolute right-1.5 top-1.5 flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground"
-      >
-        <span aria-hidden="true">🔍</span>
-      </button>
+      <div className="relative flex items-center">
+        <Search className="absolute left-4 h-5 w-5 text-muted-foreground" strokeWidth={2.5} />
+        <input
+          id="site-search"
+          type="search"
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          placeholder="Search experiments, topics..."
+          className="h-12 w-full rounded-xl border-2 border-black bg-white dark:border-white dark:bg-zinc-900 px-12 text-sm font-semibold text-foreground placeholder:text-muted-foreground focus:outline-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]"
+        />
+        <button
+          type="button"
+          aria-label="Filter"
+          className="absolute right-4 text-foreground hover:opacity-70"
+        >
+          <SlidersHorizontal className="h-5 w-5" strokeWidth={2.5} />
+        </button>
+      </div>
     </form>
   );
 }

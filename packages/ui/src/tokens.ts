@@ -21,8 +21,8 @@ export const colors = {
     danger: '#dc2626',
   },
   dark: {
-    background: '#111113',
-    surface: '#18181b',
+    background: '#121212',
+    surface: '#1e1e1e',
     foreground: '#f4f4f5',
     muted: '#a1a1aa',
     border: '#27272a',

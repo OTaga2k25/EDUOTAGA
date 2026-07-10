@@ -1,9 +1,27 @@
-import { Pressable, Text, View, Image } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { DEFAULT_MOCK_RATING, MOCK_RATINGS } from '@eduotaga/constants';
 import type { ExperimentSummary } from '@eduotaga/types';
 import { useThemeColors } from '@/hooks/use-theme-colors';
+
+const CATEGORY_ICONS = {
+  physics: 'planet',
+  chemistry: 'flask',
+  biology: 'leaf',
+  electronics: 'hardware-chip',
+  mechanical: 'settings',
+  mathematics: 'calculator',
+} as const;
+
+const CATEGORY_COLORS = {
+  physics: '#c4b5fd',
+  chemistry: '#fb923c',
+  biology: '#86efac',
+  electronics: '#86efac',
+  mechanical: '#fde047',
+  mathematics: '#93c5fd',
+} as const;
 
 export function ExperimentListItem({ experiment }: { experiment: ExperimentSummary }) {
   const theme = useThemeColors();
@@ -18,7 +36,7 @@ export function ExperimentListItem({ experiment }: { experiment: ExperimentSumma
               width: 72,
               height: 72,
               borderRadius: theme.radii.lg,
-              backgroundColor: '#A3D2F0',
+              backgroundColor: CATEGORY_COLORS[experiment.categoryId],
               borderWidth: 2,
               borderColor: theme.colors.foreground,
               alignItems: 'center',
@@ -26,7 +44,7 @@ export function ExperimentListItem({ experiment }: { experiment: ExperimentSumma
               overflow: 'hidden'
             }}
           >
-            <Image source={require('../assets/images/boy.png')} style={{ width: 80, height: 80, opacity: 0.5, resizeMode: 'cover' }} />
+            <Ionicons name={CATEGORY_ICONS[experiment.categoryId] as any} size={32} color={theme.colors.foreground} />
           </View>
           <View style={{ flex: 1 }}>
             <Text style={{ color: theme.colors.foreground, fontWeight: '900', fontSize: 16, marginBottom: 2 }} numberOfLines={1}>

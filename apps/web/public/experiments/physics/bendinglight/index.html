@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bending Light — a story of reflection & refraction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <canvas id="prism" width="940" height="230" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="eyebrow">Reflection &amp; Refraction · a light story</div>
+    <h1 class="disp">BENDING<br><span class="thin">LIGHT</span></h1>
+    <p class="lede">For a thousand years, humans have quietly learned to <em>bend and bounce</em> light — to burn distant ships, to see moons no eye had seen, and to whisper across oceans at the speed of light.</p>
+    <p class="hook">It all comes down to two tricks. Let's chase them through history — and at the end, you'll build an instrument of your own.</p>
+    <div class="scrollcue">scroll to begin<span>↓</span></div>
+  </div>
+</header>
+<div class="spectrum"></div>
+
+<!-- ================= INTRO ================= -->
+<section class="intro">
+  <div class="wrap">
+    <h2 class="disp">Light travels straight — until it doesn't.</h2>
+    <p>Around the year 1021, in Cairo, a scholar named <strong>Ibn al-Haytham</strong> did something radical: instead of guessing how vision worked, he tested it. His <em>Book of Optics</em> argued that we see because light bounces off objects and enters the eye — and that this light obeys strict, repeatable rules. He is often called the father of the scientific method itself.</p>
+    <p>Those rules are the whole chapter. When light meets a new surface it can do two things, and mastering each one changed the world.</p>
+    <div class="twocard">
+      <div class="card reflect">
+        <div class="k">Trick one</div><h3>Reflection</h3>
+        <p>Light bounces off a surface. The angle it hits at equals the angle it leaves at. Curve that surface, and you can gather scattered light into a single burning point — or fling it back out as a searchlight beam.</p>
+      </div>
+      <div class="card refract">
+        <div class="k">Trick two</div><h3>Refraction</h3>
+        <p>Light slows down entering glass or water, so its path bends. Shape the glass and you control the bend — pulling faraway galaxies close, or trapping a beam inside a hair-thin fibre forever.</p>
+      </div>
+    </div>
+    <p style="margin-top:26px;color:var(--muted);font-size:16px;" class="mono">Everything below is hands-on. No sliders for the physics — you bend the mirror, squash the lens, and swing the beam with your own hands.</p>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 1 ================= -->
+<section class="chapter ch1">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Experiment 01 · Reflection · Syracuse, 212 BC</span></div>
+    <h2 class="disp">Could a mirror set a warship on fire?</h2>
+    <p class="dropcap">When the Roman fleet besieged Syracuse, legend says the engineer <strong>Archimedes</strong> lined the harbour walls with polished bronze shields and aimed the sun at the ships until their sails caught fire. Historians still argue whether it really happened — but the physics is real, and you can feel it work.</p>
+    <p>A flat mirror just bounces light back. But bend it <em>inward</em> — a <strong>concave</strong> mirror — and every parallel ray from the distant sun bounces toward one point: the <strong>principal focus (F)</strong>. Bend it deeper and the focus pulls in closer; flatten it and the focus flees away. The sagitta formula the ancients used still holds: <span class="mono" style="font-size:15px">R = (a² + s²) / 2s,&nbsp; f = R/2</span>.</p>
+    <p class="pull">Grab the mirror's rim and bend it. Feel the focus move. Then slide the paper into it.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Live experiment</span><span class="lab-title">Concave mirror · the burning point</span></div>
+      <canvas id="simBurn" width="820" height="380"></canvas>
+      <div class="lab-controls">
+        <div class="seg" role="group" aria-label="beam direction">
+          <button id="beamIn" class="on">☀ Sun → mirror</button>
+          <button id="beamOut">💡 Bulb at F → beam</button>
+        </div>
+      </div>
+      <div class="readout" id="burnRead"></div>
+      <div class="hint"><span class="h">◐ Drag the glowing ring on the mirror's rim</span> to bend it (curvature → focal length). <span class="h">▯ Drag the paper</span> to chase the focus. In bulb mode, drag the bulb and watch when the beam turns perfectly parallel.</div>
+    </div>
+
+    <div class="today">
+      <div class="big">3,500°C</div>
+      <div>
+        <h4>The same trick, industrial scale</h4>
+        <p>At Odeillo in the French Pyrenees, a field of mirrors throws sunlight onto one giant concave reflector. The focus reaches about 3,500°C — hot enough to melt steel, with no fuel but the sun. And the reverse layout — a bulb placed <em>at</em> F — is exactly a car headlight and a searchlight.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 2 ================= -->
+<section class="chapter ch2">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Experiment 02 · Refraction · Padua, 1609</span></div>
+    <h2 class="disp">The night Galileo pulled Jupiter closer.</h2>
+    <p class="dropcap">In 1609 Galileo heard of a Dutch toy that made distant things look near. He built his own, pointed it at the sky, and within months saw four tiny "stars" circling Jupiter — moons. The heavens were not perfect and unchanging after all. A pair of curved glass discs had quietly ended one worldview and begun another.</p>
+    <p>A <strong>convex lens</strong> bends passing light inward to a focus. A fatter lens bends harder — shorter focal length. Where the image lands, and whether it's flipped, giant, or ghostly, depends on one thing only: <em>how far the object sits from the lens compared to f</em>. Sixty years after Galileo, <strong>van Leeuwenhoek</strong> ground a tiny bead-like lens, looked at pond water, and discovered bacteria.</p>
+    <p class="pull">Drag the candle. Drag the lens. Pinch the lens fatter or thinner by its bulge. Watch the image obey.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Live experiment</span><span class="lab-title">Convex lens · squash the glass, move the world</span></div>
+      <canvas id="simLens" width="840" height="400"></canvas>
+      <div class="readout" id="lensRead"></div>
+      <div class="hint"><span class="h">🕯 Drag the candle</span> left/right (and up/down to resize it). <span class="h">◇ Drag the lens body</span> to slide it. <span class="h">● Drag the small handle on the lens's bulge</span> outward to fatten it (shorter f) or inward to thin it (longer f). Try pushing the candle inside F — the moment it crosses, the image flips from real to a magnifying-glass ghost.</div>
+    </div>
+
+    <div class="today">
+      <div class="big">6.5 m</div>
+      <div>
+        <h4>From a hand-lens to the edge of time</h4>
+        <p>The same optics live in your eye, your phone camera, and your glasses. Scaled up, they become the James Webb Space Telescope — a 6.5-metre mirror of 18 gold-coated segments gathering light that left distant galaxies over 13 billion years ago.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 3 ================= -->
+<section class="chapter ch3">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Experiment 03 · Total internal reflection · 1841 → today</span></div>
+    <h2 class="disp">How do you make light travel down a hair?</h2>
+    <p class="dropcap">In 1841 the Swiss engineer <strong>Daniel Colladon</strong> did a parlour trick that dazzled Paris: he shone light into a curved stream of water pouring from a tank — and the light <em>followed the water's curve</em>, glowing at the bottom. Nobody yet realised they were watching the future of the internet.</p>
+    <p>When light inside glass or water strikes the surface too steeply, it cannot escape into the air at all — it reflects back <em>perfectly</em>. This is <strong>total internal reflection</strong>. The tipping point is the <strong>critical angle</strong>: below it light leaks out, past it the surface becomes a flawless mirror.</p>
+    <p class="pull">Grab the torch and swing it. Feel for the exact angle where the surface snaps into a mirror.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Live experiment</span><span class="lab-title">Total internal reflection · the light trap</span></div>
+      <canvas id="simTir" width="840" height="400"></canvas>
+      <div class="lab-controls">
+        <div class="seg" id="tirMedium">
+          <button data-n="1.33">Water n=1.33</button>
+          <button data-n="1.50" class="on">Glass n=1.50</button>
+          <button data-n="2.42">Diamond n=2.42</button>
+        </div>
+      </div>
+      <div class="readout" id="tirRead"></div>
+      <div class="hint"><span class="h">🔦 Drag the torch</span> anywhere in the lower medium to aim the beam. Switch to diamond and notice how tiny its critical angle is — that's why diamonds trap and blaze light.</div>
+    </div>
+
+    <div class="today">
+      <div class="big">99%</div>
+      <div>
+        <h4>The light in the cable — and the sparkle in a ring</h4>
+        <p>Nearly all intercontinental internet traffic rides through undersea glass fibres, where light pulses bounce along by total internal reflection for thousands of kilometres — Charles Kao's ultra-clear fibre earned a Nobel Prize. The same effect gives diamond its fire: a critical angle of only ~24° means light ricochets inside before blazing back out at your eye.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 4 · CAPSTONE ================= -->
+<section class="chapter ch4">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Capstone · The optician's bench · you, now</span></div>
+    <h2 class="disp">Build your own instrument.</h2>
+    <p class="dropcap">Galileo's telescope was two lenses in a tube. Van Leeuwenhoek's microscope was one bead of glass held to the eye. That's the astonishing secret of this whole chapter: with nothing but two pieces of curved glass and the rules you just learned, <em>you</em> can build the instruments that discovered moons and microbes.</p>
+    <p>Here is an optical bench with two lenses. Everything is yours to move and bend. The bench watches what you build — and tells you the moment you've invented something.</p>
+    <p class="pull">Two lenses. Three inventions hiding inside them. Find them all.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Capstone build</span><span class="lab-title">The optician's bench</span></div>
+      <div class="missions" id="missions">
+        <button data-m="telescope" class="on">🔭 Mission 1 · Telescope</button>
+        <button data-m="microscope">🔬 Mission 2 · Microscope</button>
+        <button data-m="projector">📽 Mission 3 · Projector</button>
+      </div>
+      <canvas id="simBench" width="860" height="420"></canvas>
+      <div class="readout" id="benchRead"></div>
+      <div class="hint" id="benchHint"></div>
+    </div>
+
+    <div class="today">
+      <div class="big">2 lenses</div>
+      <div>
+        <h4>Everything is a combination</h4>
+        <p>A refracting telescope = long-f objective + short-f eyepiece, spaced so the first image lands at the eyepiece's focus. A compound microscope = short-f objective with the specimen just outside its focus, plus an eyepiece as a magnifier. A projector = one lens throwing a big real image on a wall. Cameras, binoculars, your own eye + glasses — all just stacked lenses obeying 1/v − 1/u = 1/f.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINALE ================= -->
+<section class="finale">
+  <div class="wrap">
+    <h2 class="disp">Two tricks. A civilisation of light.</h2>
+    <p>Everything you just built — the burning mirror, the flipping image, the trapped beam, the telescope on your bench — reduces to two rules light has always obeyed, long before anyone wrote them down.</p>
+    <div class="twoprinc">
+      <div>
+        <div class="mono" style="color:var(--fire)">REFLECTION</div>
+        <p style="margin:8px 0 10px">Angle in equals angle out. Curve the mirror and control where the light gathers.</p>
+        <div class="eq">1/v + 1/u = 1/f</div>
+      </div>
+      <div>
+        <div class="mono" style="color:var(--cool)">REFRACTION</div>
+        <p style="margin:8px 0 10px">Light bends as it changes speed between media. Shape the glass and control the bend.</p>
+        <div class="eq">n = sin i / sin r = c / v</div>
+      </div>
+    </div>
+    <p>Look up from this page and you'll spot them everywhere: the rear-view mirror in a car, the lens in your eye focusing these words, the phone camera, the fibre humming under the sea that carried this very page to you.</p>
+    <p style="color:var(--amber);font-style:italic;">Once you can bend light, you can see the invisible, reach the unreachable, and speak across the world. That's the whole chapter.</p>
+  </div>
+</section>
+
+<div class="foot">Bending Light · a teaching companion to "Light — Reflection and Refraction" · drag, bend &amp; build</div>
+
+<script src="script.js"></script>
+</body>
+</html>

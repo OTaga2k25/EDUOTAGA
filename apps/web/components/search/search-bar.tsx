@@ -29,12 +29,12 @@ export function SearchBar({ className }: { className?: string }) {
           value={value}
           onChange={(event) => setValue(event.target.value)}
           placeholder="Search experiments, topics..."
-          className="h-12 w-full rounded-xl border-2 border-black bg-white dark:border-white dark:bg-zinc-900 px-12 text-sm font-semibold text-foreground placeholder:text-muted-foreground focus:outline-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]"
+          className="appearance-none h-12 w-full rounded-xl border-2 border-black bg-white dark:border-white dark:bg-zinc-900 pl-11 pr-12 text-sm font-semibold text-foreground placeholder:text-muted-foreground focus:outline-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] focus:-translate-y-0.5 focus:-translate-x-0.5 focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:focus:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all"
         />
         <button
           type="button"
           aria-label="Filter"
-          className="absolute right-4 text-foreground hover:opacity-70"
+          className="absolute right-4 text-foreground hover:opacity-70 transition-opacity"
         >
           <SlidersHorizontal className="h-5 w-5" strokeWidth={2.5} />
         </button>

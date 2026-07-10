@@ -9,6 +9,15 @@
     "color": "blue"
   },
   {
+    "id": "light-reflection-refraction",
+    "slug": "light-reflection-refraction",
+    "name": "Light — Reflection & Refraction",
+    "description": "Explore mirrors, lenses, and total internal reflection.",
+    "categoryId": "physics",
+    "icon": "sun",
+    "color": "orange"
+  },
+  {
     "id": "acids-bases-titration",
     "slug": "acids-bases-titration",
     "name": "Acids, Bases & Titration",

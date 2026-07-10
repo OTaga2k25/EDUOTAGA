@@ -23,11 +23,9 @@ export function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
         </div>
       </div>
 
-      <div className="max-w-md flex-1">
+      <div className="absolute left-1/2 -translate-x-1/2 w-full max-w-md hidden sm:block px-4">
         <Suspense fallback={null}>
-          <div className="hidden sm:block">
-            <SearchBar />
-          </div>
+          <SearchBar />
         </Suspense>
       </div>
 

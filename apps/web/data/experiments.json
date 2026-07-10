@@ -115,6 +115,89 @@
     "updatedAt": "2026-01-12T00:00:00.000Z"
   },
   {
+    "id": "bendinglight",
+    "slug": "bendinglight",
+    "title": "Bending Light: Reflection & Refraction",
+    "subjectId": "light-reflection-refraction",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Bend mirrors and lenses by hand to discover how reflection, refraction, and total internal reflection actually work.",
+    "theory": "Light travels in straight lines until it meets a new surface, where it obeys one of two rules. **Reflection**: the angle of incidence equals the angle of reflection; curving the mirror (concave) gathers parallel rays to a single **principal focus (F)**, related to the radius of curvature by f = R/2. **Refraction**: light changes speed crossing between media, bending its path according to Snell's Law, n = sin i / sin r. A convex lens uses this to focus light to a point whose position depends on the object distance u relative to f (1/v − 1/u = 1/f). When light inside a denser medium hits a boundary steeper than the **critical angle** (sin θc = 1/n), it undergoes **total internal reflection** and cannot escape at all — the principle behind optical fibres.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Bend the concave mirror",
+        "description": "Drag the glowing ring on the mirror's rim to change its curvature and watch the focal point F move."
+      },
+      {
+        "order": 2,
+        "title": "Find the burning point",
+        "description": "Slide the paper screen until it sits exactly at F and observe what happens; then switch to bulb mode and place the bulb at F to produce a parallel beam."
+      },
+      {
+        "order": 3,
+        "title": "Squash the convex lens",
+        "description": "Drag the candle and the lens, and use the bulge handle to change the lens's focal length. Note how the image changes from real & inverted to virtual & magnified as the candle crosses F."
+      },
+      {
+        "order": 4,
+        "title": "Find the critical angle",
+        "description": "Drag the torch inside the glass/water/diamond block and sweep the angle until the beam suddenly stops escaping — that is the critical angle, and beyond it you get total internal reflection."
+      },
+      {
+        "order": 5,
+        "title": "Build an instrument",
+        "description": "On the optician's bench, arrange the two lenses and the object to complete each mission: a telescope, a microscope, and a projector."
+      }
+    ],
+    "observation": "The mirror's focal length shortens as its curvature deepens, matching f = R/2. The lens image flips from real/inverted to virtual/magnified exactly when the object crosses the focal point. Total internal reflection begins abruptly once the incidence angle passes the critical angle predicted by sin θc = 1/n, with denser media (diamond) showing a much smaller critical angle than water or glass.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Bending a concave mirror to a deeper curve (smaller radius of curvature) will:",
+        "options": [
+          { "id": "a", "text": "Move the focal point farther away" },
+          { "id": "b", "text": "Move the focal point closer to the mirror" },
+          { "id": "c", "text": "Leave the focal point unchanged" },
+          { "id": "d", "text": "Turn the mirror convex" }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Since f = R/2, a smaller radius of curvature R produces a shorter focal length f, pulling the focus closer to the mirror."
+      },
+      {
+        "id": "q2",
+        "question": "A candle placed exactly at a convex lens's focal point produces:",
+        "options": [
+          { "id": "a", "text": "A magnified virtual image" },
+          { "id": "b", "text": "A same-size real image" },
+          { "id": "c", "text": "No image — the outgoing rays are parallel" },
+          { "id": "d", "text": "An inverted, diminished image" }
+        ],
+        "correctOptionId": "c",
+        "explanation": "At u = f, the lens equation gives v = infinity: every ray leaves the lens parallel to the axis, so no image forms."
+      },
+      {
+        "id": "q3",
+        "question": "Total internal reflection occurs when light travels:",
+        "options": [
+          { "id": "a", "text": "From a denser medium into a rarer medium, above the critical angle" },
+          { "id": "b", "text": "From a rarer medium into a denser medium, at any angle" },
+          { "id": "c", "text": "Through a flat mirror" },
+          { "id": "d", "text": "Through a vacuum" }
+        ],
+        "correctOptionId": "a",
+        "explanation": "TIR requires light moving from higher to lower refractive index, and only once the incidence angle exceeds the critical angle sin θc = 1/n."
+      }
+    ],
+    "tags": ["reflection", "refraction", "lens", "mirror", "total internal reflection", "optics"],
+    "estimatedDurationMinutes": 35,
+    "createdAt": "2026-07-10T00:00:00.000Z",
+    "updatedAt": "2026-07-10T00:00:00.000Z"
+  },
+  {
     "id": "acid-base-titration",
     "slug": "acid-base-titration",
     "title": "Acid-Base Titration",

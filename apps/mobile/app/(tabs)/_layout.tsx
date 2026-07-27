@@ -17,7 +17,14 @@ export default function TabsLayout() {
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.muted,
         tabBarIcon: ({ color }) => {
-          const name = route.name === 'index' ? 'home' : route.name === 'subjects' ? 'flask' : 'search';
+          const name =
+            route.name === 'index'
+              ? 'home'
+              : route.name === 'subjects'
+                ? 'flask'
+                : route.name === 'tutor'
+                  ? 'chatbubble-ellipses'
+                  : 'search';
           return <Ionicons name={name} size={24} color={color} />;
         },
       })}
@@ -61,6 +68,7 @@ export default function TabsLayout() {
         }} 
       />
       <Tabs.Screen name="subjects" options={{ title: 'Subjects' }} />
+      <Tabs.Screen name="tutor" options={{ title: 'Tutor' }} />
       <Tabs.Screen name="search" options={{ title: 'Search' }} />
     </Tabs>
   );

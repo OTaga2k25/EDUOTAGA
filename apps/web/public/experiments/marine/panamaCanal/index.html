@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Panama Canal — Lock Physics Simulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=2">
+</head>
+<body>
+
+
+<div id="viewport">
+  <canvas id="scene"></canvas>
+  <span class="cross tl">+</span><span class="cross tr">+</span>
+  <span class="cross bl">+</span><span class="cross br">+</span>
+  <div id="hudCard">
+    <label>Ship elevation</label>
+    <b id="elevNum">0.0 m</b>
+    <div class="bar"><i id="hudBar"></i></div>
+    <label>Water moved</label>
+    <b id="hudWater" class="sm">0 ML</b>
+  </div>
+  <div id="valve"><span class="dot"></span>Valves open &mdash; gravity flow</div>
+  <div id="caption">Panam&aacute; Canal Lock System</div>
+  <div id="hint">drag rotate &middot; pinch zoom &middot; 2-finger pan &middot; double-tap auto cam</div>
+</div>
+
+<main id="panel">
+  <h2>Lock Staircase</h2>
+  <p class="lede">Pacific &rarr; Gat&uacute;n Lake &middot; gravity, buoyancy &amp; steel &mdash; Marine Engineering</p>
+
+  <div style="margin-bottom:12px;">
+    <button id="btnPlay" class="tab active execute-btn">Execute Step</button>
+  </div>
+  <div id="controls" style="display:flex;flex-wrap:wrap;gap:8px;">
+    <button id="btnSpeed" class="tab">Speed 1&times;</button>
+    <button id="btnView" class="tab">View &middot; Auto</button>
+    <button id="btnLabels" class="tab">Labels &#10003;</button>
+    <button id="btnReset" class="tab">Restart</button>
+  </div>
+
+  <div class="kicker">Live readouts</div>
+  <div id="cards">
+    <div class="card"><label>Ship elevation</label><b id="cElev">0.0 m</b></div>
+    <div class="card aqua"><label>Chamber levels</label><b id="cLevels">0 / 9 / 18 m</b></div>
+    <div class="card aqua"><label>Water moved</label><b id="cWater">0 ML</b></div>
+    <div class="card"><label>Lock status</label><b id="cStatus">TRANSIT</b></div>
+  </div>
+
+  <div class="kicker">Sequence</div>
+  <div id="stepline">
+    <div id="stepnum">Step 1 / 13</div>
+    <div id="progress"><i id="pbar"></i></div>
+  </div>
+  <h3 id="steplabel"></h3>
+  <p id="stepdesc"></p>
+  <div id="fact"></div>
+
+  <footer>Virtual marine lab &middot; three.js &middot; no pumps were harmed</footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/panama-sim.js?v=2"></script>
+</body>
+</html>

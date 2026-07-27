@@ -9,6 +9,7 @@ export const API_ROUTES = {
   videos: '/api/videos',
   videosByExperiment: (experimentId: string) => `/api/videos?experimentId=${experimentId}`,
   search: (query: string) => `/api/search?q=${encodeURIComponent(query)}`,
+  tutorChat: '/api/tutor/chat',
 } as const;
 
 /**

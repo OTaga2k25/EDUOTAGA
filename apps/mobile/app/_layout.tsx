@@ -23,7 +23,6 @@ export default function RootLayout() {
             <Stack.Screen name="experiments/index" options={{ title: 'Experiments' }} />
             <Stack.Screen name="subjects/[subject]" options={{ title: 'Subject' }} />
             <Stack.Screen name="experiments/[slug]/index" options={{ title: 'Experiment' }} />
-            <Stack.Screen name="experiments/[slug]/simulation" options={{ title: 'Simulation' }} />
           </Stack>
           <StatusBar style="auto" />
         </QueryProvider>

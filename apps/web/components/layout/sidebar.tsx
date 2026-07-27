@@ -20,13 +20,12 @@ import Image from 'next/image';
 const MAIN_NAV_ITEMS = [
   { href: '/', label: 'Dashboard', icon: Home },
   { href: '/experiments', label: 'Experiments', icon: FlaskConical },
-  { href: '/theory', label: 'Theory', icon: BookOpen },
-  { href: '/simulations', label: 'Simulations', icon: MonitorPlay },
+  // { href: '/simulations', label: 'Simulations', icon: MonitorPlay },
   { href: '/videos', label: 'Videos', icon: Video },
   { href: '/my-lab', label: 'My Lab', icon: LayoutDashboard },
-  { href: '/reports', label: 'Reports', icon: FileText },
-  { href: '/bookmarks', label: 'Bookmarks', icon: Bookmark },
-  { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
+  // { href: '/reports', label: 'Reports', icon: FileText },
+  // { href: '/bookmarks', label: 'Bookmarks', icon: Bookmark },
+  // { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
 ] as const;
 
 export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -50,7 +49,8 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
         )}
       >
         <div className="flex h-16 items-center gap-3 border-b-2 border-black dark:border-white px-5">
-          <FlaskConical className="h-8 w-8 text-primary fill-primary" />
+          <img src="/logo-light.png" alt="edUOtaga Logo" className="block dark:hidden h-12 w-auto object-contain" />
+          <img src="/logo-dark.png" alt="edUOtaga Logo" className="hidden dark:block h-12 w-auto object-contain" />
           <div className="flex flex-col">
             <span className="text-xl font-black uppercase leading-tight tracking-tight text-foreground">edUOtaga</span>
             <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Virtual Labs</span>

@@ -47,6 +47,13 @@ export const CATEGORIES: Record<CategoryId, Category> = {
     icon: 'sigma',
     color: 'violet',
   },
+  marine: {
+    id: 'marine',
+    name: 'Marine Engineering',
+    description: 'Marine systems, fluid mechanics, and buoyancy.',
+    icon: 'anchor',
+    color: 'cyan',
+  },
 };
 
 export const CATEGORY_IDS = Object.keys(CATEGORIES) as CategoryId[];

@@ -1,7 +1,8 @@
 import { Suspense } from 'react';
 import { SearchBar } from '@/components/search/search-bar';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
-import { Menu, FlaskConical } from 'lucide-react';
+import { Menu } from 'lucide-react';
+import Image from 'next/image';
 
 export function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
   return (
@@ -16,7 +17,8 @@ export function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
       </button>
 
       <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 lg:hidden">
-        <FlaskConical className="h-7 w-7 text-primary fill-primary" />
+        <img src="/logo-light.png" alt="edUOtaga Logo" className="block dark:hidden h-12 w-auto object-contain" />
+        <img src="/logo-dark.png" alt="edUOtaga Logo" className="hidden dark:block h-12 w-auto object-contain" />
         <div className="flex flex-col mt-1">
           <span className="text-[16px] font-black uppercase leading-none tracking-tight text-foreground">edUOtaga</span>
           <span className="text-[8px] font-bold uppercase tracking-wider text-muted-foreground mt-0.5">Virtual Labs</span>
@@ -29,7 +31,7 @@ export function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
         </Suspense>
       </div>
 
-      <div className="ml-auto flex items-center gap-3">
+      <div className="relative z-10 ml-auto flex items-center gap-3">
         <ThemeToggle />
       </div>
     </header>

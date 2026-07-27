@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { SITE_DESCRIPTION, SITE_NAME } from '@eduotaga/constants';
 import { QueryProvider } from '@/providers/query-provider';
 import { ThemeProvider, themeInitScript } from '@/providers/theme-provider';
+import { TutorProvider } from '@/providers/tutor-provider';
 import { AppShell } from '@/components/layout/app-shell';
 import Script from 'next/script';
 import './globals.css';
@@ -44,7 +45,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <ThemeProvider>
           <QueryProvider>
-            <AppShell>{children}</AppShell>
+            <TutorProvider>
+              <AppShell>{children}</AppShell>
+            </TutorProvider>
           </QueryProvider>
         </ThemeProvider>
       </body>

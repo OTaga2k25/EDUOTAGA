@@ -6,6 +6,8 @@ import type {
   ExperimentSummary,
   SearchResultItem,
   SubjectWithCount,
+  TutorChatRequest,
+  TutorChatResponse,
 } from '@eduotaga/types';
 
 /**
@@ -31,4 +33,7 @@ export const api = {
   getExperiment: (slug: string) => unwrap<ExperimentDetail>(client.get(API_ROUTES.experiment(slug))),
 
   search: (query: string) => unwrap<SearchResultItem[]>(client.get(API_ROUTES.search(query))),
+
+  tutorChat: (body: TutorChatRequest) =>
+    unwrap<TutorChatResponse>(client.post(API_ROUTES.tutorChat, body)),
 };

@@ -4,7 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
-  useLayoutEffect,
+  useEffect,
   useMemo,
   useState,
   useSyncExternalStore,
@@ -44,17 +44,27 @@ function getSystemThemeServerSnapshot(): 'light' | 'dark' {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(readStoredTheme);
+  const [theme, setThemeState] = useState<Theme>('system');
+  const [mounted, setMounted] = useState(false);
+
   const systemTheme = useSyncExternalStore(
     subscribeToSystemTheme,
     getSystemTheme,
     getSystemThemeServerSnapshot,
   );
+
+  useEffect(() => {
+    setThemeState(readStoredTheme());
+    setMounted(true);
+  }, []);
+
   const resolvedTheme = theme === 'system' ? systemTheme : theme;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    // Only toggle the class after mounting, letting the init script handle initial load
+    if (!mounted) return;
     document.documentElement.classList.toggle('dark', resolvedTheme === 'dark');
-  }, [resolvedTheme]);
+  }, [resolvedTheme, mounted]);
 
   const setTheme = useCallback((next: Theme) => {
     localStorage.setItem(STORAGE_KEY, next);

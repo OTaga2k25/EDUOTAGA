@@ -40,5 +40,12 @@
     "description": "Geometry, calculus, and statistics visualized.",
     "icon": "sigma",
     "color": "violet"
+  },
+  {
+    "id": "marine",
+    "name": "Marine Engineering",
+    "description": "Marine systems, fluid mechanics, and buoyancy.",
+    "icon": "anchor",
+    "color": "cyan"
   }
 ]

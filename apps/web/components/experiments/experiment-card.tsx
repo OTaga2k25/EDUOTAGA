@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { ExperimentSummary } from '@eduotaga/types';
 import { CATEGORIES } from '@eduotaga/constants';
-import { Atom, FlaskConical, Leaf, Cpu, Settings, Sigma } from 'lucide-react';
+import { Atom, FlaskConical, Leaf, Cpu, Settings, Sigma, Anchor } from 'lucide-react';
 
 const CATEGORY_ICONS = {
   physics: Atom,
@@ -10,6 +10,7 @@ const CATEGORY_ICONS = {
   electronics: Cpu,
   mechanical: Settings,
   mathematics: Sigma,
+  marine: Anchor,
 } as const;
 
 export function ExperimentCard({ experiment }: { experiment: ExperimentSummary }) {

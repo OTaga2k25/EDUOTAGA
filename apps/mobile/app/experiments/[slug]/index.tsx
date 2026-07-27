@@ -1,14 +1,10 @@
-import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
-import { Link, useLocalSearchParams } from 'expo-router';
+import { ActivityIndicator, Text, View } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
+import { WebView } from 'react-native-webview';
 import { DIFFICULTY_LABELS } from '@eduotaga/constants';
 import { formatDuration } from '@eduotaga/utils';
 import { Badge } from '@/components/badge';
-import { RichText } from '@/components/rich-text';
-import { ProcedureList } from '@/components/procedure-list';
-import { VideoList } from '@/components/video-list';
-import { QuizView } from '@/components/quiz-view';
 import { EmptyState } from '@/components/empty-state';
-import { SegmentedTabs } from '@/components/segmented-tabs';
 import { useExperiment } from '@/hooks/use-experiments';
 import { useThemeColors } from '@/hooks/use-theme-colors';
 
@@ -17,6 +13,19 @@ const DIFFICULTY_TONE = {
   intermediate: 'warning',
   advanced: 'danger',
 } as const;
+
+/**
+ * simulationUrl comes back from the API as a root-relative path
+ * (e.g. "/experiments/physics/bendinglight/index.html") — correct for a
+ * same-origin <iframe> on the website, but a bare WebView has no origin
+ * to resolve it against and falls back to file://, which is blocked.
+ * Resolve it against the same host the app already fetches the API from.
+ */
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:3000';
+
+function resolveSimulationUrl(url: string): string {
+  return /^https?:\/\//.test(url) ? url : `${API_BASE_URL}${url}`;
+}
 
 export default function ExperimentScreen() {
   const theme = useThemeColors();
@@ -32,77 +41,45 @@ export default function ExperimentScreen() {
   }
 
   return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: theme.colors.background }}
-      contentContainerStyle={{ padding: theme.spacing.md, paddingBottom: theme.spacing['2xl'] }}
-    >
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
-        <Badge label={experiment.subject.name} tone="primary" />
-        <Badge label={DIFFICULTY_LABELS[experiment.difficulty]} tone={DIFFICULTY_TONE[experiment.difficulty]} />
-        {experiment.estimatedDurationMinutes && (
-          <Badge label={formatDuration(experiment.estimatedDurationMinutes)} />
-        )}
-      </View>
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <View style={{ padding: theme.spacing.md, paddingBottom: theme.spacing.sm }}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
+          <Badge label={experiment.subject.name} tone="primary" />
+          <Badge label={DIFFICULTY_LABELS[experiment.difficulty]} tone={DIFFICULTY_TONE[experiment.difficulty]} />
+          {experiment.estimatedDurationMinutes && (
+            <Badge label={formatDuration(experiment.estimatedDurationMinutes)} />
+          )}
+        </View>
 
-      <Text
-        style={{
-          color: theme.colors.foreground,
-          fontSize: theme.typography.sizes['2xl'],
-          fontWeight: '700',
-          marginTop: theme.spacing.sm,
-        }}
-      >
-        {experiment.title}
-      </Text>
-      <Text style={{ color: theme.colors.muted, marginTop: 4 }}>{experiment.summary}</Text>
-
-      <Link
-        href={{ pathname: '/experiments/[slug]/simulation', params: { slug: experiment.slug } }}
-        asChild
-      >
         <Text
           style={{
-            marginTop: theme.spacing.md,
-            backgroundColor: experiment.simulationAvailable ? theme.colors.primary : theme.colors.border,
-            color: experiment.simulationAvailable ? theme.colors.primaryForeground : theme.colors.muted,
-            textAlign: 'center',
-            paddingVertical: theme.spacing.sm,
-            borderRadius: theme.radii.full,
+            color: theme.colors.foreground,
+            fontSize: theme.typography.sizes.xl,
             fontWeight: '700',
-            overflow: 'hidden',
+            marginTop: theme.spacing.sm,
           }}
         >
-          {experiment.simulationAvailable ? 'Open simulation' : 'Simulation coming soon'}
+          {experiment.title}
         </Text>
-      </Link>
-
-      <View style={{ marginTop: theme.spacing.lg }}>
-        <SegmentedTabs
-          tabs={[
-            { id: 'theory', label: 'Theory', content: <RichText content={experiment.theory} /> },
-            { id: 'procedure', label: 'Procedure', content: <ProcedureList steps={experiment.procedure} /> },
-            { id: 'observation', label: 'Observation', content: <RichText content={experiment.observation} /> },
-            { id: 'videos', label: 'Videos', content: <VideoList videos={experiment.videos} /> },
-            {
-              id: 'downloads',
-              label: 'Downloads',
-              content:
-                experiment.downloads.length === 0 ? (
-                  <EmptyState title="No downloads yet" />
-                ) : (
-                  <View style={{ gap: theme.spacing.xs }}>
-                    {experiment.downloads.map((download) => (
-                      <Text key={download.id} style={{ color: theme.colors.foreground }}>
-                        {download.label}
-                      </Text>
-                    ))}
-                  </View>
-                ),
-            },
-            { id: 'quiz', label: 'Quiz', content: <QuizView questions={experiment.quiz} /> },
-          ]}
-        />
+        <Text style={{ color: theme.colors.muted, marginTop: 4 }}>{experiment.summary}</Text>
       </View>
-    </ScrollView>
+
+      <View style={{ flex: 1 }}>
+        {experiment.simulationAvailable ? (
+          <WebView
+            source={{ uri: resolveSimulationUrl(experiment.simulationUrl) }}
+            startInLoadingState
+            allowsInlineMediaPlayback
+          />
+        ) : (
+          <View style={{ padding: theme.spacing.md }}>
+            <EmptyState
+              title="Simulation coming soon"
+              description="This experiment's interactive simulation hasn't been added yet."
+            />
+          </View>
+        )}
+      </View>
+    </View>
   );
 }

@@ -4,6 +4,7 @@ import { useState, type ReactNode } from 'react';
 import { Sidebar } from '@/components/layout/sidebar';
 import { Topbar } from '@/components/layout/topbar';
 import { Footer } from '@/components/layout/footer';
+import { TutorWidget } from '@/components/tutor/tutor-widget';
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -17,6 +18,8 @@ export function AppShell({ children }: { children: ReactNode }) {
         <main className="flex-1">{children}</main>
         <Footer />
       </div>
+
+      <TutorWidget />
     </div>
   );
 }

@@ -61,5 +61,14 @@
     "categoryId": "mathematics",
     "icon": "line-chart",
     "color": "violet"
+  },
+  {
+    "id": "marine-engineering",
+    "slug": "marine-engineering",
+    "name": "Marine Engineering",
+    "description": "Explore the physics of locks, buoyancy, and marine fluid systems.",
+    "categoryId": "marine",
+    "icon": "anchor",
+    "color": "cyan"
   }
 ]

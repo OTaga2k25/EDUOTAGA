@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Reverse String — Two-Pointer Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header id="masthead">
+  <div class="crest">&#8646;</div>
+  <div class="mast-title">
+    <div class="kick">Algorithm Engineering</div>
+    <h1>Reverse String &mdash; Two-Pointer Engine</h1>
+  </div>
+  <div class="crest">{ }</div>
+</header>
+
+<div id="viewport">
+  <canvas id="scene"></canvas>
+  <span class="cross tl">+</span><span class="cross tr">+</span>
+  <span class="cross bl">+</span><span class="cross br">+</span>
+  <div id="hudCard">
+    <label>Pointer L &rarr; index</label>
+    <b id="hudL">0</b>
+    <div class="bar"><i id="hudBar"></i></div>
+    <label>Swaps done</label>
+    <b id="hudSwaps" class="sm">0</b>
+  </div>
+  <div id="valve"><span class="dot"></span>s[l] &harr; s[r] &mdash; in-place swap</div>
+  <div id="caption">Two-Pointer Swap System</div>
+  <div id="hint">drag to rotate &middot; pinch to zoom &middot; 2-finger drag to pan</div>
+  <div class="flabel l" id="flabL" style="opacity:0">L</div>
+  <div class="flabel r" id="flabR" style="opacity:0">R</div>
+</div>
+
+<main id="panel">
+  <h2>Two-Pointer Swap</h2>
+  <p class="lede">"hello world" &rarr; mirrored string &middot; two markers trade places until they meet &mdash; Algorithm Engineering</p>
+
+  <div class="introcard"> Picture "hello world" as 11 kids standing in a row, each holding one letter. The kid at the far left and the kid at the far right swap places. Then the next pair in swaps too. They keep meeting closer to the middle until every pair has traded &mdash; no second row of kids is ever needed, just swaps within the same line.</div>
+
+  <div class="kicker">The Word, Live</div>
+  <div id="stripwrap"></div>
+
+  <div id="controls">
+    <button id="btnPlay" class="tab active">Pause</button>
+    <button id="btnSpeed" class="tab">Speed 1&times;</button>
+    <button id="btnLabels" class="tab">Labels &#10003;</button>
+    <button id="btnReset" class="tab">Restart</button>
+  </div>
+
+  <div class="kicker">Step by Step</div>
+  <div id="stepline">
+    <div id="stepnum">Step 1 / 9</div>
+    <div id="progress"><i id="pbar"></i></div>
+  </div>
+  <h3 id="steplabel"></h3>
+  <p id="stepdesc"></p>
+  <div id="fact"></div>
+
+  <div class="kicker">The Code Behind It</div>
+  <div id="codepanel">
+    <div class="ed-head">
+      <span class="ed-dot r"></span><span class="ed-dot y"></span><span class="ed-dot g"></span>
+      <span class="ed-file">reverse_string.py</span>
+    </div>
+    <pre id="codeLines"></pre>
+    <div id="plainLine"><b>In plain English:</b> <span id="plainText"></span></div>
+  </div>
+
+  <footer>Virtual algorithms lab &middot; three.js &middot; zero extra arrays allocated</footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/reverse-string.js"></script>
+</body>
+</html>

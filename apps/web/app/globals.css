@@ -44,7 +44,7 @@
   --color-danger: #f87171;
 }
 
-@theme inline {
+@theme {
   --color-background: var(--color-background);
   --color-surface: var(--color-surface);
   --color-foreground: var(--color-foreground);

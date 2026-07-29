@@ -12,8 +12,8 @@
 <header id="masthead">
   <div class="crest">&#8646;</div>
   <div class="mast-title">
-    <div class="kick">Algorithm Engineering</div>
-    <h1>Reverse String &mdash; Two-Pointer Engine</h1>
+    <div class="kick">Virtual Algorithm Lab</div>
+    <h1>Reverse String &mdash; Two-Pointer Trick</h1>
   </div>
   <div class="crest">{ }</div>
 </header>
@@ -38,18 +38,25 @@
 
 <main id="panel">
   <h2>Two-Pointer Swap</h2>
-  <p class="lede">"hello world" &rarr; mirrored string &middot; two markers trade places until they meet &mdash; Algorithm Engineering</p>
+  <p class="lede" id="subtitleText">"hello world" &rarr; "dlrow olleh" &middot; two markers trade places until they meet</p>
 
-  <div class="introcard"> Picture "hello world" as 11 kids standing in a row, each holding one letter. The kid at the far left and the kid at the far right swap places. Then the next pair in swaps too. They keep meeting closer to the middle until every pair has traded &mdash; no second row of kids is ever needed, just swaps within the same line.</div>
+
 
   <div class="kicker">The Word, Live</div>
   <div id="stripwrap"></div>
 
-  <div id="controls">
-    <button id="btnPlay" class="tab active">Pause</button>
+  <div id="controls" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+    <button id="btnStep" class="tab active" style="background: #3f9fc4; color: #052330; font-weight: bold;">Step Forward ➔</button>
+    <button id="btnPlay" class="tab">Play Auto</button>
     <button id="btnSpeed" class="tab">Speed 1&times;</button>
-    <button id="btnLabels" class="tab">Labels &#10003;</button>
+    <button id="btnLabels" class="tab active">Labels &#10003;</button>
     <button id="btnReset" class="tab">Restart</button>
+    <div style="flex-basis: 100%; height: 1px; background: rgba(255,255,255,0.1); margin: 4px 0;"></div>
+    <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
+      <span style="font-size: 13px; color: #8f9aa0; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; white-space: nowrap;">Custom Word:</span>
+      <input type="text" id="customWordInput" placeholder="e.g. RACECA..." maxlength="11" style="padding: 6px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; border: 1px solid #8f9aa0; border-radius: 4px; background: #052330; color: #fff; flex-grow: 1; text-transform: uppercase; min-width: 0;">
+      <button id="btnLoadCustom" class="tab active" style="background: #e0a23c; color: #3a2600; font-weight: bold; padding: 5px 12px; margin: 0; white-space: nowrap;">Load Word</button>
+    </div>
   </div>
 
   <div class="kicker">Step by Step</div>
@@ -65,10 +72,53 @@
   <div id="codepanel">
     <div class="ed-head">
       <span class="ed-dot r"></span><span class="ed-dot y"></span><span class="ed-dot g"></span>
-      <span class="ed-file">reverse_string.py</span>
+      <span class="ed-file">reverse_array.py</span>
     </div>
     <pre id="codeLines"></pre>
     <div id="plainLine"><b>In plain English:</b> <span id="plainText"></span></div>
+  </div>
+
+  <div class="kicker">Theory & Fundamentals</div>
+  <div class="introcard">
+    <p style="margin-top: 0;"><strong>The Two-Pointer Technique</strong></p>
+    <p>Reversing an array or string in-place is a fundamental concept frequently tested in exams. By using a Left and Right pointer and swapping elements directly, we achieve <strong>O(1) auxiliary space</strong> (no extra memory) and <strong>O(N) time complexity</strong> (linear time).</p>
+  </div>
+
+
+  <div class="kicker">Knowledge Check</div>
+  
+  <div class="introcard" style="background: rgba(63, 159, 196, 0.1); border-left: 4px solid #3f9fc4; margin-bottom: 15px;">
+    <p style="margin-top: 0; font-weight: bold; margin-bottom: 5px;">Q1: Tracing the Algorithm</p>
+    <p style="margin-top: 0;">If the starting word is <code>"EXAMS"</code>, what will the string look like after <strong>exactly 1 swap</strong>?</p>
+    <div style="display: flex; gap: 10px; margin-top: 10px;">
+      <input type="text" id="quizInput1" placeholder="Type answer..." style="padding: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; border: 1px solid #8f9aa0; border-radius: 4px; background: #052330; color: #fff; width: 140px; text-transform: uppercase;">
+      <button id="btnQuiz1" class="tab active" style="margin: 0; padding: 6px 12px;">Check</button>
+    </div>
+    <p id="quizFeedback1" style="margin-top: 10px; margin-bottom: 0; font-weight: 600; min-height: 20px; font-size: 13px;"></p>
+  </div>
+
+  <div class="introcard" style="background: rgba(63, 159, 196, 0.1); border-left: 4px solid #3f9fc4; margin-bottom: 15px;">
+    <p style="margin-top: 0; font-weight: bold; margin-bottom: 5px;">Q2: Loop Condition</p>
+    <p style="margin-top: 0;">Why does the while loop use the condition <code>l &lt; r</code> instead of <code>l &lt;= r</code>?</p>
+    <select id="quizSelect2" style="padding: 6px; font-size: 14px; border-radius: 4px; background: #052330; color: #fff; width: 100%; border: 1px solid #8f9aa0; margin-top: 5px; cursor: pointer;">
+      <option value="">Select an answer...</option>
+      <option value="A">To save memory space</option>
+      <option value="B">Because if l == r, swapping an element with itself wastes an operation</option>
+      <option value="C">Because the array is 0-indexed</option>
+    </select>
+    <p id="quizFeedback2" style="margin-top: 10px; margin-bottom: 0; font-weight: 600; min-height: 20px; font-size: 13px;"></p>
+  </div>
+
+  <div class="introcard" style="background: rgba(63, 159, 196, 0.1); border-left: 4px solid #3f9fc4; margin-bottom: 15px;">
+    <p style="margin-top: 0; font-weight: bold; margin-bottom: 5px;">Q3: Space Complexity</p>
+    <p style="margin-top: 0;">What is the auxiliary space complexity of reversing a string in-place using two pointers?</p>
+    <select id="quizSelect3" style="padding: 6px; font-size: 14px; border-radius: 4px; background: #052330; color: #fff; width: 100%; border: 1px solid #8f9aa0; margin-top: 5px; cursor: pointer;">
+      <option value="">Select an answer...</option>
+      <option value="A">O(1)</option>
+      <option value="B">O(N)</option>
+      <option value="C">O(log N)</option>
+    </select>
+    <p id="quizFeedback3" style="margin-top: 10px; margin-bottom: 0; font-weight: 600; min-height: 20px; font-size: 13px;"></p>
   </div>
 
   <footer>Virtual algorithms lab &middot; three.js &middot; zero extra arrays allocated</footer>

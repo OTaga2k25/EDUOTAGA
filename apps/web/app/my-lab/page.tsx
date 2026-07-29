@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import { getExperiments } from '@/lib/data';
+import { getExperiments, getSubjects } from '@/lib/data';
 import { MyLabClient } from './my-lab-client';
+import type { ExperimentSummary } from '@eduotaga/types';
 
 export const metadata: Metadata = {
   title: 'My Lab | edUOtaga',
@@ -9,6 +10,20 @@ export const metadata: Metadata = {
 
 export default async function MyLabPage() {
   const allExperiments = await getExperiments();
+  const subjects = await getSubjects();
+
+  const summaries: ExperimentSummary[] = allExperiments.map((exp) => ({
+    id: exp.id,
+    slug: exp.slug,
+    title: exp.title,
+    subjectId: exp.subjectId,
+    subjectName: subjects.find((s) => s.id === exp.subjectId)?.name || 'Unknown',
+    categoryId: exp.categoryId,
+    difficulty: exp.difficulty,
+    summary: exp.summary,
+    thumbnailUrl: exp.thumbnailPath,
+    tags: exp.tags,
+  }));
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
@@ -20,8 +35,8 @@ export default async function MyLabPage() {
           Your personal collection of saved experiments.
         </p>
       </div>
-      
-      <MyLabClient allExperiments={allExperiments} />
+
+      <MyLabClient allExperiments={summaries} />
     </div>
   );
 }

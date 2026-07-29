@@ -3,7 +3,6 @@ import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import {
   CATEGORY_LIST,
-  MOCK_CONTINUE_LEARNING,
   MOCK_DASHBOARD_STATS,
 } from '@eduotaga/constants';
 import { SectionHeading } from '@/components/section-heading';
@@ -12,15 +11,16 @@ import { ExperimentListItem } from '@/components/experiment-list-item';
 import { DotGridBackground } from '@/components/dot-grid-background';
 import { useExperiments } from '@/hooks/use-experiments';
 import { useThemeColors } from '@/hooks/use-theme-colors';
+import { useLastOpenedSlug } from '@/hooks/use-last-opened';
 
 export default function HomeScreen() {
   const theme = useThemeColors();
   const isDark = useColorScheme() === 'dark';
   const { data: experiments, isPending } = useExperiments();
+  const lastOpenedSlug = useLastOpenedSlug();
 
   const continueExperiment =
-    experiments?.find((experiment) => experiment.slug === MOCK_CONTINUE_LEARNING.experimentSlug) ??
-    experiments?.[0];
+    experiments?.find((experiment) => experiment.slug === lastOpenedSlug) ?? experiments?.[0];
   const popular = experiments?.slice(0, 4) ?? [];
 
   return (
@@ -61,12 +61,7 @@ export default function HomeScreen() {
         {isPending ? (
           <ActivityIndicator color={theme.colors.primary} />
         ) : (
-          continueExperiment && (
-            <ContinueLearningCard
-              experiment={continueExperiment}
-              progressPercent={MOCK_CONTINUE_LEARNING.progressPercent}
-            />
-          )
+          continueExperiment && <ContinueLearningCard experiment={continueExperiment} />
         )}
       </View>
 

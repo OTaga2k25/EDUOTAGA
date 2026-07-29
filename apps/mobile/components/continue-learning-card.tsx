@@ -6,10 +6,8 @@ import { useThemeColors } from '@/hooks/use-theme-colors';
 
 export function ContinueLearningCard({
   experiment,
-  progressPercent,
 }: {
   experiment: ExperimentSummary;
-  progressPercent: number;
 }) {
   const theme = useThemeColors();
 
@@ -26,14 +24,7 @@ export function ContinueLearningCard({
           {/* Content */}
           <View style={{ flex: 1, justifyContent: 'center' }}>
             <Text style={{ fontSize: 16, fontWeight: '900', color: theme.colors.foreground, marginBottom: 2 }}>{experiment.title}</Text>
-            <Text style={{ fontSize: 12, fontWeight: '700', color: theme.colors.muted, marginBottom: 8 }}>{experiment.subjectName}</Text>
-            
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-               <View style={{ flex: 1, height: 8, backgroundColor: theme.colors.surface, borderRadius: 4, borderWidth: 1, borderColor: theme.colors.foreground, overflow: 'hidden' }}>
-                 <View style={{ width: `${progressPercent}%`, height: '100%', backgroundColor: theme.colors.primary, borderRightWidth: 1, borderColor: theme.colors.foreground }} />
-               </View>
-               <Text style={{ fontSize: 12, fontWeight: '800', color: theme.colors.foreground, width: 32 }}>{progressPercent}%</Text>
-            </View>
+            <Text style={{ fontSize: 12, fontWeight: '700', color: theme.colors.muted }}>{experiment.subjectName}</Text>
           </View>
           
           {/* Arrow Button */}

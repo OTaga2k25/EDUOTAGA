@@ -12,6 +12,7 @@ const CATEGORY_ICONS = {
   electronics: 'hardware-chip',
   mechanical: 'settings',
   mathematics: 'calculator',
+  marine: 'boat',
 } as const;
 
 const CATEGORY_COLORS = {
@@ -21,6 +22,7 @@ const CATEGORY_COLORS = {
   electronics: '#86efac',
   mechanical: '#fde047',
   mathematics: '#93c5fd',
+  marine: '#67e8f9',
 } as const;
 
 export function ExperimentListItem({ experiment }: { experiment: ExperimentSummary }) {

@@ -9,6 +9,7 @@ const CATEGORY_ICONS = {
   electronics: Cpu,
   mechanical: Settings,
   mathematics: Sigma,
+  marine: Leaf, // using Leaf temporarily or Ship if available
 } as const;
 
 const CATEGORY_BG = {
@@ -18,6 +19,7 @@ const CATEGORY_BG = {
   electronics: '!bg-neo-green dark:!bg-neo-green',
   mechanical: '!bg-neo-yellow dark:!bg-neo-yellow',
   mathematics: '!bg-neo-blue dark:!bg-neo-blue',
+  marine: '!bg-neo-cyan dark:!bg-neo-cyan',
 } as const;
 
 export function CategoryCard({

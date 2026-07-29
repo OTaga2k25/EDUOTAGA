@@ -7,6 +7,7 @@ import { Badge } from '@/components/badge';
 import { EmptyState } from '@/components/empty-state';
 import { useExperiment } from '@/hooks/use-experiments';
 import { useThemeColors } from '@/hooks/use-theme-colors';
+import { useTrackLastOpened } from '@/hooks/use-last-opened';
 
 const DIFFICULTY_TONE = {
   beginner: 'success',
@@ -31,6 +32,8 @@ export default function ExperimentScreen() {
   const theme = useThemeColors();
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const { data: experiment, isPending } = useExperiment(slug);
+
+  useTrackLastOpened(experiment?.slug);
 
   if (isPending || !experiment) {
     return (

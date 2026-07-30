@@ -142,5 +142,279 @@
     "estimatedDurationMinutes": 20,
     "createdAt": "2026-07-17T00:00:00.000Z",
     "updatedAt": "2026-07-17T00:00:00.000Z"
+  },
+  {
+    "id": "reversearray",
+    "slug": "reversearray",
+    "title": "Reverse an Array: In-Place Swap",
+    "subjectId": "two-pointer",
+    "categoryId": "computer",
+    "difficulty": "beginner",
+    "summary": "Master the Two-Pointer technique to reverse an array in-place with O(1) auxiliary space.",
+    "theory": "Reversing an array or string in-place is a fundamental computer science concept. By using a Left and Right pointer and swapping elements directly, we achieve **O(1) auxiliary space** (no extra memory allocated) and **O(N) time complexity** (linear time).",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Initialize Pointers",
+        "description": "Drop two markers on the track: L at the first block, R at the last block."
+      },
+      {
+        "order": 2,
+        "title": "Swap in Place",
+        "description": "Swap the block at L with the block at R without allocating a new array."
+      },
+      {
+        "order": 3,
+        "title": "Move Markers Inward",
+        "description": "Slide marker L one step right and marker R one step left, until they meet or cross."
+      }
+    ],
+    "observation": "For an 11-letter word, only 5 swaps are needed! Using two pointers is extremely memory efficient compared to creating a duplicate string.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What is the auxiliary space complexity of reversing a string in-place using two pointers?",
+        "options": [
+          { "id": "a", "text": "O(1)" },
+          { "id": "b", "text": "O(N)" },
+          { "id": "c", "text": "O(log N)" },
+          { "id": "d", "text": "O(N^2)" }
+        ],
+        "correctOptionId": "a",
+        "explanation": "We only need memory for two variables (L and R) regardless of the string's length, meaning it requires O(1) constant auxiliary space."
+      }
+    ],
+    "tags": ["algorithms", "two-pointer", "arrays", "strings", "in-place", "computer science"],
+    "estimatedDurationMinutes": 15,
+    "createdAt": "2026-07-29T00:00:00.000Z",
+    "updatedAt": "2026-07-29T00:00:00.000Z"
+  },
+  {
+    "id": "reversestring",
+    "slug": "reversestring",
+    "title": "Reverse a String: Out-of-Place",
+    "subjectId": "two-pointer",
+    "categoryId": "computer",
+    "difficulty": "beginner",
+    "summary": "Understand why reversing immutable strings requires O(N) extra memory space.",
+    "theory": "In many programming languages, strings are **immutable**, meaning their characters cannot be modified in-place. To reverse a string without converting it to an array, we must create a completely new string in memory and build it character by character from the end of the original string. This approach results in **O(N) auxiliary space** because we allocate new memory proportional to the string's length.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Allocate New String",
+        "description": "Observe how a brand new empty string must be created in memory."
+      },
+      {
+        "order": 2,
+        "title": "Iterate Backwards",
+        "description": "Watch a pointer start at the end of the original string and move backwards."
+      },
+      {
+        "order": 3,
+        "title": "Concatenate",
+        "description": "See each character get appended to the new string, allocating more memory space each time."
+      }
+    ],
+    "observation": "Reversing an 11-letter string this way allocates 11 new character slots in memory. Compare this to the Array version, which required 0 extra slots!",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Why does reversing an immutable string require O(N) auxiliary space?",
+        "options": [
+          { "id": "a", "text": "Because it takes N operations to reverse." },
+          { "id": "b", "text": "Because you must create a new string of length N in memory." },
+          { "id": "c", "text": "Because strings take up more memory than arrays." },
+          { "id": "d", "text": "It doesn't, it takes O(1) space." }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Since the original string cannot be modified, a new string of size N must be built, consuming O(N) extra memory."
+      }
+    ],
+    "tags": ["algorithms", "strings", "out-of-place", "immutability", "space-complexity", "computer science"],
+    "estimatedDurationMinutes": 10,
+    "createdAt": "2026-07-29T00:00:00.000Z",
+    "updatedAt": "2026-07-29T00:00:00.000Z"
+  },
+  {
+    "id": "palindromechecker",
+    "slug": "palindromechecker",
+    "title": "Palindrome Checker: Two-Pointer Convergence",
+    "subjectId": "two-pointer",
+    "categoryId": "computer",
+    "difficulty": "beginner",
+    "summary": "Use two converging pointers to verify if a string is a palindrome in O(N) time and O(1) space.",
+    "theory": "A palindrome is a word that reads the same forwards and backwards (e.g., 'racecar'). The most efficient way to check for a palindrome is using the Two-Pointer technique. We place a pointer at the start (L) and end (R) of the string. We compare the characters at these pointers. If they match, we move the pointers inward. If they don't match, it is not a palindrome. We repeat this until the pointers meet in the middle.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Initialize Pointers",
+        "description": "Place L at the first character and R at the last character."
+      },
+      {
+        "order": 2,
+        "title": "Compare Characters",
+        "description": "Check if the character at L is identical to the character at R."
+      },
+      {
+        "order": 3,
+        "title": "Converge",
+        "description": "If they match, move L right by 1 and R left by 1. Stop if they don't match."
+      }
+    ],
+    "observation": "Notice how the pointers act as a mirror, checking symmetry from the outside in.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "What happens the moment the characters at L and R do NOT match?",
+        "options": [
+          { "id": "a", "text": "The loop continues until they meet." },
+          { "id": "b", "text": "The function immediately returns False (it is not a palindrome)." },
+          { "id": "c", "text": "L and R are swapped." },
+          { "id": "d", "text": "The pointers jump back to the start." }
+        ],
+        "correctOptionId": "b",
+        "explanation": "A single mismatch proves the word is not perfectly symmetrical, so we can stop checking immediately."
+      }
+    ],
+    "tags": ["algorithms", "two-pointer", "palindromes", "strings", "computer science"],
+    "estimatedDurationMinutes": 10,
+    "createdAt": "2026-07-29T00:00:00.000Z",
+    "updatedAt": "2026-07-29T00:00:00.000Z"
+  },
+  {
+    "id": "whatisanalgorithm",
+    "slug": "whatisanalgorithm",
+    "title": "What is an Algorithm?",
+    "subjectId": "algorithm-fundamentals",
+    "categoryId": "computer",
+    "difficulty": "beginner",
+    "summary": "Discover what an algorithm is by commanding a warehouse robot through a sequence of instructions to deliver a package.",
+    "theory": "An algorithm is a finite, ordered sequence of well-defined instructions used to solve a specific problem. Every algorithm must have: Input (the problem data), Output (the desired result), Definiteness (every step is precisely defined), Finiteness (it terminates after finite steps), and Effectiveness (every step can be carried out). In this experiment, a robot follows instructions to pick up and deliver a package in a warehouse — demonstrating sequential execution, correctness, and why instruction order matters.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Observe the Algorithm",
+        "description": "Read the instruction queue and predict whether the robot will successfully deliver the package."
+      },
+      {
+        "order": 2,
+        "title": "Execute Step by Step",
+        "description": "Use the Step Forward button to execute one instruction at a time. Watch the robot move, turn, pick up, and drop the package."
+      },
+      {
+        "order": 3,
+        "title": "Try the Wrong Algorithm",
+        "description": "Load the 'Wrong Instructions' algorithm and observe what happens when the instruction order is incorrect."
+      },
+      {
+        "order": 4,
+        "title": "Build Your Own",
+        "description": "Use the Interactive Playground to arrange your own instruction blocks and test if your algorithm delivers the package."
+      }
+    ],
+    "observation": "The correct algorithm delivers the package in 6 steps with 3 moves, 1 turn, 1 pick, and 1 drop. The wrong algorithm causes a wall collision because the robot turns too early. This demonstrates that algorithms must have correct instruction order to produce the desired output.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Which of the following is NOT a required property of an algorithm?",
+        "options": [
+          { "id": "a", "text": "Finiteness" },
+          { "id": "b", "text": "Randomness" },
+          { "id": "c", "text": "Definiteness" },
+          { "id": "d", "text": "Effectiveness" }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Randomness is not a required property. Algorithms must be finite, definite, and effective."
+      },
+      {
+        "id": "q2",
+        "question": "Why did the incorrect algorithm fail?",
+        "options": [
+          { "id": "a", "text": "The robot was too slow" },
+          { "id": "b", "text": "The instructions were in the wrong order" },
+          { "id": "c", "text": "The package was too heavy" },
+          { "id": "d", "text": "The warehouse was too small" }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The wrong instruction order caused the robot to collide with a wall before reaching the package."
+      }
+    ],
+    "tags": ["algorithms", "fundamentals", "introduction", "sequential execution", "computer science"],
+    "estimatedDurationMinutes": 20,
+    "createdAt": "2026-07-30T00:00:00.000Z",
+    "updatedAt": "2026-07-30T00:00:00.000Z"
+  },
+  {
+    "id": "algorithmexecution",
+    "title": "Algorithm Execution Flow",
+    "categoryId": "data-structures-algorithms",
+    "subjectId": "algorithm-fundamentals",
+    "description": "Observe how a computer executes an algorithm internally through the Fetch, Decode, and Execute cycle.",
+    "summary": "Watch a 3D CPU simulation execute a simple algorithm, visualizing the Program Counter, Memory, Registers, and Execution stages.",
+    "theory": "When a computer runs an algorithm, it doesn't understand the whole program at once. It executes one instruction at a time using the Fetch-Decode-Execute cycle. 1. Fetch: The CPU reads the next instruction from Memory based on the Program Counter (PC) address. 2. Decode: The Control Unit interprets the instruction. 3. Execute: The Arithmetic Logic Unit (ALU) or CPU performs the operation. 4. Update PC: The PC increments to point to the next instruction.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Start Execution",
+        "description": "Press Play to watch the CPU automatically fetch, decode, and execute the algorithm."
+      },
+      {
+        "order": 2,
+        "title": "Step-by-Step",
+        "description": "Use the Step button to manually advance the execution and observe the changes in the Program Counter and Registers."
+      },
+      {
+        "order": 3,
+        "title": "Advanced Mode",
+        "description": "Toggle Advanced Mode to view the internal registers (PC, IR, A, B) and detailed execution stages."
+      }
+    ],
+    "observation": "During execution, the Program Counter dictates which instruction is fetched. The Instruction Register holds the active instruction. Data moves from Memory to Registers, is processed, and then stored back or outputted. The cycle repeats until the END instruction.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Which register stores the address of the next instruction?",
+        "options": [
+          { "id": "a", "text": "RAM" },
+          { "id": "b", "text": "Program Counter" },
+          { "id": "c", "text": "Cache" },
+          { "id": "d", "text": "ALU" }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The Program Counter (PC) holds the memory address of the next instruction to be fetched."
+      },
+      {
+        "id": "q2",
+        "question": "Which stage reads an instruction from memory?",
+        "options": [
+          { "id": "a", "text": "Fetch" },
+          { "id": "b", "text": "Decode" },
+          { "id": "c", "text": "Execute" },
+          { "id": "d", "text": "Store" }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The Fetch stage retrieves the instruction from Memory into the Instruction Register."
+      }
+    ],
+    "tags": ["algorithms", "execution flow", "cpu cycle", "fetch decode execute", "computer science"],
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-07-30T01:00:00.000Z",
+    "updatedAt": "2026-07-30T01:00:00.000Z"
   }
 ]
+

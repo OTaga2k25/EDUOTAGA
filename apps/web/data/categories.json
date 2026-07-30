@@ -47,5 +47,12 @@
     "description": "Marine systems, fluid mechanics, and buoyancy.",
     "icon": "anchor",
     "color": "cyan"
+  },
+  {
+    "id": "computer",
+    "name": "Data Structures & Algorithms",
+    "description": "Algorithms, data structures, and computing concepts.",
+    "icon": "terminal",
+    "color": "sky"
   }
 ]

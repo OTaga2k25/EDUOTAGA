@@ -54,6 +54,13 @@ export const CATEGORIES: Record<CategoryId, Category> = {
     icon: 'anchor',
     color: 'cyan',
   },
+  computer: {
+    id: 'computer',
+    name: 'Data Structures & Algorithms',
+    description: 'Algorithms, data structures, and computing concepts.',
+    icon: 'terminal',
+    color: 'sky',
+  },
 };
 
 export const CATEGORY_IDS = Object.keys(CATEGORIES) as CategoryId[];

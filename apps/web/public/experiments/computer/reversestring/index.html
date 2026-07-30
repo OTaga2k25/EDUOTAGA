@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Reverse String — Two-Pointer Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header id="masthead">
+  <div class="crest">&#8646;</div>
+  <div class="mast-title">
+    <div class="kick">Virtual Algorithm Lab</div>
+    <h1>Reverse a String: Out-of-Place</h1>
+  </div>
+  <div class="crest">{ }</div>
+</header>
+
+<div id="viewport">
+  <canvas id="scene"></canvas>
+  <span class="cross tl">+</span><span class="cross tr">+</span>
+  <span class="cross bl">+</span><span class="cross br">+</span>
+  <div id="hudCard">
+    <label>Pointer L &rarr; index</label>
+    <b id="hudL">0</b>
+    <div class="bar"><i id="hudBar"></i></div>
+    <label>Swaps done</label>
+    <b id="hudSwaps" class="sm">0</b>
+  </div>
+  <div id="valve"><span class="dot"></span>new_s += s[i] &mdash; O(N) memory alloc</div>
+  <div id="caption">Out-of-Place Allocation System</div>
+  <div id="hint">drag to rotate &middot; pinch to zoom &middot; 2-finger drag to pan</div>
+  <div class="flabel l" id="flabL" style="opacity:0">L</div>
+  <div class="flabel r" id="flabR" style="opacity:0">R</div>
+</div>
+
+<main id="panel">
+  <h2>Out-of-Place Reversal</h2>
+  <p class="lede" id="subtitleText">"hello" &rarr; "olleh" &middot; iterate backwards to build a new string</p>
+
+
+
+  <div class="kicker">The Word, Live</div>
+  <div id="stripwrap"></div>
+
+  <div id="controls" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+    <button id="btnStep" class="tab active" style="background: #3f9fc4; color: #052330; font-weight: bold;">Step Forward ➔</button>
+    <button id="btnPlay" class="tab">Play Auto</button>
+    <button id="btnSpeed" class="tab">Speed 1&times;</button>
+    <button id="btnLabels" class="tab active">Labels &#10003;</button>
+    <button id="btnReset" class="tab">Restart</button>
+    <div style="flex-basis: 100%; height: 1px; background: rgba(255,255,255,0.1); margin: 4px 0;"></div>
+    <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
+      <span style="font-size: 13px; color: #8f9aa0; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; white-space: nowrap;">Custom Word:</span>
+      <input type="text" id="customWordInput" placeholder="e.g. RACECA..." maxlength="11" style="padding: 6px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; border: 1px solid #8f9aa0; border-radius: 4px; background: #052330; color: #fff; flex-grow: 1; text-transform: uppercase; min-width: 0;">
+      <button id="btnLoadCustom" class="tab active" style="background: #e0a23c; color: #3a2600; font-weight: bold; padding: 5px 12px; margin: 0; white-space: nowrap;">Load Word</button>
+    </div>
+  </div>
+
+  <div class="kicker">Step by Step</div>
+  <div id="stepline">
+    <div id="stepnum">Step 1 / 9</div>
+    <div id="progress"><i id="pbar"></i></div>
+  </div>
+  <h3 id="steplabel"></h3>
+  <p id="stepdesc"></p>
+  <div id="fact"></div>
+
+  <div class="kicker">The Code Behind It</div>
+  <div id="codepanel">
+    <div class="ed-head">
+      <span class="ed-dot r"></span><span class="ed-dot y"></span><span class="ed-dot g"></span>
+      <span class="ed-file">reverse_string.py</span>
+    </div>
+    <pre id="codeLines"></pre>
+    <div id="plainLine"><b>In plain English:</b> <span id="plainText"></span></div>
+  </div>
+
+  <div class="kicker">Theory & Fundamentals</div>
+  <div class="introcard">
+    <p style="margin-top: 0;"><strong>String Immutability & O(N) Space</strong></p>
+    <p>In languages like Python and Java, strings are <strong>immutable</strong> (they cannot be changed in-place). To reverse a string, we must allocate a completely new string in memory and build it character-by-character from the end of the original string. This requires <strong>O(N) auxiliary space</strong>.</p>
+  </div>
+
+
+  <div class="kicker">Knowledge Check</div>
+  
+  <div class="introcard" style="background: rgba(63, 159, 196, 0.1); border-left: 4px solid #3f9fc4; margin-bottom: 15px;">
+    <p style="margin-top: 0; font-weight: bold; margin-bottom: 5px;">Q1: Memory Allocation</p>
+    <p style="margin-top: 0;">If the original string has 10 characters, how many new character slots must be allocated in memory?</p>
+    <div style="display: flex; gap: 10px; margin-top: 10px;">
+      <input type="text" id="quizInput1" placeholder="Type answer..." style="padding: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; border: 1px solid #8f9aa0; border-radius: 4px; background: #052330; color: #fff; width: 140px; text-transform: uppercase;">
+      <button id="btnQuiz1" class="tab active" style="margin: 0; padding: 6px 12px;">Check</button>
+    </div>
+    <p id="quizFeedback1" style="margin-top: 10px; margin-bottom: 0; font-weight: 600; min-height: 20px; font-size: 13px;"></p>
+  </div>
+
+  <div class="introcard" style="background: rgba(63, 159, 196, 0.1); border-left: 4px solid #3f9fc4; margin-bottom: 15px;">
+    <p style="margin-top: 0; font-weight: bold; margin-bottom: 5px;">Q2: Iteration Direction</p>
+    <p style="margin-top: 0;">To build the reversed string sequentially, where does the loop pointer start?</p>
+    <select id="quizSelect2" style="padding: 6px; font-size: 14px; border-radius: 4px; background: #052330; color: #fff; width: 100%; border: 1px solid #8f9aa0; margin-top: 5px; cursor: pointer;">
+      <option value="">Select an answer...</option>
+      <option value="A">At index 0 (the beginning)</option>
+      <option value="B">At index N/2 (the middle)</option>
+      <option value="C">At index N-1 (the end)</option>
+    </select>
+    <p id="quizFeedback2" style="margin-top: 10px; margin-bottom: 0; font-weight: 600; min-height: 20px; font-size: 13px;"></p>
+  </div>
+
+  <div class="introcard" style="background: rgba(63, 159, 196, 0.1); border-left: 4px solid #3f9fc4; margin-bottom: 15px;">
+    <p style="margin-top: 0; font-weight: bold; margin-bottom: 5px;">Q3: Space Complexity</p>
+    <p style="margin-top: 0;">What is the auxiliary space complexity of reversing an immutable string by building a new one?</p>
+    <select id="quizSelect3" style="padding: 6px; font-size: 14px; border-radius: 4px; background: #052330; color: #fff; width: 100%; border: 1px solid #8f9aa0; margin-top: 5px; cursor: pointer;">
+      <option value="">Select an answer...</option>
+      <option value="A">O(1)</option>
+      <option value="B">O(N)</option>
+      <option value="C">O(log N)</option>
+    </select>
+    <p id="quizFeedback3" style="margin-top: 10px; margin-bottom: 0; font-weight: 600; min-height: 20px; font-size: 13px;"></p>
+  </div>
+
+  <footer>Virtual algorithms lab &middot; three.js &middot; O(N) extra memory allocated</footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/reverse-string.js"></script>
+</body>
+</html>

@@ -7,7 +7,8 @@ export type CategoryId =
   | 'electronics'
   | 'mechanical'
   | 'mathematics'
-  | 'marine';
+  | 'marine'
+  | 'computer';
 
 export interface Category {
   id: CategoryId;

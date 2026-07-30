@@ -70,5 +70,23 @@
     "categoryId": "marine",
     "icon": "anchor",
     "color": "cyan"
+  },
+  {
+    "id": "algorithm-fundamentals",
+    "slug": "algorithm-fundamentals",
+    "name": "Algorithm Fundamentals",
+    "description": "Core building blocks of algorithms — searching, sorting, and basic problem-solving strategies.",
+    "categoryId": "computer",
+    "icon": "book-open",
+    "color": "indigo"
+  },
+  {
+    "id": "two-pointer",
+    "slug": "two-pointer",
+    "name": "Two-Pointer Technique",
+    "description": "Master algorithmic patterns using two markers to process arrays and strings efficiently.",
+    "categoryId": "computer",
+    "icon": "code",
+    "color": "sky"
   }
 ]

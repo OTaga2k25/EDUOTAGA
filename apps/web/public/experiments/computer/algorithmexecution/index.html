@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Algorithm Execution Flow — Virtual Algorithm Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header id="masthead">
+  <div class="crest">&#9881;</div>
+  <div class="mast-title">
+    <div class="kick">Virtual Algorithm Lab</div>
+    <h1>Algorithm Execution Flow</h1>
+  </div>
+  <div class="crest">{ }</div>
+</header>
+
+<div id="viewport">
+  <!-- ── Completion Overlay ── -->
+  <div id="completionOverlay" style="position:fixed; inset:0; background:rgba(8,14,20,0.85); z-index:200; display:none; align-items:center; justify-content:center; backdrop-filter:blur(5px); opacity:0; transition:opacity 0.5s;">
+    <div style="background:#052330; border:1px solid #4f9d7a; padding:30px 40px; border-radius:8px; max-width:550px; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
+      <h2 style="color:#fff; margin-bottom:20px; font-family:Georgia,serif; text-align:center; color:#4f9d7a;" id="coTitle">Execution Summary</h2>
+      
+      <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:6px; margin-bottom:15px; display:flex; gap:20px;">
+        <div style="flex:1;">
+          <h4 style="color:#e0a23c; margin-bottom:8px; text-transform:uppercase; font-size:11px; letter-spacing:1px;">Operations</h4>
+          <ul style="color:#d7dee1; font-size:13px; line-height:1.6; margin-left:18px;">
+            <li>Instructions Executed: <span id="coExec">5</span></li>
+            <li>Fetch: <span id="coFetch">5</span></li>
+            <li>Decode: <span id="coDecode">5</span></li>
+            <li>Execute: <span id="coExecute">5</span></li>
+          </ul>
+        </div>
+        <div style="flex:1; border-left:1px solid rgba(255,255,255,0.1); padding-left:20px;">
+          <h4 style="color:#e0a23c; margin-bottom:8px; text-transform:uppercase; font-size:11px; letter-spacing:1px;">Final State</h4>
+          <ul style="color:#d7dee1; font-size:13px; line-height:1.6; margin-left:18px; list-style:none;">
+            <li style="margin-left:-18px;">Program Counter: <span id="coFinalPC">5</span></li>
+            <li style="margin-left:-18px; margin-top:8px;">Registers:</li>
+            <li style="color:#4f9d7a; font-weight:bold;">A = <span id="coFinalA">15</span></li>
+            <li style="color:#4f9d7a; font-weight:bold;">B = <span id="coFinalB">15</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:6px; margin-bottom:25px;">
+        <h4 style="color:#e0a23c; margin-bottom:8px; text-transform:uppercase; font-size:11px; letter-spacing:1px;">Conclusion</h4>
+        <p style="color:#d7dee1; font-size:13px; line-height:1.6; margin:0;">
+          Every instruction passes through <b style="color:#3f9fc4;">Fetch</b> → <b style="color:#e0a23c;">Decode</b> → <b style="color:#4f9d7a;">Execute</b> before the CPU moves to the next instruction.
+        </p>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; gap:10px;">
+        <button id="btnRetryExp" class="tab" style="padding:10px 20px;">Retry Experiment</button>
+        <a href="../flowcharts/index.html" style="text-decoration:none; flex:1;"><button class="tab active" style="width:100%; padding:10px 20px; background:#3f9fc4; border-color:#3f9fc4; color:#052330;">Next: Flowcharts and Pseudocode ➔</button></a>
+      </div>
+    </div>
+  </div>
+  <canvas id="scene"></canvas>
+  <div id="hudCard">
+    <label>Program Counter</label>
+    <b id="hudPC">0</b>
+    <div class="bar"><i id="hudBar"></i></div>
+    <label>Active Stage</label>
+    <b id="hudStage" class="sm">READY</b>
+  </div>
+  <div id="valve"><span class="dot"></span><span id="valveText">PROCESSING</span></div>
+  <div id="caption">CPU Execution Simulator</div>
+  <div id="hint">drag to rotate &middot; pinch to zoom &middot; 2-finger drag to pan</div>
+  <div id="statusBadge" class="status-badge" style="opacity:0">READY</div>
+</div>
+
+<main id="panel">
+  <h2>How Algorithms Run</h2>
+  <p class="lede" id="subtitleText">Discover how the CPU processes instructions internally.</p>
+  <div style="font-size:12.5px; color:#a1adb4; margin-bottom:20px; padding:10px 12px; background:rgba(255,255,255,0.05); border-left:3px solid #8f9aa0; border-radius:4px;">
+    <b>Note:</b> A computer executes algorithms step-by-step through the Fetch → Decode → Execute cycle.
+  </div>
+
+  <!-- ── Instruction Queue ── -->
+  <div class="kicker">Program Memory</div>
+  <div id="memoryQueue"></div>
+
+  <!-- ── Controls ── -->
+  <div id="controls">
+    <button id="btnStep" class="tab active" style="background:#3f9fc4;color:#052330;font-weight:bold;">Step Forward ➔</button>
+    <button id="btnPlay" class="tab">Play Auto</button>
+    <button id="btnSpeed" class="tab">Speed 1&times;</button>
+    <button id="btnReset" class="tab">Restart</button>
+  </div>
+  
+  <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+    <div class="kicker" style="margin-bottom:0;">Live Execution Cycle</div>
+    <div style="display:flex; gap:4px; margin-bottom:0;">
+      <button id="btnModeBeginner" class="tab active" style="padding:4px 8px; margin:0; font-size:11px; letter-spacing:.05em; border-radius:4px;">Beginner</button>
+      <button id="btnModeAdvanced" class="tab" style="padding:4px 8px; margin:0; font-size:11px; letter-spacing:.05em; border-radius:4px;">Advanced</button>
+    </div>
+  </div>
+
+  <div class="cycle-box" id="cycleBox" style="margin-top:10px;">
+    <div class="stage" id="stageFetch">FETCH</div>
+    <div class="arrow">↓</div>
+    <div class="stage" id="stageDecode">DECODE</div>
+    <div class="arrow">↓</div>
+    <div class="stage" id="stageExecute">EXECUTE</div>
+    <div class="arrow">↓</div>
+    <div class="stage" id="stageUpdate">UPDATE PC</div>
+  </div>
+
+  <div class="introcard">
+    <b id="liveStageLabel">READY</b>
+    <p id="liveStageDesc" style="margin-top:8px;">Press Start to begin execution.</p>
+  </div>
+
+  <!-- ── Variables Panel (Advanced) ── -->
+  <div id="advancedArea" style="display:none;">
+    <div class="kicker">Live Registers</div>
+    <div class="vars-grid" id="varsPanel">
+      <div class="var-card" id="boxRegA"><span class="var-label">Reg A</span><span id="valA" class="var-val">0</span></div>
+      <div class="var-card" id="boxRegB"><span class="var-label">Reg B</span><span id="valB" class="var-val">0</span></div>
+      <div class="var-card" id="boxPC"><span class="var-label">PC</span><span id="valPC" class="var-val">0</span></div>
+      <div class="var-card" id="boxIR"><span class="var-label">IR</span><span id="valIR" class="var-val">—</span></div>
+    </div>
+    
+    <div class="kicker">Theory</div>
+    <div class="introcard">
+      <ul style="margin:0 0 0 16px; padding:0; line-height:1.6; font-size:12.5px;">
+        <li><b>Program Counter (PC):</b> Holds the memory address of the next instruction.</li>
+        <li><b>Memory:</b> Where program instructions and data are stored.</li>
+        <li><b>Instruction Register (IR):</b> Holds the current instruction being executed.</li>
+        <li><b>Registers (A, B):</b> Fast internal memory used by the CPU for calculations.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── Conclusion ── -->
+  <div class="kicker">Observation</div>
+  <div class="introcard" style="border-left-color: #4f9d7a;">
+    <p style="margin:0; line-height:1.6; font-size:12.5px;">
+      During execution, the <b>Program Counter</b> dictates which instruction is fetched. The <b>Instruction Register</b> holds the active instruction. Data moves from Memory to Registers, is processed, and then stored back or outputted. The cycle repeats until the END instruction.
+    </p>
+  </div>
+
+  <footer>Virtual Algorithm Lab &middot; Three.js &middot; Algorithm Fundamentals</footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/cpu.js"></script>
+</body>
+</html>

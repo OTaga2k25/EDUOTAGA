@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { ExperimentSummary } from '@eduotaga/types';
 import { CATEGORIES } from '@eduotaga/constants';
-import { Atom, FlaskConical, Leaf, Cpu, Settings, Sigma, Anchor } from 'lucide-react';
+import { Atom, FlaskConical, Leaf, Cpu, Settings, Sigma, Anchor, Terminal } from 'lucide-react';
 
 const CATEGORY_ICONS = {
   physics: Atom,
@@ -11,6 +11,7 @@ const CATEGORY_ICONS = {
   mechanical: Settings,
   mathematics: Sigma,
   marine: Anchor,
+  computer: Terminal,
 } as const;
 
 export function ExperimentCard({ experiment }: { experiment: ExperimentSummary }) {
@@ -24,7 +25,7 @@ export function ExperimentCard({ experiment }: { experiment: ExperimentSummary }
       <div className="neo-card flex h-full flex-col justify-between p-4 min-h-[160px]">
         <div>
           <h3 className="text-sm font-black leading-tight mb-1">{experiment.title}</h3>
-          <p className="text-xs font-semibold opacity-70">{category.name}</p>
+          <p className="text-xs font-semibold opacity-70">{experiment.subjectName}</p>
         </div>
 
          <div className="flex items-end justify-between mt-4">

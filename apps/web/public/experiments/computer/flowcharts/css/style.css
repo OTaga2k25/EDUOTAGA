@@ -247,8 +247,8 @@ footer{margin-top:28px;font-size:10px;letter-spacing:.2em;text-transform:upperca
 
 
 .legend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-.legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #d7dee1; }
-.shape { width: 24px; height: 16px; background: rgba(255,255,255,0.1); border: 1px solid #4f9d7a; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: #fff; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--ink-soft); }
+.shape { width: 24px; height: 16px; background: rgba(0,0,0,0.04); border: 2px solid #4f9d7a; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: var(--ink); }
 .shape-oval { border-radius: 10px; border-color: #445566; }
 .shape-parallelogram { transform: skew(-15deg); border-color: #3f9fc4; }
 .shape-diamond { transform: rotate(45deg); width: 14px; height: 14px; margin: 0 5px; border-color: #e0a23c; }

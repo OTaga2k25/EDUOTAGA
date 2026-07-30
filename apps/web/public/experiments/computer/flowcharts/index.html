@@ -93,21 +93,15 @@
     <button id="btnReset" class="tab">Restart</button>
   </div>
   
-  <div style="display:flex; justify-content:space-between; align-items:flex-end;" class="mt-4">
-    <div class="kicker" style="margin-bottom:0;">Live Execution Analysis</div>
-    <div style="display:flex; gap:4px; margin-bottom:0;">
-      <button id="btnModeBeginner" class="tab active" style="padding:4px 8px; margin:0; font-size:11px; letter-spacing:.05em; border-radius:4px;">Beginner</button>
-      <button id="btnModeAdvanced" class="tab" style="padding:4px 8px; margin:0; font-size:11px; letter-spacing:.05em; border-radius:4px;">Advanced</button>
-    </div>
-  </div>
+  <div class="kicker mt-4">Live Execution Analysis</div>
 
   <div class="introcard mt-2">
     <b id="liveStageLabel">READY</b>
     <p id="liveStageDesc" style="margin-top:8px;">Press Start to evaluate the traffic controller.</p>
   </div>
 
-  <!-- ── Variables Panel (Advanced) ── -->
-  <div id="advancedArea" style="display:none;">
+  <!-- ── Variables Panel ── -->
+  <div>
     <div class="kicker">System State</div>
     <div class="vars-grid" id="varsPanel">
       <div class="var-card"><span class="var-label">Intersection</span><span id="valLight" class="var-val" style="color:#ff5f56">RED</span></div>
@@ -116,27 +110,26 @@
     </div>
     
     <div class="kicker">Under the Hood</div>
-    <div class="introcard">
-      <pre style="margin:0; font-size:11px; color:#d7dee1; line-height:1.5;">
-// Pseudo-code representation
-while (true) {
-  read(timer);
-  if (timer == 0) {
-    changeLight();
-    reset(timer);
-  } else {
-    wait(1);
-    timer--;
-  }
-}
-      </pre>
+    <div id="codepanel" style="margin-top:0; border-radius:4px; box-shadow:none;">
+      <div class="cline" id="code-0"><div class="cln">1</div><div class="ccode cmt">// Pseudo-code representation</div></div>
+      <div class="cline" id="code-init"><div class="cln">2</div><div class="ccode"><span class="kw">let</span> cycles = <span class="num">0</span>;</div></div>
+      <div class="cline" id="code-while"><div class="cln">3</div><div class="ccode"><span class="kw">while</span> (cycles <= <span class="num">2</span>) {</div></div>
+      <div class="cline" id="code-read"><div class="cln">4</div><div class="ccode">  <span class="fn">read</span>(timer);</div></div>
+      <div class="cline" id="code-if"><div class="cln">5</div><div class="ccode">  <span class="kw">if</span> (timer == <span class="num">0</span>) {</div></div>
+      <div class="cline" id="code-change"><div class="cln">6</div><div class="ccode">    <span class="fn">changeLight</span>();</div></div>
+      <div class="cline" id="code-inc"><div class="cln">7</div><div class="ccode">    cycles++;</div></div>
+      <div class="cline" id="code-else"><div class="cln">8</div><div class="ccode">  } <span class="kw">else</span> {</div></div>
+      <div class="cline" id="code-wait"><div class="cln">9</div><div class="ccode">    <span class="fn">wait</span>(<span class="num">1</span>);</div></div>
+      <div class="cline" id="code-endIf"><div class="cln">10</div><div class="ccode">  }</div></div>
+      <div class="cline" id="code-endWhile"><div class="cln">11</div><div class="ccode">}</div></div>
+      <div class="cline" id="code-end"><div class="cln">12</div><div class="ccode"><span class="fn">shutdown</span>();</div></div>
     </div>
   </div>
 
   <footer>Virtual Algorithm Lab &middot; Three.js &middot; Flowcharts</footer>
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
 <script src="js/simulation.js"></script>
 </body>
 </html>

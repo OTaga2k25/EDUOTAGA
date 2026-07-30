@@ -113,7 +113,7 @@
     <div id="codepanel" style="margin-top:0; border-radius:4px; box-shadow:none;">
       <div class="cline" id="code-0"><div class="cln">1</div><div class="ccode cmt">// Pseudo-code representation</div></div>
       <div class="cline" id="code-init"><div class="cln">2</div><div class="ccode"><span class="kw">let</span> cycles = <span class="num">0</span>;</div></div>
-      <div class="cline" id="code-while"><div class="cln">3</div><div class="ccode"><span class="kw">while</span> (cycles <= <span class="num">2</span>) {</div></div>
+      <div class="cline" id="code-while"><div class="cln">3</div><div class="ccode"><span class="kw">while</span> (cycles < <span class="num">3</span>) {</div></div>
       <div class="cline" id="code-read"><div class="cln">4</div><div class="ccode">  <span class="fn">read</span>(timer);</div></div>
       <div class="cline" id="code-if"><div class="cln">5</div><div class="ccode">  <span class="kw">if</span> (timer == <span class="num">0</span>) {</div></div>
       <div class="cline" id="code-change"><div class="cln">6</div><div class="ccode">    <span class="fn">changeLight</span>();</div></div>
@@ -123,6 +123,34 @@
       <div class="cline" id="code-endIf"><div class="cln">10</div><div class="ccode">  }</div></div>
       <div class="cline" id="code-endWhile"><div class="cln">11</div><div class="ccode">}</div></div>
       <div class="cline" id="code-end"><div class="cln">12</div><div class="ccode"><span class="fn">shutdown</span>();</div></div>
+    </div>
+    <div class="kicker">Test Your Knowledge</div>
+    <div id="quizSection" style="background:rgba(0,0,0,0.03); padding:15px; border-radius:6px; margin-bottom:25px; margin-top:0;">
+      
+      <div id="quizContainer">
+        <p id="quizPrompt" style="color:#505c6a; font-size:13px; margin-bottom:15px;"></p>
+        
+        <div style="display:flex; gap:10px; justify-content:center;">
+          <button id="btnQuizOval" class="quiz-btn" style="background:transparent; border:1px solid rgba(0,0,0,0.1); padding:15px 5px; border-radius:8px; cursor:pointer; display:flex; flex-direction:column; align-items:center; flex:1; transition:0.2s;">
+            <div class="shape shape-oval" style="margin-bottom:10px;"></div> <span style="color:#505c6a; font-size:11px; font-weight:bold;">Oval</span>
+          </button>
+          <button id="btnQuizDiamond" class="quiz-btn" style="background:transparent; border:1px solid rgba(0,0,0,0.1); padding:15px 5px; border-radius:8px; cursor:pointer; display:flex; flex-direction:column; align-items:center; flex:1; transition:0.2s;">
+            <div class="shape shape-diamond" style="margin-bottom:10px;"></div> <span style="color:#505c6a; font-size:11px; font-weight:bold;">Diamond</span>
+          </button>
+          <button id="btnQuizRect" class="quiz-btn" style="background:transparent; border:1px solid rgba(0,0,0,0.1); padding:15px 5px; border-radius:8px; cursor:pointer; display:flex; flex-direction:column; align-items:center; flex:1; transition:0.2s;">
+            <div class="shape shape-rect" style="margin-bottom:10px;"></div> <span style="color:#505c6a; font-size:11px; font-weight:bold;">Rect</span>
+          </button>
+          <button id="btnQuizPara" class="quiz-btn" style="background:transparent; border:1px solid rgba(0,0,0,0.1); padding:15px 5px; border-radius:8px; cursor:pointer; display:flex; flex-direction:column; align-items:center; flex:1; transition:0.2s;">
+            <div class="shape shape-parallelogram" style="margin-bottom:10px;"></div> <span style="color:#505c6a; font-size:11px; font-weight:bold;">Data</span>
+          </button>
+        </div>
+      </div>
+      
+      <div id="quizResult" style="display:none; flex-direction:column; align-items:center; text-align:center;">
+         <p id="quizResultMessage" style="font-size:13px; margin-bottom:15px; color:#505c6a;"></p>
+         <button id="btnQuizRetry" class="tab" style="padding:8px 16px; margin:0;">Try Again</button>
+      </div>
+
     </div>
   </div>
 

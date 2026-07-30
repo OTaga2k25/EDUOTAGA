@@ -7,14 +7,14 @@ const NODES = [
   { id: 2, label: 'TIMER\n== 0?', type: 'decision', desc: 'Is the timer zero?', x: -6, y: 6.5 },
   { id: 3, label: 'CHANGE\nLIGHT', type: 'process', desc: 'Change the traffic signal.', x: -12, y: 2 },
   { id: 4, label: 'WAIT\n1s', type: 'process', desc: 'Pause and let time pass.', x: 0, y: 2 },
-  { id: 5, label: 'CYCLES\n> 2?', type: 'decision', desc: 'Check if we have completed 3 full cycles.', x: -6, y: -3 },
+  { id: 5, label: 'CYCLES\n== 3?', type: 'decision', desc: 'Check if we have completed 3 cycles.', x: -6, y: -3 },
   { id: 6, label: 'END', type: 'sequence', desc: 'System shutdown.', x: -6, y: -7.5 }
 ];
 
 let executionPath = [0];
 let pathIdx = 0;
 
-let timerVal = 2;
+let timerVal = 1;
 let lightState = 'RED'; // RED -> GREEN -> YELLOW -> RED
 let cycles = 0;
 
@@ -58,7 +58,7 @@ function getNextLight(current) {
 }
 
 function generateExecutionPath() {
-  timerVal = 2;
+  timerVal = 1;
   lightState = 'RED';
   cycles = 0;
   executionPath = [0];
@@ -91,9 +91,9 @@ function updateUI() {
       valDecision.textContent = timerVal===0?'TRUE':'FALSE';
       valDecision.style.color = timerVal===0?'#4f9d7a':'#ff5f56';
     } else if (node.id === 5) {
-      descStage.innerHTML = `Cycles = ${cycles}<br>${cycles} > 2 ? <b style="color:${cycles>2?'#4f9d7a':'#ff5f56'}">${cycles>2?'TRUE':'FALSE'}</b>`;
-      valDecision.textContent = cycles>2?'TRUE':'FALSE';
-      valDecision.style.color = cycles>2?'#4f9d7a':'#ff5f56';
+      descStage.innerHTML = `Cycles = ${cycles}<br>${cycles} == 3 ? <b style="color:${cycles>=3?'#4f9d7a':'#ff5f56'}">${cycles>=3?'TRUE':'FALSE'}</b>`;
+      valDecision.textContent = cycles>=3?'TRUE':'FALSE';
+      valDecision.style.color = cycles>=3?'#4f9d7a':'#ff5f56';
     } else {
       descStage.textContent = node.desc;
     }
@@ -426,6 +426,12 @@ async function executeCycle() {
   isAnimating = true;
   valve.style.opacity = '1';
 
+  // Restore opacities from previous steps
+  nodeMeshes[3].mesh.material.opacity = 1; nodeMeshes[3].mesh.material.transparent = false;
+  nodeMeshes[4].mesh.material.opacity = 1; nodeMeshes[4].mesh.material.transparent = false;
+  lblYes1.material.opacity = 1; lblNo1.material.opacity = 1;
+  lblYes2.material.opacity = 1; lblNo2.material.opacity = 1;
+
   let targetNodeId = 0;
   
   if (currentNodeId === 0) targetNodeId = 1;
@@ -436,7 +442,7 @@ async function executeCycle() {
   }
   else if (currentNodeId === 3 || currentNodeId === 4) targetNodeId = 5;
   else if (currentNodeId === 5) {
-    if (cycles > 2) {
+    if (cycles >= 3) {
       targetNodeId = 6;
     } else {
       targetNodeId = 1; 
@@ -496,7 +502,7 @@ async function executeCycle() {
   if (targetNodeId === 3) { 
     lightState = getNextLight(lightState);
     updateTrafficLightVisuals();
-    timerVal = (lightState === 'GREEN' ? 3 : (lightState === 'YELLOW' ? 1 : 2));
+    timerVal = (lightState === 'GREEN' ? 1 : (lightState === 'YELLOW' ? 0 : 1));
     cycles++;
   } else if (targetNodeId === 4) { 
     timerVal = Math.max(0, timerVal - 1);
@@ -550,7 +556,7 @@ function resetSimulation() {
   isRunning = false;
   isAnimating = false;
   
-  updateTrafficLightVisuals();
+  timerVal = 1; updateTrafficLightVisuals();
   
   if (nodeMeshes[0]) robotGrp.position.copy(nodeMeshes[0].pos);
   robotGrp.position.z = 1.0;
@@ -563,6 +569,8 @@ function resetSimulation() {
   
   nodeMeshes[3].mesh.material.opacity = 1; nodeMeshes[3].mesh.material.transparent = false;
   nodeMeshes[4].mesh.material.opacity = 1; nodeMeshes[4].mesh.material.transparent = false;
+  lblYes1.material.opacity = 1; lblNo1.material.opacity = 1;
+  lblYes2.material.opacity = 1; lblNo2.material.opacity = 1;
   lblYes1.material.opacity = 1; lblNo1.material.opacity = 1;
   lblYes2.material.opacity = 1; lblNo2.material.opacity = 1;
 
@@ -609,6 +617,61 @@ el('btnSpeed').onclick = () => {
 el('btnReset').onclick = resetSimulation;
 
 el('btnRetryExp').onclick = resetSimulation;
+
+/* ---------- QUIZ LOGIC ---------- */
+const questions = [
+  { text: "IF/ELSE Decision", answer: "Diamond", detail: "A Diamond is always used for evaluating True/False decisions." },
+  { text: "Start / End Terminator", answer: "Oval", detail: "An Oval (or pill) is used to mark the start and end of a program." },
+  { text: "Process or Action", answer: "Rect", detail: "A Rectangle represents a process, like changing a variable or executing a function." },
+  { text: "Input / Output (Data)", answer: "Para", detail: "A Parallelogram is used when reading input (like the timer) or displaying output." }
+];
+let currentQuestion = null;
+
+const qOval = el('btnQuizOval');
+const qDiamond = el('btnQuizDiamond');
+const qRect = el('btnQuizRect');
+const qPara = el('btnQuizPara');
+const qPrompt = el('quizPrompt');
+const qContainer = el('quizContainer');
+const qResult = el('quizResult');
+const qResultMessage = el('quizResultMessage');
+const qRetry = el('btnQuizRetry');
+
+function loadRandomQuestion() {
+  currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+  qPrompt.innerHTML = `To prove your understanding, select the correct flowchart shape to represent an <b>${currentQuestion.text}</b>.`;
+  qContainer.style.display = 'block';
+  qResult.style.display = 'none';
+  [qOval, qDiamond, qRect, qPara].forEach(b => {
+    b.style.pointerEvents = 'auto';
+    b.style.opacity = '1';
+    b.style.borderColor = 'rgba(0,0,0,0.1)';
+    b.style.background = 'transparent';
+  });
+}
+
+function handleQuizClick(btn, type) {
+  const isCorrect = (type === currentQuestion.answer);
+  qContainer.style.display = 'none';
+  qResult.style.display = 'flex';
+  
+  if (isCorrect) {
+    qResultMessage.innerHTML = `<span style="color:#4f9d7a; font-size:16px;"><b>Correct!</b></span><br><br>${currentQuestion.detail}`;
+    qRetry.innerText = 'Try Another Question';
+  } else {
+    qResultMessage.innerHTML = `<span style="color:#ff5f56; font-size:16px;"><b>Incorrect.</b></span><br><br>Think about the geometric rules of flowcharts!`;
+    qRetry.innerText = 'Try Again';
+  }
+}
+
+qOval.onclick = () => handleQuizClick(qOval, 'Oval');
+qRect.onclick = () => handleQuizClick(qRect, 'Rect');
+qDiamond.onclick = () => handleQuizClick(qDiamond, 'Diamond');
+qPara.onclick = () => handleQuizClick(qPara, 'Para');
+qRetry.onclick = loadRandomQuestion;
+
+// Init Quiz
+loadRandomQuestion();
 
 /* INIT */
 resetSimulation();

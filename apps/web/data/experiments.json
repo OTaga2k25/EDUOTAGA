@@ -44,10 +44,22 @@
         "id": "q1",
         "question": "Bending a concave mirror to a deeper curve (smaller radius of curvature) will:",
         "options": [
-          { "id": "a", "text": "Move the focal point farther away" },
-          { "id": "b", "text": "Move the focal point closer to the mirror" },
-          { "id": "c", "text": "Leave the focal point unchanged" },
-          { "id": "d", "text": "Turn the mirror convex" }
+          {
+            "id": "a",
+            "text": "Move the focal point farther away"
+          },
+          {
+            "id": "b",
+            "text": "Move the focal point closer to the mirror"
+          },
+          {
+            "id": "c",
+            "text": "Leave the focal point unchanged"
+          },
+          {
+            "id": "d",
+            "text": "Turn the mirror convex"
+          }
         ],
         "correctOptionId": "b",
         "explanation": "Since f = R/2, a smaller radius of curvature R produces a shorter focal length f, pulling the focus closer to the mirror."
@@ -56,10 +68,22 @@
         "id": "q2",
         "question": "A candle placed exactly at a convex lens's focal point produces:",
         "options": [
-          { "id": "a", "text": "A magnified virtual image" },
-          { "id": "b", "text": "A same-size real image" },
-          { "id": "c", "text": "No image — the outgoing rays are parallel" },
-          { "id": "d", "text": "An inverted, diminished image" }
+          {
+            "id": "a",
+            "text": "A magnified virtual image"
+          },
+          {
+            "id": "b",
+            "text": "A same-size real image"
+          },
+          {
+            "id": "c",
+            "text": "No image — the outgoing rays are parallel"
+          },
+          {
+            "id": "d",
+            "text": "An inverted, diminished image"
+          }
         ],
         "correctOptionId": "c",
         "explanation": "At u = f, the lens equation gives v = infinity: every ray leaves the lens parallel to the axis, so no image forms."
@@ -68,16 +92,35 @@
         "id": "q3",
         "question": "Total internal reflection occurs when light travels:",
         "options": [
-          { "id": "a", "text": "From a denser medium into a rarer medium, above the critical angle" },
-          { "id": "b", "text": "From a rarer medium into a denser medium, at any angle" },
-          { "id": "c", "text": "Through a flat mirror" },
-          { "id": "d", "text": "Through a vacuum" }
+          {
+            "id": "a",
+            "text": "From a denser medium into a rarer medium, above the critical angle"
+          },
+          {
+            "id": "b",
+            "text": "From a rarer medium into a denser medium, at any angle"
+          },
+          {
+            "id": "c",
+            "text": "Through a flat mirror"
+          },
+          {
+            "id": "d",
+            "text": "Through a vacuum"
+          }
         ],
         "correctOptionId": "a",
         "explanation": "TIR requires light moving from higher to lower refractive index, and only once the incidence angle exceeds the critical angle sin θc = 1/n."
       }
     ],
-    "tags": ["reflection", "refraction", "lens", "mirror", "total internal reflection", "optics"],
+    "tags": [
+      "reflection",
+      "refraction",
+      "lens",
+      "mirror",
+      "total internal reflection",
+      "optics"
+    ],
     "estimatedDurationMinutes": 35,
     "createdAt": "2026-07-10T00:00:00.000Z",
     "updatedAt": "2026-07-10T00:00:00.000Z"
@@ -117,10 +160,22 @@
         "id": "q1",
         "question": "How is water moved between the locks in the Panamá Canal?",
         "options": [
-          { "id": "a", "text": "Electric water pumps" },
-          { "id": "b", "text": "Gravity flow valves" },
-          { "id": "c", "text": "Hydraulic rams" },
-          { "id": "d", "text": "Tidal forces" }
+          {
+            "id": "a",
+            "text": "Electric water pumps"
+          },
+          {
+            "id": "b",
+            "text": "Gravity flow valves"
+          },
+          {
+            "id": "c",
+            "text": "Hydraulic rams"
+          },
+          {
+            "id": "d",
+            "text": "Tidal forces"
+          }
         ],
         "correctOptionId": "b",
         "explanation": "The canal relies entirely on gravity flow valves to move water between chambers."
@@ -129,16 +184,34 @@
         "id": "q2",
         "question": "What physics principle allows the ship to be lifted within the lock?",
         "options": [
-          { "id": "a", "text": "Aerodynamics" },
-          { "id": "b", "text": "Capillary action" },
-          { "id": "c", "text": "Buoyancy" },
-          { "id": "d", "text": "Magnetism" }
+          {
+            "id": "a",
+            "text": "Aerodynamics"
+          },
+          {
+            "id": "b",
+            "text": "Capillary action"
+          },
+          {
+            "id": "c",
+            "text": "Buoyancy"
+          },
+          {
+            "id": "d",
+            "text": "Magnetism"
+          }
         ],
         "correctOptionId": "c",
         "explanation": "As the water level rises in the chamber, buoyancy lifts the floating ship along with the water."
       }
     ],
-    "tags": ["panama canal", "marine engineering", "buoyancy", "locks", "fluid mechanics"],
+    "tags": [
+      "panama canal",
+      "marine engineering",
+      "buoyancy",
+      "locks",
+      "fluid mechanics"
+    ],
     "estimatedDurationMinutes": 20,
     "createdAt": "2026-07-17T00:00:00.000Z",
     "updatedAt": "2026-07-17T00:00:00.000Z"
@@ -178,16 +251,35 @@
         "id": "q1",
         "question": "What is the auxiliary space complexity of reversing a string in-place using two pointers?",
         "options": [
-          { "id": "a", "text": "O(1)" },
-          { "id": "b", "text": "O(N)" },
-          { "id": "c", "text": "O(log N)" },
-          { "id": "d", "text": "O(N^2)" }
+          {
+            "id": "a",
+            "text": "O(1)"
+          },
+          {
+            "id": "b",
+            "text": "O(N)"
+          },
+          {
+            "id": "c",
+            "text": "O(log N)"
+          },
+          {
+            "id": "d",
+            "text": "O(N^2)"
+          }
         ],
         "correctOptionId": "a",
         "explanation": "We only need memory for two variables (L and R) regardless of the string's length, meaning it requires O(1) constant auxiliary space."
       }
     ],
-    "tags": ["algorithms", "two-pointer", "arrays", "strings", "in-place", "computer science"],
+    "tags": [
+      "algorithms",
+      "two-pointer",
+      "arrays",
+      "strings",
+      "in-place",
+      "computer science"
+    ],
     "estimatedDurationMinutes": 15,
     "createdAt": "2026-07-29T00:00:00.000Z",
     "updatedAt": "2026-07-29T00:00:00.000Z"
@@ -227,16 +319,35 @@
         "id": "q1",
         "question": "Why does reversing an immutable string require O(N) auxiliary space?",
         "options": [
-          { "id": "a", "text": "Because it takes N operations to reverse." },
-          { "id": "b", "text": "Because you must create a new string of length N in memory." },
-          { "id": "c", "text": "Because strings take up more memory than arrays." },
-          { "id": "d", "text": "It doesn't, it takes O(1) space." }
+          {
+            "id": "a",
+            "text": "Because it takes N operations to reverse."
+          },
+          {
+            "id": "b",
+            "text": "Because you must create a new string of length N in memory."
+          },
+          {
+            "id": "c",
+            "text": "Because strings take up more memory than arrays."
+          },
+          {
+            "id": "d",
+            "text": "It doesn't, it takes O(1) space."
+          }
         ],
         "correctOptionId": "b",
         "explanation": "Since the original string cannot be modified, a new string of size N must be built, consuming O(N) extra memory."
       }
     ],
-    "tags": ["algorithms", "strings", "out-of-place", "immutability", "space-complexity", "computer science"],
+    "tags": [
+      "algorithms",
+      "strings",
+      "out-of-place",
+      "immutability",
+      "space-complexity",
+      "computer science"
+    ],
     "estimatedDurationMinutes": 10,
     "createdAt": "2026-07-29T00:00:00.000Z",
     "updatedAt": "2026-07-29T00:00:00.000Z"
@@ -276,16 +387,34 @@
         "id": "q1",
         "question": "What happens the moment the characters at L and R do NOT match?",
         "options": [
-          { "id": "a", "text": "The loop continues until they meet." },
-          { "id": "b", "text": "The function immediately returns False (it is not a palindrome)." },
-          { "id": "c", "text": "L and R are swapped." },
-          { "id": "d", "text": "The pointers jump back to the start." }
+          {
+            "id": "a",
+            "text": "The loop continues until they meet."
+          },
+          {
+            "id": "b",
+            "text": "The function immediately returns False (it is not a palindrome)."
+          },
+          {
+            "id": "c",
+            "text": "L and R are swapped."
+          },
+          {
+            "id": "d",
+            "text": "The pointers jump back to the start."
+          }
         ],
         "correctOptionId": "b",
         "explanation": "A single mismatch proves the word is not perfectly symmetrical, so we can stop checking immediately."
       }
     ],
-    "tags": ["algorithms", "two-pointer", "palindromes", "strings", "computer science"],
+    "tags": [
+      "algorithms",
+      "two-pointer",
+      "palindromes",
+      "strings",
+      "computer science"
+    ],
     "estimatedDurationMinutes": 10,
     "createdAt": "2026-07-29T00:00:00.000Z",
     "updatedAt": "2026-07-29T00:00:00.000Z"
@@ -330,10 +459,22 @@
         "id": "q1",
         "question": "Which of the following is NOT a required property of an algorithm?",
         "options": [
-          { "id": "a", "text": "Finiteness" },
-          { "id": "b", "text": "Randomness" },
-          { "id": "c", "text": "Definiteness" },
-          { "id": "d", "text": "Effectiveness" }
+          {
+            "id": "a",
+            "text": "Finiteness"
+          },
+          {
+            "id": "b",
+            "text": "Randomness"
+          },
+          {
+            "id": "c",
+            "text": "Definiteness"
+          },
+          {
+            "id": "d",
+            "text": "Effectiveness"
+          }
         ],
         "correctOptionId": "b",
         "explanation": "Randomness is not a required property. Algorithms must be finite, definite, and effective."
@@ -342,79 +483,242 @@
         "id": "q2",
         "question": "Why did the incorrect algorithm fail?",
         "options": [
-          { "id": "a", "text": "The robot was too slow" },
-          { "id": "b", "text": "The instructions were in the wrong order" },
-          { "id": "c", "text": "The package was too heavy" },
-          { "id": "d", "text": "The warehouse was too small" }
+          {
+            "id": "a",
+            "text": "The robot was too slow"
+          },
+          {
+            "id": "b",
+            "text": "The instructions were in the wrong order"
+          },
+          {
+            "id": "c",
+            "text": "The package was too heavy"
+          },
+          {
+            "id": "d",
+            "text": "The warehouse was too small"
+          }
         ],
         "correctOptionId": "b",
         "explanation": "The wrong instruction order caused the robot to collide with a wall before reaching the package."
       }
     ],
-    "tags": ["algorithms", "fundamentals", "introduction", "sequential execution", "computer science"],
+    "tags": [
+      "algorithms",
+      "fundamentals",
+      "introduction",
+      "sequential execution",
+      "computer science"
+    ],
     "estimatedDurationMinutes": 20,
     "createdAt": "2026-07-30T00:00:00.000Z",
     "updatedAt": "2026-07-30T00:00:00.000Z"
   },
   {
     "id": "algorithmexecution",
-    "title": "Algorithm Execution Flow",
-    "categoryId": "data-structures-algorithms",
+    "title": "Algorithm Logic Flow",
+    "categoryId": "computer",
     "subjectId": "algorithm-fundamentals",
-    "description": "Observe how a computer executes an algorithm internally through the Fetch, Decode, and Execute cycle.",
-    "summary": "Watch a 3D CPU simulation execute a simple algorithm, visualizing the Program Counter, Memory, Registers, and Execution stages.",
-    "theory": "When a computer runs an algorithm, it doesn't understand the whole program at once. It executes one instruction at a time using the Fetch-Decode-Execute cycle. 1. Fetch: The CPU reads the next instruction from Memory based on the Program Counter (PC) address. 2. Decode: The Control Unit interprets the instruction. 3. Execute: The Arithmetic Logic Unit (ALU) or CPU performs the operation. 4. Update PC: The PC increments to point to the next instruction.",
+    "description": "Observe how an algorithm makes decisions and processes logic using Sequence, Selection, and Iteration.",
+    "summary": "Watch a 3D flowchart simulation execute a logical algorithm, visualizing inputs, decisions, processes, and outputs.",
+    "theory": "An algorithm solves a problem using three basic constructs: Sequence, Selection, and Iteration. 1. Sequence: Executing steps in order. 2. Selection: Making decisions (e.g., IF temperature > 30 THEN Fan ON). 3. Iteration: Repeating actions in a loop.",
     "procedure": [
       {
         "order": 1,
         "title": "Start Execution",
-        "description": "Press Play to watch the CPU automatically fetch, decode, and execute the algorithm."
+        "description": "Press Play to watch the robot traverse the flowchart nodes."
       },
       {
         "order": 2,
         "title": "Step-by-Step",
-        "description": "Use the Step button to manually advance the execution and observe the changes in the Program Counter and Registers."
+        "description": "Use the Step button to manually advance the logic and observe the changes in Variables."
       },
       {
         "order": 3,
         "title": "Advanced Mode",
-        "description": "Toggle Advanced Mode to view the internal registers (PC, IR, A, B) and detailed execution stages."
+        "description": "Toggle Advanced Mode to view live memory states (Temperature, Fan Relay)."
       }
     ],
-    "observation": "During execution, the Program Counter dictates which instruction is fetched. The Instruction Register holds the active instruction. Data moves from Memory to Registers, is processed, and then stored back or outputted. The cycle repeats until the END instruction.",
+    "observation": "Instead of following a single straight line, an algorithm makes intelligent choices using Conditions. It receives input, checks logic, and modifies its output accordingly.",
     "simulationEntry": "index.html",
     "videoIds": [],
     "downloads": [],
     "quiz": [
       {
         "id": "q1",
-        "question": "Which register stores the address of the next instruction?",
+        "question": "Which part of an algorithm makes a decision?",
         "options": [
-          { "id": "a", "text": "RAM" },
-          { "id": "b", "text": "Program Counter" },
-          { "id": "c", "text": "Cache" },
-          { "id": "d", "text": "ALU" }
+          {
+            "id": "a",
+            "text": "Sequence"
+          },
+          {
+            "id": "b",
+            "text": "Selection (Condition)"
+          },
+          {
+            "id": "c",
+            "text": "Output"
+          },
+          {
+            "id": "d",
+            "text": "Input"
+          }
         ],
         "correctOptionId": "b",
-        "explanation": "The Program Counter (PC) holds the memory address of the next instruction to be fetched."
+        "explanation": "Selection (like IF/THEN) allows an algorithm to make a decision and change its path."
       },
       {
         "id": "q2",
-        "question": "Which stage reads an instruction from memory?",
+        "question": "Which loop continues until a condition becomes false?",
         "options": [
-          { "id": "a", "text": "Fetch" },
-          { "id": "b", "text": "Decode" },
-          { "id": "c", "text": "Execute" },
-          { "id": "d", "text": "Store" }
+          {
+            "id": "a",
+            "text": "For Loop"
+          },
+          {
+            "id": "b",
+            "text": "While Loop"
+          },
+          {
+            "id": "c",
+            "text": "Infinite Loop"
+          },
+          {
+            "id": "d",
+            "text": "Decision Box"
+          }
         ],
-        "correctOptionId": "a",
-        "explanation": "The Fetch stage retrieves the instruction from Memory into the Instruction Register."
+        "correctOptionId": "b",
+        "explanation": "A While loop repeats continuously as long as its given condition remains true."
       }
     ],
-    "tags": ["algorithms", "execution flow", "cpu cycle", "fetch decode execute", "computer science"],
+    "tags": [
+      "algorithms",
+      "logic flow",
+      "flowchart",
+      "decision making",
+      "computer science"
+    ],
     "estimatedDurationMinutes": 25,
     "createdAt": "2026-07-30T01:00:00.000Z",
-    "updatedAt": "2026-07-30T01:00:00.000Z"
+    "updatedAt": "2026-07-30T01:00:00.000Z",
+    "slug": "algorithmexecution"
+  },
+  {
+    "id": "flowcharts",
+    "slug": "flowcharts",
+    "title": "Flowcharts: Visualizing Algorithms",
+    "subjectId": "algorithm-fundamentals",
+    "categoryId": "computer",
+    "difficulty": "beginner",
+    "summary": "Learn how to represent algorithms visually using standard flowchart symbols by simulating a smart traffic light controller.",
+    "theory": "A flowchart is a visual representation of an algorithm. It uses standard shapes to denote different types of steps, and arrows to connect them, showing the flow of execution. Ovals represent Start/End. Rectangles represent Processes or Actions. Diamonds represent Decisions (Yes/No). Parallelograms represent Input/Output. Flowcharts make complex logic easy to understand and debug before writing any code.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Identify Symbols",
+        "description": "Review the Flowchart Legend to understand what each shape represents."
+      },
+      {
+        "order": 2,
+        "title": "Trace the Logic",
+        "description": "Press Step to watch the execution indicator traverse the flowchart and see how the Traffic Light responds."
+      },
+      {
+        "order": 3,
+        "title": "Observe Decisions",
+        "description": "Watch the execution branch at the Decision Diamond based on the Timer condition."
+      }
+    ],
+    "observation": "The execution always starts at the START node. The Decision diamond acts as a fork in the road, choosing a path based on the timer condition. The loop arrow returns execution to an earlier step, demonstrating iteration.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Which flowchart symbol represents a decision?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Rectangle"
+          },
+          {
+            "id": "b",
+            "text": "Diamond"
+          },
+          {
+            "id": "c",
+            "text": "Oval"
+          },
+          {
+            "id": "d",
+            "text": "Parallelogram"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The diamond shape is universally used in flowcharts to represent a decision point, typically leading to a Yes/No branch."
+      },
+      {
+        "id": "q2",
+        "question": "What is the purpose of the Oval symbol in a flowchart?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To indicate the Start and End of the algorithm"
+          },
+          {
+            "id": "b",
+            "text": "To process data"
+          },
+          {
+            "id": "c",
+            "text": "To input information"
+          },
+          {
+            "id": "d",
+            "text": "To store variables"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Ovals (terminators) are used exclusively to mark the absolute starting and ending points of a flowchart."
+      },
+      {
+        "id": "q3",
+        "question": "What happens when a flowchart reaches an arrow that points backwards to a previous step?",
+        "options": [
+          {
+            "id": "a",
+            "text": "The program crashes"
+          },
+          {
+            "id": "b",
+            "text": "It creates a loop, repeating a section of the algorithm"
+          },
+          {
+            "id": "c",
+            "text": "The flowchart ends immediately"
+          },
+          {
+            "id": "d",
+            "text": "It asks the user for input"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Arrows that point back to earlier steps create Iteration (loops), allowing an algorithm to repeat tasks until a condition is met."
+      }
+    ],
+    "tags": [
+      "algorithms",
+      "flowchart",
+      "logic flow",
+      "visual programming",
+      "computer science"
+    ],
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-07-30T10:00:00.000Z",
+    "updatedAt": "2026-07-30T10:00:00.000Z"
   }
 ]
-

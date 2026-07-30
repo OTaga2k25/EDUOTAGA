@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Flowcharts — Virtual Algorithm Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header id="masthead">
+  <div class="crest">&#9881;</div>
+  <div class="mast-title">
+    <div class="kick">Virtual Algorithm Lab</div>
+    <h1>Flowcharts</h1>
+  </div>
+  <div class="crest">{ }</div>
+</header>
+
+<div id="viewport">
+  <!-- ── Completion Overlay ── -->
+  <div id="completionOverlay" style="position:fixed; inset:0; background:rgba(8,14,20,0.85); z-index:200; display:none; align-items:center; justify-content:center; backdrop-filter:blur(5px); opacity:0; transition:opacity 0.5s;">
+    <div style="background:#052330; border:1px solid #4f9d7a; padding:30px 40px; border-radius:8px; max-width:550px; box-shadow:0 10px 40px rgba(0,0,0,0.5);">
+      <h2 style="color:#fff; margin-bottom:20px; font-family:Georgia,serif; text-align:center; color:#4f9d7a;" id="coTitle">Execution Summary</h2>
+      
+      <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:6px; margin-bottom:15px; display:flex; gap:20px;">
+        <div style="flex:1;">
+          <h4 style="color:#e0a23c; margin-bottom:8px; text-transform:uppercase; font-size:11px; letter-spacing:1px;">Statistics</h4>
+          <ul style="color:#d7dee1; font-size:13px; line-height:1.6; margin-left:18px;">
+            <li>Execution Steps: <span id="coExec">0</span></li>
+            <li>Loops Completed: <span id="coLoops">0</span></li>
+          </ul>
+        </div>
+        <div style="flex:1; border-left:1px solid rgba(255,255,255,0.1); padding-left:20px;">
+          <h4 style="color:#e0a23c; margin-bottom:8px; text-transform:uppercase; font-size:11px; letter-spacing:1px;">Performance</h4>
+          <ul style="color:#d7dee1; font-size:13px; line-height:1.6; margin-left:18px; list-style:none;">
+            <li style="margin-left:-18px; margin-top:8px;">Rating:</li>
+            <li style="color:#4f9d7a; font-weight:bold; font-size:24px;">★★★★★</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:6px; margin-bottom:25px;">
+        <h4 style="color:#e0a23c; margin-bottom:8px; text-transform:uppercase; font-size:11px; letter-spacing:1px;">Conclusion</h4>
+        <p style="color:#d7dee1; font-size:13px; line-height:1.6; margin:0;">
+          A flowchart allows developers to visualize and debug algorithms before writing a single line of code. It perfectly represents Sequence, Selection, and Iteration.
+        </p>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; gap:10px;">
+        <button id="btnRetryExp" class="tab" style="padding:10px 20px;">Restart System</button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="scene"></canvas>
+  <div id="hudCard">
+    <label>Algorithm Step</label>
+    <b id="hudStep">0</b>
+    <div class="bar"><i id="hudBar"></i></div>
+    <label>Current Phase</label>
+    <b id="hudStage" class="sm">READY</b>
+  </div>
+  <div id="valve"><span class="dot"></span><span id="valveText">EVALUATING</span></div>
+  <div id="caption">3D Flowchart Execution Simulator</div>
+  <div id="hint">drag to rotate &middot; pinch to zoom &middot; 2-finger drag to pan</div>
+  
+  <div id="statusBadge" class="status-badge" style="opacity:0">READY</div>
+</div>
+
+<main id="panel">
+  <h2>Visualizing Logic</h2>
+  <p class="lede" id="subtitleText">Discover how flowcharts represent algorithm execution flow.</p>
+  <div style="font-size:12.5px; color:#a1adb4; margin-bottom:20px; padding:10px 12px; background:rgba(255,255,255,0.05); border-left:3px solid #8f9aa0; border-radius:4px;">
+    <b>Note:</b> A flowchart maps the logic of a system visually using universal geometric symbols.
+  </div>
+
+  <div class="kicker">Legend: Flowchart Symbols</div>
+  <div class="legend-grid">
+    <div class="legend-item"><div class="shape shape-oval"></div> <span><b>Start / End</b> (Terminator)</span></div>
+    <div class="legend-item"><div class="shape shape-parallelogram"></div> <span><b>Input / Output</b> (Data)</span></div>
+    <div class="legend-item"><div class="shape shape-diamond"></div> <span><b>Decision</b> (Yes / No)</span></div>
+    <div class="legend-item"><div class="shape shape-rect"></div> <span><b>Process</b> (Action)</span></div>
+    <div class="legend-item"><div class="shape shape-arrow">↓</div> <span><b>Flow</b> (Execution Path)</span></div>
+  </div>
+
+  <div class="kicker mt-6">Simulation Controls</div>
+  <div id="controls">
+    <button id="btnStep" class="tab active" style="background:#3f9fc4;color:#052330;font-weight:bold;">Step Forward ➔</button>
+    <button id="btnPlay" class="tab">Play Auto</button>
+    <button id="btnSpeed" class="tab">Speed 1&times;</button>
+    <button id="btnReset" class="tab">Restart</button>
+  </div>
+  
+  <div style="display:flex; justify-content:space-between; align-items:flex-end;" class="mt-4">
+    <div class="kicker" style="margin-bottom:0;">Live Execution Analysis</div>
+    <div style="display:flex; gap:4px; margin-bottom:0;">
+      <button id="btnModeBeginner" class="tab active" style="padding:4px 8px; margin:0; font-size:11px; letter-spacing:.05em; border-radius:4px;">Beginner</button>
+      <button id="btnModeAdvanced" class="tab" style="padding:4px 8px; margin:0; font-size:11px; letter-spacing:.05em; border-radius:4px;">Advanced</button>
+    </div>
+  </div>
+
+  <div class="introcard mt-2">
+    <b id="liveStageLabel">READY</b>
+    <p id="liveStageDesc" style="margin-top:8px;">Press Start to evaluate the traffic controller.</p>
+  </div>
+
+  <!-- ── Variables Panel (Advanced) ── -->
+  <div id="advancedArea" style="display:none;">
+    <div class="kicker">System State</div>
+    <div class="vars-grid" id="varsPanel">
+      <div class="var-card"><span class="var-label">Intersection</span><span id="valLight" class="var-val" style="color:#ff5f56">RED</span></div>
+      <div class="var-card"><span class="var-label">Timer</span><span id="valTimer" class="var-val">3</span></div>
+      <div class="var-card"><span class="var-label">Decision</span><span id="valDecision" class="var-val">—</span></div>
+    </div>
+    
+    <div class="kicker">Under the Hood</div>
+    <div class="introcard">
+      <pre style="margin:0; font-size:11px; color:#d7dee1; line-height:1.5;">
+// Pseudo-code representation
+while (true) {
+  read(timer);
+  if (timer == 0) {
+    changeLight();
+    reset(timer);
+  } else {
+    wait(1);
+    timer--;
+  }
+}
+      </pre>
+    </div>
+  </div>
+
+  <footer>Virtual Algorithm Lab &middot; Three.js &middot; Flowcharts</footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/simulation.js"></script>
+</body>
+</html>

@@ -19,7 +19,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${SITE_NAME} — Open Virtual Laboratory`,
+    default: `${SITE_NAME} - Open Virtual Laboratory`,
     template: `%s · ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,

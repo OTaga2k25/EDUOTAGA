@@ -1,0 +1,30 @@
+{
+  "cli": {
+    "version": ">= 21.4.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EAS_PACKAGE_MANAGER": "npm"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "EAS_PACKAGE_MANAGER": "npm"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "env": {
+        "EAS_PACKAGE_MANAGER": "npm"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

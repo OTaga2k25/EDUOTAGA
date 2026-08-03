@@ -26,12 +26,12 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — Open Virtual Laboratory`,
+    title: `${SITE_NAME} - Open Virtual Laboratory`,
     description: SITE_DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} — Open Virtual Laboratory`,
+    title: `${SITE_NAME} - Open Virtual Laboratory`,
     description: SITE_DESCRIPTION,
   },
 };

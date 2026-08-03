@@ -49,8 +49,8 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
         )}
       >
         <div className="flex h-16 items-center gap-3 border-b-2 border-black dark:border-white px-5">
-          <img src="/logo-light.png" alt="edUOtaga Logo" className="block dark:hidden h-12 w-auto object-contain" />
-          <img src="/logo-dark.png" alt="edUOtaga Logo" className="hidden dark:block h-12 w-auto object-contain" />
+          <img src="/logo-light.png" alt="edUOtaga Logo" width="150" height="48" className="block dark:hidden h-12 w-auto object-contain" />
+          <img src="/logo-dark.png" alt="edUOtaga Logo" width="150" height="48" className="hidden dark:block h-12 w-auto object-contain" />
           <div className="flex flex-col">
             <span className="text-xl font-black uppercase leading-tight tracking-tight text-foreground">edUOtaga</span>
             <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Virtual Labs</span>

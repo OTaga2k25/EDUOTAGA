@@ -20,9 +20,8 @@ export function ContinueLearningCard({
           <div className="flex justify-between items-start">
              <div>
                <h3 className="text-[15px] sm:text-lg font-black leading-tight sm:leading-normal">{experiment.title}</h3>
-               <p className="text-[11px] sm:text-sm font-semibold opacity-70 mt-0.5 sm:mt-0">{experiment.subjectName}</p>
              </div>
-             <button className="hidden sm:block hover:opacity-70">
+             <button aria-label="Bookmark experiment" className="hidden sm:block hover:opacity-70">
                <Bookmark className="h-6 w-6" />
              </button>
              <Link href={`/experiments/${experiment.slug}`} className="sm:hidden flex h-7 w-7 mt-1 items-center justify-center rounded-full border-2 border-black dark:border-white shrink-0">

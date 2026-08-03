@@ -24,7 +24,6 @@ export function ContinueLearningCard({
           {/* Content */}
           <View style={{ flex: 1, justifyContent: 'center' }}>
             <Text style={{ fontSize: 16, fontWeight: '900', color: theme.colors.foreground, marginBottom: 2 }}>{experiment.title}</Text>
-            <Text style={{ fontSize: 12, fontWeight: '700', color: theme.colors.muted }}>{experiment.subjectName}</Text>
           </View>
           
           {/* Arrow Button */}

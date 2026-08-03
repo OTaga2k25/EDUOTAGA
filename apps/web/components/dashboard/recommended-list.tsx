@@ -34,7 +34,6 @@ export function RecommendedList({ experiments }: { experiments: ExperimentSummar
               </div>
               <div className="flex-1 min-w-0">
                 <span className="block text-sm font-bold truncate">{experiment.title}</span>
-                <span className="block text-xs font-semibold opacity-70">{experiment.subjectName}</span>
               </div>
               <div className="flex flex-col items-end gap-1">
                  <MoreHorizontal className="h-6 w-6 text-black/70 mb-1" />

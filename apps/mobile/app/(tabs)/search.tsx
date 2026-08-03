@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, Text, TextInput, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 import { Badge } from '@/components/badge';
 import { EmptyState } from '@/components/empty-state';
@@ -13,12 +14,14 @@ export default function SearchScreen() {
   const theme = useThemeColors();
   const [query, setQuery] = useState('');
   const { data: results, isFetching } = useSearch(query);
+  const insets = useSafeAreaInsets();
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background, padding: theme.spacing.md }}>
-      <SectionHeading eyebrow="Search" title="Search EDUOTAGA" />
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <View style={{ flex: 1, padding: theme.spacing.md, paddingTop: Math.max(insets.top, theme.spacing.md), maxWidth: 800, width: '100%', alignSelf: 'center' }}>
 
-      <TextInput
+
+        <TextInput
         value={query}
         onChangeText={setQuery}
         placeholder="Search experiments, subjects, videos…"
@@ -73,6 +76,7 @@ export default function SearchScreen() {
           ) : null
         }
       />
+      </View>
     </View>
   );
 }

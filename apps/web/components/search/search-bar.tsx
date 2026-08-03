@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect, useRef, type FormEvent } from 'react';
+import { useState, useEffect, useRef, useId, type FormEvent } from 'react';
 import Link from 'next/link';
 import { Search, SlidersHorizontal, BookOpen, FlaskConical, Video } from 'lucide-react';
 import { cn } from '@eduotaga/ui/web';
@@ -14,6 +14,7 @@ export function SearchBar({ className }: { className?: string }) {
   const [suggestions, setSuggestions] = useState<SearchResultItem[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const containerRef = useRef<HTMLFormElement>(null);
+  const searchInputId = useId();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -63,13 +64,13 @@ export function SearchBar({ className }: { className?: string }) {
 
   return (
     <form ref={containerRef} onSubmit={handleSubmit} role="search" className={cn('relative w-full', className)}>
-      <label htmlFor="site-search" className="sr-only">
+      <label htmlFor={searchInputId} className="sr-only">
         Search experiments, subjects, and videos
       </label>
       <div className="relative flex items-center">
         <Search className="absolute left-4 h-5 w-5 text-muted-foreground" strokeWidth={2.5} />
         <input
-          id="site-search"
+          id={searchInputId}
           type="search"
           value={value}
           onChange={(event) => {

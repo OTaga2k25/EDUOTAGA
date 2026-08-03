@@ -1,4 +1,5 @@
-import { ActivityIndicator, Pressable, ScrollView, Text, View, Image, useColorScheme } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, Text, View, Image, useColorScheme, RefreshControl } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import {
@@ -16,8 +17,9 @@ import { useLastOpenedSlug } from '@/hooks/use-last-opened';
 export default function HomeScreen() {
   const theme = useThemeColors();
   const isDark = useColorScheme() === 'dark';
-  const { data: experiments, isPending } = useExperiments();
-  const lastOpenedSlug = useLastOpenedSlug();
+  const { data: experiments, isPending, refetch, isRefetching } = useExperiments();
+  const { slug: lastOpenedSlug, isLoaded: isLastOpenedLoaded } = useLastOpenedSlug();
+  const insets = useSafeAreaInsets();
 
   const continueExperiment =
     experiments?.find((experiment) => experiment.slug === lastOpenedSlug) ?? experiments?.[0];
@@ -28,7 +30,15 @@ export default function HomeScreen() {
       {isDark && <DotGridBackground color="#333333" />}
       <ScrollView
         style={{ flex: 1 }}
-        contentContainerStyle={{ padding: theme.spacing.md, gap: theme.spacing.xl, paddingBottom: theme.spacing['2xl'] }}
+        contentContainerStyle={{ maxWidth: 800, width: '100%', alignSelf: 'center', padding: theme.spacing.md, gap: theme.spacing.xl, paddingBottom: theme.spacing['2xl'] }}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefetching}
+            onRefresh={refetch}
+            tintColor={theme.colors.primary}
+            colors={[theme.colors.primary]}
+          />
+        }
       >
       <View style={{ backgroundColor: theme.colors.surface, borderRadius: theme.radii.xl, borderWidth: 2, borderColor: theme.colors.foreground, overflow: 'hidden', padding: theme.spacing.lg, minHeight: 160, justifyContent: 'center', shadowColor: theme.colors.foreground, shadowOffset: { width: 2, height: 2 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4 }}>
         <View style={{ width: '66%', zIndex: 10 }}>
@@ -58,7 +68,7 @@ export default function HomeScreen() {
           <Text style={{ fontSize: 20, fontWeight: '900', color: theme.colors.foreground }}>Continue Learning</Text>
           <Link href={"/experiments" as any} style={{ color: theme.colors.primary, fontWeight: '700', fontSize: theme.typography.sizes.sm }}>View all</Link>
         </View>
-        {isPending ? (
+        {isPending || !isLastOpenedLoaded ? (
           <ActivityIndicator color={theme.colors.primary} />
         ) : (
           continueExperiment && <ContinueLearningCard experiment={continueExperiment} />
@@ -68,7 +78,7 @@ export default function HomeScreen() {
       <View style={{ gap: theme.spacing.sm }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <Text style={{ fontSize: 20, fontWeight: '900', color: theme.colors.foreground }}>Subjects</Text>
-          <Link href="/subjects" style={{ color: theme.colors.primary, fontWeight: '700', fontSize: theme.typography.sizes.sm }}>View all</Link>
+          <Link href={"/experiments" as any} style={{ color: theme.colors.primary, fontWeight: '700', fontSize: theme.typography.sizes.sm }}>View all</Link>
         </View>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
           {[
@@ -97,9 +107,11 @@ export default function HomeScreen() {
         {isPending ? (
           <ActivityIndicator color={theme.colors.primary} />
         ) : (
-          <View style={{ gap: theme.spacing.sm }}>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: theme.spacing.sm }}>
             {popular.map((experiment) => (
-              <ExperimentListItem key={experiment.id} experiment={experiment} />
+              <View key={experiment.id} style={{ width: '48%' }}>
+                <ExperimentListItem experiment={experiment} />
+              </View>
             ))}
           </View>
         )}

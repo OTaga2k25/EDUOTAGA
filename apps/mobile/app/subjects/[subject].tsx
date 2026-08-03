@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList, View, RefreshControl } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { SectionHeading } from '@/components/section-heading';
 import { ExperimentCard } from '@/components/experiment-card';
@@ -11,7 +11,7 @@ export default function SubjectScreen() {
   const theme = useThemeColors();
   const { subject: slug } = useLocalSearchParams<{ subject: string }>();
   const { data: subject, isPending: isSubjectPending } = useSubject(slug);
-  const { data: experiments, isPending: areExperimentsPending } = useExperiments({ subjectId: subject?.id });
+  const { data: experiments, isPending: areExperimentsPending, refetch, isRefetching } = useExperiments({ subjectId: subject?.id });
 
   if (isSubjectPending) {
     return (
@@ -31,8 +31,22 @@ export default function SubjectScreen() {
         <FlatList
           data={experiments}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ gap: theme.spacing.sm, paddingVertical: theme.spacing.md }}
-          renderItem={({ item }) => <ExperimentCard experiment={item} />}
+          numColumns={2}
+          columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: theme.spacing.sm }}
+          contentContainerStyle={{ paddingVertical: theme.spacing.md }}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefetching}
+              onRefresh={refetch}
+              tintColor={theme.colors.primary}
+              colors={[theme.colors.primary]}
+            />
+          }
+          renderItem={({ item }) => (
+            <View style={{ width: '48%' }}>
+              <ExperimentCard experiment={item} />
+            </View>
+          )}
           ListEmptyComponent={<EmptyState title="No experiments yet" />}
         />
       )}

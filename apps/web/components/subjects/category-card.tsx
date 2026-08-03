@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Category } from '@eduotaga/types';
-import { Atom, FlaskConical, Leaf, Cpu, Settings, Sigma } from 'lucide-react';
+import { Atom, FlaskConical, Leaf, Cpu, Settings, Sigma, Monitor } from 'lucide-react';
 
 const CATEGORY_ICONS = {
   physics: Atom,
@@ -10,6 +10,7 @@ const CATEGORY_ICONS = {
   mechanical: Settings,
   mathematics: Sigma,
   marine: Leaf, // using Leaf temporarily or Ship if available
+  computer: Monitor,
 } as const;
 
 const CATEGORY_BG = {
@@ -20,6 +21,7 @@ const CATEGORY_BG = {
   mechanical: '!bg-neo-yellow dark:!bg-neo-yellow',
   mathematics: '!bg-neo-blue dark:!bg-neo-blue',
   marine: '!bg-neo-cyan dark:!bg-neo-cyan',
+  computer: '!bg-neo-purple dark:!bg-neo-purple',
 } as const;
 
 export function CategoryCard({

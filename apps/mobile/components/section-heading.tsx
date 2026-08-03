@@ -5,13 +5,13 @@ export function SectionHeading({ eyebrow, title, description }: { eyebrow?: stri
   const theme = useThemeColors();
 
   return (
-    <View style={{ gap: 4 }}>
+    <View style={{ gap: 4, marginBottom: theme.spacing.lg }}>
       {eyebrow && (
         <Text style={{ color: theme.colors.primary, fontSize: theme.typography.sizes.sm, fontWeight: '700' }}>
           {eyebrow.toUpperCase()}
         </Text>
       )}
-      <Text style={{ color: theme.colors.foreground, fontSize: theme.typography.sizes['2xl'], fontWeight: '700' }}>
+      <Text style={{ color: theme.colors.foreground, fontSize: theme.typography.sizes['3xl'], fontWeight: '900' }}>
         {title}
       </Text>
       {description && (

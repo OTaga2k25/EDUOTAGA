@@ -46,14 +46,6 @@ export default function ExperimentScreen() {
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <View style={{ padding: theme.spacing.md, paddingBottom: theme.spacing.sm }}>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
-          <Badge label={experiment.subject.name} tone="primary" />
-          <Badge label={DIFFICULTY_LABELS[experiment.difficulty]} tone={DIFFICULTY_TONE[experiment.difficulty]} />
-          {experiment.estimatedDurationMinutes && (
-            <Badge label={formatDuration(experiment.estimatedDurationMinutes)} />
-          )}
-        </View>
-
         <Text
           style={{
             color: theme.colors.foreground,

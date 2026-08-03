@@ -20,7 +20,13 @@ export async function search(query: string): Promise<SearchResultItem[]> {
   for (const experiment of experiments) {
     const score = scoreTextMatch(trimmed, {
       title: experiment.title,
-      body: [experiment.summary, experiment.theory, ...experiment.tags],
+      body: [
+        experiment.summary,
+        experiment.theory,
+        ...experiment.tags,
+        experiment.categoryId,
+        subjectNameById.get(experiment.subjectId) ?? '',
+      ],
     });
     if (score > 0) {
       scored.push({

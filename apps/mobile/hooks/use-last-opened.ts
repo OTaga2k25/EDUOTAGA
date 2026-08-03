@@ -12,18 +12,24 @@ export function useTrackLastOpened(slug: string | undefined) {
 
 export function useLastOpenedSlug() {
   const [slug, setSlug] = useState<string | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     AsyncStorage.getItem(LAST_OPENED_KEY)
       .then((value) => {
-        if (!cancelled) setSlug(value);
+        if (!cancelled) {
+          setSlug(value);
+          setIsLoaded(true);
+        }
       })
-      .catch(() => {});
+      .catch(() => {
+        if (!cancelled) setIsLoaded(true);
+      });
     return () => {
       cancelled = true;
     };
   }, []);
 
-  return slug;
+  return { slug, isLoaded };
 }

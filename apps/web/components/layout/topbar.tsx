@@ -17,8 +17,8 @@ export function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
       </button>
 
       <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 lg:hidden">
-        <img src="/logo-light.png" alt="edUOtaga Logo" className="block dark:hidden h-12 w-auto object-contain" />
-        <img src="/logo-dark.png" alt="edUOtaga Logo" className="hidden dark:block h-12 w-auto object-contain" />
+        <img src="/logo-light.png" alt="edUOtaga Logo" width="150" height="48" className="block dark:hidden h-12 w-auto object-contain" />
+        <img src="/logo-dark.png" alt="edUOtaga Logo" width="150" height="48" className="hidden dark:block h-12 w-auto object-contain" />
         <div className="flex flex-col mt-1">
           <span className="text-[16px] font-black uppercase leading-none tracking-tight text-foreground">edUOtaga</span>
           <span className="text-[8px] font-bold uppercase tracking-wider text-muted-foreground mt-0.5">Virtual Labs</span>

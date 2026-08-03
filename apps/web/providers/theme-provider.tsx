@@ -25,7 +25,7 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function readStoredTheme(): Theme {
   if (typeof window === 'undefined') return 'system';
-  return (localStorage.getItem(STORAGE_KEY) as Theme | null) ?? 'system';
+  return (localStorage.getItem(STORAGE_KEY) as Theme | null) ?? 'light';
 }
 
 function subscribeToSystemTheme(callback: () => void) {
@@ -44,7 +44,7 @@ function getSystemThemeServerSnapshot(): 'light' | 'dark' {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('system');
+  const [theme, setThemeState] = useState<Theme>('light');
   const [mounted, setMounted] = useState(false);
 
   const systemTheme = useSyncExternalStore(
@@ -83,4 +83,4 @@ export function useTheme(): ThemeContextValue {
 }
 
 /** Inline, render-blocking script that sets the `dark` class before hydration to avoid a flash. */
-export const themeInitScript = `(function(){try{var t=localStorage.getItem('${STORAGE_KEY}')||'system';var d=t==='dark'||(t==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d);}catch(e){}})();`;
+export const themeInitScript = `(function(){try{var t=localStorage.getItem('${STORAGE_KEY}')||'light';var d=t==='dark'||(t==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d);}catch(e){}})();`;

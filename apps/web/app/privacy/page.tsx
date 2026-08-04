@@ -6,7 +6,8 @@ export const metadata: Metadata = {
 };
 
 const LAST_UPDATED = "4 August 2026";
-const CONTACT_EMAIL = "support@otaga.in";
+const CONTACT_EMAIL = "otaga2k25@gmail.com";
+const CONTACT_WEBSITE = "otaga.in";
 
 export default function PrivacyPage() {
   return (
@@ -96,13 +97,26 @@ export default function PrivacyPage() {
 
         <section>
           <h2 className="text-2xl font-semibold mb-3">Contact us</h2>
-          <p>
-            If you have questions about this policy, contact us at{" "}
-            <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary underline underline-offset-4">
-              {CONTACT_EMAIL}
-            </a>
-            .
-          </p>
+          <p className="mb-3">If you have questions about this policy, you can reach us at:</p>
+          <ul className="list-none space-y-2">
+            <li>
+              Email:{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary underline underline-offset-4">
+                {CONTACT_EMAIL}
+              </a>
+            </li>
+            <li>
+              Website:{" "}
+              <a
+                href={`https://${CONTACT_WEBSITE}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary underline underline-offset-4"
+              >
+                {CONTACT_WEBSITE}
+              </a>
+            </li>
+          </ul>
         </section>
       </div>
     </div>

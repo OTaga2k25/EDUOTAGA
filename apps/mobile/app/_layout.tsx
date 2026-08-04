@@ -9,7 +9,12 @@ import { MyLabProvider } from '@/hooks/use-my-lab';
 
 // Always start in light mode, whatever the device theme is.
 // The header toggle can still switch to dark for the session.
-Appearance.setColorScheme('light');
+// Guarded: setColorScheme is unavailable on some runtimes (e.g. Expo Go).
+try {
+  Appearance.setColorScheme?.('light');
+} catch {
+  // Fall back to following the device theme.
+}
 
 export default function RootLayout() {
   const theme = useThemeColors();

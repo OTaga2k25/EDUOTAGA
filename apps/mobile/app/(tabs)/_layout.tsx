@@ -1,13 +1,32 @@
 import { Tabs } from 'expo-router';
-import { Text, View, Pressable, Appearance, useColorScheme, Image } from 'react-native';
+import { Pressable, Appearance, useColorScheme, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useThemeColors } from '@/hooks/use-theme-colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+function ThemeToggle() {
+  const theme = useThemeColors();
+  const scheme = useColorScheme();
+
+  return (
+    <Pressable
+      style={{ paddingHorizontal: 16 }}
+      onPress={() => {
+        Appearance.setColorScheme(scheme === 'dark' ? 'light' : 'dark');
+      }}
+    >
+      <Ionicons
+        name={scheme === 'dark' ? 'sunny' : 'moon'}
+        size={24}
+        color={theme.colors.foreground}
+      />
+    </Pressable>
+  );
+}
+
 export default function TabsLayout() {
   const theme = useThemeColors();
   const insets = useSafeAreaInsets();
-  const scheme = useColorScheme();
 
   return (
     <Tabs
@@ -39,9 +58,9 @@ export default function TabsLayout() {
         options={{ 
           title: 'Home',
           headerTitle: () => (
-            <Image 
-              source={scheme === 'dark' ? require('../../assets/images/logo-dark.png') : require('../../assets/images/logo-light.png')}
-              style={{ width: 120, height: 32, resizeMode: 'contain' }}
+            <Image
+              source={require('../../assets/images/EduOtagalogo.png')}
+              style={{ width: 40, height: 40, resizeMode: 'contain' }}
             />
           ),
           headerTitleAlign: 'center',
@@ -50,23 +69,7 @@ export default function TabsLayout() {
               <Ionicons name="menu" size={28} color={theme.colors.foreground} />
             </Pressable>
           ),
-          headerRight: () => {
-            const scheme = useColorScheme();
-            return (
-              <Pressable 
-                style={{ paddingHorizontal: 16 }}
-                onPress={() => {
-                  Appearance.setColorScheme(scheme === 'dark' ? 'light' : 'dark');
-                }}
-              >
-                <Ionicons 
-                  name={scheme === 'dark' ? 'sunny' : 'moon'} 
-                  size={24} 
-                  color={theme.colors.foreground} 
-                />
-              </Pressable>
-            );
-          },
+          headerRight: () => <ThemeToggle />,
         }} 
       />
       <Tabs.Screen name="experiments" options={{ title: 'Experiments', headerShown: false }} />

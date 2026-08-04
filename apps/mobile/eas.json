@@ -9,14 +9,16 @@
       "distribution": "internal",
       "env": {
         "EAS_PACKAGE_MANAGER": "npm"
-      }
+      },
+      "channel": "development"
     },
     "preview": {
       "distribution": "internal",
       "env": {
         "EAS_PACKAGE_MANAGER": "npm",
         "EXPO_PUBLIC_API_URL": "https://edu.otaga.in"
-      }
+      },
+      "channel": "preview"
     },
     "production": {
       "autoIncrement": true,
@@ -26,7 +28,8 @@
       "env": {
         "EAS_PACKAGE_MANAGER": "npm",
         "EXPO_PUBLIC_API_URL": "https://edu.otaga.in"
-      }
+      },
+      "channel": "production"
     }
   },
   "submit": {

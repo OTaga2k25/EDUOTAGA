@@ -18,7 +18,7 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.alanalz.eduotaga"
+      "package": "com.otagaworks.eduotaga"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -37,6 +37,12 @@
       "eas": {
         "projectId": "c8627e05-b151-4577-bb19-6fe7752dd31e"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c8627e05-b151-4577-bb19-6fe7752dd31e"
     }
   }
 }

@@ -20,6 +20,9 @@
     },
     "production": {
       "autoIncrement": true,
+      "android": {
+        "buildType": "app-bundle"
+      },
       "env": {
         "EAS_PACKAGE_MANAGER": "npm",
         "EXPO_PUBLIC_API_URL": "https://edu.otaga.in"

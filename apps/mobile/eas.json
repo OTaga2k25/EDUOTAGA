@@ -14,13 +14,15 @@
     "preview": {
       "distribution": "internal",
       "env": {
-        "EAS_PACKAGE_MANAGER": "npm"
+        "EAS_PACKAGE_MANAGER": "npm",
+        "EXPO_PUBLIC_API_URL": "https://edu.otaga.in"
       }
     },
     "production": {
       "autoIncrement": true,
       "env": {
-        "EAS_PACKAGE_MANAGER": "npm"
+        "EAS_PACKAGE_MANAGER": "npm",
+        "EXPO_PUBLIC_API_URL": "https://edu.otaga.in"
       }
     }
   },

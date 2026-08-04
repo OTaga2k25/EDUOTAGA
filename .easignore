@@ -53,4 +53,7 @@ metro-cache/
 # Misc
 .vercel
 
-/app.json
+# Generated native projects — EAS runs prebuild itself.
+# (.easignore replaces every .gitignore for the upload, so these must be listed here.)
+/apps/mobile/android
+/apps/mobile/ios

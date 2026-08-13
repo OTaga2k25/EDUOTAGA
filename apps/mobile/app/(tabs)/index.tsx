@@ -41,7 +41,7 @@ export default function HomeScreen() {
         }
       >
       <View style={{ backgroundColor: theme.colors.surface, borderRadius: theme.radii.xl, borderWidth: 2, borderColor: theme.colors.foreground, overflow: 'hidden', padding: theme.spacing.lg, minHeight: 160, justifyContent: 'center', shadowColor: theme.colors.foreground, shadowOffset: { width: 2, height: 2 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4 }}>
-        <View style={{ width: '66%', zIndex: 10 }}>
+        <View style={{ width: '55%', zIndex: 10 }}>
           <Text style={{ fontSize: 13, fontWeight: 'bold', color: theme.colors.foreground, marginBottom: 6 }}>
             Welcome to edUOtaga 👋
           </Text>
@@ -51,15 +51,15 @@ export default function HomeScreen() {
         </View>
         <Image
           source={require('../../assets/images/boy.png')}
-          style={{ position: 'absolute', right: -10, bottom: -10, width: 180, height: 180, resizeMode: 'contain' }}
+          style={{ position: 'absolute', right: -15, bottom: -10, width: 160, height: 160, resizeMode: 'contain' }}
         />
       </View>
 
       <Link href="/search" asChild>
-        <Pressable style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: theme.colors.surface, borderWidth: 2, borderColor: theme.colors.foreground, borderRadius: theme.radii.xl, paddingHorizontal: 20, height: 64, shadowColor: theme.colors.foreground, shadowOffset: { width: 2, height: 2 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4 }}>
-          <Ionicons name="search" size={24} color={theme.colors.muted} style={{ marginRight: 14 }} />
-          <Text style={{ flex: 1, color: theme.colors.muted, fontSize: 16, fontWeight: '600' }}>Search experiments, topics...</Text>
-          <Ionicons name="options" size={24} color={theme.colors.foreground} style={{ marginLeft: 14 }} />
+        <Pressable style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: theme.colors.surface, borderWidth: 2, borderColor: theme.colors.foreground, borderRadius: theme.radii.xl, paddingHorizontal: 16, height: 56, shadowColor: theme.colors.foreground, shadowOffset: { width: 2, height: 2 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4 }}>
+          <Ionicons name="search" size={22} color={theme.colors.muted} style={{ marginRight: 12 }} />
+          <Text numberOfLines={1} style={{ flex: 1, color: theme.colors.muted, fontSize: 15, fontWeight: '600' }}>Search experiments, topics...</Text>
+          <Ionicons name="options" size={22} color={theme.colors.foreground} style={{ marginLeft: 12 }} />
         </Pressable>
       </Link>
 

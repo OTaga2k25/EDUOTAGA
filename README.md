@@ -76,6 +76,15 @@ Adding a new experiment never requires touching frontend code; see
 - **Mobile**: Expo's free tier for development (`expo start`) and EAS
   Build's free plan for store builds.
 
+### EAS Updates (Over-The-Air)
+
+To push over-the-air updates to the mobile app without re-submitting to app stores, use the EAS CLI:
+
+```bash
+cd apps/mobile
+eas update --branch production --message "Your update message here"
+```
+
 ## Node version note
 
 This repo was scaffolded with Node 20.19.4 installed. Expo SDK 57 lists

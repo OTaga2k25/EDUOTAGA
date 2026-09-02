@@ -49,7 +49,9 @@ export default function ExperimentScreen() {
 
   if (isPending || !experiment) {
     return (
-      <View style={{ flex: 1, backgroundColor: theme.colors.background, padding: theme.spacing.md }}>
+      <View
+        style={{ flex: 1, backgroundColor: theme.colors.background, padding: theme.spacing.md }}
+      >
         <ActivityIndicator color={theme.colors.primary} />
       </View>
     );
@@ -85,7 +87,9 @@ export default function ExperimentScreen() {
             source={{ uri: resolveSimulationUrl(experiment.simulationUrl) }}
             startInLoadingState
             allowsInlineMediaPlayback
-            // Lets a simulation that requests fullscreen from inside get it.
+            // Android-only, and covers HTML5 <video> only — not the general
+            // Fullscreen API. The button below is what makes the simulation
+            // itself fill the screen.
             allowsFullscreenVideo
           />
         ) : (
@@ -96,53 +100,53 @@ export default function ExperimentScreen() {
             />
           </View>
         )}
-      </View>
 
-      {showSimulation && (
-        <Pressable
-          onPress={() => setIsFullscreen((current) => !current)}
-          accessibilityRole="button"
-          accessibilityLabel={isFullscreen ? 'Exit fullscreen' : 'View simulation fullscreen'}
-          hitSlop={8}
-          style={{
-            position: 'absolute',
-            right: theme.spacing.md,
-            // With the header hidden there is nothing keeping the button clear
-            // of the notch, so inset it manually.
-            top: (isFullscreen ? insets.top : 0) + theme.spacing.md,
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: theme.spacing.xs,
-            paddingHorizontal: theme.spacing.sm + 2,
-            paddingVertical: theme.spacing.sm,
-            borderRadius: theme.radii.full,
-            backgroundColor: theme.colors.surface,
-            borderWidth: 1,
-            borderColor: theme.colors.border,
-            // Keep it legible over whatever the simulation draws underneath.
-            shadowColor: '#000',
-            shadowOpacity: 0.2,
-            shadowRadius: 6,
-            shadowOffset: { width: 0, height: 2 },
-            elevation: 4,
-          }}
-        >
-          <Ionicons
-            name={isFullscreen ? 'contract-outline' : 'expand-outline'}
-            size={18}
-            color={theme.colors.foreground}
-          />
-          <Text
+        {showSimulation && (
+          <Pressable
+            onPress={() => setIsFullscreen((current) => !current)}
+            accessibilityRole="button"
+            accessibilityLabel={isFullscreen ? 'Exit fullscreen' : 'View simulation fullscreen'}
+            hitSlop={8}
             style={{
-              color: theme.colors.foreground,
-              fontSize: theme.typography.sizes.sm,
-              fontWeight: '600',
+              position: 'absolute',
+              right: theme.spacing.md,
+              // With the header hidden there is nothing keeping the button clear
+              // of the notch, so inset it manually.
+              top: (isFullscreen ? insets.top : 0) + theme.spacing.md,
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: theme.spacing.xs,
+              paddingHorizontal: theme.spacing.sm + 2,
+              paddingVertical: theme.spacing.sm,
+              borderRadius: theme.radii.full,
+              backgroundColor: theme.colors.surface,
+              borderWidth: 1,
+              borderColor: theme.colors.border,
+              // Keep it legible over whatever the simulation draws underneath.
+              shadowColor: '#000',
+              shadowOpacity: 0.2,
+              shadowRadius: 6,
+              shadowOffset: { width: 0, height: 2 },
+              elevation: 4,
             }}
           >
-            {isFullscreen ? 'Exit' : 'Fullscreen'}
-          </Text>
-        </Pressable>
-      )}
+            <Ionicons
+              name={isFullscreen ? 'contract-outline' : 'expand-outline'}
+              size={18}
+              color={theme.colors.foreground}
+            />
+            <Text
+              style={{
+                color: theme.colors.foreground,
+                fontSize: theme.typography.sizes.sm,
+                fontWeight: '600',
+              }}
+            >
+              {isFullscreen ? 'Exit' : 'Fullscreen'}
+            </Text>
+          </Pressable>
+        )}
+      </View>
     </View>
   );
 }

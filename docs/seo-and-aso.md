@@ -1,0 +1,215 @@
+# SEO (web) & App Links / ASO (mobile)
+
+How discovery works for EDUOTAGA, what is already wired up in code, and the
+steps that can only be completed outside the repo.
+
+---
+
+## 1. Web SEO
+
+### Canonical origin
+
+Everything derives from one value, `SITE_URL` in [`apps/web/lib/seo.ts`](../apps/web/lib/seo.ts),
+which reads `NEXT_PUBLIC_SITE_URL` and falls back to `https://edu.otaga.in`.
+
+**Set `NEXT_PUBLIC_SITE_URL` in the production environment.** If it is missing,
+the fallback is used — correct today, but it will silently point at the wrong
+domain the moment the site moves.
+
+### What is in place
+
+| Concern | Where |
+| --- | --- |
+| Title template, keywords, robots directives, OG/Twitter defaults | `app/layout.tsx` |
+| `Organization` + `WebSite` (with sitelinks SearchAction) JSON-LD | `app/layout.tsx` via `components/seo/json-ld.tsx` |
+| `LearningResource` + `BreadcrumbList` per experiment | `app/experiments/[slug]/page.tsx` |
+| `CollectionPage` + `ItemList` per subject | `app/subjects/[subject]/page.tsx` |
+| Per-page canonical URLs | `canonical()` from `lib/seo.ts` |
+| Social card image (1200x630, generated at build) | `app/opengraph-image.tsx` |
+| Sitemap (indexable routes only) | `app/sitemap.ts` |
+| robots.txt | `app/robots.ts` |
+
+### Canonicals: the one rule to remember
+
+Next.js merges metadata **shallowly**. A canonical set on the root layout is
+inherited by every page that does not override it, which would point the entire
+site at `/`. So the root layout deliberately declares **no** canonical, and
+every page sets its own with `canonical('/path')`.
+
+**When you add a page, add `...canonical('/your-path')` to its metadata.**
+
+### Deliberately not indexed
+
+- `/search` — every `?q=` is a distinct URL; indexing them creates unbounded
+  near-duplicate pages. `noindex, follow` plus disallowed in robots.txt.
+- `/my-lab` — per-visitor content, nothing useful in a search result.
+- `/videos` — placeholder page. **Remove the `robots` line from its metadata
+  and add it to the sitemap once real videos ship.**
+
+Filtered listing URLs (`/experiments?categoryId=...`) are not blocked — they
+canonicalise to the clean path, which consolidates their ranking signals.
+
+### Titles
+
+`composeTitle()` / `experimentTitle()` in `lib/seo.ts` append a keyword
+qualifier only when it fits within a 65-character budget **and** the words are
+not already in the title. Naive concatenation produced titles like
+`Bending Light: Reflection & Refraction - Virtual Light — Reflection &
+Refraction Experiment · EDUOTAGA` (103 chars, duplicated, truncated in
+results). Use these helpers rather than string-building titles by hand.
+
+### Manual steps (cannot be done from the repo)
+
+1. **Google Search Console** — add and verify `https://edu.otaga.in`, then
+   submit `https://edu.otaga.in/sitemap.xml`.
+   - Verify by DNS TXT record, or add `verification: { google: '<token>' }`
+     to the metadata in `app/layout.tsx`.
+2. **Bing Webmaster Tools** — import the Search Console property.
+3. Confirm after deploy that `https://edu.otaga.in/robots.txt` and
+   `/sitemap.xml` return the production domain, not `localhost`.
+4. Validate structured data at
+   <https://search.google.com/test/rich-results>.
+
+### The honest constraint
+
+There are currently **5 experiments across 3 subjects**. The technical work
+above makes every page indexable, correctly described, and rich-result
+eligible — but it cannot create demand that is not there. With this little
+content the site will rank for `EDUOTAGA` and little else.
+
+Ranking follows content volume. Each new experiment added to
+`data/experiments.json` is automatically titled, described, given structured
+data, and added to the sitemap — so the marginal SEO cost per experiment is now
+zero. **Publishing more experiments is the growth lever; nothing in this
+document substitutes for it.**
+
+---
+
+## 2. Mobile: App Links & Universal Links
+
+A native app is not crawlable — there is no "SEO" for it. The two levers are
+**deep links** (so web results open the app) and **ASO** (store listing).
+
+### Why this matters for the web too
+
+The mobile routes mirror the web ones exactly:
+
+| URL | Web route | App route |
+| --- | --- | --- |
+| `/experiments/<slug>` | `app/experiments/[slug]/page.tsx` | `app/experiments/[slug]/index.tsx` |
+| `/subjects/<slug>` | `app/subjects/[subject]/page.tsx` | `app/subjects/[subject].tsx` |
+
+So a Google result for `edu.otaga.in/experiments/bendinglight` opens that exact
+screen in the app when installed. Expo Router strips the origin from incoming
+`https://` URLs and routes on the path, so no `prefixes` config is required.
+
+### What is in place
+
+- `android.intentFilters` with `autoVerify: true` for `/experiments` and
+  `/subjects` — `apps/mobile/app.json`. Verified present in the prebuilt
+  `AndroidManifest.xml`.
+- `ios.associatedDomains: ["applinks:edu.otaga.in"]` and
+  `ios.bundleIdentifier: com.otagaworks.eduotaga`.
+- `apps/web/public/.well-known/assetlinks.json` (Android)
+- `apps/web/public/.well-known/apple-app-site-association` (iOS)
+- Explicit `application/json` Content-Type headers for both, in
+  `apps/web/next.config.ts`. The Apple file has no extension, and both
+  verifiers reject a wrong content type.
+
+### Required before deep links work — two placeholders must be replaced
+
+**`assetlinks.json` → `sha256_cert_fingerprints`**
+
+Use the **Play App Signing** certificate, not the upload certificate — Google
+re-signs your bundle, so the upload cert fingerprint will silently fail to
+verify. Get it from either:
+
+    eas credentials -p android
+
+(choose the production Android build credentials), or Play Console → your app →
+**Test and release → Setup → App signing** → *App signing key certificate* →
+SHA-256 fingerprint.
+
+**`apple-app-site-association` → `appIDs`**
+
+Format is `<TEAM_ID>.<BUNDLE_ID>`, e.g. `ABCDE12345.com.otagaworks.eduotaga`.
+Team ID comes from the Apple Developer account (Membership details).
+If you are not shipping iOS yet, **delete this file** rather than deploying it
+with a placeholder in place.
+
+### Verifying after deploy
+
+    # Both must return HTTP 200 and Content-Type: application/json
+    curl -sI https://edu.otaga.in/.well-known/assetlinks.json
+    curl -sI https://edu.otaga.in/.well-known/apple-app-site-association
+
+    # On a connected Android device, after installing a release build:
+    adb shell pm get-app-links com.otagaworks.eduotaga     # expect "verified"
+    adb shell am start -a android.intent.action.VIEW \
+      -d "https://edu.otaga.in/experiments/bendinglight"
+
+Google's official verifier:
+<https://developers.google.com/digital-asset-links/tools/generator>
+
+Note: `assetlinks.json` must be reachable over **HTTPS with a valid certificate
+and no redirects**. Android's verifier does not follow redirects.
+
+---
+
+## 3. ASO — Play Store listing
+
+Google Play indexes the title, short description, and (weakly) the long
+description. Draft below; the current listing is just `EDUOTAGA`, which is
+unsearchable for anyone who does not already know the name.
+
+**Title** (30 char max) — 29 characters:
+
+    EDUOTAGA: Virtual Science Lab
+
+**Short description** (80 char max) — 74 characters:
+
+    Run physics, chemistry & biology experiments in a free virtual laboratory.
+
+**Long description** (4000 char max):
+
+    EDUOTAGA is a free, open-source virtual laboratory that lets you run real
+    science experiments on your phone — no equipment, no lab, no cost.
+
+    INTERACTIVE SIMULATIONS
+    Every experiment is a hands-on simulation you control. Bend light through
+    lenses and mirrors to see reflection and refraction. Step through the
+    Panama Canal lock system. Watch two-pointer algorithms reverse arrays and
+    strings in real time.
+
+    BUILT FOR STUDENTS
+    - Physics, chemistry, biology, electronics, mechanical and marine engineering
+    - Computer science algorithm visualisations
+    - Theory, procedure, and observations alongside every simulation
+    - Practice quizzes to check what you learned
+    - Save experiments to My Lab and pick up where you left off
+
+    WHY EDUOTAGA
+    School and college labs are often unavailable, oversubscribed, or missing
+    equipment. EDUOTAGA puts the same experiments in your pocket, free, so you
+    can repeat them as many times as you need before an exam or a practical.
+
+    OPEN SOURCE
+    EDUOTAGA is open source and free forever. No ads, no subscriptions, no
+    paywalled experiments.
+
+    Also available in your browser at edu.otaga.in
+
+**Keyword coverage to preserve when editing:** virtual lab, online laboratory,
+physics simulation, chemistry experiments, biology practical, science
+experiments, STEM learning, algorithm visualisation.
+
+**Assets still needed:**
+
+- Feature graphic, 1024x500
+- At least 4 phone screenshots (a simulation mid-interaction converts far
+  better than a menu screen)
+- Category: **Education**
+
+**Also do:** add `edu.otaga.in` to the Play Console listing as the developer
+website, and link the app from the website — cross-linking is what associates
+the two properties.

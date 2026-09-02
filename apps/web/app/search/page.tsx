@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { canonical } from '@/lib/seo';
 import Link from 'next/link';
 import { Badge, EmptyState, SectionHeading } from '@eduotaga/ui/web';
 import { search } from '@/services/search-service';
@@ -6,6 +7,10 @@ import { search } from '@/services/search-service';
 export const metadata: Metadata = {
   title: 'Search',
   description: 'Search experiments, subjects, and videos on EDUOTAGA.',
+  ...canonical('/search'),
+  // Every ?q= permutation is a distinct URL. Indexing them creates unbounded
+  // near-duplicate pages, so results are crawlable but not indexable.
+  robots: { index: false, follow: true },
 };
 
 interface SearchPageProps {

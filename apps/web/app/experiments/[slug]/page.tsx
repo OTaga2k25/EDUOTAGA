@@ -6,6 +6,8 @@ import { TrackLastOpened } from '@/components/experiments/track-last-opened';
 import { SetTutorContext } from '@/components/experiments/set-tutor-context';
 import { getExperimentDetail } from '@/services/experiments-service';
 import { getExperiments } from '@/lib/data';
+import { JsonLd } from '@/components/seo/json-ld';
+import { absoluteUrl, breadcrumbSchema, canonical, experimentSchema, experimentTitle } from '@/lib/seo';
 
 interface ExperimentPageProps {
   params: Promise<{ slug: string }>;
@@ -19,11 +21,29 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: ExperimentPageProps): Promise<Metadata> {
   const { slug } = await params;
   const experiment = await getExperimentDetail(slug);
-  if (!experiment) return {};
+
+  // An unresolved slug renders notFound(); tell crawlers not to index the
+  // 404 body they receive in the meantime.
+  if (!experiment) return { title: 'Experiment not found', robots: { index: false, follow: false } };
+
+  const url = absoluteUrl(`/experiments/${slug}`);
+  const title = experimentTitle(experiment.title, experiment.subject.name);
+
   return {
-    title: experiment.title,
+    title,
     description: experiment.summary,
-    openGraph: { title: experiment.title, description: experiment.summary },
+    keywords: [...experiment.tags, experiment.subject.name, 'virtual lab', 'simulation'],
+    ...canonical(`/experiments/${slug}`),
+    openGraph: {
+      type: 'article',
+      url,
+      title,
+      description: experiment.summary,
+      publishedTime: experiment.createdAt,
+      modifiedTime: experiment.updatedAt,
+      tags: experiment.tags,
+    },
+    twitter: { card: 'summary_large_image', title, description: experiment.summary },
   };
 }
 
@@ -34,6 +54,17 @@ export default async function ExperimentPage({ params }: ExperimentPageProps) {
 
   return (
     <article className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+      <JsonLd
+        schema={[
+          experimentSchema(experiment),
+          breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Experiments', path: '/experiments' },
+            { name: experiment.subject.name, path: `/subjects/${experiment.subject.slug}` },
+            { name: experiment.title, path: `/experiments/${slug}` },
+          ]),
+        ]}
+      />
       <TrackLastOpened slug={slug} />
       <SetTutorContext
         experimentSlug={slug}

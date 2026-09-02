@@ -76,6 +76,21 @@ Adding a new experiment never requires touching frontend code; see
 - **Mobile**: Expo's free tier for development (`expo start`) and EAS
   Build's free plan for store builds.
 
+### EAS App Store Builds (Play Store)
+
+To build the Android App Bundle (`.aab`) for the Google Play Store:
+
+```bash
+cd apps/mobile
+eas build --platform android --profile production
+```
+
+If you have configured your Google Play Store credentials in EAS, you can submit the latest build directly via terminal:
+
+```bash
+eas submit -p android --latest
+```
+
 ### EAS Updates (Over-The-Air)
 
 To push over-the-air updates to the mobile app without re-submitting to app stores, use the EAS CLI:

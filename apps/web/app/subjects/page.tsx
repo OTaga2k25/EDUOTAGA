@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { JsonLd } from '@/components/seo/json-ld';
+import { breadcrumbSchema, canonical } from '@/lib/seo';
 import Link from 'next/link';
 import { EmptyState, SectionHeading } from '@eduotaga/ui/web';
 import type { CategoryId } from '@eduotaga/types';
@@ -8,8 +10,10 @@ import { CategoryCard } from '@/components/subjects/category-card';
 import { listSubjects } from '@/services/subjects-service';
 
 export const metadata: Metadata = {
-  title: 'Subjects',
-  description: 'Browse every subject available on EDUOTAGA, grouped by discipline.',
+  title: 'Lab Subjects by Discipline',
+  description:
+    'Browse every subject available on EDUOTAGA, grouped by discipline — physics, chemistry, biology, electronics, mechanical, mathematics, marine and computer science.',
+  ...canonical('/subjects'),
 };
 
 interface SubjectsPageProps {
@@ -25,6 +29,12 @@ export default async function SubjectsPage({ searchParams }: SubjectsPageProps) 
   if (!categoryId) {
     return (
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+        <JsonLd
+          schema={breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Subjects', path: '/subjects' },
+          ])}
+        />
         <SectionHeading
           eyebrow="Subjects"
           title="Find your subject"

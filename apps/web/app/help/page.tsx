@@ -1,9 +1,12 @@
 import { LifeBuoy } from "lucide-react";
 import type { Metadata } from "next";
+import { canonical } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: "Help & Support | edUOtaga",
-  description: "Get help and support for edUOtaga.",
+  title: "Help & Support",
+  description:
+    "Get help using the EDUOTAGA virtual laboratory — running simulations, saving experiments, and troubleshooting the Android app.",
+  ...canonical('/help'),
 };
 
 export default function HelpPage() {

@@ -1,10 +1,22 @@
 import type { MetadataRoute } from 'next';
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+import { SITE_URL, absoluteUrl } from '@/lib/seo';
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: '*', allow: '/', disallow: '/api/' },
-    sitemap: `${siteUrl}/sitemap.xml`,
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: [
+          '/api/',
+          // Query-string result pages — unbounded near-duplicate URLs.
+          '/search',
+          // Per-visitor content with nothing to offer a search result.
+          '/my-lab',
+        ],
+      },
+    ],
+    sitemap: absoluteUrl('/sitemap.xml'),
+    host: SITE_URL,
   };
 }

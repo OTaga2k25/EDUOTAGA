@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { canonical } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | edUOtaga",
+  title: "Privacy Policy",
   description: "How edUOtaga handles your data on the website and Android app.",
+  ...canonical('/privacy'),
 };
 
 const LAST_UPDATED = "4 August 2026";

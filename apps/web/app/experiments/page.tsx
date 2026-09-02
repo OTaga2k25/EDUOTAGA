@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { JsonLd } from '@/components/seo/json-ld';
+import { breadcrumbSchema, canonical } from '@/lib/seo';
 import { EmptyState, SectionHeading } from '@eduotaga/ui/web';
 import { CATEGORIES } from '@eduotaga/constants';
 import type { ExperimentDifficulty, ExperimentSummary } from '@eduotaga/types';
@@ -6,8 +8,10 @@ import { SubjectModuleCard } from '@/components/experiments/subject-module-card'
 import { listExperiments } from '@/services/experiments-service';
 
 export const metadata: Metadata = {
-  title: 'Experiments',
-  description: 'Browse every hands-on experiment on EDUOTAGA.',
+  title: 'All Virtual Lab Experiments',
+  description:
+    'Browse every hands-on virtual experiment on EDUOTAGA across physics, chemistry, biology, electronics, mechanical, mathematics, marine and computer science.',
+  ...canonical('/experiments'),
 };
 
 interface ExperimentsPageProps {
@@ -50,6 +54,12 @@ export default async function ExperimentsPage({ searchParams }: ExperimentsPageP
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+      <JsonLd
+        schema={breadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Experiments', path: '/experiments' },
+        ])}
+      />
       <SectionHeading
         eyebrow="Experiments"
         title="All experiments"

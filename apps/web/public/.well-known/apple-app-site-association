@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["REPLACE_WITH_APPLE_TEAM_ID.com.otagaworks.eduotaga"],
+        "components": [
+          { "/": "/experiments/*", "comment": "Experiment detail pages" },
+          { "/": "/subjects/*", "comment": "Subject listing pages" }
+        ]
+      }
+    ]
+  }
+}

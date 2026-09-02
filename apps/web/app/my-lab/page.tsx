@@ -1,11 +1,15 @@
 import type { Metadata } from 'next';
+import { canonical } from '@/lib/seo';
 import { getExperiments, getSubjects } from '@/lib/data';
 import { MyLabClient } from './my-lab-client';
 import type { ExperimentSummary } from '@eduotaga/types';
 
 export const metadata: Metadata = {
-  title: 'My Lab | edUOtaga',
+  title: 'My Lab',
   description: 'Your saved experiments and simulations.',
+  ...canonical('/my-lab'),
+  // Per-visitor content — nothing here is meaningful in a search result.
+  robots: { index: false, follow: true },
 };
 
 export default async function MyLabPage() {

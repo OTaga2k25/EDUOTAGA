@@ -3,12 +3,16 @@
     "name": "EDUOTAGA",
     "slug": "eduotaga",
     "scheme": "eduotaga",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.otagaworks.eduotaga",
+      "associatedDomains": [
+        "applinks:edu.otaga.in"
+      ]
     },
     "android": {
       "adaptiveIcon": {
@@ -18,7 +22,30 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.otagaworks.eduotaga"
+      "package": "com.otagaworks.eduotaga",
+      "versionCode": 2,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "edu.otaga.in",
+              "pathPrefix": "/experiments"
+            },
+            {
+              "scheme": "https",
+              "host": "edu.otaga.in",
+              "pathPrefix": "/subjects"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",

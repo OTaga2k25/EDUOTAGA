@@ -1,9 +1,14 @@
 import { Hammer } from "lucide-react";
 import type { Metadata } from "next";
+import { canonical } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: "Videos | edUOtaga",
+  title: "Videos",
   description: "Video tutorials are coming soon.",
+  ...canonical('/videos'),
+  // Placeholder page with no real content — indexing it would only add a
+  // thin-content URL to the site. Flip this on once videos ship.
+  robots: { index: false, follow: true },
 };
 
 export default function VideosPage() {

@@ -1,8 +1,11 @@
+import type { Metadata } from 'next';
 import {
   LEARNING_PATH_STEPS,
   MOCK_CONTINUE_LEARNING,
   MOCK_DASHBOARD_STATS,
 } from '@eduotaga/constants';
+import { JsonLd } from '@/components/seo/json-ld';
+import { breadcrumbSchema, canonical } from '@/lib/seo';
 import { WelcomeBanner } from '@/components/dashboard/welcome-banner';
 import { LearningPath } from '@/components/dashboard/learning-path';
 import { ContinueLearningClient } from '@/components/dashboard/continue-learning-client';
@@ -14,6 +17,19 @@ import { listExperiments } from '@/services/experiments-service';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
+export const metadata: Metadata = {
+  // `title.absolute` opts out of the "%s · EDUOTAGA" template so the
+  // homepage title isn't the brand name repeated twice.
+  title: {
+    absolute: 'EDUOTAGA - Free Online Virtual Science Laboratory',
+  },
+  // Kept under ~160 characters so it isn't truncated in search results.
+  description:
+    'Run physics, chemistry, biology, electronics and computer science experiments in your browser. ' +
+    'EDUOTAGA is a free, open-source virtual laboratory for students.',
+  ...canonical('/'),
+};
+
 export default async function HomePage() {
   const experiments = await listExperiments();
   const popular = experiments.slice(0, 4);
@@ -21,6 +37,7 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-4 sm:gap-8 sm:px-6 sm:py-8">
+      <JsonLd schema={breadcrumbSchema([{ name: 'Home', path: '/' }])} />
       <WelcomeBanner />
 
       <div className="sm:hidden -mt-2">

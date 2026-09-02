@@ -1,4 +1,9 @@
-import { DIFFICULTY_LABELS, SITE_DESCRIPTION, SITE_NAME } from '@eduotaga/constants';
+import {
+  DIFFICULTY_LABELS,
+  PLAY_STORE_URL,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+} from '@eduotaga/constants';
 import { getExperiments, getSubjects } from '@/lib/data';
 import { absoluteUrl } from '@/lib/seo';
 
@@ -14,8 +19,14 @@ import { absoluteUrl } from '@/lib/seo';
  */
 export const dynamic = 'force-static';
 
-function line(label: string, url: string, description: string) {
-  return `- [${label}](${absoluteUrl(url)}): ${description}`;
+/** List entry pointing at a path on this site. */
+function line(label: string, path: string, description: string) {
+  return externalLine(label, absoluteUrl(path), description);
+}
+
+/** List entry pointing at an already-absolute URL, on or off this site. */
+function externalLine(label: string, url: string, description: string) {
+  return `- [${label}](${url}): ${description}`;
 }
 
 export async function GET() {
@@ -59,9 +70,10 @@ interactive simulation that runs in the browser, paired with the underlying
 theory, a step-by-step procedure, expected observations, and a short quiz. No
 account, payment, or physical equipment is required.
 
-The same experiments ship in the ${SITE_NAME} Android app. URLs under
-/experiments/ and /subjects/ open the matching screen in the app on devices
-where it is installed, via verified Android App Links.
+The same experiments ship in the ${SITE_NAME} Android app, free on Google
+Play. URLs under /experiments/ and /subjects/ open the matching screen in the
+app on devices where it is installed, via verified Android App Links. There is
+no iOS app yet.
 
 ## Experiments
 
@@ -75,6 +87,10 @@ ${subjectLines.join('\n')}
 
 ${line('All experiments', '/experiments', 'Every experiment, grouped by discipline and subject. Filterable by category and difficulty.')}
 ${line('All subjects', '/subjects', 'Every subject, grouped into the eight lab disciplines.')}
+
+## Android app
+
+${externalLine(`${SITE_NAME} on Google Play`, PLAY_STORE_URL, 'The Android app. Same experiments and simulations as the website, free, no account required.')}
 
 ## Optional
 

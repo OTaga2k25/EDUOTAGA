@@ -1,7 +1,26 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { Maximize2, Minimize2 } from 'lucide-react';
 import { EmptyState } from '@eduotaga/ui/web';
+
+/**
+ * `inline`  — sized to the simulation, in the page flow.
+ * `native`  — the browser's real fullscreen (Fullscreen API).
+ * `overlay` — a fixed, viewport-filling panel. The fallback for browsers with
+ *             no element-level Fullscreen API, most notably Safari on iPhone,
+ *             where `requestFullscreen` does not exist at all.
+ */
+type ViewMode = 'inline' | 'native' | 'overlay';
+
+/** Vendor-prefixed Fullscreen API, still needed for older WebKit. */
+interface FullscreenElement extends HTMLElement {
+  webkitRequestFullscreen?: () => Promise<void> | void;
+}
+interface FullscreenDocument extends Document {
+  webkitFullscreenElement?: Element | null;
+  webkitExitFullscreen?: () => Promise<void> | void;
+}
 
 export function SimulationFrame({
   simulationUrl,
@@ -15,7 +34,12 @@ export function SimulationFrame({
   fullHeight?: boolean;
 }) {
   const [frameHeight, setFrameHeight] = useState<number | undefined>(undefined);
+  const [mode, setMode] = useState<ViewMode>('inline');
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<ResizeObserver | null>(null);
+
+  const isFullscreen = mode !== 'inline';
 
   const handleLoad = () => {
     try {
@@ -31,7 +55,7 @@ export function SimulationFrame({
           ) + 32; // 32px buffer for safety against mobile rendering quirks
         };
 
-        const isImmersiveCSS = doc.defaultView 
+        const isImmersiveCSS = doc.defaultView
           ? doc.defaultView.getComputedStyle(doc.body).overflowY === 'hidden'
           : false;
 
@@ -43,17 +67,93 @@ export function SimulationFrame({
         setFrameHeight(getDocHeight());
 
         // Track dynamic height changes (e.g. from web fonts or mobile wrapping)
+        observerRef.current?.disconnect();
         const observer = new ResizeObserver(() => {
           setFrameHeight(getDocHeight());
         });
         observer.observe(doc.body);
         if (doc.documentElement) observer.observe(doc.documentElement);
+        observerRef.current = observer;
       }
     } catch (e) {
       console.warn('SimulationFrame height calculation failed:', e);
       // Ignore cross-origin errors if any
     }
   };
+
+  // The observer lives on the iframe's document, which outlives a re-render —
+  // without this it keeps firing setState after the frame is gone.
+  useEffect(() => () => observerRef.current?.disconnect(), []);
+
+  const enterFullscreen = useCallback(async () => {
+    const el = containerRef.current as FullscreenElement | null;
+    if (!el) return;
+
+    const request = el.requestFullscreen ?? el.webkitRequestFullscreen;
+    if (!request) {
+      // No element-level Fullscreen API (iPhone Safari) — use the overlay.
+      setMode('overlay');
+      return;
+    }
+
+    try {
+      await request.call(el);
+      setMode('native');
+    } catch {
+      // Also rejected when the gesture isn't trusted or permissions deny it.
+      setMode('overlay');
+    }
+  }, []);
+
+  const exitFullscreen = useCallback(async () => {
+    const doc = document as FullscreenDocument;
+    if (doc.fullscreenElement ?? doc.webkitFullscreenElement) {
+      try {
+        await (doc.exitFullscreen ?? doc.webkitExitFullscreen)?.call(doc);
+      } catch {
+        // Ignore — the state sync below still returns us to inline.
+      }
+    }
+    setMode('inline');
+  }, []);
+
+  // Keep React in sync when the user leaves fullscreen by other means
+  // (Esc, F11, or the browser's own chrome).
+  useEffect(() => {
+    const onChange = () => {
+      const doc = document as FullscreenDocument;
+      if (!(doc.fullscreenElement ?? doc.webkitFullscreenElement)) {
+        setMode((current) => (current === 'native' ? 'inline' : current));
+      }
+    };
+
+    document.addEventListener('fullscreenchange', onChange);
+    document.addEventListener('webkitfullscreenchange', onChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', onChange);
+      document.removeEventListener('webkitfullscreenchange', onChange);
+    };
+  }, []);
+
+  // Native fullscreen handles Esc itself; the overlay has to do it by hand.
+  useEffect(() => {
+    if (mode !== 'overlay') return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMode('inline');
+    };
+
+    // Stop the page behind the overlay from scrolling under it.
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [mode]);
+
   if (!available) {
     return (
       <EmptyState
@@ -67,8 +167,18 @@ export function SimulationFrame({
 
   return (
     <div
-      className={`overflow-hidden w-full rounded-2xl border-2 border-black dark:border-white bg-surface ${isImmersive ? 'h-[75vh] min-h-[600px]' : ''}`}
-      style={frameHeight ? { height: frameHeight } : undefined}
+      ref={containerRef}
+      className={[
+        'group relative w-full bg-surface',
+        isFullscreen
+          ? 'h-screen'
+          : `overflow-hidden rounded-2xl border-2 border-black dark:border-white ${isImmersive ? 'h-[75vh] min-h-[600px]' : ''}`,
+        mode === 'overlay' ? 'fixed inset-0 z-[100]' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      // A measured height would fight the viewport while fullscreen.
+      style={!isFullscreen && frameHeight ? { height: frameHeight } : undefined}
     >
       <iframe
         ref={iframeRef}
@@ -79,7 +189,32 @@ export function SimulationFrame({
         className="w-full h-full"
         style={{ border: 'none' }}
         scrolling="auto"
+        // Lets the simulation itself go fullscreen from inside the frame.
+        allow="fullscreen"
+        allowFullScreen
       />
+
+      <button
+        type="button"
+        onClick={isFullscreen ? exitFullscreen : enterFullscreen}
+        // Always visible rather than hover-only: on touch there is no hover,
+        // and this is the control that makes a small simulation usable.
+        className="absolute right-3 top-3 z-10 inline-flex items-center gap-2 rounded-full border-2 border-black bg-white/90 px-3 py-2 text-sm font-bold text-black shadow-md backdrop-blur transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 dark:border-white dark:bg-zinc-900/90 dark:text-white dark:hover:bg-zinc-900"
+        aria-label={isFullscreen ? 'Exit fullscreen' : 'View simulation fullscreen'}
+      >
+        {isFullscreen ? (
+          <Minimize2 className="h-4 w-4" aria-hidden="true" />
+        ) : (
+          <Maximize2 className="h-4 w-4" aria-hidden="true" />
+        )}
+        <span className="hidden sm:inline">{isFullscreen ? 'Exit' : 'Fullscreen'}</span>
+      </button>
+
+      {mode === 'overlay' && (
+        <p className="pointer-events-none absolute bottom-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-black/70 px-3 py-1 text-xs font-medium text-white">
+          Press Esc to exit
+        </p>
+      )}
     </div>
   );
 }

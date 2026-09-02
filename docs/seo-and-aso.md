@@ -77,6 +77,12 @@ deploy. Note that route-segment config like `dynamic` is removed if Cache
 Components is ever enabled in `next.config.ts`; this route would need
 revisiting at that point.
 
+There is no mobile equivalent: `llms.txt` is served over HTTP from a domain
+root, and a native app has neither. The app is instead *described* in the web
+`llms.txt`, which links to the Play Store listing via `PLAY_STORE_URL` in
+`packages/constants`. For a native app, the listing itself is the crawlable
+surface — see the ASO section below.
+
 The standard is a proposal, not something Google uses for ranking. It costs
 nothing to serve and is read by some AI crawlers and dev tools — treat it as
 upside, not as an SEO lever.

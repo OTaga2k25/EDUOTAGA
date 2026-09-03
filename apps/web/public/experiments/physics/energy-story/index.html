@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Energy Exchange — a story of work, energy & power</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <canvas id="heroCoaster" width="940" height="250" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="eyebrow">Work · Energy · Power · a conservation story</div>
+    <h1 class="disp">THE ENERGY<br><span class="thin">EXCHANGE</span></h1>
+    <p class="lede">A roller coaster never climbs higher than its first hill. A stretched spring remembers exactly how hard you pulled. Rub your hands and the motion doesn't vanish — it warms.</p>
+    <p class="hook">Energy is never created or destroyed, only traded between forms. Let's follow the trades — and launch, roll and lift them yourself.</p>
+    <div class="scrollcue">scroll to begin<span>↓</span></div>
+  </div>
+</header>
+<div class="spectrum"></div>
+
+<!-- ================= INTRO ================= -->
+<section class="intro">
+  <div class="wrap">
+    <h2 class="disp">The universe's strictest accountant.</h2>
+    <p>Push something and you do <strong>work</strong>: <span class="mono" style="font-size:15px">W = F·d</span>. That work doesn't disappear — it becomes energy stored somewhere, and it can always be traced. Lift a book and the work is banked as height. Compress a spring and it's stored in the coils. Speed a car up and it's carried as motion.</p>
+    <p>Every process in this chapter is a <em>trade</em> between those accounts. The total never changes; it just moves. That single accounting rule is arguably the most useful idea in all of physics.</p>
+    <div class="twocard">
+      <div class="card a">
+        <div class="k">Potential energy</div><h3>The stored energy account</h3>
+        <p>Energy banked by position — height in a gravity field (mgh) or squeeze in a spring (½kx²). Silent, waiting, ready to be spent.</p>
+      </div>
+      <div class="card b">
+        <div class="k">Kinetic energy</div><h3>The spend energy account</h3>
+        <p>Energy carried as motion, ½mv². Notice the square: double the speed and you carry <em>four times</em> the energy — which is why crashes get so much worse so fast.</p>
+      </div>
+    </div>
+    <p style="margin-top:26px;color:var(--muted);font-size:16px" class="mono">Everything below is hands-on. No sliders for the physics — you set the coaster's first hill, compress a spring launcher, drop a skater into a half-pipe, haul a crate against a stopwatch, and light a bulb from a dam.</p>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 1 · ROLLER COASTER ================= -->
+<section class="chapter ch1">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Experiment 01 · Conservation · Paris, 1740<small>s</small></span></div>
+    <h2 class="disp">Why no hill is ever taller than the first.</h2>
+    <p class="dropcap">Every coaster ever built obeys one iron rule: after the lift hill, no later hill may be as tall. The reason had to be settled by an argument that raged for fifty years. Newton's followers insisted a moving body's "quantity of motion" went as <em>mv</em>. Leibniz argued for <em>mv²</em>. In the 1740<small>s</small> <strong>Émilie du Châtelet</strong> ended it — dropping brass balls into soft clay and showing that a ball at twice the speed sank <em>four</em> times as deep. Energy goes as the square of speed.</p>
+    <p>So the trade is exact: <span class="mono" style="font-size:15px">mgh = ½mv²</span>. Height converts to speed, speed converts back to height, and the sum stays fixed. The car cannot buy a hill it never paid for on the way up.</p>
+    <p class="pull">Set the first hill, release the car, and watch the two energy bars trade back and forth without ever changing their total.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Live experiment</span><span class="lab-title">The roller coaster · height ⇄ speed</span></div>
+      <canvas id="simCoaster" width="840" height="420"></canvas>
+      <div class="lab-controls">
+        <button type="button" class="coaster-go" id="coasterGo">▶ Release the car</button>
+      </div>
+      <div class="readout coaster-readout" id="coasterRead"></div>
+      <div class="hint"><span class="h">✋ Drag the car up or down the first hill</span> to choose its starting height, then release it. The dashed line marks your starting energy — the car can <b>never</b> rise above it. Try to clear the tall middle hill.</div>
+    </div>
+
+    <div class="today">
+      <div class="big">v²</div>
+      <div>
+        <h4>Why speed limits matter so much</h4>
+        <p>Kinetic energy scales as the square of speed, so a car at 60 km/h carries four times the energy of one at 30 — and needs four times the braking distance. Du Châtelet's clay experiment is quietly built into every crash barrier and airbag on the road.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 2 · SPRING LAUNCHER ================= -->
+<section class="chapter ch2">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Experiment 02 · Elastic energy · London, 1676</span></div>
+    <h2 class="disp">Hooke hid his law in an anagram.</h2>
+    <p class="dropcap">In 1676 <strong>Robert Hooke</strong> published a meaningless string of letters — <em>ceiiinosssttuv</em> — to stake his claim without revealing it. Two years later he unscrambled it: <em>ut tensio, sic vis</em> — "as the extension, so the force." Pull a spring twice as far and it pulls back twice as hard: <span class="mono" style="font-size:15px">F = kx</span>.</p>
+    <p>Because the force grows steadily from zero, the energy you store isn't F×x but the <em>area under that straight line</em>: <span class="mono" style="font-size:15px">E = ½kx²</span>. Squared again — so compressing twice as far doesn't double the launch, it <strong>quadruples</strong> the stored energy. Release it and every joule pours into speed, then into height.</p>
+    <p class="pull">Haul the block back against the spring and let go. Watch the green store empty into gold, then into blue.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Live experiment</span><span class="lab-title">The spring launcher · ½kx² → ½mv² → mgh</span></div>
+      <canvas id="simSpring" width="840" height="460"></canvas>
+      <div class="lab-controls">
+        <div class="seg" id="kSeg">
+          <button data-k="0.6">Soft spring</button>
+          <button data-k="1" class="on">Normal</button>
+          <button data-k="1.7">Stiff spring</button>
+        </div>
+      </div>
+      <div class="readout" id="springRead"></div>
+      <div class="hint"><span class="h">✋ Drag the block left</span> to compress the spring, then release to fire it up the ramp. Try to ring the bell at the top. Notice: compress twice as far and you store <b>four</b> times the energy.</div>
+    </div>
+
+    <div class="today">
+      <div class="big">½kx²</div>
+      <div>
+        <h4>The energy hidden in everyday springs</h4>
+        <p>A pole-vaulter's fibreglass pole stores the energy of their sprint and hands it back as height. Car suspensions, mousetraps, watch mainsprings, bows, and the tendons in your own legs all bank energy the same way — and give it back on demand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 3 · SKATEPARK ================= -->
+<section class="chapter ch3">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Experiment 03 · Friction &amp; dissipation · Manchester, 1843</span></div>
+    <h2 class="disp">The energy that seems to vanish is only hiding.</h2>
+    <p class="dropcap">A real skater in a real half-pipe comes back a little lower every time, and eventually stops. For centuries that looked like energy being <em>destroyed</em>. Then a brewer's son named <strong>James Joule</strong> spent years measuring, with fanatical precision, exactly how much heat a falling weight produced when it churned a paddle in water. He even lugged a thermometer on his honeymoon to measure a waterfall's temperature at top and bottom.</p>
+    <p>He proved that the missing mechanical energy turns up precisely as <strong>heat</strong>. Nothing is lost; it is degraded — spread into the disordered jiggling of atoms, from which it will never spontaneously reassemble. Friction does negative work, <span class="mono" style="font-size:15px">W = −μmg·d</span>, and that exact amount appears in the thermal account.</p>
+    <p class="pull">Drop the skater in and watch the total bar refuse to shrink — even as the red thermal slice eats the ride.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Live experiment</span><span class="lab-title">The energy skatepark · where the ride goes</span></div>
+      <canvas id="simSkate" width="840" height="420"></canvas>
+      <div class="lab-controls">
+        <div class="seg" id="fricSeg">
+          <button data-f="0" class="on">Frictionless</button>
+          <button data-f="0.06">Some friction</button>
+          <button data-f="0.14">Rough track</button>
+        </div>
+      </div>
+      <div class="readout" id="skateRead"></div>
+      <div class="hint"><span class="h">✋ Drag the skater up either wall</span> and release. On a frictionless track she returns to the same height forever. Add friction and each pass falls short — but watch the <b>red thermal bar</b> grow by exactly what the ride loses.</div>
+    </div>
+
+    <div class="today">
+      <div class="big">4.2 J</div>
+      <div>
+        <h4>The number that united heat and motion</h4>
+        <p>Joule found that 4.2 joules of mechanical work always produces one calorie of heat — the mechanical equivalent of heat. It welded mechanics and thermodynamics into one science, and the SI unit of energy now carries his name.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 4 · POWER ================= -->
+<section class="chapter ch4">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Capstone · Power · Birmingham, 1782</span></div>
+    <h2 class="disp">How fast can you spend energy?</h2>
+    <p class="dropcap">Doing work is one thing. Doing it <em>quickly</em> is another, and it is what people actually pay for. <strong>James Watt</strong> knew this: to sell steam engines to mine owners who thought in horses, he measured how fast a strong horse could haul coal and defined one <strong>horsepower</strong> as 550 foot-pounds per second — about 746 watts. He was, deliberately, a little generous, so his engines would always outperform the promise.</p>
+    <p>Power is simply the rate of energy transfer: <span class="mono" style="font-size:15px">P = W/t = F·v</span>. Lift the same crate to the same height slowly or quickly and you do <em>identical work</em> — but the fast lift demands far more power. That distinction is the difference between a bicycle and a superbike.</p>
+    <p class="pull">Three challenges. Do the work, then do it fast, then out-power a horse.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Capstone challenge</span><span class="lab-title">The power challenge · beat the horse</span></div>
+      <div class="missions" id="missions">
+        <button data-m="work" class="on">① Do 500 J of work</button>
+        <button data-m="power">② Sustain 200 W</button>
+        <button data-m="horse">③ Beat 1 horsepower</button>
+      </div>
+      <canvas id="simPower" width="860" height="430"></canvas>
+      <div class="lab-controls">
+        <div class="seg" id="massSeg">
+          <button data-m="20" class="on">Crate 20 kg</button>
+          <button data-m="40">Crate 40 kg</button>
+        </div>
+        <button class="seg" id="powerReset" style="cursor:pointer"><span style="padding:7px 16px;color:#e0d2c0">↺ Reset</span></button>
+      </div>
+      <div class="readout" id="powerRead"></div>
+      <div class="hint" id="powerHint"></div>
+    </div>
+
+    <div class="today">
+      <div class="big">746 W</div>
+      <div>
+        <h4>A unit invented for marketing, still with us</h4>
+        <p>Watt's horsepower was a sales tool — and it outlived the steam engine, the horse, and Watt himself. Your kettle draws about 2,000 W, a family car around 100,000 W, and a trained cyclist can hold roughly 300 W for an hour. One horsepower, sustained, is beyond almost any human.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 5 · HYDRO + BULB ================= -->
+<section class="chapter ch5">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Final experiment · Hydroelectric power · Niagara, 1895</span></div>
+    <h2 class="disp">Height becomes light in a bulb.</h2>
+    <p class="dropcap">The same trade you felt on the coaster — height for speed — can be sold as electricity. In 1895 the Niagara Falls Power Company opened the first large commercial hydroelectric plant: water dropped through penstocks, spun turbines, and generators pushed current to factories miles away. <strong>George Westinghouse</strong> and Tesla's AC system won the “war of the currents” by making that long-distance delivery practical.</p>
+    <p>Ideal hydraulic power is the energy of falling water, delivered every second: <span class="mono" style="font-size:15px">P = η·ρ·g·h·Q</span> — efficiency × density × gravity × head × flow rate. Raise the reservoir (more head) or open the gate (more flow) and the power climbs. That power is the load: a filament that glows only when joules arrive fast enough.</p>
+    <p class="pull">Open the dam gate, spin the turbine, and light the bulb — PE → KE → electrical → light.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Live experiment</span><span class="lab-title">Hydroelectric plant · dam → turbine → generator → bulb</span></div>
+      <canvas id="simHydro" width="900" height="460"></canvas>
+      <div class="lab-controls">
+        <button type="button" class="hydro-go" id="hydroGate">Open gate</button>
+        <div class="seg" id="headSeg">
+          <button data-h="0.45">Low head</button>
+          <button data-h="0.70" class="on">Medium head</button>
+          <button data-h="0.95">High head</button>
+        </div>
+        <div class="seg" id="loadSeg">
+          <button data-l="40">40 W bulb</button>
+          <button data-l="100" class="on">100 W bulb</button>
+          <button data-l="200">200 W bulb</button>
+        </div>
+      </div>
+      <div class="readout" id="hydroRead"></div>
+      <div class="hint"><span class="h">✋ Drag the water surface</span> to set reservoir height (head), or use the head buttons. Open the gate to start flow. The bulb only glows when generated power meets its rating — same energy chain as the coaster, sold as light.</div>
+    </div>
+
+    <div class="today">
+      <div class="big">ηρghQ</div>
+      <div>
+        <h4>Why dams sit high above the turbine</h4>
+        <p>Every extra metre of head multiplies power. A tall reservoir is a PE battery; the penstock converts it to speed; the turbine and generator hand the joules to the grid. Your bulb is just the last trade — electrical energy into light and heat — the same conservation ledger as every experiment above.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINALE ================= -->
+<section class="finale">
+  <div class="wrap">
+    <h2 class="disp">Nothing is lost. Everything is traded.</h2>
+    <p>Everything you just did by hand — the car that could never out-climb its first hill, the spring that quadrupled its store, the skater whose ride turned into warmth, the crate you hauled against the clock, the dam that lit a bulb — is one law seen five ways.</p>
+    <div class="threeprinc">
+      <div><div class="mono" style="color:var(--pe)">WORK &amp; ENERGY</div><p style="margin:8px 0 10px">Work done is energy transferred; stored as height or squeeze.</p><div class="eq">W = F·d ; PE = mgh ; ½kx²</div></div>
+      <div><div class="mono" style="color:var(--ke)">CONSERVATION</div><p style="margin:8px 0 10px">The total never changes — it only moves between accounts.</p><div class="eq">KE + PE + thermal = constant</div></div>
+      <div><div class="mono" style="color:var(--heat)">POWER</div><p style="margin:8px 0 10px">The rate of the trade. Same work, less time, more power.</p><div class="eq">P = W/t = F·v · ηρghQ</div></div>
+    </div>
+    <p>Once you see the ledger you see it everywhere: food becoming muscle motion, sunlight becoming wind, a phone battery draining into light and sound, a dam trading height for electricity, and every joule you have ever spent still out there somewhere, quietly warmer.</p>
+    <p style="color:var(--gold);font-style:italic">Energy is the universe's currency, and no one has ever caught it being counterfeited. That's the whole chapter.</p>
+  </div>
+</section>
+
+<div class="foot">The Energy Exchange · a teaching companion to "Work, Energy &amp; Power" · roll, launch, haul &amp; light</div>
+
+<script src="script.js"></script>
+</body>
+</html>

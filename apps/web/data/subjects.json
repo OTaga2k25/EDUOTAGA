@@ -25,5 +25,23 @@
     "categoryId": "computer",
     "icon": "code",
     "color": "sky"
+  },
+  {
+    "id": "energy-story",
+    "slug": "energy-story",
+    "name": "Work, Energy & Power",
+    "description": "Explore the conservation of energy, roller coasters, springs, and hydroelectric power.",
+    "categoryId": "physics",
+    "icon": "zap",
+    "color": "amber"
+  },
+  {
+    "id": "gravitation",
+    "slug": "gravitation",
+    "name": "Gravitation",
+    "description": "Explore orbits, Kepler's laws, escape velocity, and satellite missions.",
+    "categoryId": "physics",
+    "icon": "globe",
+    "color": "sky"
   }
 ]

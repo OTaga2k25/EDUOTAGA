@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Force Within — a story of gravity, orbits & escape velocity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+</head>
+<body>
+
+<!-- Theme toggle -->
+<button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 14.5A8.5 8.5 0 1 1 9.5 3a7 7 0 0 0 11.5 11.5z"/>
+  </svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+  </svg>
+</button>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <canvas id="heroOrbit" width="940" height="250" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="eyebrow">Orbits · Kepler's Laws · Escape Velocity · a gravity story</div>
+    <h1 class="disp">THE FORCE<br><span class="thin">WITHIN</span></h1>
+    <p class="lede">The Moon is falling. It has been falling for four billion years and has never once hit the ground — because it keeps missing.</p>
+    <p class="hook">The weakest force in the universe built every star, planet and galaxy. Let's chase it through history — and fly the orbits yourself.</p>
+    <div class="scrollcue">scroll to begin<span>↓</span></div>
+  </div>
+</header>
+<div class="spectrum"></div>
+
+<!-- ================= INTRO ================= -->
+<section class="intro">
+  <div class="wrap">
+    <h2 class="disp">The weakest force, and the one that shapes everything.</h2>
+    <p>Gravity is pitifully feeble — a fridge magnet beats the entire Earth in a tug of war over a paperclip. But it has two advantages nothing else has: it is always attractive, never cancelling out, and it reaches across infinite distance. Given enough mass and enough time, it wins everywhere.</p>
+    <p>Newton's insight was that the force pulling an apple down is the <em>same</em> force holding the Moon in the sky, and it obeys one line: <span class="mono" style="font-size:15px">F = G M m / r²</span> — every mass pulling every other mass, everywhere, forever.</p>
+    <div class="twocard">
+      <div class="card a">
+        <div class="k">The insight</div><h3>An orbit is a fall</h3>
+        <p>A satellite isn't beyond gravity — it's in freefall. It simply moves sideways so fast that the ground curves away beneath it as it drops.</p>
+      </div>
+      <div class="card b">
+        <div class="k">The limit</div><h3>Or a fall that never lands</h3>
+        <p>Go fast enough and gravity can never reel you back in. That threshold — escape velocity — is why rockets are enormous and why black holes are black.</p>
+      </div>
+    </div>
+    <p style="margin-top:26px;color:var(--muted);font-size:16px" class="mono">Everything below is hands-on. No sliders for the physics — you fire Newton's cannon, sling a planet into an ellipse, chase escape velocity on three worlds, and fly real satellite missions.</p>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 1 · ORBIT SIMULATOR ================= -->
+<section class="chapter ch1">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Experiment 01 · Newton's cannon · Woolsthorpe, 1666</span></div>
+    <h2 class="disp">Fire fast enough, and you never come down.</h2>
+    <p class="dropcap">Plague had closed Cambridge, and <strong>Isaac Newton</strong>, twenty-three, was thinking in his mother's orchard. The famous apple didn't hit his head — but watching one fall, he asked a question nobody had thought to ask: <em>how far up does this pull reach?</em> To the treetop, certainly. To the clouds. Why not… all the way to the Moon?</p>
+    <p>If so, the Moon is falling too — constantly, forever — and only misses the Earth because it also races sideways. To explain it, Newton drew a cannon on an impossibly tall mountain. Fire slowly and the ball lands nearby. Fire faster and it lands further. Fire fast enough and the Earth's surface curves away exactly as fast as the ball drops. <strong>It falls forever, and never lands. That is an orbit.</strong></p>
+    <p class="pull">Pull the slingshot — set both speed and aim — then release. Find the vector where falling becomes flying.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Live experiment</span><span class="lab-title">Newton's slingshot · the orbit simulator</span></div>
+      <canvas id="simCannon" width="840" height="440"></canvas>
+      <div class="lab-controls">
+        <button class="seg" id="cannonFire" style="cursor:pointer"><span style="padding:7px 16px;color:#bfe6f2">☄ Refire last shot</span></button>
+        <button class="seg" id="cannonClear" style="cursor:pointer"><span style="padding:7px 16px;color:#9fb0cc">Clear traces</span></button>
+      </div>
+      <div class="readout" id="cannonRead"></div>
+      <div class="hint"><span class="h">✋ Drag the ball back</span> like a slingshot — pull length sets speed, pull direction sets aim — then release to launch. Sideways for a circle; up/down tilts the orbit. Too slow crashes, just right orbits, faster makes an ellipse, then escape.</div>
+    </div>
+
+    <div class="today">
+      <div class="big">7.8 km/s</div>
+      <div>
+        <h4>The speed the ISS must hold, always</h4>
+        <p>The Space Station orbits at about 7.8 km/s — roughly 28,000 km/h — circling the Earth every 90 minutes. Astronauts float not because gravity is absent up there (it's about 90% as strong) but because they and the station are falling together, endlessly missing the planet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 2 · PLANET LAUNCHER ================= -->
+<section class="chapter ch2">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Experiment 02 · Kepler's laws · Prague, 1609</span></div>
+    <h2 class="disp">Eight minutes of arc that broke the heavens.</h2>
+    <p class="dropcap">For two thousand years everyone knew the planets moved in perfect circles — the heavens were divine, and circles were perfect. <strong>Johannes Kepler</strong> inherited the superbly precise observations of Tycho Brahe and spent eight brutal years trying to fit Mars to a circle. He got agonisingly close: his best circle was wrong by just <em>eight minutes of arc</em>, about a quarter the width of the Moon.</p>
+    <p>A lesser man would have blamed the data. Kepler trusted Tycho's instruments more than Plato's philosophy, threw out the circle, and found the ellipse. Three laws followed: orbits are <strong>ellipses</strong> with the Sun at one focus; a planet <strong>sweeps equal areas in equal times</strong>, so it races at perihelion and dawdles at aphelion; and <span class="mono" style="font-size:15px">T² ∝ a³</span> ties every orbit in the solar system together.</p>
+    <p class="pull">Sling the planet with your own hand and watch it carve an ellipse — sweeping equal areas as it goes.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Live experiment</span><span class="lab-title">The planet launcher · Kepler's ellipses</span></div>
+      <canvas id="simKepler" width="840" height="440"></canvas>
+      <div class="lab-controls">
+        <div class="seg" id="areaSeg">
+          <button data-a="1" class="on">Show equal areas</button>
+          <button data-a="0">Hide</button>
+        </div>
+      </div>
+      <div class="readout" id="keplerRead"></div>
+      <div class="hint"><span class="h">✋ Drag out from the planet</span> to draw a velocity arrow — direction and length both matter — then release to launch. Watch the coloured wedges: every one covers the same area, so the planet must move fastest when closest.</div>
+    </div>
+
+    <div class="today">
+      <div class="big">8′</div>
+      <div>
+        <h4>The discrepancy that founded modern science</h4>
+        <p>Kepler wrote that those eight minutes of arc "pointed the way to a complete reformation of astronomy." Refusing to explain away an inconvenient measurement is arguably the moment science grew up — and it handed Newton the data he needed to deduce the inverse-square law.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 3 · ESCAPE VELOCITY ================= -->
+<section class="chapter ch3">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Experiment 03 · Escape velocity · Thornhill, 1783</span></div>
+    <h2 class="disp">Escape velocity and black holes.</h2>
+    <p class="dropcap">Throw a ball up and it returns. Throw it harder and it goes higher. Is there a speed beyond which it simply <em>never</em> comes back? Yes — and it depends only on the world you're standing on: <span class="mono" style="font-size:15px">v_esc = √(2GM/R)</span>. On Earth, 11.2 km/s. On the Moon, a modest 2.4. On Jupiter, a brutal 59.5.</p>
+    <p>In 1783 an English country rector named <strong>John Michell</strong> followed the logic to its end. If a star were massive and compact enough, its escape velocity would exceed the speed of light — and the star would be invisible, since no light could ever leave it. He called them "dark stars." He had described a black hole, 130 years before Einstein, using nothing but Newton.</p>
+    <p class="pull">Tune the launch speed on three worlds and find the exact threshold where gravity loses its grip forever.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Live experiment</span><span class="lab-title">Escape velocity · the point of no return</span></div>
+      <canvas id="simEscape" width="840" height="440"></canvas>
+      <div class="lab-controls">
+        <div class="seg" id="worldSeg">
+          <button data-w="moon" class="on">🌑 Moon 2.4</button>
+          <button data-w="earth">🌍 Earth 11.2</button>
+          <button data-w="jupiter">🪐 Jupiter 59.5</button>
+        </div>
+        <button class="seg" id="escFire" style="cursor:pointer"><span style="padding:7px 16px;color:#f7b6dc">🚀 Launch</span></button>
+      </div>
+      <div class="readout" id="escapeRead"></div>
+      <div class="hint"><span class="h">✋ Drag the throttle</span> to set launch speed as a fraction of escape velocity, then Launch. Below 100% the craft always falls back, however high it climbs. At 100% it coasts away forever — barely.</div>
+    </div>
+
+    <div class="today">
+      <div class="big">c</div>
+      <div>
+        <h4>When escape velocity beats light</h4>
+        <p>Squeeze the Earth to the size of a marble and its escape velocity would exceed 300,000 km/s — nothing, not even light, could leave. That radius is the Schwarzschild radius, and Michell's 18th-century "dark star" turned out to be a real object at the centre of nearly every galaxy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 4 · CAPSTONE ================= -->
+<section class="chapter ch4">
+  <div class="wrap">
+    <div class="ch-eyebrow"><span class="dot"></span><span class="ac">Capstone · Satellite mission · you, now</span></div>
+    <h2 class="disp">Fly the missions yourself.</h2>
+    <p class="dropcap">In 1945, long before any rocket reached orbit, the writer <strong>Arthur C. Clarke</strong> published a short paper pointing out that a satellite at exactly 35,786 km would circle the Earth once every 24 hours — perfectly matching the planet's spin, and so appearing to hang motionless in the sky. Three such satellites, he noted, could relay signals to the whole world. Every television dish on Earth now points at that ring, which is officially called the Clarke Orbit.</p>
+    <p>You have Mission Control. Three flights are on the board: a stable low orbit, Clarke's geostationary ring, and a one-way trip out of Earth's grip altogether. Everything depends on the single vector you draw at launch.</p>
+    <p class="pull">Three missions. Draw the burn, read the telemetry, and fly them clean.</p>
+
+    <div class="lab">
+      <div class="lab-head"><span class="lab-tag">Capstone challenge</span><span class="lab-title">Mission control</span></div>
+      <div class="missions" id="missions">
+        <button data-m="leo" class="on">① Stable low orbit</button>
+        <button data-m="geo">② Geostationary ring</button>
+        <button data-m="escape">③ Escape Earth</button>
+      </div>
+      <canvas id="simMission" width="860" height="460"></canvas>
+      <div class="lab-controls">
+        <button class="seg" id="misReset" style="cursor:pointer"><span style="padding:7px 16px;color:#c6d4ea">↺ Reset craft</span></button>
+      </div>
+      <div class="readout" id="missionRead"></div>
+      <div class="hint" id="missionHint"></div>
+    </div>
+
+    <div class="today">
+      <div class="big">1957</div>
+      <div>
+        <h4>Sputnik, and the beep heard everywhere</h4>
+        <p>On 4 October 1957 a polished metal sphere the size of a beach ball became the first object humans placed in orbit, transmitting a simple beep that amateur radio operators worldwide could hear. Within twelve years the same equations put people on the Moon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINALE ================= -->
+<section class="finale">
+  <div class="wrap">
+    <h2 class="disp">One law, from the apple to the galaxy.</h2>
+    <p>Everything you just flew by hand — the cannonball that finally missed the ground, the planet that raced at perihelion, the throttle that crossed the point of no return, the ring where satellites hang still — comes from a single inverse-square line written in a plague year.</p>
+    <div class="threeprinc">
+      <div><div class="mono" style="color:var(--orbit)">UNIVERSAL GRAVITATION</div><p style="margin:8px 0 10px">Every mass pulls every other, weakening as the square of distance.</p><div class="eq">F = G M m / r²</div></div>
+      <div><div class="mono" style="color:var(--star)">ORBITS</div><p style="margin:8px 0 10px">Ellipses with equal areas swept in equal times; period tied to size.</p><div class="eq">v = √(GM/r) ; T² ∝ a³</div></div>
+      <div><div class="mono" style="color:var(--escape)">ESCAPE VELOCITY</div><p style="margin:8px 0 10px">Cross this speed and gravity can never reel you back.</p><div class="eq">v_esc = √(2GM/R)</div></div>
+    </div>
+    <p>The same equation that drops an apple keeps the ISS aloft, times your GPS, steers Voyager out of the solar system, spins the galaxies, and once — long ago, in the dark — pulled scattered hydrogen together tightly enough to ignite the very first star.</p>
+    <p style="color:var(--gold);font-style:italic">The weakest force in nature, given enough time, builds everything. That's the whole chapter.</p>
+  </div>
+</section>
+
+<div class="foot">The Force Within · a teaching companion to "Gravitation" · fire, sling &amp; fly</div>
+
+<script>
+/* ============ dark mode toggle ============ */
+(function(){
+  const root=document.documentElement;
+  const btn=document.getElementById('themeToggle');
+  function setTheme(dark){
+    root.classList.toggle('dark',dark);
+    try{localStorage.setItem('theme',dark?'dark':'light');}catch(e){}
+    btn.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');
+    btn.setAttribute('title',dark?'Switch to light mode':'Switch to dark mode');
+  }
+  setTheme(root.classList.contains('dark'));
+  btn.addEventListener('click',()=>setTheme(!root.classList.contains('dark')));
+  try{
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',e=>{
+      if(!localStorage.getItem('theme')) setTheme(e.matches);
+    });
+  }catch(e){}
+})();
+
+/* ============ shared helpers ============ */
+function pos(cv,e){const r=cv.getBoundingClientRect();
+  return {x:(e.clientX-r.left)*(cv.width/r.width), y:(e.clientY-r.top)*(cv.height/r.height)};}
+function dist(ax,ay,bx,by){return Math.hypot(ax-bx,ay-by);}
+function arrowH(ctx,x,y,ang,col,s){s=s||8;ctx.save();ctx.translate(x,y);ctx.rotate(ang);
+  ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-s,-s*.55);ctx.lineTo(-s,s*.55);
+  ctx.closePath();ctx.fill();ctx.restore();}
+function vecArrow(ctx,x,y,dx,dy,col,w){
+  const L=Math.hypot(dx,dy);if(L<3)return;
+  ctx.strokeStyle=col;ctx.lineWidth=w||3;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+dx,y+dy);ctx.stroke();
+  arrowH(ctx,x+dx,y+dy,Math.atan2(dy,dx),col);
+}
+function starfield(ctx,W,H,seed){
+  ctx.fillStyle='#fff';
+  for(let i=0;i<70;i++){
+    const x=(Math.sin(i*127.1+seed)*0.5+0.5)*W, y=(Math.sin(i*311.7+seed*2)*0.5+0.5)*H;
+    const r=(Math.sin(i*74.7)*0.5+0.5)*1.3+0.3;
+    ctx.globalAlpha=0.10+ (Math.sin(i*19.3)*0.5+0.5)*0.35;
+    ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+}
+/* orbit integrator: leapfrog around a central mass at (cx,cy) */
+function step(p,cx,cy,GM,dt,Rsurf){
+  const dx=p.x-cx, dy=p.y-cy;
+  let r=Math.hypot(dx,dy);
+  if(r<1)r=1;
+  const a=-GM/(r*r);
+  p.vx+=a*dx/r*dt; p.vy+=a*dy/r*dt;
+  p.x+=p.vx*dt; p.y+=p.vy*dt;
+  return Math.hypot(p.x-cx,p.y-cy);
+}
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ============ HERO · orbiting system ============ */
+(function(){
+  const cv=document.getElementById('heroOrbit'),ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height,cx=W/2,cy=H*0.58;
+  let t=0;
+  const orbs=[{a:76,b:30,s:1.5,c:'#4fc3f7',r:5},{a:128,b:52,s:0.92,c:'#6ee7a8',r:6.5},
+              {a:186,b:76,s:0.56,c:'#e453a0',r:5},{a:250,b:104,s:0.34,c:'#c9b6ff',r:4}];
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    starfield(ctx,W,H,3);
+    orbs.forEach(o=>{
+      ctx.strokeStyle='rgba(255,255,255,.09)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.ellipse(cx,cy,o.a,o.b,0,0,7);ctx.stroke();
+    });
+    ctx.fillStyle='rgba(255,213,79,.18)';ctx.beginPath();ctx.arc(cx,cy,26,0,7);ctx.fill();
+    ctx.fillStyle='#ffd54f';ctx.beginPath();ctx.arc(cx,cy,13,0,7);ctx.fill();
+    orbs.forEach((o,i)=>{
+      const a=(reduced?1.1:t/60*o.s)+i;
+      ctx.fillStyle=o.c;
+      ctx.beginPath();ctx.arc(cx+Math.cos(a)*o.a,cy+Math.sin(a)*o.b,o.r,0,7);ctx.fill();
+    });
+    t++;if(!reduced)requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ============ SIM 1 · NEWTON'S SLINGSHOT (magnitude + direction) ============ */
+(function(){
+  const cv=document.getElementById('simCannon'),ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height,cx=W*0.5,cy=H*0.58,R=92;
+  const read=document.getElementById('cannonRead');
+  const GM=180000;
+  const alt=R+34;
+  const launch={x:cx,y:cy-alt};
+  const vCirc=Math.sqrt(GM/alt);
+  const vEsc=vCirc*Math.SQRT2;
+  /* pull distance → launch speed; max pull ≈ 1.25× escape */
+  const PULL_SCALE=0.48;
+  const MAX_PULL=vEsc*1.25/PULL_SCALE;
+  let drag=false, dragPt=null, hot=false;
+  let lastV={vx:vCirc,vy:0};
+  const traces=[]; let ball=null, status='';
+
+  function clampPull(dx,dy){
+    const L=Math.hypot(dx,dy);
+    if(L<=MAX_PULL||L<1e-6)return {dx,dy,L};
+    const s=MAX_PULL/L;
+    return {dx:dx*s,dy:dy*s,L:MAX_PULL};
+  }
+  function pullToVel(dx,dy){
+    const p=clampPull(dx,dy);
+    return {vx:-p.dx*PULL_SCALE, vy:-p.dy*PULL_SCALE, pull:p.L};
+  }
+  function fire(vx,vy){
+    if(ball&&ball.pts&&ball.pts.length>2){
+      const col=status==='crash'?'#ff8b8b':(status==='escape'?'#e453a0':'#ffd54f');
+      traces.push({pts:ball.pts.slice(),col});if(traces.length>6)traces.shift();
+    }
+    lastV={vx,vy};
+    ball={x:launch.x,y:launch.y,vx,vy,pts:[{x:launch.x,y:launch.y}],alive:true};
+    status='';
+  }
+
+  cv.addEventListener('pointerdown',e=>{
+    if(ball&&ball.alive)return;
+    const p=pos(cv,e);
+    if(dist(p.x,p.y,launch.x,launch.y)<48){
+      drag=true;dragPt={x:p.x,y:p.y};
+      cv.setPointerCapture(e.pointerId);
+    }
+  });
+  cv.addEventListener('pointermove',e=>{
+    const p=pos(cv,e);
+    hot=!ball&&dist(p.x,p.y,launch.x,launch.y)<48;
+    if(drag)dragPt={x:p.x,y:p.y};
+  });
+  cv.addEventListener('pointerup',()=>{
+    if(drag&&dragPt){
+      const v=pullToVel(dragPt.x-launch.x,dragPt.y-launch.y);
+      if(Math.hypot(v.vx,v.vy)>vCirc*0.06) fire(v.vx,v.vy);
+      else lastV={vx:v.vx,vy:v.vy};
+    }
+    drag=false;dragPt=null;
+  });
+  cv.addEventListener('pointerleave',()=>{if(!drag)hot=false;});
+  cv.addEventListener('pointercancel',()=>{drag=false;dragPt=null;});
+
+  document.getElementById('cannonFire').onclick=()=>{
+    if(drag&&dragPt){
+      const v=pullToVel(dragPt.x-launch.x,dragPt.y-launch.y);
+      fire(v.vx,v.vy);drag=false;dragPt=null;
+    }else fire(lastV.vx,lastV.vy);
+  };
+  document.getElementById('cannonClear').onclick=()=>{traces.length=0;ball=null;status='';};
+
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    starfield(ctx,W,H,11);
+
+    /* reference circular orbit */
+    ctx.strokeStyle='rgba(79,195,247,.22)';ctx.setLineDash([4,6]);ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.arc(cx,cy,alt,0,7);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(79,195,247,.55)';ctx.font="10px 'Space Mono',monospace";
+    ctx.fillText('circular orbit',cx+alt*0.55,cy-alt*0.72);
+
+    /* planet */
+    const g=ctx.createRadialGradient(cx-20,cy-24,10,cx,cy,R);
+    g.addColorStop(0,'#5da9e8');g.addColorStop(1,'#12406b');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.fill();
+    ctx.strokeStyle='rgba(110,231,168,.35)';ctx.lineWidth=2;ctx.stroke();
+
+    /* mountain + slingshot posts */
+    ctx.fillStyle='#2c3b52';ctx.beginPath();
+    ctx.moveTo(cx-22,cy-R+6);ctx.lineTo(cx,cy-R-36);ctx.lineTo(cx+22,cy-R+6);ctx.closePath();ctx.fill();
+    const postL={x:cx-18,y:cy-R-28}, postR={x:cx+18,y:cy-R-28};
+    ctx.fillStyle='#6b7c96';
+    ctx.fillRect(postL.x-3,postL.y-2,6,22);
+    ctx.fillRect(postR.x-3,postR.y-2,6,22);
+    ctx.fillStyle='#93a2c4';
+    ctx.beginPath();ctx.arc(postL.x,postL.y,4,0,7);ctx.fill();
+    ctx.beginPath();ctx.arc(postR.x,postR.y,4,0,7);ctx.fill();
+
+    /* old traces */
+    traces.forEach(tr=>{
+      ctx.strokeStyle=tr.col;ctx.globalAlpha=.45;ctx.lineWidth=1.6;ctx.beginPath();
+      tr.pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();
+    });
+    ctx.globalAlpha=1;
+
+    /* active ball physics */
+    if(ball&&ball.alive){
+      for(let s=0;s<3;s++){
+        const r=step(ball,cx,cy,GM,0.10,R);
+        ball.pts.push({x:ball.x,y:ball.y});
+        if(ball.pts.length>4000)ball.pts.shift();
+        if(r<=R){ball.alive=false;status='crash';break;}
+        if(r>Math.max(W,H)*1.9){ball.alive=false;status='escape';break;}
+      }
+      if(ball.pts.length>2600&&status==='')status='orbit';
+    }
+    if(ball){
+      const col=status==='crash'?'#ff8b8b':(status==='escape'?'#e453a0':'#ffd54f');
+      ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();
+      ball.pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();
+      if(ball.alive){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(ball.x,ball.y,5,0,7);ctx.fill();}
+      if(!ball.alive){traces.push({pts:ball.pts,col});if(traces.length>6)traces.shift();ball=null;}
+    }
+
+    /* slingshot aim UI (when idle / aiming) */
+    let aimVx=lastV.vx, aimVy=lastV.vy, ballX=launch.x, ballY=launch.y;
+    if(drag&&dragPt){
+      const cl=clampPull(dragPt.x-launch.x,dragPt.y-launch.y);
+      ballX=launch.x+cl.dx; ballY=launch.y+cl.dy;
+      const v=pullToVel(cl.dx,cl.dy);
+      aimVx=v.vx; aimVy=v.vy;
+
+      /* elastic bands */
+      ctx.strokeStyle='rgba(255,213,79,.75)';ctx.lineWidth=2.2;
+      ctx.beginPath();ctx.moveTo(postL.x,postL.y);ctx.lineTo(ballX,ballY);ctx.lineTo(postR.x,postR.y);ctx.stroke();
+      /* dashed pull line */
+      ctx.strokeStyle='rgba(255,255,255,.22)';ctx.setLineDash([3,4]);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(launch.x,launch.y);ctx.lineTo(ballX,ballY);ctx.stroke();ctx.setLineDash([]);
+      /* velocity vector (flight direction) */
+      vecArrow(ctx,ballX,ballY,aimVx*1.8,aimVy*1.8,'#ffd54f',3);
+
+      /* speed rings around rest position: circular / escape */
+      [[vCirc,'#4fc3f7','circular'],[vEsc,'#e453a0','escape']].forEach(([spd,c,lab])=>{
+        const rr=spd/PULL_SCALE;
+        ctx.strokeStyle=c;ctx.globalAlpha=.35;ctx.lineWidth=1.4;ctx.setLineDash([3,5]);
+        ctx.beginPath();ctx.arc(launch.x,launch.y,rr,0,7);ctx.stroke();
+        ctx.setLineDash([]);ctx.globalAlpha=1;
+        ctx.fillStyle=c;ctx.font="10px 'Space Mono',monospace";
+        ctx.fillText(lab,launch.x+rr*0.72,launch.y-rr*0.55);
+      });
+    }else if(!ball){
+      /* idle preview of last aim */
+      vecArrow(ctx,launch.x,launch.y,aimVx*1.5,aimVy*1.5,'rgba(255,213,79,.55)',2.5);
+      ctx.fillStyle='#9fb0cc';ctx.font="10px 'Space Mono',monospace";
+      ctx.fillText('drag ball to sling',launch.x-42,launch.y-22);
+    }
+
+    /* projectile at rest / pulled (when not in flight) */
+    if(!ball){
+      ctx.fillStyle=(hot||drag)?'#fff':'#ffd54f';
+      ctx.beginPath();ctx.arc(ballX,ballY,11,0,7);ctx.fill();
+      ctx.strokeStyle='#03050c';ctx.lineWidth=2;ctx.stroke();
+      /* tiny highlight */
+      ctx.fillStyle='rgba(255,255,255,.35)';
+      ctx.beginPath();ctx.arc(ballX-3,ballY-3,3,0,7);ctx.fill();
+    }
+
+    const spd=Math.hypot(aimVx,aimVy);
+    const ratio=spd/vCirc;
+    const ang=Math.atan2(aimVy,aimVx)*180/Math.PI;
+    /* angle: 0° = right (horizontal), negative = upward on canvas (y grows down) so flip for readable “up” */
+    const angDisp=-ang;
+    const tangHint=Math.abs(angDisp)<12||Math.abs(Math.abs(angDisp)-180)<12;
+
+    read.innerHTML=`speed = <b>${ratio.toFixed(2)}×</b> circular (escape 1.41×) · direction = <b>${angDisp.toFixed(0)}°</b> (0° = horizontal right). `+
+      (status==='crash'?`<span style="color:#ff8b8b">Too slow or aimed inward — it hit the surface.</span> Gravity reeled it in before the ground could curve away.`
+       :status==='escape'?`<span class="win">Escaped!</span> Past escape speed along a path that never turns back.`
+       :status==='orbit'?`<span class="win">In orbit — falling forever, and forever missing.</span> Sideways speed matched the curve of the Earth.`
+       :drag? (ratio<0.95?`Pull further for circular speed, or aim more sideways (not straight up).`
+              :Math.abs(ratio-1)<0.08&&tangHint?`<span class="win">Near circular + nearly horizontal</span> — release for a clean orbit.`
+              :ratio<1.41?`Solid pull — release for an ellipse (or tilt the aim to reshape it).`
+              :`Above escape — release and it may leave for good.`)
+       :`Pull the yellow ball back from the mountain peak. Length = speed, direction = aim. Release to launch. Sideways ≈ circular; straight up just falls back.`);
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ============ SIM 2 · KEPLER PLANET LAUNCHER ============ */
+(function(){
+  const cv=document.getElementById('simKepler'),ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height,cx=W*0.46,cy=H*0.52;
+  const read=document.getElementById('keplerRead');
+  const GM=150000;
+  let start={x:cx+200,y:cy}, drag=false, dragPt=null, hot=false, showArea=1;
+  let p=null, pts=[], wedges=[], wedgeAcc=0, rmin=1e9, rmax=0, vmin=1e9, vmax=0;
+  const seg=document.getElementById('areaSeg');
+  seg.querySelectorAll('button').forEach(b=>b.onclick=()=>{seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');showArea=+b.dataset.a;});
+
+  cv.addEventListener('pointerdown',e=>{const q=pos(cv,e);
+    if(dist(q.x,q.y,start.x,start.y)<40){drag=true;dragPt={x:q.x,y:q.y};cv.setPointerCapture(e.pointerId);}});
+  cv.addEventListener('pointermove',e=>{const q=pos(cv,e);
+    hot=dist(q.x,q.y,start.x,start.y)<40;
+    if(drag)dragPt={x:q.x,y:q.y};});
+  cv.addEventListener('pointerup',()=>{
+    if(drag&&dragPt){
+      const vx=(dragPt.x-start.x)*0.5, vy=(dragPt.y-start.y)*0.5;
+      p={x:start.x,y:start.y,vx:-vx*0.9,vy:-vy*0.9};
+      pts=[];wedges=[];wedgeAcc=0;rmin=1e9;rmax=0;vmin=1e9;vmax=0;
+    }
+    drag=false;dragPt=null;});
+  cv.addEventListener('pointerleave',()=>hot=false);
+
+  const WC=['#ffd54f','#6ee7a8','#4fc3f7','#e453a0','#c9b6ff','#ff9d6e'];
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    starfield(ctx,W,H,7);
+    if(p){
+      for(let s=0;s<4;s++){
+        const r=step(p,cx,cy,GM,0.09,0);
+        pts.push({x:p.x,y:p.y});
+        if(pts.length>5200)pts.shift();
+        rmin=Math.min(rmin,r);rmax=Math.max(rmax,r);
+        const sp=Math.hypot(p.vx,p.vy);vmin=Math.min(vmin,sp);vmax=Math.max(vmax,sp);
+        wedgeAcc++;
+        if(wedgeAcc%26===0){
+          wedges.push({x:p.x,y:p.y,i:wedges.length});
+          if(wedges.length>60)wedges.shift();
+        }
+        if(r<16||r>2600){p=null;break;}
+      }
+    }
+    /* equal-area wedges */
+    if(showArea&&wedges.length>1){
+      for(let i=1;i<wedges.length;i++){
+        const a=wedges[i-1],b=wedges[i];
+        ctx.fillStyle=WC[i%WC.length];ctx.globalAlpha=.22;
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.closePath();ctx.fill();
+      }
+      ctx.globalAlpha=1;
+    }
+    /* path */
+    if(pts.length>1){
+      ctx.strokeStyle='rgba(79,195,247,.85)';ctx.lineWidth=1.8;ctx.beginPath();
+      pts.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.stroke();
+    }
+    /* star */
+    ctx.fillStyle='rgba(255,213,79,.16)';ctx.beginPath();ctx.arc(cx,cy,40,0,7);ctx.fill();
+    ctx.fillStyle='#ffd54f';ctx.beginPath();ctx.arc(cx,cy,16,0,7);ctx.fill();
+    ctx.fillStyle='#93a2c4';ctx.font="10px 'Space Mono',monospace";ctx.fillText('star at a focus',cx-38,cy+34);
+
+    /* planet or launch handle */
+    if(p){ctx.fillStyle='#6ee7a8';ctx.beginPath();ctx.arc(p.x,p.y,8,0,7);ctx.fill();}
+    else{
+      ctx.fillStyle=(hot||drag)?'#fff':'#6ee7a8';ctx.beginPath();ctx.arc(start.x,start.y,11,0,7);ctx.fill();
+      ctx.strokeStyle='#03050c';ctx.lineWidth=2;ctx.stroke();
+      ctx.fillStyle='#9fb0cc';ctx.font="10px 'Space Mono',monospace";ctx.fillText('drag to sling',start.x-32,start.y-20);
+    }
+    if(drag&&dragPt){
+      vecArrow(ctx,start.x,start.y,-(dragPt.x-start.x),-(dragPt.y-start.y),'#ffd54f',3);
+      ctx.strokeStyle='rgba(255,255,255,.2)';ctx.setLineDash([3,4]);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(start.x,start.y);ctx.lineTo(dragPt.x,dragPt.y);ctx.stroke();ctx.setLineDash([]);
+    }
+
+    const ecc=rmax>0&&rmin<1e9?((rmax-rmin)/(rmax+rmin)):0;
+    read.innerHTML= p||pts.length
+      ? `perihelion <b>${Math.round(rmin)}</b> · aphelion <b>${Math.round(rmax)}</b> → eccentricity <b>${ecc.toFixed(2)}</b>. `+
+        `speed ranges <b>${vmin.toFixed(0)}–${vmax.toFixed(0)}</b>. `+
+        (ecc<0.08?`<span class="win">Almost a perfect circle.</span>`
+         :`<span class="win">An ellipse with the star at one focus.</span> Every coloured wedge has the same area — so near the star the planet must sweep a short, fat wedge <em>fast</em>.`)
+      : `Drag outward from the green planet to set its launch velocity, then release. Pull sideways for a circle, harder for an ellipse.`;
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ============ SIM 3 · ESCAPE VELOCITY ============ */
+(function(){
+  const cv=document.getElementById('simEscape'),ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height,cx=W*0.28,cy=H*0.56;
+  const read=document.getElementById('escapeRead');
+  const WORLDS={
+    moon:{R:52,GM:26000,name:'Moon',v:2.4,col:'#b8bfd0'},
+    earth:{R:74,GM:120000,name:'Earth',v:11.2,col:'#5da9e8'},
+    jupiter:{R:104,GM:600000,name:'Jupiter',v:59.5,col:'#d8a06a'}
+  };
+  let wk='moon', frac=0.6, craft=null, apo=0, status='';
+  let grab=false,hot=false;
+  const seg=document.getElementById('worldSeg');
+  seg.querySelectorAll('button').forEach(b=>b.onclick=()=>{seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');wk=b.dataset.w;craft=null;status='';apo=0;});
+  const barX=W*0.60, barY=H-64, barW=W*0.32;
+  function knobX(){return barX+barW*(frac/1.3);}
+  cv.addEventListener('pointerdown',e=>{const p=pos(cv,e);
+    if(dist(p.x,p.y,knobX(),barY)<32){grab=true;cv.setPointerCapture(e.pointerId);}});
+  cv.addEventListener('pointermove',e=>{const p=pos(cv,e);hot=dist(p.x,p.y,knobX(),barY)<32;
+    if(grab)frac=Math.max(0.05,Math.min(1.3,(p.x-barX)/barW*1.3));});
+  cv.addEventListener('pointerup',()=>grab=false);
+  cv.addEventListener('pointerleave',()=>hot=false);
+
+  function launch(){
+    const w=WORLDS[wk];
+    const vesc=Math.sqrt(2*w.GM/w.R);
+    const v=vesc*frac;
+    craft={x:cx,y:cy-w.R-4,vx:v*0.30,vy:-v*0.954,pts:[{x:cx,y:cy-w.R-4}],done:false,impact:null};
+    apo=0;status='';
+  }
+  document.getElementById('escFire').onclick=launch;
+
+  /** Snap craft to the world surface and freeze the trajectory on impact. */
+  function hitSurface(w){
+    const dx=craft.x-cx, dy=craft.y-cy;
+    let r=Math.hypot(dx,dy)||1;
+    craft.x=cx+(dx/r)*w.R;
+    craft.y=cy+(dy/r)*w.R;
+    craft.vx=0;craft.vy=0;
+    craft.pts.push({x:craft.x,y:craft.y});
+    craft.impact={x:craft.x,y:craft.y};
+    craft.done=true;
+    status='fell';
+  }
+
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    starfield(ctx,W,H,19);
+    const w=WORLDS[wk];
+    const vesc=Math.sqrt(2*w.GM/w.R);
+    /* integrate only while in flight — stop hard on planet/moon collision */
+    if(craft&&!craft.done){
+      for(let s=0;s<3;s++){
+        const prevX=craft.x, prevY=craft.y;
+        const r=step(craft,cx,cy,w.GM,0.10,w.R);
+        apo=Math.max(apo,r-w.R);
+        if(r<=w.R){
+          /* place impact on surface (interpolate from last free point if needed) */
+          craft.x=prevX;craft.y=prevY;
+          hitSurface(w);
+          break;
+        }
+        craft.pts.push({x:craft.x,y:craft.y});
+        if(craft.pts.length>4200)craft.pts.shift();
+        if(r>2400){status='escaped';craft.done=true;break;}
+      }
+      if(!craft.done&&craft.pts.length>3000&&status==='')status='orbit';
+    }
+    /* world */
+    const g=ctx.createRadialGradient(cx-16,cy-18,8,cx,cy,w.R);
+    g.addColorStop(0,w.col);g.addColorStop(1,'#10203a');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,w.R,0,7);ctx.fill();
+    ctx.fillStyle='#9fb0cc';ctx.font="12px 'Space Mono',monospace";
+    ctx.fillText(w.name,cx-16,cy+w.R+22);
+    ctx.fillText('v_esc = '+w.v+' km/s',cx-46,cy+w.R+38);
+
+    /* trajectory — freezes at impact; does not continue through the body */
+    if(craft){
+      const col=status==='fell'?'#ff8b8b':(status==='escaped'?'#e453a0':'#ffd54f');
+      ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();
+      craft.pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();
+      if(!craft.done){
+        ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(craft.x,craft.y,4.5,0,7);ctx.fill();
+      }else if(craft.impact){
+        /* crash mark on the planet/moon surface */
+        const ix=craft.impact.x, iy=craft.impact.y;
+        ctx.strokeStyle='#ff8b8b';ctx.lineWidth=2.2;
+        ctx.beginPath();ctx.moveTo(ix-7,iy-7);ctx.lineTo(ix+7,iy+7);
+        ctx.moveTo(ix+7,iy-7);ctx.lineTo(ix-7,iy+7);ctx.stroke();
+        ctx.fillStyle='rgba(255,139,139,.35)';
+        ctx.beginPath();ctx.arc(ix,iy,10,0,7);ctx.fill();
+      }
+    }
+
+    /* throttle bar */
+    ctx.fillStyle='rgba(255,255,255,.07)';ctx.fillRect(barX,barY-8,barW,16);
+    const escX=barX+barW*(1/1.3);
+    ctx.fillStyle='rgba(228,83,160,.25)';ctx.fillRect(escX,barY-8,barW-(escX-barX),16);
+    ctx.strokeStyle='#e453a0';ctx.lineWidth=2.4;
+    ctx.beginPath();ctx.moveTo(escX,barY-14);ctx.lineTo(escX,barY+14);ctx.stroke();
+    ctx.fillStyle='#e453a0';ctx.font="10px 'Space Mono',monospace";ctx.fillText('escape velocity',escX-40,barY-20);
+    ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.strokeRect(barX,barY-8,barW,16);
+    const kx=knobX();
+    ctx.fillStyle=(hot||grab)?'#fff':'#ffd54f';ctx.beginPath();ctx.arc(kx,barY,13,0,7);ctx.fill();
+    ctx.strokeStyle='#03050c';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='#9fb0cc';ctx.font="11px 'Space Mono',monospace";
+    ctx.fillText('drag throttle ⇔',barX,barY+34);
+    ctx.fillStyle='#fff';ctx.font="13px 'Space Mono',monospace";
+    ctx.fillText((frac*100).toFixed(0)+'% of v_esc  =  '+(w.v*frac).toFixed(1)+' km/s',barX,barY-34);
+
+    read.innerHTML=`<b>${w.name}</b> · v_esc = √(2GM/R) = <b>${w.v} km/s</b> · launching at <b>${(w.v*frac).toFixed(1)} km/s</b>. `+
+      (status==='fell'?`<span style="color:#ff8b8b">Impact — trajectory stopped on the surface.</span> Climbed ${Math.round(apo)} px, then hit ${w.name}. Below 100% of escape velocity, gravity always wins.`
+       :status==='escaped'?`<span class="win">Escaped — gone for good.</span> Above escape velocity there is no turning point, no matter how far it travels.`
+       :status==='orbit'?`<span class="win">Captured into orbit</span> — fast enough to miss the surface, too slow to leave.`
+       :frac<0.99?`Below the threshold: however high it climbs, it must fall back and collide with ${w.name}.`
+       :`At or above escape velocity — press Launch and it will never return.`);
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ============ SIM 4 · CAPSTONE · SATELLITE MISSIONS ============ */
+(function(){
+  const cv=document.getElementById('simMission'),ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height,cx=W*0.44,cy=H*0.50;
+  const read=document.getElementById('missionRead'),hintEl=document.getElementById('missionHint');
+  const R=58, GM=150000;
+  const GEO=176;                                    // geostationary radius (px)
+  const LEO=96;
+  /* Earth spin rate matched to GEO orbital period: ω = √(GM / r³) */
+  const OMEGA_EARTH=Math.sqrt(GM/(GEO*GEO*GEO));
+  const V_GEO=Math.sqrt(GM/GEO);                    // circular speed at GEO
+  let earthAng=-Math.PI/2;                          // surface marker angle (top at start)
+  let drag=false,dragPt=null,hot=false;
+  let p=null,pts=[],rmin=1e9,rmax=0,mission='leo';
+  let crashed=false,escaped=false,stationary=false;
+  const done={leo:false,geo:false,escape:false};
+  const MIS={
+    leo:'① Draw a burn that puts the craft into a stable, nearly circular low orbit — eccentricity under 0.12, without touching the atmosphere. Pull sideways (tangentially), not upward.',
+    geo:'② You start on the Clarke ring (35,786 km). Give a sideways burn for a circular GEO orbit. The red arrow on Earth is a ground station — when your period matches Earth’s spin, the satellite stays fixed above that arrow.',
+    escape:'③ Escape Earth altogether — cross the escape threshold so the craft never returns.'
+  };
+  function startPos(){
+    /* GEO mission: craft waits on the Clarke ring (fixed handle so you can aim); ground station spins below */
+    if(mission==='geo') return {x:cx, y:cy-GEO};
+    if(mission==='escape') return {x:cx, y:cy-R-26};
+    return {x:cx, y:cy-LEO}; // leo: launch from low-orbit height
+  }
+  const missBtns=document.getElementById('missions');
+  missBtns.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    missBtns.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+    mission=b.dataset.m;reset();
+    if(mission==='geo') earthAng=-Math.PI/2; // reset ground station under craft at top
+    hintEl.innerHTML=`<span class="h">${MIS[mission]}</span>`;
+  });
+  hintEl.innerHTML=`<span class="h">${MIS.leo}</span>`;
+  function reset(){p=null;pts=[];rmin=1e9;rmax=0;crashed=false;escaped=false;stationary=false;}
+  document.getElementById('misReset').onclick=reset;
+
+  cv.addEventListener('pointerdown',e=>{
+    const q=pos(cv,e), s=startPos();
+    if(dist(q.x,q.y,s.x,s.y)<42){drag=true;dragPt={x:q.x,y:q.y};cv.setPointerCapture(e.pointerId);}
+  });
+  cv.addEventListener('pointermove',e=>{
+    const q=pos(cv,e), s=startPos();
+    hot=!p&&dist(q.x,q.y,s.x,s.y)<42;
+    if(drag)dragPt={x:q.x,y:q.y};
+  });
+  cv.addEventListener('pointerup',()=>{
+    if(drag&&dragPt){
+      const s=startPos();
+      p={x:s.x,y:s.y,vx:-(dragPt.x-s.x)*0.46,vy:-(dragPt.y-s.y)*0.46};
+      pts=[];rmin=1e9;rmax=0;crashed=false;escaped=false;stationary=false;
+    }
+    drag=false;dragPt=null;
+  });
+  cv.addEventListener('pointerleave',()=>{if(!drag)hot=false;});
+
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    starfield(ctx,W,H,29);
+
+    /* advance Earth rotation (matches GEO period so a true GEO sat stays over the marker) */
+    if(!drag){
+      const dtSpin=0.09*2;
+      earthAng+=OMEGA_EARTH*dtSpin;
+      if(earthAng>Math.PI*8)earthAng-=Math.PI*8;
+    }
+
+    if(p){
+      for(let s=0;s<4;s++){
+        const r=step(p,cx,cy,GM,0.09,R);
+        pts.push({x:p.x,y:p.y});
+        if(pts.length>5000)pts.shift();
+        rmin=Math.min(rmin,r);rmax=Math.max(rmax,r);
+        if(r<=R+4){crashed=true;p=null;break;}
+        if(r>1600){escaped=true;p=null;break;}
+      }
+    }
+
+    /* target rings — emphasize GEO when that mission is active */
+    const geoHi=mission==='geo';
+    ctx.strokeStyle=geoHi?'rgba(232,195,58,.85)':'rgba(232,195,58,.40)';
+    ctx.setLineDash([5,6]);ctx.lineWidth=geoHi?2.4:1.6;
+    ctx.beginPath();ctx.arc(cx,cy,GEO,0,7);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(232,195,58,.9)';ctx.font="10px 'Space Mono',monospace";
+    ctx.fillText('geostationary ring (35,786 km)',cx+GEO*0.22,cy-GEO-10);
+    ctx.strokeStyle=mission==='leo'?'rgba(110,231,168,.55)':'rgba(110,231,168,.28)';
+    ctx.setLineDash([3,5]);ctx.lineWidth=mission==='leo'?2:1.4;
+    ctx.beginPath();ctx.arc(cx,cy,LEO,0,7);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(110,231,168,.7)';ctx.fillText('low orbit',cx+LEO*0.4,cy-LEO-6);
+
+    /* longitude ray from ground station out through GEO altitude */
+    if(mission==='geo'){
+      const gx=cx+Math.cos(earthAng)*GEO, gy=cy+Math.sin(earthAng)*GEO;
+      ctx.strokeStyle='rgba(232,195,58,.30)';ctx.lineWidth=1.2;ctx.setLineDash([2,5]);
+      ctx.beginPath();ctx.moveTo(cx+Math.cos(earthAng)*R,cy+Math.sin(earthAng)*R);
+      ctx.lineTo(gx,gy);ctx.stroke();ctx.setLineDash([]);
+    }
+
+    /* earth */
+    const g=ctx.createRadialGradient(cx-16,cy-18,8,cx,cy,R);
+    g.addColorStop(0,'#5da9e8');g.addColorStop(1,'#0f3358');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.fill();
+    ctx.strokeStyle='rgba(110,231,168,.30)';ctx.lineWidth=6;
+    ctx.beginPath();ctx.arc(cx,cy,R+4,0,7);ctx.stroke();
+
+    /* rotating ground-station marker on Earth — red arrow (shows rotation / GEO lock) */
+    {
+      const ca=Math.cos(earthAng), sa=Math.sin(earthAng);
+      const base=R-4;
+      const tipR=R+16;
+      const tipX=cx+ca*tipR, tipY=cy+sa*tipR;
+      const bx=cx+ca*base, by=cy+sa*base;
+      /* shaft */
+      ctx.strokeStyle='#ff3b3b';ctx.lineWidth=2.8;ctx.lineCap='round';
+      ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(tipX,tipY);ctx.stroke();
+      /* arrow head pointing outward */
+      arrowH(ctx,tipX,tipY,earthAng,'#ff3b3b',11);
+      /* small base blot on surface */
+      ctx.fillStyle='#ff3b3b';
+      ctx.beginPath();ctx.arc(cx+ca*R,cy+sa*R,3.5,0,7);ctx.fill();
+      if(mission==='geo'){
+        ctx.fillStyle='#ff6b6b';ctx.font="10px 'Space Mono',monospace";
+        const lx=cx+ca*(R+22)-28, ly=cy+sa*(R+22);
+        ctx.fillText('ground station',lx,ly);
+      }
+    }
+
+    /* path */
+    if(pts.length>1){
+      ctx.strokeStyle=escaped?'#e453a0':(crashed?'#ff8b8b':'#4fc3f7');ctx.lineWidth=2;
+      ctx.beginPath();pts.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.stroke();
+    }
+    if(p){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(p.x,p.y,5,0,7);ctx.fill();}
+
+    /* launch handle — sits at GEO height for geostationary mission */
+    const s=startPos();
+    if(!p){
+      ctx.fillStyle=(hot||drag)?'#fff':'#6ee7a8';ctx.beginPath();ctx.arc(s.x,s.y,10,0,7);ctx.fill();
+      ctx.strokeStyle='#03050c';ctx.lineWidth=2;ctx.stroke();
+      ctx.fillStyle='#9fb0cc';ctx.font="10px 'Space Mono',monospace";
+      if(mission==='geo'){
+        ctx.fillText('GEO height · drag to burn',s.x-54,s.y-18);
+        /* hint: circular GEO speed arrow (tangential, prograde) */
+        const sang=Math.atan2(s.y-cy,s.x-cx);
+        const tx=-Math.sin(sang), ty=Math.cos(sang);
+        ctx.strokeStyle='rgba(232,195,58,.35)';ctx.setLineDash([3,4]);ctx.lineWidth=1.2;
+        ctx.beginPath();ctx.moveTo(s.x,s.y);
+        ctx.lineTo(s.x+tx*V_GEO*1.6,s.y+ty*V_GEO*1.6);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle='rgba(232,195,58,.7)';ctx.font="9px 'Space Mono',monospace";
+        ctx.fillText('circular →',s.x+tx*V_GEO*1.6-10,s.y+ty*V_GEO*1.6+12);
+      }else{
+        ctx.fillText('drag to burn',s.x-32,s.y-18);
+      }
+    }
+    if(drag&&dragPt){
+      vecArrow(ctx,s.x,s.y,-(dragPt.x-s.x),-(dragPt.y-s.y),'#ffd54f',3.5);
+      const v=Math.hypot(dragPt.x-s.x,dragPt.y-s.y)*0.46;
+      ctx.fillStyle='#ffd54f';ctx.font="11px 'Space Mono',monospace";
+      ctx.fillText('Δv '+v.toFixed(0)+(mission==='geo'?`  (circular ≈ ${V_GEO.toFixed(0)})`:''),s.x+16,s.y+22);
+    }
+
+    const ecc=(rmax>0&&rmin<1e9)?((rmax-rmin)/(rmax+rmin)):1;
+    const aAvg=(rmin+rmax)/2;
+    /* check if craft hangs over the ground station (geostationary) */
+    if(p&&mission==='geo'&&pts.length>400){
+      const satAng=Math.atan2(p.y-cy,p.x-cx);
+      let dAng=Math.abs(satAng-earthAng)%(Math.PI*2);
+      if(dAng>Math.PI)dAng=Math.PI*2-dAng;
+      const rNow=Math.hypot(p.x-cx,p.y-cy);
+      stationary=dAng<0.18&&Math.abs(rNow-GEO)<20&&ecc<0.18;
+    }else stationary=false;
+
+    /* detection */
+    if(!crashed&&!escaped&&pts.length>900){
+      if(mission==='leo'&&ecc<0.12&&rmin>R+12&&rmax<GEO*0.8)done.leo=true;
+      if(mission==='geo'&&ecc<0.12&&Math.abs(aAvg-GEO)<16)done.geo=true;
+      if(mission==='geo'&&stationary&&pts.length>600)done.geo=true;
+    }
+    if(mission==='escape'&&escaped)done.escape=true;
+    Object.keys(done).forEach(k=>{if(done[k]){const b=missBtns.querySelector(`[data-m="${k}"]`);if(b)b.classList.add('done');}});
+    const all=done.leo&&done.geo&&done.escape;
+
+    let msg;
+    if(all)msg=`<span class="win">🏆 All three missions flown — you're mission control!</span> Every orbit is the same equation: sideways speed versus the pull inward.`;
+    else if(crashed)msg=`<span style="color:#ff8b8b">Impact.</span> Not enough sideways speed — the ground didn't curve away fast enough. Pull the burn arrow more <b>tangentially</b> and a bit harder.`;
+    else if(escaped)msg=mission==='escape'?`<span class="win">Escape achieved — the craft is never coming back.</span>`
+      :`<span style="color:#e453a0">Overshot — it escaped.</span> Too much Δv for this mission; ease off.`;
+    else if(pts.length>200)msg=`perigee <b>${Math.round(rmin)}</b> · apogee <b>${Math.round(rmax)}</b> · eccentricity <b>${ecc.toFixed(2)}</b>`+
+      (mission==='geo'?` · target radius ${GEO} (you're at ${Math.round(aAvg)})`+(stationary?` · <span class="win">locked over ground station!</span>`:''):'')+
+      (done[mission]?` — <span class="win">mission accomplished!</span>`:` — ${ecc<0.12?'nicely circular':'too elliptical, even out the burn'}`);
+    else if(mission==='geo')msg=`Craft is at <b>geostationary height</b>. Pull sideways (along the gold hint) with Δv ≈ <b>${V_GEO.toFixed(0)}</b> for a circular GEO orbit. Watch the <b>red arrow</b> on Earth — if your period matches Earth's spin, you stay fixed above it.`;
+    else msg=`Drag from the green craft to draw your burn — <b>direction and length both matter</b>. Sideways burns make orbits; upward burns just come back down.`;
+    read.innerHTML=msg;
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
+</body>
+</html>

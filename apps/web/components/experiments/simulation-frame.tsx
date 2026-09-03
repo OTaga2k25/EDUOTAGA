@@ -48,11 +48,16 @@ export function SimulationFrame({
         if (!doc.body) return;
 
         const getDocHeight = () => {
-          return Math.max(
-            doc.body.scrollHeight || 0, doc.documentElement.scrollHeight || 0,
-            doc.body.offsetHeight || 0, doc.documentElement.offsetHeight || 0,
-            doc.body.clientHeight || 0, doc.documentElement.clientHeight || 0
-          ) + 32; // 32px buffer for safety against mobile rendering quirks
+          return (
+            Math.max(
+              doc.body.scrollHeight || 0,
+              doc.documentElement.scrollHeight || 0,
+              doc.body.offsetHeight || 0,
+              doc.documentElement.offsetHeight || 0,
+              doc.body.clientHeight || 0,
+              doc.documentElement.clientHeight || 0,
+            ) + 32
+          ); // 32px buffer for safety against mobile rendering quirks
         };
 
         const isImmersiveCSS = doc.defaultView
@@ -169,7 +174,7 @@ export function SimulationFrame({
     <div
       ref={containerRef}
       className={[
-        'group relative w-full bg-surface',
+        'group bg-surface relative w-full',
         isFullscreen
           ? 'h-screen'
           : `overflow-hidden rounded-2xl border-2 border-black dark:border-white ${isImmersive ? 'h-[75vh] min-h-[600px]' : ''}`,
@@ -186,7 +191,7 @@ export function SimulationFrame({
         title={`${title} simulation`}
         loading="lazy"
         onLoad={handleLoad}
-        className="w-full h-full"
+        className="h-full w-full"
         style={{ border: 'none' }}
         scrolling="auto"
         // Lets the simulation itself go fullscreen from inside the frame.
@@ -199,7 +204,7 @@ export function SimulationFrame({
         onClick={isFullscreen ? exitFullscreen : enterFullscreen}
         // Always visible rather than hover-only: on touch there is no hover,
         // and this is the control that makes a small simulation usable.
-        className="absolute right-3 top-3 z-10 inline-flex items-center gap-2 rounded-full border-2 border-black bg-white/90 px-3 py-2 text-sm font-bold text-black shadow-md backdrop-blur transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 dark:border-white dark:bg-zinc-900/90 dark:text-white dark:hover:bg-zinc-900"
+        className="focus-visible:ring-primary/50 absolute top-3 right-3 z-10 inline-flex items-center gap-2 rounded-full border-2 border-black bg-white/90 px-3 py-2 text-sm font-bold text-black shadow-md backdrop-blur transition-colors hover:bg-white focus-visible:ring-2 focus-visible:outline-none dark:border-white dark:bg-zinc-900/90 dark:text-white dark:hover:bg-zinc-900"
         aria-label={isFullscreen ? 'Exit fullscreen' : 'View simulation fullscreen'}
       >
         {isFullscreen ? (

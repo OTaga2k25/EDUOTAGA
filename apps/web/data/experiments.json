@@ -418,5 +418,57 @@
     "estimatedDurationMinutes": 10,
     "createdAt": "2026-07-29T00:00:00.000Z",
     "updatedAt": "2026-07-29T00:00:00.000Z"
+  },
+  {
+    "id": "energy-story",
+    "slug": "energy-story",
+    "title": "The Energy Exchange",
+    "subjectId": "energy-story",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "A story of work, energy & power. Roll, launch, haul & light.",
+    "theory": "Energy is never created or destroyed, only traded between forms.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Launch the Coaster",
+        "description": "Release the coaster and watch the trade between kinetic and potential energy."
+      }
+    ],
+    "observation": "Energy always conserves.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [],
+    "tags": ["physics", "energy", "power"],
+    "estimatedDurationMinutes": 20,
+    "createdAt": "2026-09-03T00:00:00.000Z",
+    "updatedAt": "2026-09-03T00:00:00.000Z"
+  },
+  {
+    "id": "gravitation",
+    "slug": "gravitation",
+    "title": "The Force Within",
+    "subjectId": "gravitation",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "A story of gravity, orbits & escape velocity. Fire, sling & fly.",
+    "theory": "Every mass pulls every other mass, weakening as the square of distance.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Newton's Cannon",
+        "description": "Fire a cannonball fast enough to fall around the Earth without hitting the ground."
+      }
+    ],
+    "observation": "An orbit is just a fall that never lands.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [],
+    "tags": ["physics", "gravity", "orbit", "escape velocity"],
+    "estimatedDurationMinutes": 20,
+    "createdAt": "2026-09-03T00:00:00.000Z",
+    "updatedAt": "2026-09-03T00:00:00.000Z"
   }
 ]

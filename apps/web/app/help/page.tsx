@@ -17,7 +17,7 @@ export default function HelpPage() {
       </div>
       <h1 className="text-4xl font-bold tracking-tight mb-4">Help Center</h1>
       <p className="text-muted-foreground max-w-md text-lg">
-        Our support portal is currently being set up. If you need immediate assistance, please reach out via our GitHub repository.
+        Our support portal is currently being set up. Please check back soon or contact support for assistance.
       </p>
     </div>
   );

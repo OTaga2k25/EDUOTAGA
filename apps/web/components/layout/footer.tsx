@@ -18,14 +18,6 @@ export function Footer() {
           <Link href="/experiments" className="hover:underline hover:text-neo-blue transition-colors">
             Experiments
           </Link>
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noreferrer"
-            className="hover:underline hover:text-neo-blue transition-colors"
-          >
-            GitHub
-          </a>
         </div>
       </div>
     </footer>

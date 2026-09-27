@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ESP32 Prototype Bench</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 22 22"><rect x="5" y="3" width="12" height="16" rx="1.5" fill="#101614"/><rect x="7" y="4.5" width="8" height="6" rx="1" fill="#C9CFD2"/><g fill="#E0B659"><rect x="2" y="5" width="3" height="1.4"/><rect x="2" y="8" width="3" height="1.4"/><rect x="2" y="11" width="3" height="1.4"/><rect x="2" y="14" width="3" height="1.4"/><rect x="17" y="5" width="3" height="1.4"/><rect x="17" y="8" width="3" height="1.4"/><rect x="17" y="11" width="3" height="1.4"/><rect x="17" y="14" width="3" height="1.4"/></g></svg>
+      </div>
+      <div>
+        <h1>ESP32 Prototype Bench</h1>
+        <p>Wire a DevKit with jumpers, check it against the pin rules, run it, get the sketch.</p>
+      </div>
+    </div>
+    <div class="ctl">
+      <label for="preset">Bench</label>
+      <select id="preset">
+        <option value="bottle">Hover-vehicle bottle</option>
+        <option value="weather">Weather station</option>
+        <option value="parking">Parking sensor</option>
+        <option value="bugs">Find the mistakes</option>
+        <option value="empty">Empty bench</option>
+      </select>
+    </div>
+    <label class="switch" for="wifi"><input type="checkbox" id="wifi" checked><span class="track"></span>Wi-Fi on</label>
+    <div class="status" id="status"></div>
+    <button class="btn run" id="run" aria-pressed="false">
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path id="runIcon" d="M2 1l9 5-9 5z" fill="currentColor"/></svg>
+      <span id="runLabel">Run</span>
+    </button>
+  </header>
+
+  <aside class="lib card" aria-label="Parts">
+    <div class="lib-head">
+      <div class="eyebrow">Parts bin</div>
+      <h2>Add to the bench</h2>
+      <p>Click a part to drop it on the mat.</p>
+    </div>
+    <div class="lib-list" id="lib"></div>
+  </aside>
+
+  <main class="stage" id="stage">
+    <canvas id="view" aria-label="3D workbench. Click pins to connect jumpers."></canvas>
+    <div class="loading" id="loading">Laying out the cutting mat…</div>
+    <div class="view-tools">
+      <button class="btn small" id="topView" title="Look straight down">Top view</button>
+      <button class="btn small" id="resetView" title="Reset camera">Reset view</button>
+    </div>
+    <div class="hint"><div class="msg" id="hint"></div></div>
+    <div class="tip" id="tip" hidden></div>
+  </main>
+
+  <section class="panel card" aria-label="Details">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="inspect" aria-selected="true">Inspect</button>
+      <button class="tab" role="tab" data-tab="checks" aria-selected="false">Checks <span class="n" id="checkCount">0</span></button>
+      <button class="tab" role="tab" data-tab="world" aria-selected="false">World</button>
+      <button class="tab" role="tab" data-tab="serial" aria-selected="false">Serial</button>
+      <button class="tab" role="tab" data-tab="code" aria-selected="false">Sketch</button>
+    </div>
+    <div class="pane" id="pane-inspect"></div>
+    <div class="pane" id="pane-checks" hidden></div>
+    <div class="pane" id="pane-world" hidden></div>
+    <div class="pane" id="pane-serial" hidden>
+      <div class="toolbar">
+        <span class="eyebrow">Serial monitor · 115200</span><span class="spacer"></span>
+        <button class="btn small" id="serialPause">Pause</button>
+        <button class="btn small" id="serialClear">Clear</button>
+      </div>
+      <pre class="serial" id="serialOut">Press Run to boot the board.</pre>
+    </div>
+    <div class="pane" id="pane-code" hidden>
+      <div class="toolbar">
+        <span class="eyebrow">Generated from your wiring</span><span class="spacer"></span>
+        <button class="btn small" id="copyCode">Copy sketch</button>
+      </div>
+      <pre class="code" id="codeOut"></pre>
+    </div>
+  </section>
+</div>
+
+<script src="lib/three.min.js"></script>
+<script src="lib/OrbitControls.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -38,13 +38,18 @@ export function CategoryCard({
   return (
     <Link href={`/subjects?categoryId=${category.id}`} className="group block h-full outline-none">
       <div className="neo-card flex h-full flex-col gap-3 p-6">
-        <div className={`flex h-14 w-14 items-center justify-center rounded-xl border-2 border-black dark:border-white ${CATEGORY_BG[category.id]}`}>
+        <div
+          className={`flex h-14 w-14 items-center justify-center rounded-xl border-2 border-black dark:border-white ${CATEGORY_BG[category.id]}`}
+        >
           <Icon className="h-8 w-8 text-black transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-6" />
         </div>
-        <h3 className="text-lg font-black text-foreground">{category.name}</h3>
-        <p className="line-clamp-2 flex-1 text-sm font-semibold opacity-70">{category.description}</p>
+        <h3 className="text-foreground text-lg font-black">{category.name}</h3>
+        <p className="line-clamp-2 flex-1 text-sm font-semibold opacity-70">
+          {category.description}
+        </p>
         <p className="text-xs font-bold opacity-70">
-          {subjectCount} subject{subjectCount === 1 ? '' : 's'} · {experimentCount} experiment{experimentCount === 1 ? '' : 's'}
+          {subjectCount} subject{subjectCount === 1 ? '' : 's'} · {experimentCount} experiment
+          {experimentCount === 1 ? '' : 's'}
         </p>
       </div>
     </Link>

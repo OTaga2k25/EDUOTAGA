@@ -22,15 +22,15 @@ export function ExperimentCard({ experiment }: { experiment: ExperimentSummary }
 
   return (
     <Link href={`/experiments/${experiment.slug}`} className="block h-full outline-none">
-      <div className="neo-card flex h-full flex-col justify-between p-4 min-h-[160px]">
+      <div className="neo-card flex h-full min-h-[160px] flex-col justify-between p-4">
         <div>
-          <h3 className="text-sm font-black leading-tight mb-1">{experiment.title}</h3>
+          <h3 className="mb-1 text-sm leading-tight font-black">{experiment.title}</h3>
         </div>
 
-         <div className="flex items-end justify-end mt-4">
-           <div aria-hidden="true">
-             <Icon className="h-10 w-10 text-black dark:text-white opacity-70" />
-           </div>
+        <div className="mt-4 flex items-end justify-end">
+          <div aria-hidden="true">
+            <Icon className="h-10 w-10 text-black opacity-70 dark:text-white" />
+          </div>
         </div>
       </div>
     </Link>

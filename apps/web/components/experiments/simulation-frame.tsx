@@ -47,6 +47,25 @@ export function SimulationFrame({
         const doc = iframeRef.current.contentWindow.document;
         if (!doc.body) return;
 
+        const win = doc.defaultView;
+        const bodyStyle = win ? win.getComputedStyle(doc.body) : null;
+        const htmlStyle = win ? win.getComputedStyle(doc.documentElement) : null;
+
+        const isImmersiveCSS =
+          bodyStyle?.overflowY === 'hidden' ||
+          bodyStyle?.overflow === 'hidden' ||
+          htmlStyle?.overflowY === 'hidden' ||
+          htmlStyle?.overflow === 'hidden' ||
+          doc.body.style.height === '100%' ||
+          doc.documentElement.style.height === '100%';
+
+        if (fullHeight && isImmersiveCSS) {
+          // It's a 100%-height immersive canvas / workbench app
+          observerRef.current?.disconnect();
+          setFrameHeight(undefined);
+          return;
+        }
+
         const getDocHeight = () => {
           return (
             Math.max(
@@ -56,26 +75,35 @@ export function SimulationFrame({
               doc.documentElement.offsetHeight || 0,
               doc.body.clientHeight || 0,
               doc.documentElement.clientHeight || 0,
-            ) + 32
-          ); // 32px buffer for safety against mobile rendering quirks
+            ) + 16
+          );
         };
 
-        const isImmersiveCSS = doc.defaultView
-          ? doc.defaultView.getComputedStyle(doc.body).overflowY === 'hidden'
-          : false;
-
-        if (fullHeight && isImmersiveCSS) {
-          // It's a 100%-height immersive canvas app
-          return;
-        }
-
-        setFrameHeight(getDocHeight());
+        let lastHeight = getDocHeight();
+        let consecutiveExpansions = 0;
+        setFrameHeight(lastHeight);
 
         // Track dynamic height changes (e.g. from web fonts or mobile wrapping)
         observerRef.current?.disconnect();
         const observer = new ResizeObserver(() => {
-          setFrameHeight(getDocHeight());
+          const newHeight = getDocHeight();
+          if (newHeight === lastHeight) return;
+
+          // Prevent runaway feedback loop where iframe container expansion triggers doc expansion
+          if (newHeight > lastHeight && newHeight - lastHeight <= 48) {
+            consecutiveExpansions++;
+            if (consecutiveExpansions > 2) {
+              observer.disconnect();
+              return;
+            }
+          } else {
+            consecutiveExpansions = 0;
+          }
+
+          lastHeight = newHeight;
+          setFrameHeight(newHeight);
         });
+
         observer.observe(doc.body);
         if (doc.documentElement) observer.observe(doc.documentElement);
         observerRef.current = observer;
@@ -177,7 +205,7 @@ export function SimulationFrame({
         'group bg-surface relative w-full',
         isFullscreen
           ? 'h-screen'
-          : `overflow-hidden rounded-2xl border-2 border-black dark:border-white ${isImmersive ? 'h-[75vh] min-h-[600px]' : ''}`,
+          : `overflow-hidden rounded-2xl border-2 border-black dark:border-white ${isImmersive ? 'h-[80vh] min-h-[640px]' : ''}`,
         mode === 'overlay' ? 'fixed inset-0 z-[100]' : '',
       ]
         .filter(Boolean)

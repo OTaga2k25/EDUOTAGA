@@ -3,9 +3,10 @@ import { JsonLd } from '@/components/seo/json-ld';
 import { breadcrumbSchema, canonical } from '@/lib/seo';
 import { EmptyState, SectionHeading } from '@eduotaga/ui/web';
 import { CATEGORIES } from '@eduotaga/constants';
-import type { ExperimentDifficulty, ExperimentSummary } from '@eduotaga/types';
+import type { ExperimentDifficulty, ExperimentSummary, Subject } from '@eduotaga/types';
 import { SubjectModuleCard } from '@/components/experiments/subject-module-card';
 import { listExperiments } from '@/services/experiments-service';
+import { getSubjects } from '@/lib/data';
 
 export const metadata: Metadata = {
   title: 'All Virtual Lab Experiments',
@@ -19,11 +20,27 @@ interface ExperimentsPageProps {
 }
 
 /** Group experiments into Category → Subject → Experiments */
-function groupByCategoryAndSubject(experiments: ExperimentSummary[]) {
-  const result: Record<string, {
-    categoryName: string;
-    subjects: Record<string, { subjectName: string; experiments: ExperimentSummary[] }>;
-  }> = {};
+function groupByCategoryAndSubject(
+  experiments: ExperimentSummary[],
+  subjectMap: Map<string, Subject>,
+) {
+  const result: Record<
+    string,
+    {
+      categoryName: string;
+      subjects: Record<
+        string,
+        {
+          subjectName: string;
+          slug?: string;
+          description?: string;
+          icon?: string;
+          color?: string;
+          experiments: ExperimentSummary[];
+        }
+      >;
+    }
+  > = {};
 
   for (const exp of experiments) {
     if (!result[exp.categoryId]) {
@@ -35,7 +52,15 @@ function groupByCategoryAndSubject(experiments: ExperimentSummary[]) {
     }
     const category = result[exp.categoryId];
     if (!category.subjects[exp.subjectId]) {
-      category.subjects[exp.subjectId] = { subjectName: exp.subjectName, experiments: [] };
+      const subjectInfo = subjectMap.get(exp.subjectId);
+      category.subjects[exp.subjectId] = {
+        subjectName: exp.subjectName,
+        slug: subjectInfo?.slug,
+        description: subjectInfo?.description,
+        icon: subjectInfo?.icon,
+        color: subjectInfo?.color,
+        experiments: [],
+      };
     }
     category.subjects[exp.subjectId].experiments.push(exp);
   }
@@ -45,12 +70,16 @@ function groupByCategoryAndSubject(experiments: ExperimentSummary[]) {
 
 export default async function ExperimentsPage({ searchParams }: ExperimentsPageProps) {
   const { categoryId, difficulty } = await searchParams;
-  const experiments = await listExperiments({
-    categoryId,
-    difficulty: difficulty as ExperimentDifficulty | undefined,
-  });
+  const [experiments, subjects] = await Promise.all([
+    listExperiments({
+      categoryId,
+      difficulty: difficulty as ExperimentDifficulty | undefined,
+    }),
+    getSubjects(),
+  ]);
 
-  const grouped = groupByCategoryAndSubject(experiments);
+  const subjectMap = new Map(subjects.map((s) => [s.id, s]));
+  const grouped = groupByCategoryAndSubject(experiments, subjectMap);
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
@@ -72,24 +101,47 @@ export default async function ExperimentsPage({ searchParams }: ExperimentsPageP
         </div>
       ) : (
         <div className="mt-12 flex flex-col gap-14">
-          {Object.entries(grouped).map(([catId, category]) => (
-            <div key={catId}>
-              {/* ── Category heading ── */}
-              <h2 className="mb-6 text-2xl font-black text-foreground">
-                {category.categoryName}
-              </h2>
+          {Object.entries(grouped).map(([catId, category]) => {
+            const subjectEntries = Object.entries(category.subjects);
+            const totalExpCount = subjectEntries.reduce(
+              (sum, [, s]) => sum + s.experiments.length,
+              0,
+            );
 
-              <div className="flex flex-col gap-5">
-                {Object.entries(category.subjects).map(([subId, subject]) => (
-                  <SubjectModuleCard
-                    key={subId}
-                    subjectName={subject.subjectName}
-                    experiments={subject.experiments}
-                  />
-                ))}
+            return (
+              <div key={catId}>
+                {/* ── Category heading with count pills ── */}
+                <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b-2 border-black/10 pb-4 dark:border-white/10">
+                  <h2 className="text-foreground text-2xl font-black">{category.categoryName}</h2>
+                  <div className="flex items-center gap-2">
+                    <span className="bg-neo-yellow/30 text-foreground rounded-full border-2 border-black px-2.5 py-0.5 text-xs font-black dark:border-white/30">
+                      {subjectEntries.length} {subjectEntries.length === 1 ? 'subject' : 'subjects'}
+                    </span>
+                    <span className="text-foreground rounded-full border-2 border-black bg-black/5 px-2.5 py-0.5 text-xs font-black dark:border-white/30 dark:bg-white/10">
+                      {totalExpCount} {totalExpCount === 1 ? 'experiment' : 'experiments'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* ── Responsive Card Grid ── */}
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {subjectEntries.map(([subId, subject]) => (
+                    <SubjectModuleCard
+                      key={subId}
+                      subjectId={subId}
+                      subjectName={subject.subjectName}
+                      subjectSlug={subject.slug}
+                      subjectDescription={subject.description}
+                      iconName={subject.icon}
+                      subjectColor={subject.color}
+                      categoryId={catId}
+                      experiments={subject.experiments}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </section>

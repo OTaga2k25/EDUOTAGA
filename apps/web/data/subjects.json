@@ -43,5 +43,14 @@
     "categoryId": "physics",
     "icon": "globe",
     "color": "sky"
+  },
+  {
+    "id": "esp32-prototyping",
+    "slug": "esp32-prototyping",
+    "name": "ESP32 & Microcontroller Prototyping",
+    "description": "Wire DevKits with jumpers, check pin rules, run simulations, and generate Arduino sketches.",
+    "categoryId": "electronics",
+    "icon": "cpu",
+    "color": "emerald"
   }
 ]

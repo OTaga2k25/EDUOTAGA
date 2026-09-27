@@ -113,14 +113,7 @@
         "explanation": "TIR requires light moving from higher to lower refractive index, and only once the incidence angle exceeds the critical angle sin θc = 1/n."
       }
     ],
-    "tags": [
-      "reflection",
-      "refraction",
-      "lens",
-      "mirror",
-      "total internal reflection",
-      "optics"
-    ],
+    "tags": ["reflection", "refraction", "lens", "mirror", "total internal reflection", "optics"],
     "estimatedDurationMinutes": 35,
     "createdAt": "2026-07-10T00:00:00.000Z",
     "updatedAt": "2026-07-10T00:00:00.000Z"
@@ -205,13 +198,7 @@
         "explanation": "As the water level rises in the chamber, buoyancy lifts the floating ship along with the water."
       }
     ],
-    "tags": [
-      "panama canal",
-      "marine engineering",
-      "buoyancy",
-      "locks",
-      "fluid mechanics"
-    ],
+    "tags": ["panama canal", "marine engineering", "buoyancy", "locks", "fluid mechanics"],
     "estimatedDurationMinutes": 20,
     "createdAt": "2026-07-17T00:00:00.000Z",
     "updatedAt": "2026-07-17T00:00:00.000Z"
@@ -272,14 +259,7 @@
         "explanation": "We only need memory for two variables (L and R) regardless of the string's length, meaning it requires O(1) constant auxiliary space."
       }
     ],
-    "tags": [
-      "algorithms",
-      "two-pointer",
-      "arrays",
-      "strings",
-      "in-place",
-      "computer science"
-    ],
+    "tags": ["algorithms", "two-pointer", "arrays", "strings", "in-place", "computer science"],
     "estimatedDurationMinutes": 15,
     "createdAt": "2026-07-29T00:00:00.000Z",
     "updatedAt": "2026-07-29T00:00:00.000Z"
@@ -408,13 +388,7 @@
         "explanation": "A single mismatch proves the word is not perfectly symmetrical, so we can stop checking immediately."
       }
     ],
-    "tags": [
-      "algorithms",
-      "two-pointer",
-      "palindromes",
-      "strings",
-      "computer science"
-    ],
+    "tags": ["algorithms", "two-pointer", "palindromes", "strings", "computer science"],
     "estimatedDurationMinutes": 10,
     "createdAt": "2026-07-29T00:00:00.000Z",
     "updatedAt": "2026-07-29T00:00:00.000Z"
@@ -470,5 +444,100 @@
     "estimatedDurationMinutes": 20,
     "createdAt": "2026-09-03T00:00:00.000Z",
     "updatedAt": "2026-09-03T00:00:00.000Z"
+  },
+  {
+    "id": "esp32-prototype-bench",
+    "slug": "ESP_Prototyping",
+    "title": "ESP32 Prototype Bench",
+    "subjectId": "esp32-prototyping",
+    "categoryId": "electronics",
+    "difficulty": "intermediate",
+    "summary": "Wire an ESP32 DevKit on an interactive 3D breadboard, check pin constraints, monitor serial output, and generate Arduino sketches.",
+    "theory": "The **ESP32** is a versatile micro-controller with integrated Wi-Fi and Bluetooth. When prototyping with microcontrollers, understanding GPIO pin constraints is essential: some pins are **input-only** (GPIO 34-39), some are **strapping pins** that affect bootloader mode (GPIO 0, 2, 12, 15), and others conflict with the Wi-Fi ADC2 subsystem. The prototype bench lets you wire circuits with jumpers, check pin assignments against hardware rules, and inspect the generated Arduino firmware in real time.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Select a Bench Preset",
+        "description": "Choose between presets like Weather Station, Parking Sensor, or Hover-Vehicle Bottle, or start with an Empty Bench."
+      },
+      {
+        "order": 2,
+        "title": "Add Parts from the Bin",
+        "description": "Pick sensors, LEDs, displays, or actuators from the parts bin to drop them onto the workbench mat."
+      },
+      {
+        "order": 3,
+        "title": "Wire Jumpers in 3D",
+        "description": "Click pins on the ESP32 and components to connect jumper wires. Rotate and zoom the 3D view or switch to Top View for precision."
+      },
+      {
+        "order": 4,
+        "title": "Verify Pin Rules & Checks",
+        "description": "Open the Checks tab to ensure no strapping pin conflicts, power rail shorts, or ADC2 Wi-Fi clashes exist."
+      },
+      {
+        "order": 5,
+        "title": "Run Simulation & Inspect Sketch",
+        "description": "Click Run to power the board, observe the live circuit and Serial Monitor at 115200 baud, and copy the auto-generated Arduino sketch."
+      }
+    ],
+    "observation": "Safe microcontroller wiring prevents boot failures caused by strapping pin pull-ups and avoids ADC2 channel conflicts when Wi-Fi is active. The generated sketch dynamically reflects your GPIO connections.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Which of the following ESP32 GPIO pins can only be used as inputs?",
+        "options": [
+          {
+            "id": "a",
+            "text": "GPIO 34, 35, 36 (VP), and 39 (VN)"
+          },
+          {
+            "id": "b",
+            "text": "GPIO 2, 4, 16, and 17"
+          },
+          {
+            "id": "c",
+            "text": "GPIO 21 and 22"
+          },
+          {
+            "id": "d",
+            "text": "GPIO 18, 19, and 23"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "GPIs 34, 35, 36, and 39 do not have internal pull-up or pull-down resistors and cannot be configured as digital outputs."
+      },
+      {
+        "id": "q2",
+        "question": "Why should you avoid using ADC2 pins when Wi-Fi is enabled on the ESP32?",
+        "options": [
+          {
+            "id": "a",
+            "text": "They draw too much power from the 3.3V rail"
+          },
+          {
+            "id": "b",
+            "text": "The ADC2 hardware is shared with the Wi-Fi driver and causes read errors when Wi-Fi is active"
+          },
+          {
+            "id": "c",
+            "text": "ADC2 only supports 5V analog signals"
+          },
+          {
+            "id": "d",
+            "text": "They invert the serial monitor baud rate"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The ESP32 Wi-Fi driver uses ADC2 internally; attempting to read analog values on ADC2 pins while Wi-Fi is on will fail or return invalid data."
+      }
+    ],
+    "tags": ["esp32", "iot", "microcontroller", "breadboard", "circuits", "arduino", "embedded"],
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-09-27T00:00:00.000Z",
+    "updatedAt": "2026-09-27T00:00:00.000Z"
   }
 ]

@@ -1579,11 +1579,16 @@ document.addEventListener("click", ev => {
   else if (t.dataset.act === "check") { setChecks(true); showTab("checks"); }
   else if (t.dataset.act === "pausechecks") setChecks(false);
   else if (t.dataset.show) select({ kind: "comp", id: t.dataset.show });
-  else if (t.dataset.goto) showTab(t.dataset.goto);
+  else if (t.dataset.goto) {
+    showTab(t.dataset.goto);
+    if (window.innerWidth <= 900) $(".panel")?.scrollIntoView({ behavior: "smooth" });
+  }
   else if (t.dataset.wcolor) {
     const w = state.wires.find(x => x.id === state.sel.id);
     w.color = t.dataset.wcolor; buildWire(w); renderInspector(); save();
-  } else if (t.classList.contains("tab")) showTab(t.dataset.tab);
+  } else if (t.classList.contains("tab")) {
+    showTab(t.dataset.tab);
+  }
 });
 document.addEventListener("input", ev => {
   const el = ev.target;
@@ -1637,6 +1642,9 @@ $("#copyCode").addEventListener("click", async ev => {
 });
 $("#resetView").addEventListener("click", () => resetView(false));
 $("#topView").addEventListener("click", () => resetView(true));
+$("#jumpToParts")?.addEventListener("click", () => $(".lib")?.scrollIntoView({ behavior: "smooth" }));
+$("#jumpToPanel")?.addEventListener("click", () => $(".panel")?.scrollIntoView({ behavior: "smooth" }));
+$("#jumpToBench")?.addEventListener("click", () => $("#stage")?.scrollIntoView({ behavior: "smooth" }));
 $("#preset").addEventListener("change", ev => { loadPreset(ev.target.value); });
 
 // ═════════════════════════ presets ═════════════════════════

@@ -91,6 +91,11 @@ export default function ExperimentScreen() {
             // Fullscreen API. The button below is what makes the simulation
             // itself fill the screen.
             allowsFullscreenVideo
+            nestedScrollEnabled
+            showsVerticalScrollIndicator
+            domStorageEnabled
+            javaScriptEnabled
+            style={{ flex: 1, backgroundColor: 'transparent' }}
           />
         ) : (
           <View style={{ padding: theme.spacing.md }}>
@@ -113,6 +118,7 @@ export default function ExperimentScreen() {
               // With the header hidden there is nothing keeping the button clear
               // of the notch, so inset it manually.
               top: (isFullscreen ? insets.top : 0) + theme.spacing.md,
+              zIndex: 100,
               flexDirection: 'row',
               alignItems: 'center',
               gap: theme.spacing.xs,

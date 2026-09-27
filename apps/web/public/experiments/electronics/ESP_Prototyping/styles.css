@@ -77,10 +77,22 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
-html,
-body {
-  height: 100%;
-  overflow: hidden;
+@media (min-width: 901px) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+}
+@media (max-width: 900px) {
+  html,
+  body {
+    height: auto !important;
+    min-height: 100%;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 [hidden] {
   display: none !important;
@@ -770,40 +782,81 @@ input[type='range'] {
     grid-template-columns: 220px minmax(0, 1fr) 320px;
   }
 }
+.mobile-only {
+  display: none !important;
+}
+
 @media (max-width: 900px) {
+  .mobile-only {
+    display: inline-flex !important;
+  }
   html,
   body {
-    height: auto;
+    height: auto !important;
+    min-height: 100%;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
   }
   .app {
-    height: auto;
+    height: auto !important;
+    min-height: 100%;
+    overflow: visible !important;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto auto auto auto;
     grid-template-areas: 'top' 'stage' 'lib' 'panel';
+    padding: 10px 10px 72px 10px;
+    gap: 16px;
+  }
+  .top {
+    /* Leave room on the top-right on mobile so the mobile app's floating Exit button does not overlap controls */
+    padding-right: 95px;
   }
   .stage {
-    height: 62svh;
-    min-height: 360px;
+    height: 52svh;
+    min-height: 320px;
+  }
+  .view-tools {
+    left: 12px;
+    right: 12px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .lib {
+    overflow: visible;
   }
   .lib-list {
     flex-direction: row;
     overflow-x: auto;
     overflow-y: hidden;
     padding-bottom: 12px;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
   }
   .lib-group {
     display: none;
   }
   .part {
-    width: 200px;
+    width: 210px;
     flex: none;
     border-color: var(--line);
+    background: var(--panel);
+    scroll-snap-align: start;
   }
   .panel {
     max-height: none;
+    overflow: visible;
   }
   .pane {
-    max-height: 70svh;
+    max-height: none;
+    overflow: visible;
+  }
+  .panel-footer {
+    display: flex;
+    justify-content: center;
+    padding: 14px;
+    border-top: 1px solid var(--line);
   }
   .brand {
     width: 100%;

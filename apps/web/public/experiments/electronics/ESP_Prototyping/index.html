@@ -53,6 +53,8 @@
     <div class="view-tools">
       <button class="btn small" id="topView" title="Look straight down">Top view</button>
       <button class="btn small" id="resetView" title="Reset camera">Reset view</button>
+      <button class="btn small mobile-only" id="jumpToParts" title="Scroll down to parts bin">Parts ↓</button>
+      <button class="btn small mobile-only" id="jumpToPanel" title="Scroll down to details and code">Panel ↓</button>
     </div>
     <div class="hint"><div class="msg" id="hint"></div></div>
     <div class="tip" id="tip" hidden></div>
@@ -83,6 +85,9 @@
         <button class="btn small" id="copyCode">Copy sketch</button>
       </div>
       <pre class="code" id="codeOut"></pre>
+    </div>
+    <div class="panel-footer mobile-only">
+      <button class="btn small" id="jumpToBench">↑ Back to 3D Bench</button>
     </div>
   </section>
 </div>

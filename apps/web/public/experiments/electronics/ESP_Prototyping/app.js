@@ -1646,11 +1646,27 @@ $("#copyCode").addEventListener("click", async ev => {
   catch { const r = document.createRange(); r.selectNodeContents($("#codeOut")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); ev.target.textContent = "Selected: press Ctrl+C"; }
   setTimeout(() => ev.target.textContent = "Copy sketch", 1800);
 });
+function setMobileView(view) {
+  const app = $(".app");
+  if (!app) return;
+  app.dataset.activeView = view;
+  $$(".mobile-nav-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.view === view);
+  });
+  if (view === "bench") {
+    setTimeout(resize, 30);
+  }
+}
+$$(".mobile-nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => setMobileView(btn.dataset.view));
+});
+$("#mobileAddPartBtn")?.addEventListener("click", () => setMobileView("parts"));
+$("#mobileViewCodeBtn")?.addEventListener("click", () => { showTab("code"); setMobileView("panel"); });
+$("#backToBenchFromParts")?.addEventListener("click", () => setMobileView("bench"));
+$("#jumpToBench")?.addEventListener("click", () => setMobileView("bench"));
+
 $("#resetView").addEventListener("click", () => resetView(false));
 $("#topView").addEventListener("click", () => resetView(true));
-$("#jumpToParts")?.addEventListener("click", () => $(".lib")?.scrollIntoView({ behavior: "smooth" }));
-$("#jumpToPanel")?.addEventListener("click", () => $(".panel")?.scrollIntoView({ behavior: "smooth" }));
-$("#jumpToBench")?.addEventListener("click", () => $("#stage")?.scrollIntoView({ behavior: "smooth" }));
 $("#preset").addEventListener("change", ev => { loadPreset(ev.target.value); });
 
 // ═════════════════════════ presets ═════════════════════════

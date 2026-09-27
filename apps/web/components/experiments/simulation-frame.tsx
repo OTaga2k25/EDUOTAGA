@@ -205,7 +205,11 @@ export function SimulationFrame({
         'group bg-surface relative w-full',
         isFullscreen
           ? 'h-screen'
-          : `overflow-hidden rounded-2xl border-2 border-black dark:border-white ${isImmersive ? 'h-[80vh] min-h-[640px]' : ''}`,
+          : `overflow-hidden rounded-2xl border-2 border-black dark:border-white ${
+              isImmersive
+                ? 'h-[80svh] min-h-[520px] max-h-[760px] sm:h-[80vh] sm:min-h-[640px] sm:max-h-none'
+                : ''
+            }`,
         mode === 'overlay' ? 'fixed inset-0 z-[100]' : '',
       ]
         .filter(Boolean)
@@ -221,7 +225,7 @@ export function SimulationFrame({
         onLoad={handleLoad}
         className="h-full w-full"
         style={{ border: 'none' }}
-        scrolling="auto"
+        scrolling={isImmersive ? 'no' : 'auto'}
         // Lets the simulation itself go fullscreen from inside the frame.
         allow="fullscreen"
         allowFullScreen
@@ -232,15 +236,15 @@ export function SimulationFrame({
         onClick={isFullscreen ? exitFullscreen : enterFullscreen}
         // Always visible rather than hover-only: on touch there is no hover,
         // and this is the control that makes a small simulation usable.
-        className="focus-visible:ring-primary/50 absolute top-3 right-3 z-10 inline-flex items-center gap-2 rounded-full border-2 border-black bg-white/90 px-3 py-2 text-sm font-bold text-black shadow-md backdrop-blur transition-colors hover:bg-white focus-visible:ring-2 focus-visible:outline-none dark:border-white dark:bg-zinc-900/90 dark:text-white dark:hover:bg-zinc-900"
+        className="focus-visible:ring-primary/50 absolute top-2 right-2 sm:top-3 sm:right-3 z-30 inline-flex items-center gap-1.5 sm:gap-2 rounded-full border-2 border-black bg-white/95 px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-black text-black shadow-md backdrop-blur transition-all active:scale-95 hover:bg-white focus-visible:ring-2 focus-visible:outline-none dark:border-white dark:bg-zinc-900/95 dark:text-white dark:hover:bg-zinc-900"
         aria-label={isFullscreen ? 'Exit fullscreen' : 'View simulation fullscreen'}
       >
         {isFullscreen ? (
-          <Minimize2 className="h-4 w-4" aria-hidden="true" />
+          <Minimize2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden="true" />
         ) : (
-          <Maximize2 className="h-4 w-4" aria-hidden="true" />
+          <Maximize2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden="true" />
         )}
-        <span className="hidden sm:inline">{isFullscreen ? 'Exit' : 'Fullscreen'}</span>
+        <span className="text-xs sm:text-sm font-bold">{isFullscreen ? 'Exit' : 'Fullscreen'}</span>
       </button>
 
       {mode === 'overlay' && (

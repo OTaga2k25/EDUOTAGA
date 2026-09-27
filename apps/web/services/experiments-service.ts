@@ -31,6 +31,7 @@ function toSummary(
       ? buildSimulationUrl(experiment.categoryId, experiment.slug, experiment.thumbnailPath)
       : undefined,
     tags: experiment.tags,
+    isNew: experiment.isNew ?? experiment.slug === 'ESP_Prototyping',
   };
 }
 

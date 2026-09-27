@@ -25,6 +25,11 @@ export function ExperimentCard({ experiment }: { experiment: ExperimentSummary }
       <Pressable>
         <View style={{ backgroundColor: theme.colors.surface, borderRadius: theme.radii.xl, borderWidth: 2, borderColor: theme.colors.foreground, padding: 16, minHeight: 160, flexDirection: 'column', justifyContent: 'space-between', shadowColor: theme.colors.foreground, shadowOffset: { width: 2, height: 2 }, shadowOpacity: 1, shadowRadius: 0, elevation: 4 }}>
           <View>
+            {Boolean(experiment.isNew || experiment.slug === 'ESP_Prototyping') && (
+              <View style={{ alignSelf: 'flex-start', backgroundColor: '#ffde59', paddingHorizontal: 7, paddingVertical: 2, borderRadius: 6, borderWidth: 1.5, borderColor: theme.colors.foreground, marginBottom: 8 }}>
+                <Text style={{ fontSize: 10, fontWeight: '900', color: '#000' }}>★ NEW</Text>
+              </View>
+            )}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <Text style={{ flex: 1, color: theme.colors.foreground, fontWeight: '900', fontSize: 16, marginBottom: 4 }} numberOfLines={2}>
                 {experiment.title}

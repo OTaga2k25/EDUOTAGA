@@ -452,6 +452,7 @@
     "subjectId": "esp32-prototyping",
     "categoryId": "electronics",
     "difficulty": "intermediate",
+    "isNew": true,
     "summary": "Wire an ESP32 DevKit on an interactive 3D breadboard, check pin constraints, monitor serial output, and generate Arduino sketches.",
     "theory": "The **ESP32** is a versatile micro-controller with integrated Wi-Fi and Bluetooth. When prototyping with microcontrollers, understanding GPIO pin constraints is essential: some pins are **input-only** (GPIO 34-39), some are **strapping pins** that affect bootloader mode (GPIO 0, 2, 12, 15), and others conflict with the Wi-Fi ADC2 subsystem. The prototype bench lets you wire circuits with jumpers, check pin assignments against hardware rules, and inspect the generated Arduino firmware in real time.",
     "procedure": [

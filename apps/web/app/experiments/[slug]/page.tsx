@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { Sparkles } from 'lucide-react';
 import { SimulationFrame } from '@/components/experiments/simulation-frame';
 import { SaveButton } from '@/components/experiments/save-button';
 import { TrackLastOpened } from '@/components/experiments/track-last-opened';
@@ -74,9 +75,17 @@ export default async function ExperimentPage({ params }: ExperimentPageProps) {
       />
 
       <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-          {experiment.title}
-        </h1>
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+            {experiment.title}
+          </h1>
+          {((experiment as any).isNew || experiment.slug === 'ESP_Prototyping') && (
+            <span className="inline-flex items-center gap-1.5 rounded-lg border-2 border-black bg-[#ffde59] px-3 py-1 text-xs font-black uppercase tracking-wider text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:border-white dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]">
+              <Sparkles className="h-3.5 w-3.5 fill-black text-black" />
+              New Experiment
+            </span>
+          )}
+        </div>
         <SaveButton experimentId={experiment.id} />
       </div>
       <p className="mt-3 text-lg text-muted">{experiment.summary}</p>

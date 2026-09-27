@@ -43,6 +43,7 @@ export interface Experiment {
   downloads: DownloadResource[];
   quiz: QuizQuestion[];
   tags: string[];
+  isNew?: boolean;
   estimatedDurationMinutes?: number;
   thumbnailPath?: string;
   createdAt: string;
@@ -61,6 +62,7 @@ export interface ExperimentSummary {
   summary: string;
   thumbnailUrl?: string;
   tags: string[];
+  isNew?: boolean;
 }
 
 /** Fully hydrated shape returned by `GET /api/experiments/[slug]`. */

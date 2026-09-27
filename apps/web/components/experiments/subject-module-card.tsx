@@ -97,6 +97,7 @@ export function SubjectModuleCard({
     'bg-neo-yellow dark:bg-neo-yellow';
 
   const subjectHref = subjectSlug ? `/subjects/${subjectSlug}` : undefined;
+  const hasNewExperiment = experiments.some((exp) => Boolean(exp.isNew || exp.slug === 'ESP_Prototyping'));
 
   return (
     <div className="neo-card flex h-full flex-col justify-between p-5 transition-all duration-300 sm:p-6">
@@ -109,9 +110,16 @@ export function SubjectModuleCard({
             <IconComponent className="h-6 w-6 text-black" />
           </div>
 
-          <span className="text-foreground rounded-full border-2 border-black bg-black/5 px-2.5 py-0.5 text-xs font-black dark:border-white/30 dark:bg-white/10">
-            {experiments.length} {experiments.length === 1 ? 'lab' : 'labs'}
-          </span>
+          <div className="flex items-center gap-2">
+            {hasNewExperiment && (
+              <span className="inline-flex items-center gap-1 rounded-full border-2 border-black bg-[#ffde59] px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-black shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0,1)] dark:border-white dark:shadow-[1.5px_1.5px_0px_0px_rgba(255,255,255,1)]">
+                ★ NEW
+              </span>
+            )}
+            <span className="text-foreground rounded-full border-2 border-black bg-black/5 px-2.5 py-0.5 text-xs font-black dark:border-white/30 dark:bg-white/10">
+              {experiments.length} {experiments.length === 1 ? 'lab' : 'labs'}
+            </span>
+          </div>
         </div>
 
         <div className="mt-4">
@@ -145,35 +153,58 @@ export function SubjectModuleCard({
           </div>
 
           <div className="flex flex-col gap-3">
-            {experiments.map((exp) => (
-              <Link
-                key={exp.id}
-                href={`/experiments/${exp.slug}`}
-                className="group/exp block rounded-lg border-2 border-black bg-black/[0.02] p-3.5 transition-all hover:-translate-y-0.5 hover:bg-black/[0.05] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:border-white/40 dark:bg-white/[0.03] dark:hover:bg-white/[0.07] dark:hover:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.7)]"
-              >
-                <div>
-                  <h4 className="text-foreground group-hover/exp:text-primary text-sm leading-snug font-black transition-colors">
-                    {exp.title}
-                  </h4>
-                </div>
+            {experiments.map((exp) => {
+              const isNew = Boolean(exp.isNew || exp.slug === 'ESP_Prototyping');
+              return (
+                <Link
+                  key={exp.id}
+                  href={`/experiments/${exp.slug}`}
+                  className={`group/exp relative block overflow-hidden rounded-lg border-2 border-black p-3.5 transition-all hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:border-white/40 dark:hover:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.7)] ${
+                    isNew
+                      ? 'bg-[#ffde59]/10 border-black dark:border-white dark:bg-[#ffde59]/15 hover:bg-[#ffde59]/20'
+                      : 'bg-black/[0.02] hover:bg-black/[0.05] dark:bg-white/[0.03] dark:hover:bg-white/[0.07]'
+                  }`}
+                >
+                  {/* ── Corner Ribbon ── */}
+                  {isNew && (
+                    <div className="absolute top-0 right-0 overflow-hidden w-20 h-20 pointer-events-none z-10">
+                      <div className="absolute transform rotate-45 bg-[#ffde59] text-black font-black text-[9px] py-1 right-[-28px] top-[14px] w-[95px] text-center border-y-2 border-black shadow-[0_2px_0_rgba(0,0,0,0.3)] tracking-wider uppercase">
+                        ★ NEW ★
+                      </div>
+                    </div>
+                  )}
 
-                {exp.summary && (
-                  <p className="text-muted mt-1.5 line-clamp-2 text-xs leading-relaxed font-medium">
-                    {exp.summary}
-                  </p>
-                )}
+                  <div className={isNew ? 'pr-12' : ''}>
+                    <h4 className="text-foreground group-hover/exp:text-primary text-sm leading-snug font-black transition-colors">
+                      {exp.title}
+                    </h4>
+                  </div>
 
-                <div className="mt-3 flex items-center justify-between border-t border-black/10 pt-2 dark:border-white/10">
-                  <span className="text-muted max-w-[150px] truncate text-[11px] font-bold">
-                    Interactive Lab
-                  </span>
-                  <span className="text-primary inline-flex items-center gap-1 text-xs font-black group-hover/exp:underline">
-                    Launch Lab
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/exp:translate-x-1" />
-                  </span>
-                </div>
-              </Link>
-            ))}
+                  {exp.summary && (
+                    <p className="text-muted mt-1.5 line-clamp-2 text-xs leading-relaxed font-medium">
+                      {exp.summary}
+                    </p>
+                  )}
+
+                  <div className="mt-3 flex items-center justify-between border-t border-black/10 pt-2 dark:border-white/10">
+                    <span className="text-muted max-w-[150px] truncate text-[11px] font-bold">
+                      {isNew ? (
+                        <span className="inline-flex items-center gap-1 font-black text-amber-700 dark:text-amber-300">
+                          <Sparkles className="h-3 w-3 fill-current" />
+                          Newly Added
+                        </span>
+                      ) : (
+                        'Interactive Lab'
+                      )}
+                    </span>
+                    <span className="text-primary inline-flex items-center gap-1 text-xs font-black group-hover/exp:underline">
+                      Launch Lab
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/exp:translate-x-1" />
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>

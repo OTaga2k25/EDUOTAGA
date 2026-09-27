@@ -13,7 +13,7 @@ export const API_ROUTES = {
 } as const;
 
 /**
- * Builds the public URL for an experiment's simulation entry point.
+ * Builds the public URL for an experiment's simulation entry pointS.
  * Mirrors `apps/web/public/experiments/<categoryId>/<slug>/<entry>`.
  */
 export function buildSimulationUrl(

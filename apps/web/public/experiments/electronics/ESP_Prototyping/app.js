@@ -1256,6 +1256,11 @@ function renderStatus() {
   const n = $("#checkCount");
   n.textContent = e || w || "✓";
   n.className = "n" + (e ? "" : w ? " w" : " z");
+  const mb = $("#mobileCheckBadge");
+  if (mb) {
+    mb.textContent = e || w || "";
+    mb.hidden = (!e && !w);
+  }
 }
 const WORLD = [
   ["light", "Ambient light", 0, 100, 1, "%", ["ldr"]],
@@ -1573,15 +1578,16 @@ document.addEventListener("click", ev => {
     const c = addComp(t.dataset.add, x, z);
     changed({ world: true });
     select({ kind: "comp", id: c.id });
-    flashHint(`${c.name} placed. Click its pins to wire it.`);
+    flashHint(`${c.name} placed. Click pins to wire it.`);
+    if (window.innerWidth <= 900) setMobileView("bench");
   } else if (t.dataset.act === "delete") deleteSelection();
   else if (t.dataset.act === "rotate") rotateSelection();
-  else if (t.dataset.act === "check") { setChecks(true); showTab("checks"); }
+  else if (t.dataset.act === "check") { setChecks(true); showTab("checks"); if (window.innerWidth <= 900) setMobileView("panel"); }
   else if (t.dataset.act === "pausechecks") setChecks(false);
-  else if (t.dataset.show) select({ kind: "comp", id: t.dataset.show });
+  else if (t.dataset.show) { select({ kind: "comp", id: t.dataset.show }); if (window.innerWidth <= 900) setMobileView("bench"); }
   else if (t.dataset.goto) {
     showTab(t.dataset.goto);
-    if (window.innerWidth <= 900) $(".panel")?.scrollIntoView({ behavior: "smooth" });
+    if (window.innerWidth <= 900) setMobileView("panel");
   }
   else if (t.dataset.wcolor) {
     const w = state.wires.find(x => x.id === state.sel.id);

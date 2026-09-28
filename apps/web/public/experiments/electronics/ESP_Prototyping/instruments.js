@@ -372,20 +372,25 @@ function syncKnobs() {
 // knobs: drag up/down, scroll, click the left/right half, or arrow keys
 function wireKnob(el, step) {
   let drag = null;
+  const doStep = dir => {
+    step(dir);
+    if (el.id === "dmDial") B.sound?.playDialClick();
+    else B.sound?.playKnobTick();
+  };
   el.addEventListener("pointerdown", e => { drag = { y: e.clientY, acc: 0, moved: false }; el.setPointerCapture(e.pointerId); e.preventDefault(); el.focus(); });
   el.addEventListener("pointermove", e => {
     if (!drag) return;
     const dy = drag.y - e.clientY; drag.y = e.clientY; drag.acc += dy;
-    while (Math.abs(drag.acc) >= 14) { step(Math.sign(drag.acc)); drag.acc -= Math.sign(drag.acc) * 14; drag.moved = true; }
+    while (Math.abs(drag.acc) >= 14) { doStep(Math.sign(drag.acc)); drag.acc -= Math.sign(drag.acc) * 14; drag.moved = true; }
   });
   el.addEventListener("pointerup", e => {
-    if (drag && !drag.moved) { const r = el.getBoundingClientRect(); step(e.clientX < r.left + r.width / 2 ? -1 : 1); }
+    if (drag && !drag.moved) { const r = el.getBoundingClientRect(); doStep(e.clientX < r.left + r.width / 2 ? -1 : 1); }
     drag = null;
   });
-  el.addEventListener("wheel", e => { e.preventDefault(); step(e.deltaY < 0 ? 1 : -1); }, { passive: false });
+  el.addEventListener("wheel", e => { e.preventDefault(); doStep(e.deltaY < 0 ? 1 : -1); }, { passive: false });
   el.addEventListener("keydown", e => {
-    if (e.key === "ArrowUp" || e.key === "ArrowRight") { step(1); e.preventDefault(); }
-    if (e.key === "ArrowDown" || e.key === "ArrowLeft") { step(-1); e.preventDefault(); }
+    if (e.key === "ArrowUp" || e.key === "ArrowRight") { doStep(1); e.preventDefault(); }
+    if (e.key === "ArrowDown" || e.key === "ArrowLeft") { doStep(-1); e.preventDefault(); }
   });
 }
 $$("[data-knob]").forEach(el => wireKnob(el, d => knobStep(el.dataset.knob, d)));
@@ -809,6 +814,7 @@ $("#probeBtn").title = "Place the multimeter probes on the bench";
 $("#probeBtn").addEventListener("click", () => place("dmm+"));
 B.on("placing", p => { $("#probeBtn").setAttribute("aria-pressed", String(!!p && p.what.startsWith("dmm"))); $$("[data-place]").forEach(b => b.setAttribute("aria-pressed", String(!!p && p.what === b.dataset.place))); });
 B.on("place", (what, key) => {
+  B.sound?.playProbeContact();
   if (what === "dmm+") dmm.red = key;
   if (what === "dmm-") dmm.black = key;
   if (what === "ch1") { scope.ch1 = key; autoSet(); B.showDock("scope"); }
@@ -872,7 +878,13 @@ $("#dp-meter").innerHTML = `
       <p class="note" id="dmNote"></p>
     </div>
   </div>`;
-function setMode(m) { dmm.mode = m; dmm.hold = false; syncDial(); renderDmm(true); }
+function setMode(m) {
+  if (dmm.mode !== m) B.sound?.playDialClick();
+  dmm.mode = m;
+  dmm.hold = false;
+  syncDial();
+  renderDmm(true);
+}
 function dialStep(dir) { const i = DIAL.findIndex(d => d[0] === dmm.mode); setMode(DIAL[clamp(i + dir, 0, DIAL.length - 1)][0]); }
 function syncDial() {
   const d = DIAL.find(x => x[0] === dmm.mode);
@@ -900,15 +912,30 @@ function resistanceBetween(a, b) {
   }
   return null;
 }
-let beepOsc = null;
+let beepOsc = null, beepGain = null;
 function beep(on) {
   try {
+    const ctx = (B.sound && B.sound.ctx) || (beep.ctx = new (window.AudioContext || window.webkitAudioContext)());
+    if (!ctx) return;
     if (on && !beepOsc) {
-      const ctx = beep.ctx || (beep.ctx = new (window.AudioContext || window.webkitAudioContext)());
-      const o = ctx.createOscillator(), g = ctx.createGain();
-      o.frequency.value = 2700; g.gain.value = 0.03; o.connect(g).connect(ctx.destination); o.start(); beepOsc = o;
-    } else if (!on && beepOsc) { beepOsc.stop(); beepOsc = null; }
-  } catch (e) { beepOsc = null; }
+      beepOsc = ctx.createOscillator();
+      beepGain = ctx.createGain();
+      beepOsc.type = "sine";
+      beepOsc.frequency.setValueAtTime(2700, ctx.currentTime);
+      beepGain.gain.setValueAtTime(0.04, ctx.currentTime);
+      beepOsc.connect(beepGain).connect(ctx.destination);
+      beepOsc.start();
+    } else if (!on && beepOsc) {
+      beepGain.gain.setValueAtTime(beepGain.gain.value, ctx.currentTime);
+      beepGain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.01);
+      const o = beepOsc, g = beepGain;
+      setTimeout(() => {
+        try { o.stop(); o.disconnect(); g.disconnect(); } catch (e) {}
+      }, 15);
+      beepOsc = null;
+      beepGain = null;
+    }
+  } catch (e) { beepOsc = null; beepGain = null; }
 }
 // what the meter shows right now: { val, unit, sub, note, warn, beep }
 let held = null;
@@ -971,7 +998,7 @@ let dmmLast = "";
 function renderDmm(force) {
   const st = dmmState();
   $("#dp-meter .dmm-lcd").classList.toggle("off", !!st.off);
-  beep(!!st.beep && !dmm.hold && B.dockVisible("meter"));
+  beep(!!st.beep && !dmm.hold);
   if (!force && !B.dockVisible("meter")) return;
   const key = JSON.stringify(st) + dmm.red + dmm.black + dmm.mode + dmm.hold;
   if (!force && key === dmmLast) return;

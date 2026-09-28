@@ -6,6 +6,183 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
+// ═════════════════════════ Web Audio Sound FX ═════════════════════════
+let audioCtx = null;
+function getAudioContext() {
+  if (!audioCtx) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (AC) audioCtx = new AC();
+  }
+  if (audioCtx && audioCtx.state === "suspended") {
+    audioCtx.resume().catch(() => {});
+  }
+  return audioCtx;
+}
+["click", "pointerdown", "keydown", "touchstart"].forEach(evt => {
+  document.addEventListener(evt, () => getAudioContext(), { once: true, passive: true });
+});
+
+let buzzerOsc = null, buzzerGain = null, buzzerFilter = null;
+let lastTickTime = 0;
+
+const SOUND = {
+  get ctx() { return getAudioContext(); },
+
+  playWireConnect() {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(680, now);
+      osc.frequency.exponentialRampToValueAtTime(70, now + 0.04);
+      g.gain.setValueAtTime(0.16, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+      osc.connect(g).connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.05);
+
+      const click = ctx.createOscillator();
+      const cg = ctx.createGain();
+      click.type = "sine";
+      click.frequency.setValueAtTime(2800, now);
+      click.frequency.exponentialRampToValueAtTime(700, now + 0.015);
+      cg.gain.setValueAtTime(0.12, now);
+      cg.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+      click.connect(cg).connect(ctx.destination);
+      click.start(now);
+      click.stop(now + 0.025);
+    } catch (e) {}
+  },
+
+  playWireRemove() {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(320, now);
+      osc.frequency.exponentialRampToValueAtTime(140, now + 0.035);
+      g.gain.setValueAtTime(0.12, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      osc.connect(g).connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.045);
+    } catch (e) {}
+  },
+
+  playKnobTick() {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      if (now - lastTickTime < 0.035) return;
+      lastTickTime = now;
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(1900, now);
+      osc.frequency.exponentialRampToValueAtTime(450, now + 0.012);
+      g.gain.setValueAtTime(0.07, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.014);
+      osc.connect(g).connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.016);
+    } catch (e) {}
+  },
+
+  playDialClick() {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const o1 = ctx.createOscillator();
+      const g1 = ctx.createGain();
+      o1.type = "square";
+      o1.frequency.setValueAtTime(440, now);
+      o1.frequency.exponentialRampToValueAtTime(140, now + 0.025);
+      g1.gain.setValueAtTime(0.08, now);
+      g1.gain.exponentialRampToValueAtTime(0.001, now + 0.028);
+      o1.connect(g1).connect(ctx.destination);
+      o1.start(now);
+      o1.stop(now + 0.03);
+
+      const o2 = ctx.createOscillator();
+      const g2 = ctx.createGain();
+      o2.type = "sine";
+      o2.frequency.setValueAtTime(2600, now);
+      o2.frequency.exponentialRampToValueAtTime(800, now + 0.018);
+      g2.gain.setValueAtTime(0.09, now);
+      g2.gain.exponentialRampToValueAtTime(0.001, now + 0.022);
+      o2.connect(g2).connect(ctx.destination);
+      o2.start(now);
+      o2.stop(now + 0.025);
+    } catch (e) {}
+  },
+
+  playProbeContact() {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(3200, now);
+      osc.frequency.exponentialRampToValueAtTime(1500, now + 0.02);
+      g.gain.setValueAtTime(0.08, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.022);
+      osc.connect(g).connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.025);
+    } catch (e) {}
+  },
+
+  setBuzzer(on) {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    try {
+      if (on) {
+        if (!buzzerOsc) {
+          buzzerOsc = ctx.createOscillator();
+          buzzerGain = ctx.createGain();
+          buzzerFilter = ctx.createBiquadFilter();
+          buzzerOsc.type = "square";
+          buzzerOsc.frequency.setValueAtTime(2650, ctx.currentTime);
+          buzzerFilter.type = "lowpass";
+          buzzerFilter.frequency.setValueAtTime(3800, ctx.currentTime);
+          buzzerGain.gain.setValueAtTime(0.045, ctx.currentTime);
+          buzzerOsc.connect(buzzerFilter).connect(buzzerGain).connect(ctx.destination);
+          buzzerOsc.start();
+        }
+      } else {
+        if (buzzerOsc) {
+          try {
+            buzzerGain.gain.setValueAtTime(buzzerGain.gain.value, ctx.currentTime);
+            buzzerGain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.01);
+            const o = buzzerOsc, g = buzzerGain, f = buzzerFilter;
+            setTimeout(() => {
+              try { o.stop(); o.disconnect(); g.disconnect(); f.disconnect(); } catch (e) {}
+            }, 15);
+          } catch (e) {}
+          buzzerOsc = null;
+          buzzerGain = null;
+          buzzerFilter = null;
+        }
+      }
+    } catch (e) {
+      buzzerOsc = null;
+      buzzerGain = null;
+      buzzerFilter = null;
+    }
+  }
+};
+
+
 // ═════════════════════════ ESP32 DevKit V1 (30-pin) ═════════════════════════
 const U = 0.5;                                   // 0.1" header pitch in scene units
 const ESP_LEFT  = ["EN", "36", "39", "34", "35", "32", "33", "25", "26", "27", "14", "12", "13", "GND", "VIN"];
@@ -988,6 +1165,7 @@ function tickSim(dt) {
       serialPrint(`${simT.toFixed(2).padStart(7)}s  ${parts.join("  ")}`);
     }
   }
+  let anyBuzzerActive = false;
   // actuators
   state.comps.forEach(c => {
     const a = c.anim;
@@ -1013,6 +1191,7 @@ function tickSim(dt) {
         a.ring.material.opacity = on ? 0.9 * (1 - ph) : 0;
         a.ring.scale.setScalar(on ? 0.7 + ph * 1.2 : 1);
         outputs.set(c.id, { on });
+        if (on) anyBuzzerActive = true;
         break;
       }
       case "servo": {
@@ -1038,6 +1217,7 @@ function tickSim(dt) {
       default: { const f = API.ext.tick[c.type]; if (f) f(c, a, live, dt, simT); }
     }
   });
+  SOUND.setBuzzer(anyBuzzerActive && ((simT * 4) % 1 < 0.65));
   const esp = byId("esp");
   if (esp) {
     const blue = state.comps.find(c => c.type === "led" && gpioOf(c, "SIG") === 2 && !hasErr(c));
@@ -1439,6 +1619,7 @@ function addComp(type, x, z, props = {}, id, name, rot = 0) {
   const c = { id: id || "c" + (uid++), type, x, z, rot, name: name || nextName(type), props: Object.assign({}, (T[type] && T[type].props) || {}, props) };
   state.comps.push(c);
   buildComp(c);
+  SOUND.playWireConnect();
   return c;
 }
 function freeSpot() {
@@ -1456,6 +1637,7 @@ function addWire(a, b, color) {
   const w = { id: "w" + (uid++), a, b, color: color || wireColorFor(a, b) };
   state.wires.push(w);
   buildWire(w);
+  SOUND.playWireConnect();
   return w;
 }
 function removeWire(id) {
@@ -1464,6 +1646,7 @@ function removeWire(id) {
   const w = state.wires[i];
   scene.remove(w.group); w.group.traverse(o => o.geometry && o.geometry.dispose());
   state.wires.splice(i, 1);
+  SOUND.playWireRemove();
 }
 function removeComp(id) {
   if (id === "esp") return;
@@ -1475,6 +1658,7 @@ function removeComp(id) {
   state.comps.forEach(o => { if (o.props && o.props.src === id) o.props.src = "manual"; });
 }
 function clearBench() {
+  SOUND.setBuzzer(false);
   state.wires.slice().forEach(w => removeWire(w.id));
   state.comps.slice().forEach(c => { destroyComp(c); });
   state.comps = [];
@@ -1618,6 +1802,7 @@ canvas.addEventListener("pointerup", ev => {
   if (state.pending) { cancelPending(); return; }
   if (hit.kind === "press") {
     const c = byId(hit.id); c.props.pressed = !c.props.pressed;
+    SOUND.playKnobTick();
     if (state.sel && state.sel.id === c.id) renderInspector();
     save();
     return;
@@ -1740,6 +1925,7 @@ function rotateSelection() {
   c.group.updateMatrixWorld(true);
   rebuildWiresFor(c.id);
   updateSelRing();
+  SOUND.playKnobTick();
   save();
 }
 
@@ -1773,6 +1959,7 @@ document.addEventListener("input", ev => {
     const w = WORLD.find(x => x[0] === k);
     state.env[k] = el.type === "checkbox" ? (el.checked ? 1 : 0) : +el.value;
     if (el.type !== "checkbox") el.nextElementSibling.textContent = state.env[k] + w[5];
+    SOUND.playKnobTick();
     save();
     return;
   }
@@ -1784,6 +1971,7 @@ document.addEventListener("input", ev => {
     if (el.type === "range") {
       const out = el.nextElementSibling;
       out.textContent = k === "value" ? Math.round(v * 3300) + " mV" : k === "manual" && c.type === "servo" ? Math.round(v * 180) + "°" : Math.round(v * 100) + "%";
+      SOUND.playKnobTick();
       save();
       if (activeTab === "code") renderCode();
       return;
@@ -1809,7 +1997,7 @@ $("#run").addEventListener("click", () => {
   $("#runLabel").textContent = state.running ? "Stop" : "Run";
   $("#runIcon").setAttribute("d", state.running ? "M2 1h8v10H2z" : "M2 1l9 5-9 5z");
   if (state.running) { simT = 0; serialAcc = 0; brownoutUntil = 0; brownoutAcc = 0; serialLines = []; bootLog(); showTab("serial"); }
-  else { serialPrint("# stopped"); renderInspector(); }
+  else { serialPrint("# stopped"); SOUND.setBuzzer(false); renderInspector(); }
   API.emit("run", state.running);
 });
 $("#serialClear").addEventListener("click", () => { serialLines = []; renderSerial(); });
@@ -1997,6 +2185,7 @@ const API = window.Bench = {
   serialPrint, changed, flashHint, select, showTab, save, clamp, esc, scene, camera, controls, renderer, pinTop, startPlacing, stopPlacing, MAT_W, MAT_D,
   distanceFor: c => c.props.range === "obstacle" && API.rangeFor ? API.rangeFor(c) : state.env.distance,
   CATS, WORLD, NORM, BUILD, DEFAULT_ENV, PRESETS, U, M, std, mesh, boxM, cylM, topBox, silk, canvasTex, addPin, addPinRow, moduleDraw, GLOW_TEX, hex6, rebuildComp, isSensor,
+  sound: SOUND,
   ext: { read: {}, tick: {}, serial: {}, live: {}, check: {}, controls: {}, codeSensor: {}, codeAct: {}, part: {}, espOut: {}, power: {}, i2c: {}, leak: {}, postBuild: {}, place: {} },
   on(evt, fn) { (listeners[evt] = listeners[evt] || []).push(fn); },
   emit(evt, ...a) { (listeners[evt] || []).forEach(fn => { try { fn(...a); } catch (e) { console.error(evt, e); } }); },

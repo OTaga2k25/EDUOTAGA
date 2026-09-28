@@ -60,6 +60,7 @@ button, select, input { font: inherit; color: inherit; }
   grid-template-areas: "top top top" "lib stage panel";
   gap: 12px;
   padding: 12px 16px;
+  transition: grid-template-columns 0.22s ease;
 }
 
 /* ── top bar ── */
@@ -203,6 +204,9 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 
 @media (max-width: 1100px) {
   .app { grid-template-columns: 220px minmax(0, 1fr) 320px; }
+  .app.lib-collapsed { grid-template-columns: 0px minmax(0, 1fr) 320px; }
+  .app.panel-collapsed { grid-template-columns: 220px minmax(0, 1fr) 0px; }
+  .app.lib-collapsed.panel-collapsed { grid-template-columns: 0px minmax(0, 1fr) 0px; }
 }
 
 @media (max-width: 900px) {
@@ -440,6 +444,60 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   }
   .desktop-only {
     display: inline-flex !important;
+  }
+  .app.lib-collapsed {
+    grid-template-columns: 0px minmax(0, 1fr) 360px;
+  }
+  .app.panel-collapsed {
+    grid-template-columns: 248px minmax(0, 1fr) 0px;
+  }
+  .app.lib-collapsed.panel-collapsed {
+    grid-template-columns: 0px minmax(0, 1fr) 0px;
+  }
+  .app.lib-collapsed .lib {
+    display: none !important;
+  }
+  .app.panel-collapsed .panel {
+    display: none !important;
+  }
+
+  /* Peek buttons to reopen collapsed panels */
+  .panel-peek {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s, transform 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+  .panel-peek:hover {
+    background: var(--panel-2);
+    border-color: var(--accent);
+    transform: translateY(-50%) scale(1.05);
+  }
+  .panel-peek.left {
+    left: 10px;
+  }
+  .panel-peek.right {
+    right: 10px;
+  }
+  .view-tools .btn[aria-pressed="false"] {
+    opacity: 0.6;
+  }
+  .view-tools .btn[aria-pressed="true"] {
+    opacity: 1;
   }
 }
 

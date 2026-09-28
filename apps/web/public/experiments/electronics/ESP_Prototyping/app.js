@@ -2048,6 +2048,58 @@ $("#backToBenchFromParts")?.addEventListener("click", () => setMobileView("bench
 $("#backToBenchFromDock")?.addEventListener("click", () => setMobileView("bench"));
 $("#jumpToBench")?.addEventListener("click", () => setMobileView("bench"));
 
+// ═════════════════════════ Desktop Side Panels Collapse/Expand ═════════════════════════
+let sidePanels = { libOpen: true, panelOpen: true };
+try {
+  const saved = JSON.parse(localStorage.getItem("esp32bench.panels") || "null");
+  if (saved) {
+    if (typeof saved.libOpen === "boolean") sidePanels.libOpen = saved.libOpen;
+    if (typeof saved.panelOpen === "boolean") sidePanels.panelOpen = saved.panelOpen;
+  }
+} catch (e) {}
+
+function setLibOpen(open) {
+  sidePanels.libOpen = open;
+  const app = $(".app");
+  if (app) app.classList.toggle("lib-collapsed", !open);
+  $("#libCollapseBtn")?.setAttribute("aria-expanded", String(open));
+  $("#toggleLibBtn")?.setAttribute("aria-pressed", String(open));
+  const peek = $("#openLibPeek");
+  if (peek) peek.hidden = open;
+  try { localStorage.setItem("esp32bench.panels", JSON.stringify(sidePanels)); } catch (e) {}
+  SOUND.playDialClick();
+  setTimeout(resize, 40);
+  setTimeout(resize, 240);
+}
+
+function setPanelOpen(open) {
+  sidePanels.panelOpen = open;
+  const app = $(".app");
+  if (app) app.classList.toggle("panel-collapsed", !open);
+  $("#panelCollapseBtn")?.setAttribute("aria-expanded", String(open));
+  $("#togglePanelBtn")?.setAttribute("aria-pressed", String(open));
+  const peek = $("#openPanelPeek");
+  if (peek) peek.hidden = open;
+  try { localStorage.setItem("esp32bench.panels", JSON.stringify(sidePanels)); } catch (e) {}
+  SOUND.playDialClick();
+  setTimeout(resize, 40);
+  setTimeout(resize, 240);
+}
+
+$("#libCollapseBtn")?.addEventListener("click", () => setLibOpen(!sidePanels.libOpen));
+$("#toggleLibBtn")?.addEventListener("click", () => setLibOpen(!sidePanels.libOpen));
+$("#openLibPeek")?.addEventListener("click", () => setLibOpen(true));
+
+$("#panelCollapseBtn")?.addEventListener("click", () => setPanelOpen(!sidePanels.panelOpen));
+$("#togglePanelBtn")?.addEventListener("click", () => setPanelOpen(!sidePanels.panelOpen));
+$("#openPanelPeek")?.addEventListener("click", () => setPanelOpen(true));
+
+if (window.innerWidth > 900) {
+  if (!sidePanels.libOpen) setLibOpen(false);
+  if (!sidePanels.panelOpen) setPanelOpen(false);
+}
+
+
 // ═════════════════════════ presets ═════════════════════════
 const PRESETS = {
   bottle: {
@@ -2185,7 +2237,7 @@ const API = window.Bench = {
   serialPrint, changed, flashHint, select, showTab, save, clamp, esc, scene, camera, controls, renderer, pinTop, startPlacing, stopPlacing, MAT_W, MAT_D,
   distanceFor: c => c.props.range === "obstacle" && API.rangeFor ? API.rangeFor(c) : state.env.distance,
   CATS, WORLD, NORM, BUILD, DEFAULT_ENV, PRESETS, U, M, std, mesh, boxM, cylM, topBox, silk, canvasTex, addPin, addPinRow, moduleDraw, GLOW_TEX, hex6, rebuildComp, isSensor,
-  sound: SOUND,
+  sound: SOUND, setLibOpen, setPanelOpen, sidePanels,
   ext: { read: {}, tick: {}, serial: {}, live: {}, check: {}, controls: {}, codeSensor: {}, codeAct: {}, part: {}, espOut: {}, power: {}, i2c: {}, leak: {}, postBuild: {}, place: {} },
   on(evt, fn) { (listeners[evt] = listeners[evt] || []).push(fn); },
   emit(evt, ...a) { (listeners[evt] || []).forEach(fn => { try { fn(...a); } catch (e) { console.error(evt, e); } }); },

@@ -48,7 +48,10 @@
           <div class="eyebrow">Parts bin</div>
           <h2>Add to the bench</h2>
         </div>
-        <button class="btn small mobile-only" id="backToBenchFromParts">← 3D Bench</button>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <button class="btn small mobile-only" id="backToBenchFromParts">← 3D Bench</button>
+          <button class="btn small desktop-only" id="libCollapseBtn" title="Hide parts bin" aria-expanded="true">Hide</button>
+        </div>
       </div>
       <p>Click a part to drop it on the mat.</p>
     </div>
@@ -60,13 +63,21 @@
     <canvas id="view" aria-label="3D workbench. Click pins to connect jumpers."></canvas>
     <div class="loading" id="loading">Laying out the cutting mat…</div>
     <div class="view-tools">
+      <button class="btn small desktop-only" id="toggleLibBtn" title="Toggle parts bin" aria-pressed="true">Parts</button>
       <button class="btn small" id="probeBtn" aria-pressed="false" title="Place the multimeter probes on the bench">Probe with multimeter</button>
       <button class="btn small" id="instView" title="Look at the oscilloscope and multimeter">Instruments</button>
       <button class="btn small" id="topView" title="Look straight down">Top view</button>
       <button class="btn small" id="resetView" title="Reset camera">Reset view</button>
+      <button class="btn small desktop-only" id="togglePanelBtn" title="Toggle details panel" aria-pressed="true">Details</button>
       <button class="btn small mobile-only" id="mobileAddPartBtn">+ Add Part</button>
       <button class="btn small mobile-only" id="mobileViewCodeBtn">Code</button>
     </div>
+    <button class="panel-peek left desktop-only" id="openLibPeek" title="Show parts bin" hidden>
+      <span>📦 Parts ▶</span>
+    </button>
+    <button class="panel-peek right desktop-only" id="openPanelPeek" title="Show details panel" hidden>
+      <span>◀ 📋 Details</span>
+    </button>
     <div class="hint"><div class="msg" id="hint"></div></div>
     <div class="tip" id="tip" hidden></div>
   </div>
@@ -100,6 +111,7 @@
       <button class="tab" role="tab" data-tab="world" aria-selected="false">World</button>
       <button class="tab" role="tab" data-tab="serial" aria-selected="false">Serial</button>
       <button class="tab" role="tab" data-tab="code" aria-selected="false">Sketch</button>
+      <button class="btn small desktop-only" id="panelCollapseBtn" title="Hide details panel" aria-expanded="true" style="margin-left:auto">Hide</button>
     </div>
     <div class="pane" id="pane-inspect"></div>
     <div class="pane" id="pane-checks" hidden></div>

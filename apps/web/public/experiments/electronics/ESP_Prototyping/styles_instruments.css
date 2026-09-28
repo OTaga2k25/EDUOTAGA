@@ -1,0 +1,191 @@
+/* ESP32 Prototype Bench: instrument dock (oscilloscope, logic analyzer, power, MQTT, FreeRTOS) */
+.stagecol { grid-area: stage; display: flex; flex-direction: column; gap: 12px; min-height: 0; min-width: 0; }
+.stagecol > .stage { flex: 1; grid-area: auto; }
+
+.dock { flex: none; height: 340px; display: flex; flex-direction: column; overflow: hidden; }
+.dock.collapsed { height: auto; }
+.dock.collapsed .dpane { display: none; }
+.dock-head { display: flex; align-items: center; gap: 8px; padding: 6px 8px 6px 6px; border-bottom: 1px solid var(--line); }
+.dock.collapsed .dock-head { border-bottom: 0; }
+.dtabs { display: flex; gap: 2px; overflow-x: auto; flex: 1; min-width: 0; }
+.dtab { border: 0; background: transparent; padding: 7px 10px; border-radius: 7px; cursor: pointer; font-weight: 500; font-size: 13px; color: var(--muted); white-space: nowrap; }
+.dtab[aria-selected="true"] { background: var(--panel-2); color: var(--ink); }
+.dpane { flex: 1; min-height: 0; overflow: auto; padding: 10px 12px 12px; container-type: inline-size; }
+
+.inst { display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 12px; height: 100%; min-height: 250px; }
+.inst-side { display: flex; flex-direction: column; gap: 10px; min-width: 0; overflow: auto; }
+.inst-side .field { margin-bottom: 0; }
+.inst-side select, .dpane select { width: 100%; height: 32px; font-size: 13px; }
+.screen {
+  position: relative; background: #0b1410; border-radius: 10px; overflow: hidden; min-height: 220px;
+  box-shadow: inset 0 0 0 1px #1d2b25, inset 0 0 30px rgba(0, 0, 0, .6);
+}
+.screen canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.screen .overlay { position: absolute; left: 10px; top: 8px; right: 10px; display: flex; gap: 14px; flex-wrap: wrap; font: 500 11.5px/1.3 var(--mono); color: #9fb8ad; pointer-events: none; }
+.screen .overlay b { color: #e8f3ee; font-weight: 600; }
+.screen .empty { position: absolute; inset: 0; display: grid; place-items: center; color: #8fa89d; font: 500 13px var(--mono); text-align: center; padding: 20px; }
+.ch1 { color: #f3d23c !important; }
+.ch2 { color: #4fd3e8 !important; }
+.meas { display: grid; grid-template-columns: auto 1fr 1fr; gap: 3px 10px; font: 12px/1.35 var(--mono); font-variant-numeric: tabular-nums; }
+.meas .h { color: var(--muted); font-size: 11px; }
+.btnrow { display: flex; gap: 6px; flex-wrap: wrap; }
+.note { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+.note b { color: var(--ink); }
+
+/* multimeter */
+#probeBtn[aria-pressed="true"], [data-place][aria-pressed="true"] { background: #f2c230; border-color: #d4a50f; color: #1a1a1a; }
+.selrow { display: flex; gap: 6px; }
+.selrow select { flex: 1; min-width: 0; }
+.dmm-inst { grid-template-columns: minmax(230px, 280px) minmax(0, 1fr); }
+.dmm {
+  background: #f2c230; color: #1a1a1a; border-radius: 18px; padding: 8px 12px 8px; display: flex; flex-direction: column; gap: 6px;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .15), 0 4px 14px rgba(0, 0, 0, .18); font-family: var(--mono); align-self: start;
+}
+.dmm-head { display: flex; justify-content: space-between; align-items: center; font: 700 10.5px/1 var(--mono); letter-spacing: .06em; }
+.dmm-lcd {
+  position: relative; background: #b9c9a8; border-radius: 8px; padding: 15px 10px 6px; text-align: right; color: #1d2a1a; min-height: 52px;
+  font: 600 30px/1 var(--mono); font-variant-numeric: tabular-nums; box-shadow: inset 0 2px 5px rgba(0, 0, 0, .3);
+}
+.dmm-lcd.off { background: #8d9a82; }
+.dmm-lcd small { font-size: 15px; margin-left: 4px; }
+.dmm-sub { position: absolute; left: 10px; top: 6px; font-size: 11px; font-weight: 700; }
+.dial-wrap { position: relative; height: 116px; background: #2a2d30; border-radius: 12px; margin: 0 -2px; }
+.dial {
+  --a: -95deg; position: absolute; left: 50%; top: 50%; width: 58px; height: 58px; margin: -29px 0 0 -29px; border-radius: 50%; cursor: grab; touch-action: none;
+  background: radial-gradient(circle at 40% 35%, #3a3a3a, #111 70%); box-shadow: 0 3px 6px rgba(0, 0, 0, .5), inset 0 0 0 2px #444;
+  transform: rotate(var(--a)); transition: transform .18s ease-out;
+}
+.dial:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.dial-grip { position: absolute; left: 50%; top: 4px; bottom: 4px; width: 16px; margin-left: -8px; border-radius: 8px; background: linear-gradient(90deg, #2c2c2c, #4a4a4a, #2c2c2c); }
+.dial-ptr { position: absolute; left: 50%; top: 5px; width: 5px; height: 18px; margin-left: -2.5px; border-radius: 3px; background: #fff; }
+.dpos {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(var(--a)) translateY(-47px) rotate(calc(-1 * var(--a)));
+  border: 0; background: transparent; color: #9aa3a8; font: 700 11.5px var(--mono); padding: 2px 3px; border-radius: 5px; cursor: pointer; white-space: nowrap;
+}
+.dpos[aria-pressed="true"] { color: #1a1a1a; background: #f2c230; }
+.dpos:hover { color: #fff; }
+.dmm-jacks { display: flex; justify-content: space-between; gap: 6px; }
+.jack { display: flex; flex-direction: column; align-items: center; gap: 3px; border: 0; background: transparent; font: 700 10.5px var(--mono); color: #1a1a1a; cursor: pointer; padding: 2px 6px; border-radius: 8px; }
+.jack:hover { background: rgba(0, 0, 0, .08); }
+.jack[aria-pressed="true"] { background: #1a1a1a; color: #f2c230; }
+.jk { width: 18px; height: 18px; border-radius: 50%; border: 4px solid #333; display: inline-block; box-shadow: inset 0 0 0 3px rgba(0, 0, 0, .55); }
+.jk.red { background: #d8342c; } .jk.blk { background: #222; }
+.fbtn { border: 0; border-radius: 6px; padding: 5px 10px; font: 700 11px var(--mono); letter-spacing: .04em; cursor: pointer; background: #5b6268; color: #f2f2f2; box-shadow: 0 2px 0 rgba(0, 0, 0, .45); }
+.fbtn:active { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0, 0, 0, .45); }
+.fbtn.hold { background: #2a2d30; }
+.fbtn.hold[aria-pressed="true"] { background: #d8342c; }
+.fbtn.runstop { background: #3aa35c; }
+.fbtn.runstop.stopped { background: #d8342c; }
+
+/* oscilloscope front panel (same controls as the 3D scope) */
+.scope-inst { grid-template-columns: minmax(0, 1fr) 230px; }
+.bezel {
+  display: grid; grid-template-columns: minmax(0, 1fr) 150px; grid-template-rows: minmax(0, 1fr) auto; gap: 4px 10px;
+  background: #23272b; border-radius: 12px; padding: 8px 10px; box-shadow: inset 0 0 0 1px #33393e, 0 4px 14px rgba(0, 0, 0, .18); min-height: 0;
+}
+.bezel .screen { min-height: 200px; }
+.brandline { grid-column: 1 / -1; font: 600 10.5px var(--mono); color: #aab4ba; letter-spacing: .04em; }
+.fpanel { display: flex; flex-direction: column; gap: 5px; color: #d8dde0; }
+.fsec { display: flex; flex-direction: column; gap: 2px; }
+.fsec-t { font: 700 9.5px var(--mono); color: #8fa0a8; letter-spacing: .1em; text-align: center; }
+.knobs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.knobw { display: flex; flex-direction: column; align-items: center; gap: 1px; min-width: 0; line-height: 1.1; }
+.knob {
+  --a: 0deg; width: 34px; height: 34px; border-radius: 50%; position: relative; cursor: ns-resize; touch-action: none;
+  background: radial-gradient(circle at 38% 32%, #f4f6f7, #b9bfc3 60%, #8c9296); box-shadow: 0 3px 5px rgba(0, 0, 0, .55), inset 0 -2px 3px rgba(0, 0, 0, .25);
+  transform: rotate(var(--a)); transition: transform .12s ease-out;
+}
+.knob.orange { background: radial-gradient(circle at 38% 32%, #ffc9a0, #ff8a3c 60%, #c85d1c); }
+.knob i { position: absolute; left: 50%; top: 3px; width: 3px; height: 10px; margin-left: -1.5px; border-radius: 2px; background: #1c1c1c; }
+.knob:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.kl { font: 700 9.5px var(--mono); color: #d8dde0; }
+.kv { font: 500 10px var(--mono); color: #f3d23c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.fbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.fbtns .fbtn { padding: 5px 4px; font-size: 10px; }
+.bncs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.bnc { display: flex; flex-direction: column; align-items: center; gap: 2px; border: 0; background: transparent; cursor: pointer; font: 700 10.5px var(--mono); color: #d8dde0; padding: 3px 0; border-radius: 8px; }
+button.bnc:hover { background: rgba(255, 255, 255, .08); }
+.bnc[aria-pressed="true"] { background: rgba(243, 210, 60, .22); }
+.bnc.gnd { cursor: default; }
+.bnc i { width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle, #1a1a1a 0 4px, #c9ced2 5px 8px, #8c9296 9px 10px, var(--c) 11px); box-shadow: 0 2px 3px rgba(0, 0, 0, .5); }
+@container (max-width: 760px) { .scope-inst { grid-template-columns: minmax(0, 1fr); } .bezel .screen { min-height: 220px; } }
+.probe-row { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 8px; align-items: center; font-size: 12.5px; line-height: 1.35; }
+.pdot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--line); }
+.pwhere { font-family: var(--mono); font-size: 12px; }
+.pwhere .none { color: var(--muted); }
+.warnline { font-weight: 700; color: var(--err); }
+@container (max-width: 560px) { .dmm-inst { grid-template-columns: 1fr; } }
+
+/* power */
+.rails { display: flex; flex-direction: column; gap: 12px; }
+.rail-row { display: grid; grid-template-columns: 150px minmax(0, 1fr) 100px; gap: 6px 10px; align-items: center; }
+.rail-name b { display: block; font-size: 13px; }
+.rail-name span { font-size: 11.5px; color: var(--muted); }
+.bar { position: relative; height: 22px; border-radius: 6px; background: var(--panel-2); border: 1px solid var(--line); overflow: hidden; display: flex; }
+.bar .seg { height: 100%; min-width: 1px; border-right: 1px solid rgba(255, 255, 255, .35); }
+.bar .limit { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--err); }
+.rail-total { font: 600 12.5px var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
+.rail-total.over { color: var(--err); }
+.consumers { display: flex; flex-wrap: wrap; gap: 4px 10px; font: 11.5px var(--mono); color: var(--muted); grid-column: 2 / 4; }
+.consumers i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; }
+.life { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.big { font: 600 22px/1.1 var(--display); font-variant-numeric: tabular-nums; }
+.big small { font: 500 12px var(--sans); color: var(--muted); }
+.warnbox { font-size: 12.5px; padding: 8px 10px; border-radius: 8px; background: var(--err-soft); color: var(--err); }
+.okbox { font-size: 12.5px; padding: 8px 10px; border-radius: 8px; background: var(--ok-soft); color: var(--ok); }
+
+/* mqtt */
+.mq { display: grid; grid-template-columns: 240px minmax(0, 1fr) 270px; gap: 12px; height: 100%; min-height: 270px; }
+.mq-col { display: flex; flex-direction: column; gap: 8px; min-width: 0; min-height: 0; }
+.mq-diagram { position: relative; height: 118px; flex: none; background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.mq-diagram svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mq-node { position: absolute; transform: translate(-50%, -50%); padding: 5px 8px; border-radius: 7px; font: 600 11.5px/1.2 var(--mono); background: var(--panel); border: 1.5px solid var(--line); text-align: center; white-space: nowrap; }
+.mq-node.on { border-color: var(--ok); }
+.mq-node.off { border-color: var(--err); color: var(--err); }
+.mq-dot { position: absolute; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: var(--accent); pointer-events: none; }
+.mq-log { flex: 1; min-height: 110px; overflow: auto; background: var(--code-bg); color: var(--code-ink); border-radius: 9px; padding: 6px 8px; font: 11.5px/1.45 var(--mono); }
+.mq-log .row { white-space: nowrap; }
+.mq-log .t { color: #7fa394; }
+.mq-log .tp { color: #f0a868; }
+.mq-log .lwt { color: #ff8f84; }
+.mq-log .sys { color: #8fb6e8; }
+.mq-log .drop { color: #ff8f84; text-decoration: line-through; }
+.mq-log .dim { color: #6f8a7f; }
+.mq input[type="text"], .mq textarea { width: 100%; font: 12px var(--mono); padding: 6px 8px; border-radius: 7px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); }
+.mq textarea { height: 52px; resize: vertical; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 600 11.5px var(--mono); padding: 4px 8px; border-radius: 999px; }
+.pill.on { background: var(--ok-soft); color: var(--ok); }
+.pill.off { background: var(--err-soft); color: var(--err); }
+.pill.wait { background: var(--warn-soft); color: var(--warn); }
+
+/* rtos */
+.rt-legend { display: flex; flex-wrap: wrap; gap: 4px 12px; font: 11.5px var(--mono); color: var(--muted); }
+.rt-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
+.rt-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; font: 12px var(--mono); font-variant-numeric: tabular-nums; }
+.rt-stats b { font-size: 16px; font-family: var(--display); }
+
+@media (max-width: 900px) {
+  .inst, .mq { grid-template-columns: minmax(0, 1fr); }
+  .screen { height: 240px; }
+  .rail-row { grid-template-columns: minmax(0, 1fr); }
+  .consumers { grid-column: 1; }
+  .bezel { grid-template-columns: minmax(0, 1fr); }
+  .fpanel { flex-direction: row; flex-wrap: wrap; }
+}
+
+/* the dock can be narrow even on a wide screen: size by the dock, not the viewport */
+@container (max-width: 980px) {
+  .mq { grid-template-columns: 220px minmax(0, 1fr); height: auto; }
+  .mq > .mq-col:last-child { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 12px; align-items: start; }
+  .mq > .mq-col:last-child > .eyebrow, .mq > .mq-col:last-child > .field, .mq > .mq-col:last-child > #mqGot { grid-column: 1; }
+  .mq > .mq-col:last-child > #mqTopic, .mq > .mq-col:last-child > #mqPayload, .mq > .mq-col:last-child > .btnrow { grid-column: 2; }
+  .mq > .mq-col:last-child > .eyebrow:nth-of-type(2) { grid-column: 2; grid-row: 1; }
+  .mq-log { max-height: 170px; }
+}
+@container (max-width: 640px) {
+  .inst, .mq { grid-template-columns: minmax(0, 1fr) !important; height: auto; }
+  .mq > .mq-col:last-child { grid-column: auto; display: flex; }
+  .screen { height: 230px; }
+  .rail-row { grid-template-columns: minmax(0, 1fr); }
+  .consumers { grid-column: 1; }
+}

@@ -6,6 +6,7 @@
 <title>ESP32 Prototype Bench</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles_instruments.css">
 
 </head>
 <body>
@@ -26,6 +27,8 @@
         <option value="bottle">Hover-vehicle bottle</option>
         <option value="weather">Weather station</option>
         <option value="parking">Parking sensor</option>
+        <option value="home">Home automation</option>
+        <option value="seabed">Seabed station</option>
         <option value="bugs">Find the mistakes</option>
         <option value="empty">Empty bench</option>
       </select>
@@ -52,10 +55,13 @@
     <div class="lib-list" id="lib"></div>
   </aside>
 
-  <main class="stage" id="stage">
+  <main class="stagecol">
+  <div class="stage" id="stage">
     <canvas id="view" aria-label="3D workbench. Click pins to connect jumpers."></canvas>
     <div class="loading" id="loading">Laying out the cutting mat…</div>
     <div class="view-tools">
+      <button class="btn small" id="probeBtn" aria-pressed="false" title="Place the multimeter probes on the bench">Probe with multimeter</button>
+      <button class="btn small" id="instView" title="Look at the oscilloscope and multimeter">Instruments</button>
       <button class="btn small" id="topView" title="Look straight down">Top view</button>
       <button class="btn small" id="resetView" title="Reset camera">Reset view</button>
       <button class="btn small mobile-only" id="mobileAddPartBtn">+ Add Part</button>
@@ -63,6 +69,28 @@
     </div>
     <div class="hint"><div class="msg" id="hint"></div></div>
     <div class="tip" id="tip" hidden></div>
+  </div>
+
+  <section class="dock card" id="dock" aria-label="Instruments">
+    <div class="dock-head">
+      <div class="dtabs" role="tablist">
+        <button class="dtab" role="tab" data-dtab="scope" aria-selected="true">Oscilloscope</button>
+        <button class="dtab" role="tab" data-dtab="meter" aria-selected="false">Multimeter</button>
+        <button class="dtab" role="tab" data-dtab="logic" aria-selected="false">Logic analyzer</button>
+        <button class="dtab" role="tab" data-dtab="power" aria-selected="false">Power</button>
+        <button class="dtab" role="tab" data-dtab="mqtt" aria-selected="false">MQTT</button>
+        <button class="dtab" role="tab" data-dtab="rtos" aria-selected="false">FreeRTOS</button>
+      </div>
+      <button class="btn small mobile-only" id="backToBenchFromDock">← 3D Bench</button>
+      <button class="btn small desktop-only" id="dockToggle" aria-expanded="true">Hide instruments</button>
+    </div>
+    <div class="dpane" id="dp-scope"></div>
+    <div class="dpane" id="dp-meter" hidden></div>
+    <div class="dpane" id="dp-logic" hidden></div>
+    <div class="dpane" id="dp-power" hidden></div>
+    <div class="dpane" id="dp-mqtt" hidden></div>
+    <div class="dpane" id="dp-rtos" hidden></div>
+  </section>
   </main>
 
   <section class="panel card" aria-label="Details">
@@ -99,15 +127,19 @@
   <nav class="mobile-nav" id="mobileNav" aria-label="Workbench sections">
     <button class="mobile-nav-btn active" data-view="bench" id="btnViewBench">
       <span class="nav-icon">🛠️</span>
-      <span class="nav-label">3D Bench</span>
+      <span class="nav-label">Bench</span>
+    </button>
+    <button class="mobile-nav-btn" data-view="dock" id="btnViewDock">
+      <span class="nav-icon">🔬</span>
+      <span class="nav-label">Instruments</span>
     </button>
     <button class="mobile-nav-btn" data-view="parts" id="btnViewParts">
       <span class="nav-icon">📦</span>
-      <span class="nav-label">Parts Bin</span>
+      <span class="nav-label">Parts</span>
     </button>
     <button class="mobile-nav-btn" data-view="panel" id="btnViewPanel">
       <span class="nav-icon">📋</span>
-      <span class="nav-label">Details & Code</span>
+      <span class="nav-label">Details</span>
       <span class="mobile-badge" id="mobileCheckBadge" hidden>0</span>
     </button>
   </nav>
@@ -116,5 +148,10 @@
 <script src="lib/three.min.js"></script>
 <script src="lib/OrbitControls.js"></script>
 <script src="app.js"></script>
+<script src="instruments.js"></script>
+<script src="mqtt.js"></script>
+<script src="rtos.js"></script>
+<script src="parts_extra.js"></script>
+<script src="bench3d.js"></script>
 </body>
 </html>

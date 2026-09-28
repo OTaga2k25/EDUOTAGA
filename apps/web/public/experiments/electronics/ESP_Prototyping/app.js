@@ -61,7 +61,7 @@ const T = {
             pins: [["VCC", "pwr", "3V3"], ["DATA", "io", "1-Wire bus. 4.7 kΩ pull-up is on this board"], ["GND", "gnd", "Ground"]] },
   sonar:  { name: "HC-SR04 ultrasonic", short: "sonar", cat: "Sensors", blurb: "Distance 2–400 cm. 5 V part.", w: 4.6, d: 2.6, label: "HC-SR04", color: 0x1f4f9e, needs5v: true,
             pins: [["VCC", "pwr", "Needs 5 V: use VIN"], ["TRIG", "din", "10 µs pulse from the ESP32"], ["ECHO", "dout", "Pulse back at VCC level: 5 V!"], ["GND", "gnd", "Ground"]],
-            props: { divider: false } },
+            props: { divider: false, mount: "flat", range: "slider" }, newProps: { mount: "upright", range: "obstacle" } },
   turb:   { name: "Turbidity sensor", short: "turb", cat: "Sensors", blurb: "Water clarity, analog. 5 V part.", w: 2.6, d: 2.0, label: "TURBIDITY", color: 0x1b1b1b, needs5v: true, out5v: true,
             pins: [["VCC", "pwr", "Needs 5 V: use VIN"], ["GND", "gnd", "Ground"], ["AO", "analog", "0–4.5 V at 5 V supply"]],
             props: { divider: false } },
@@ -83,12 +83,29 @@ const T = {
   battery:{ name: "Battery pack 4×AA", short: "bat", cat: "Power & drivers", blurb: "6 V for motors. Share its ground.", w: 4.6, d: 4, board: false,
             pins: [["BAT+", "bat+", "6 V: motor power only"], ["BAT-", "bat-", "Must join ESP32 GND"]] },
 };
-const CATS = ["Sensors", "Actuators", "Power & drivers"];
+const RAIL_PINS = [...[1, 2, 3, 4, 5, 6, 7, 8].map(i => ["+" + i, "railp", "Rail +: every + hole is joined"]), ...[1, 2, 3, 4, 5, 6, 7, 8].map(i => ["-" + i, "railn", "Rail −: every − hole is joined"])];
+Object.assign(T, {
+  rail:     { name: "Power rail strip", short: "rail", cat: "Breadboard & passives", blurb: "Breadboard rails: 8 holes of + and 8 of −. One jumper feeds many parts.", w: 4.6, d: 2.2, board: false, passive: true,
+              pins: RAIL_PINS, bus: [RAIL_PINS.slice(0, 8).map(p => p[0]), RAIL_PINS.slice(8).map(p => p[0])] },
+  resistor: { name: "Resistor", short: "r", cat: "Breadboard & passives", blurb: "Pull-up, pull-down or current limit. Pick the value.", w: 3.0, d: 1.4, board: false, passive: true,
+              pins: [["A", "res", "Resistor lead"], ["B", "res", "Resistor lead"]], props: { ohms: 10000 } },
+  divider:  { name: "Voltage divider 1k/2k", short: "div", cat: "Breadboard & passives", blurb: "5 V signal in, 3.3 V out. For ECHO and 5 V analog.", w: 2.6, d: 1.9, color: 0x2d6a4f, label: "1K / 2K", passive: true,
+              pins: [["IN", "divin", "5 V signal in (e.g. ECHO)"], ["GND", "gnd", "Ground"], ["OUT", "divout", "IN × 2/3: to the GPIO"]] },
+  shifter:  { name: "Level shifter (2-ch)", short: "ls", cat: "Breadboard & passives", blurb: "BSS138, both directions. 3.3 V ↔ 5 V logic.", w: 3.8, d: 2.2, color: 0x1f4f9e, label: "LEVEL SHIFT", passive: true,
+              pins: [["LV", "lvpwr", "3.3 V side supply: 3V3"], ["HV", "hvpwr", "5 V side supply: VIN"], ["GND", "gnd", "Ground"], ["LV1", "lvx", "Channel 1, 3.3 V side (GPIO)"],
+                     ["HV1", "hvx", "Channel 1, 5 V side (part)"], ["LV2", "lvx", "Channel 2, 3.3 V side (GPIO)"], ["HV2", "hvx", "Channel 2, 5 V side (part)"]] },
+});
+T.driver.passive = true;
+T.battery.passive = true;
+const isSensor = c => c.type !== "esp32" && T[c.type] && !T[c.type].act && !T[c.type].passive;
+const RES_BANDS = { 220: ["#d8342c", "#d8342c", "#8b5a2b"], 1000: ["#8b5a2b", "#1b1b1b", "#d8342c"], 2000: ["#d8342c", "#1b1b1b", "#d8342c"], 4700: ["#e9c21c", "#8a4fd1", "#d8342c"], 10000: ["#8b5a2b", "#1b1b1b", "#ef7d22"] };
+const ohmsText = o => o >= 1000 ? (o / 1000) + " kΩ" : o + " Ω";
+const CATS = ["Sensors", "Actuators", "Power & drivers", "Breadboard & passives"];
 const WIRE_COLORS = { red: "#d8342c", black: "#262626", blue: "#2f6fd6", yellow: "#e9c21c", green: "#2fa34f", orange: "#ef7d22", white: "#e9e9e9", purple: "#8a4fd1", brown: "#8b5a2b" };
 const SIGNAL_CYCLE = ["green", "orange", "white", "purple", "brown", "blue", "yellow"];
 
 // ═════════════════════════ state ═════════════════════════
-const state = { comps: [], wires: [], wifi: true, running: false, sel: null, pending: null, showChecks: true,
+const state = { comps: [], wires: [], wifi: true, running: false, sel: null, pending: null, showChecks: true, placing: null,
   env: { light: 55, tilt: 0, airTemp: 24, humidity: 48, waterTemp: 6, distance: 60, turbidity: 350 } };
 let issues = [], compSev = new Map(), nets = null;
 let simT = 0, serialAcc = 0, serialLines = [], serialPaused = false, brownoutUntil = 0, brownoutAcc = 0;
@@ -129,14 +146,47 @@ controls.minDistance = 6;
 controls.maxDistance = 80;
 controls.enableZoom = false;                     // wheel handled below
 controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+controls.screenSpacePanning = false;             // pan slides along the bench, never lifts the pivot
 
 // Trackpad: pinch (ctrlKey wheel) zooms, two-finger drag pans. Mouse wheel zooms.
 const _off = new THREE.Vector3(), _right = new THREE.Vector3(), _fwd = new THREE.Vector3();
-function dolly(delta) {
-  _off.copy(camera.position).sub(controls.target);
-  const d = clamp(_off.length() * Math.exp(delta), controls.minDistance, controls.maxDistance);
-  camera.position.copy(controls.target).add(_off.setLength(d));
+// Zoom toward whatever is under the cursor (a part, an instrument, or the bench), so the orbit pivot follows you there.
+const _zp = new THREE.Vector3();
+function zoomPoint(ev) {
+  if (!ev) return null;
+  setNdc(ev);
+  const hit = ray.intersectObjects(scene.children.filter(o => o.visible && !o.isLight && o !== scene.userData.table && !o.isSprite), true).find(h => h.object.isMesh && !h.object.material.transparent);
+  if (hit) return _zp.copy(hit.point);
+  benchPlane.constant = 0;
+  return ray.ray.intersectPlane(benchPlane, _zp);
 }
+function dolly(delta, ev) {
+  _off.copy(camera.position).sub(controls.target);
+  const d0 = _off.length();
+  const d = clamp(d0 * Math.exp(delta), controls.minDistance, controls.maxDistance);
+  const k = d / d0, p = zoomPoint(ev);
+  if (!p || camera.position.distanceTo(p) > controls.maxDistance * 1.6) { camera.position.copy(controls.target).add(_off.setLength(d)); return; }
+  // scale camera and pivot about the cursor point; keep the pivot on the bench plane
+  camera.position.sub(p).multiplyScalar(k).add(p);
+  controls.target.sub(p).multiplyScalar(k).add(p);
+  // pivot on the thing you zoomed at, but never below the bench or above the instruments
+  const ty = clamp(controls.target.y, 0, 8);
+  if (ty !== controls.target.y) {
+    const dir = controls.target.clone().sub(camera.position).normalize();
+    if (Math.abs(dir.y) > 0.05) {
+      const t2 = camera.position.clone().addScaledVector(dir, (ty - camera.position.y) / dir.y);
+      if (t2.distanceTo(camera.position) < controls.maxDistance * 0.95) controls.target.copy(t2);
+    }
+  }
+  keepInBounds();
+}
+// the pivot may roam the mat and the instruments behind it; camera moves with it so the view never tilts
+function keepInBounds() {
+  const t = controls.target, BOUNDS = { x0: -MAT_W / 2 - 10, x1: MAT_W / 2 + 10, z0: -MAT_D / 2 - 18, z1: MAT_D / 2 + 8 };
+  const dx = clamp(t.x, BOUNDS.x0, BOUNDS.x1) - t.x, dz = clamp(t.z, BOUNDS.z0, BOUNDS.z1) - t.z;
+  if (dx || dz) { t.x += dx; t.z += dz; camera.position.x += dx; camera.position.z += dz; }
+}
+controls.addEventListener("change", keepInBounds);
 function panBy(dx, dy) {
   const k = camera.position.distanceTo(controls.target) * 0.0014;
   camera.getWorldDirection(_fwd); _fwd.y = 0;
@@ -146,8 +196,7 @@ function panBy(dx, dy) {
   const move = _right.multiplyScalar(dx * k).addScaledVector(_fwd, -dy * k);
   camera.position.add(move);
   controls.target.add(move);
-  controls.target.x = clamp(controls.target.x, -MAT_W / 2, MAT_W / 2);
-  controls.target.z = clamp(controls.target.z, -MAT_D / 2, MAT_D / 2);
+  keepInBounds();
 }
 function isMouseWheel(ev) {
   if (ev.deltaMode !== 0) return true;                         // line/page units: a wheel
@@ -155,15 +204,16 @@ function isMouseWheel(ev) {
 }
 canvas.addEventListener("wheel", ev => {
   ev.preventDefault();
-  if (ev.ctrlKey) dolly(ev.deltaY * 0.012);                    // pinch
-  else if (isMouseWheel(ev)) dolly(Math.sign(ev.deltaY) * Math.min(Math.abs(ev.deltaY), 150) * 0.0015);
+  if (ev.ctrlKey) dolly(ev.deltaY * 0.012, ev);                // pinch
+  else if (isMouseWheel(ev)) dolly(Math.sign(ev.deltaY) * Math.min(Math.abs(ev.deltaY), 150) * 0.0015, ev);
   else panBy(ev.deltaX, ev.deltaY);                            // two-finger drag
 }, { passive: false });
 const MAXANISO = renderer.capabilities.getMaxAnisotropy();
 
 function resetView(top) {
+  if (top === "inst") { camera.position.set(1.5, 31, 19); controls.target.set(1.5, 4, -28); controls.update(); return; }
   if (top) { camera.position.set(0, 46, 0.01); controls.target.set(0, 0, 0); }
-  else { camera.position.set(-5, 40, 38); controls.target.set(-5.5, 0, 3); }
+  else { camera.position.set(-3, 52, 50); controls.target.set(-3, 0, -5); }
   controls.update();
 }
 
@@ -222,7 +272,7 @@ function applyTheme() {
   const bg = cs.getPropertyValue("--scene").trim() || "#D9E0DC";
   const col = new THREE.Color(bg);
   scene.background = col;
-  scene.fog = new THREE.Fog(col, 70, 160);
+  scene.fog = new THREE.Fog(col, 110, 260);
   scene.userData.table.material.color = col.clone().multiplyScalar(0.92);
 }
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme);
@@ -482,6 +532,28 @@ const BUILD = {
     g.add(topBox(2.2, 0.02, 0.5, 0x26483d, (gx, S, X, Z) => silk(gx, S, c.name + " · THRUSTER", X(0), Z(0), 0.2, "center", "rgba(255,210,150,.95)"), 0.6, 0.01, 1.3));
   },
   driver(c, g) { g.add(boxM(1.3, 0.2, 0.8, M.dark, 1.5, 0.26, -0.5)); },
+  rail(c, g) {
+    g.add(topBox(4.6, 0.3, 2.2, 0xeeeae1, (gx, S, X, Z) => {
+      gx.fillStyle = "#d8342c"; gx.fillRect(X(-2.1), Z(-0.95), S * 4.2, S * 0.07);
+      gx.fillStyle = "#2f6fd6"; gx.fillRect(X(-2.1), Z(0.88), S * 4.2, S * 0.07);
+      silk(gx, S, "+", X(-2.1), Z(-0.45), 0.36, "center", "#d8342c", 700); silk(gx, S, "−", X(-2.1), Z(0.45), 0.36, "center", "#2f6fd6", 700);
+      silk(gx, S, c.name, X(1.9), Z(0), 0.2, "center", "#b45f1e");
+    }, 0, 0.15, 0));
+    RAIL_PINS.forEach(([n, k, d], i) => addPin(c, g, n, k, d, -1.6 + (i % 8) * 0.45, i < 8 ? -0.45 : 0.45, 0.3));
+  },
+  resistor(c, g) {
+    const bands = RES_BANDS[c.props.ohms] || RES_BANDS[10000];
+    const body = cylM(0.22, 0.22, 1.1, std(0xd9c49a, { roughness: 0.6 }), 0, 0.5, -0.1, 20); body.rotation.z = Math.PI / 2; g.add(body);
+    bands.concat(["#c9a54a"]).forEach((col, i) => { const b = cylM(0.235, 0.235, 0.09, std(new THREE.Color(col)), -0.33 + i * 0.2 + (i === 3 ? 0.12 : 0), 0.5, -0.1, 20); b.rotation.z = Math.PI / 2; g.add(b); });
+    for (const x of [-1, 1]) {
+      const lead = cylM(0.03, 0.03, 0.6, M.metal, x * 0.8, 0.5, -0.1, 8); lead.rotation.z = Math.PI / 2; g.add(lead);
+      g.add(boxM(0.5, 0.25, 0.5, M.header, x * 1.1, 0.125, -0.1));
+      addPin(c, g, x < 0 ? "A" : "B", "res", "Resistor lead", x * 1.1, -0.1, 0.25);
+    }
+    g.add(topBox(1.6, 0.02, 0.4, 0x26483d, (gx, S, X, Z) => silk(gx, S, `${c.name} · ${ohmsText(c.props.ohms)}`, X(0), Z(0), 0.2, "center", "rgba(255,210,150,.95)"), 0, 0.01, 0.45));
+  },
+  divider(c, g) { g.add(boxM(0.5, 0.18, 0.25, std(0x1b1b1b), 0.7, 0.25, -0.35), boxM(0.5, 0.18, 0.25, std(0x1b1b1b), 0.7, 0.25, 0.05)); },
+  shifter(c, g) { for (const x of [0.9, 1.45]) g.add(boxM(0.35, 0.16, 0.3, M.dark, x, 0.24, -0.55)); },
   battery(c, g) {
     g.add(boxM(4.4, 0.7, 3.0, std(0x1b1b1b, { roughness: 0.7 }), 0, 0.35, -0.4));
     [-1.5, -0.5, 0.5, 1.5].forEach((x, i) => {
@@ -511,6 +583,7 @@ function buildComp(c) {
       addPinRow(c, g, t.pins, 0, t.d / 2 - 0.35, 0.16);
     }
     BUILD[c.type] && BUILD[c.type](c, g, t);
+    if (API.ext.postBuild[c.type]) API.ext.postBuild[c.type](c, g, t);
   }
   g.traverse(o => { if (o.isMesh && !o.userData.pinKey) o.userData.compId = c.id; if (o.userData.press) o.userData.compId = c.id; });
   const badge = new THREE.Sprite(new THREE.SpriteMaterial({ map: BADGE.error, depthTest: false, transparent: true }));
@@ -522,6 +595,12 @@ function buildComp(c) {
   g.rotation.y = (c.rot || 0) * Math.PI / 2;
   c.group = g;
   scene.add(g);
+}
+function rebuildComp(c) {
+  destroyComp(c);
+  buildComp(c);
+  rebuildWiresFor(c.id);
+  updateSelRing();
 }
 function destroyComp(c) {
   scene.remove(c.group);
@@ -540,8 +619,8 @@ function pinTop(key) {
 function wireColorFor(a, b) {
   const ka = pinMeta(a).kind, kb = pinMeta(b).kind;
   const ks = [ka, kb];
-  if (ks.some(k => ["pwr", "3v3", "vin", "vm", "bat+"].includes(k))) return "red";
-  if (ks.some(k => ["gnd", "bat-"].includes(k))) return "black";
+  if (ks.some(k => ["pwr", "3v3", "vin", "vm", "bat+", "railp", "lvpwr", "hvpwr"].includes(k))) return "red";
+  if (ks.some(k => ["gnd", "bat-", "railn"].includes(k))) return "black";
   if (ks.includes("sda")) return "blue";
   if (ks.includes("scl")) return "yellow";
   const used = state.wires.length;
@@ -579,7 +658,9 @@ function computeNets() {
   const find = k => { while (parent.get(k) !== k) { parent.set(k, parent.get(parent.get(k))); k = parent.get(k); } return k; };
   const add = k => { if (!parent.has(k)) parent.set(k, k); };
   state.comps.forEach(c => Object.keys(c.pins).forEach(p => add(c.id + ":" + p)));
-  state.wires.forEach(w => { add(w.a); add(w.b); const ra = find(w.a), rb = find(w.b); if (ra !== rb) parent.set(ra, rb); });
+  const union = (a, b) => { add(a); add(b); const ra = find(a), rb = find(b); if (ra !== rb) parent.set(ra, rb); };
+  state.comps.forEach(c => (T[c.type] && T[c.type].bus || []).forEach(grp => grp.forEach(p => union(c.id + ":" + grp[0], c.id + ":" + p))));
+  state.wires.forEach(w => union(w.a, w.b));
   const members = new Map();
   for (const k of parent.keys()) { const r = find(k); if (!members.has(r)) members.set(r, []); members.get(r).push(k); }
   const info = new Map();
@@ -622,13 +703,13 @@ function validate() {
   }
 
   for (const c of state.comps) {
-    if (c.type === "esp32") continue;
+    if (c.type === "esp32" || T[c.type].object) continue;
     const t = T[c.type];
     const connected = Object.keys(c.pins).filter(p => nets.of(c.id + ":" + p).keys.length > 1);
     if (!connected.length) { add("info", c, `${c.name} isn't wired yet`, "Click one of its pins, then a pin on the ESP32."); continue; }
     c.vcc = 3.3;
     for (const [pin, kind] of t.pins) {
-      const key = c.id + ":" + pin, n = nets.of(key), lone = n.keys.length === 1, g = n.gpios[0];
+      const key = c.id + ":" + pin, n = nets.of(key), lone = n.keys.length === 1, tr = trace(key), g = tr ? tr.g : undefined;
       const label = `${c.name} ${pin}`;
       switch (kind) {
         case "pwr":
@@ -650,7 +731,7 @@ function validate() {
           if (!(g in ADC1) && !(g in ADC2)) add("error", c, `GPIO ${g} has no ADC`, `${label} is analog. Use GPIO 32–39.`);
           else if (g in ADC2 && wifi) add("error", c, `${label} is on ADC2 (GPIO ${g}) while Wi-Fi is on`, "ADC2 is shared with the radio and returns nothing. Move it to GPIO 32–39.");
           else if (g in ADC2) add("info", c, `${label} uses ADC2 (GPIO ${g})`, "Works now, fails the day you turn Wi-Fi on. GPIO 32–39 is safer.");
-          if ((t.out5v || c.type === "pot" || c.type === "ldr") && c.vcc >= 5 && !c.props.divider)
+          if ((t.out5v || c.type === "pot" || c.type === "ldr") && c.vcc >= 5 && !c.props.divider && !(tr && tr.via))
             add("error", c, `${label} can output ${c.type === "turb" ? "4.5" : "5"} V into a 3.3 V pin`, t.out5v ? "Turn on the voltage divider for this part (inspector)." : "Power it from 3V3 instead of VIN.");
           break;
         case "din":
@@ -663,8 +744,8 @@ function validate() {
         case "dout":
           if (lone) { add("error", c, `${label} isn't connected`, "Wire it to a GPIO input."); break; }
           if (g == null) { add("error", c, `${label} isn't on a GPIO`, "The ESP32 needs to read this pin."); break; }
-          if (c.type === "sonar" && c.vcc >= 5 && !c.props.divider) add("error", c, `${label} sends 5 V into GPIO ${g}`, "Turn on the 1 kΩ / 2 kΩ divider in the inspector.");
-          if (c.type === "button" && INPUT_ONLY.has(g)) add("warn", c, `GPIO ${g} has no internal pull-up`, "Add a 10 kΩ pull-up to 3V3, or use another pin.");
+          if ((c.type === "sonar" || c.type === "jsn") && c.vcc >= 5 && !c.props.divider && !(tr && tr.via)) add("error", c, `${label} sends 5 V into GPIO ${g}`, "Turn on the 1 kΩ / 2 kΩ divider in the inspector.");
+          if (c.type === "button" && INPUT_ONLY.has(g) && !hasPullup(tr.n)) add("warn", c, `GPIO ${g} has no internal pull-up`, "Add a 10 kΩ pull-up to 3V3, or use another pin.");
           if (g === 12) add("warn", c, `${label} is on GPIO 12`, "If it pulls GPIO 12 high at reset, the flash voltage is wrong and the board won't boot.");
           if (g === 1 || g === 3) add("warn", c, `${label} is on GPIO ${g} (USB serial)`, "It will garble the serial monitor.");
           break;
@@ -703,8 +784,31 @@ function validate() {
           if (lone || !n.hasGnd) add("error", c, `${c.name} ground isn't shared with the ESP32`, "Wire BAT- to GND. Without a common ground the driver can't read the PWM signal.");
           break;
         case "drvout": break;
+        case "divin":
+          if (lone) add("warn", c, `${label} isn't connected`, "IN takes the 5 V signal, for example HC-SR04 ECHO.");
+          else if (n.gpios.length) add("warn", c, `${label} is on a GPIO`, "The 5 V signal goes to IN. OUT goes to the GPIO.");
+          break;
+        case "divout":
+          if (lone) add("warn", c, `${label} isn't connected`, "Wire OUT to the GPIO that reads the signal.");
+          else if (n.hasVin || n.has3v3 || n.hasGnd) add("error", c, `${label} is on a supply pin`, "OUT carries the reduced signal to a GPIO.");
+          break;
+        case "lvpwr":
+          if (lone) add("error", c, `${label} isn't connected`, "LV is the 3.3 V side: wire it to 3V3.");
+          else if (!n.has3v3) add("error", c, `${label} isn't on 3V3`, "The low side must match the ESP32: 3.3 V.");
+          break;
+        case "hvpwr":
+          if (lone) add("error", c, `${label} isn't connected`, "HV is the 5 V side: wire it to VIN.");
+          else if (!n.hasVin) add("warn", c, `${label} isn't on VIN`, "The high side should match the 5 V part: VIN.");
+          break;
+        case "lvx":
+          if (!lone && (n.hasVin || n.hasBatP)) add("error", c, `${label} gets 5 V or more`, "LV pins face the ESP32 at 3.3 V.");
+          break;
       }
     }
+  }
+  for (const c of state.comps) {
+    const f = API.ext.check[c.type];
+    if (f && Object.keys(c.pins).some(p => nets.of(c.id + ":" + p).keys.length > 1)) f(c, add, nets, trace);
   }
   for (const [g, list] of i2cBus) {
     const seen = new Map();
@@ -726,7 +830,22 @@ function validate() {
 const hasErr = c => compSev.get(c.id) === "error";
 
 // ═════════════════════════ simulation ═════════════════════════
-function gpioOf(c, pin) { const n = nets.of(c.id + ":" + pin); return n ? (n.gpios[0] ?? null) : null; }
+const PAIR = { divin: () => "OUT", hvx: p => "LV" + p.slice(2), lvx: p => "HV" + p.slice(2) };
+// Follow a signal to its GPIO, also through a divider (IN → OUT) or a level shifter (HVn ↔ LVn).
+function trace(key) {
+  const n = nets && nets.of(key);
+  if (!n) return null;
+  if (n.gpios.length) return { g: n.gpios[0], via: null, n };
+  for (const m of n.metas) {
+    const f = PAIR[m.kind];
+    if (!f || m.c.id + ":" + m.pin === key) continue;
+    const other = nets.of(m.c.id + ":" + f(m.pin));
+    if (other && other.gpios.length) return { g: other.gpios[0], via: m.c, n: other };
+  }
+  return null;
+}
+function hasPullup(n) { return !!n && n.metas.some(m => m.kind === "res" && nets.of(m.c.id + ":" + (m.pin === "A" ? "B" : "A")).has3v3); }
+function gpioOf(c, pin) { const t = trace(c.id + ":" + pin); return t ? t.g : null; }
 function driverOfMotor(m) {
   const n = nets.of(m.id + ":M+");
   const d = n && n.metas.find(x => x.kind === "drvout");
@@ -765,10 +884,15 @@ function readSensor(c, t) {
     case "bme": { const tt = e.airTemp + nz(0.1); return { norm: clamp(tt / 50), text: `${tt.toFixed(1)} °C · ${e.humidity}% · ${(1013.2 + nz(0.3)).toFixed(1)} hPa`, csv: `${tt.toFixed(1)}C` }; }
     case "dht": { const tt = Math.round((e.airTemp + 0.4) * 10) / 10; return { norm: clamp(tt / 50), text: `${tt.toFixed(1)} °C · ${e.humidity}% RH`, csv: `${tt.toFixed(1)}C/${e.humidity}%` }; }
     case "ds18": { const tt = Math.round((e.waterTemp + nz(0.05)) * 16) / 16; return { norm: clamp(tt / 40), text: `${tt.toFixed(2)} °C water`, csv: `${tt.toFixed(2)}C` }; }
-    case "sonar": { const d = e.distance + nz(0.6); return { norm: clamp((d - 2) / 198), text: `${d.toFixed(1)} cm`, csv: `${d.toFixed(1)}cm` }; }
+    case "sonar": {
+      const D = API.distanceFor(c);
+      if (D == null) return { norm: 1, text: "no echo: nothing in the beam (4 m max)", csv: "0cm" };
+      if (D < 2) return { norm: 0, text: `too close: under 2 cm (${D.toFixed(1)} cm)`, csv: "0cm" };
+      const d = D + nz(0.6); return { norm: clamp((d - 2) / 198), text: `${d.toFixed(1)} cm`, csv: `${d.toFixed(1)}cm` }; }
     case "turb": { const mv = Math.round(clamp(4.2 - e.turbidity / 3000 * 2.7, 0, 4.5) * (c.props.divider ? 2 / 3 : 1) * 1000); return { norm: clamp(e.turbidity / 3000), text: `${e.turbidity} NTU (${mv} mV)`, csv: `${e.turbidity}NTU` }; }
   }
-  return null;
+  const f = API.ext.read[c.type];
+  return f ? f(c, t, e, nz) : null;
 }
 function srcLevel(c) {
   let n;
@@ -776,7 +900,7 @@ function srcLevel(c) {
   else { const r = readings.get(c.props.src); n = r ? r.norm : 0; }
   return clamp(c.props.invert ? 1 - n : n);
 }
-function leakActive() { return state.comps.some(c => c.type === "button" && c.props.leak && c.props.pressed && !hasErr(c)); }
+function leakActive() { return state.comps.some(c => (c.type === "button" && c.props.leak && c.props.pressed && !hasErr(c)) || (API.ext.leak && API.ext.leak[c.type] && API.ext.leak[c.type](c))); }
 
 function serialPrint(line) {
   serialLines.push(line);
@@ -828,9 +952,10 @@ function tickSim(dt) {
     vibration += speed * (0.04 + (m.props.blob ? 0.3 : 0));
   });
   readings.clear();
-  if (state.running && !booting) state.comps.forEach(c => { if (!T[c.type] || T[c.type].act || c.type === "esp32" || c.type === "driver" || c.type === "battery") return; const r = readSensor(c, simT); if (r) readings.set(c.id, r); });
+  if (state.running && !booting) state.comps.forEach(c => { if (!isSensor(c)) return; const r = readSensor(c, simT); if (r) readings.set(c.id, r); });
   if (state.running) {
     simT += dt;
+    if (!booting && API.usbOverload && API.usbOverload()) brownRisk = true;
     if (brownRisk) {
       brownoutAcc += dt;
       if (brownoutAcc > 2.2) {
@@ -845,7 +970,7 @@ function tickSim(dt) {
       serialAcc = 0;
       const parts = [];
       state.comps.forEach(c => {
-        if (c.type === "esp32" || c.type === "driver" || c.type === "battery") return;
+        if (c.type === "esp32" || T[c.type].passive) return;
         if (T[c.type].act) {
           const o = outputs.get(c.id);
           if (!o) return;
@@ -853,6 +978,7 @@ function tickSim(dt) {
           if (c.type === "servo") parts.push(`${c.name}=${Math.round(o.angle)}deg`);
           if (c.type === "led") parts.push(`${c.name}=${Math.round(o.level * 255)}`);
           if (c.type === "buzzer") parts.push(`${c.name}=${o.on ? 1 : 0}`);
+          if (API.ext.serial[c.type]) parts.push(`${c.name}=${API.ext.serial[c.type](c, o)}`);
         } else {
           const r = readings.get(c.id);
           parts.push(`${c.name}=${r ? r.csv : "--"}`);
@@ -909,6 +1035,7 @@ function tickSim(dt) {
         a.body.position.z = -0.5 + Math.cos(c.anim.spin) * wob;
         break;
       }
+      default: { const f = API.ext.tick[c.type]; if (f) f(c, a, live, dt, simT); }
     }
   });
   const esp = byId("esp");
@@ -942,7 +1069,8 @@ function generateCode() {
     return `constrain(${NORM[T[s.type].short](s.name)}, 0.0f, 1.0f)`;
   };
   const lvlOf = c => c.props.invert ? `(1.0f - ${normOf(c)})` : normOf(c);
-  const sensors = state.comps.filter(c => c.type !== "esp32" && !T[c.type].act && !["driver", "battery"].includes(c.type) && wired(c));
+  const sensors = state.comps.filter(c => isSensor(c) && wired(c));
+  const codeCtx = c => ({ c, n: c.name, PN, pinDef, gpioOf, setup, loop, outs, glob, inc, prints, fnBlocks, startI2C, lvlOf, normOf, sensors, wired, NORM, T });
   const acts = state.comps.filter(c => T[c.type] && T[c.type].act && wired(c));
 
   for (const c of sensors) {
@@ -1002,6 +1130,7 @@ float mpuPitch() {
         loop.push(`  digitalWrite(${PN(c, "TRIG")}, HIGH); delayMicroseconds(10); digitalWrite(${PN(c, "TRIG")}, LOW);`,
                   `  float ${n}_cm = pulseIn(${PN(c, "ECHO")}, HIGH, 30000) / 58.0f;  // 0 = no echo`);
         prints.push([`${n}=%.1fcm`, `${n}_cm`]); break;
+      default: { const f = API.ext.codeSensor[c.type]; if (f) f(codeCtx(c)); }
     }
   }
   const leak = state.comps.find(c => c.type === "button" && c.props.leak && wired(c) && gpioOf(c, "SIG") != null);
@@ -1035,6 +1164,7 @@ float mpuPitch() {
         prints.push([`${n}=%d`, `${n}_duty`]);
         break;
       }
+      default: { const f = API.ext.codeAct[c.type]; if (f) f(codeCtx(c)); }
     }
   }
   const L = [];
@@ -1076,7 +1206,7 @@ function renderLibrary() {
   const el = $("#lib");
   el.innerHTML = CATS.map(cat => `<div class="lib-group eyebrow">${cat}</div>` +
     Object.entries(T).filter(([, t]) => t.cat === cat).map(([k, t]) => {
-      const col = t.color != null ? hex6(t.color) : k === "servo" ? "#2a5db0" : k === "motor" ? "#bfc5ca" : "#1b1b1b";
+      const col = t.color != null ? hex6(t.color) : { servo: "#2a5db0", motor: "#bfc5ca", rail: "#eeeae1", resistor: "#d9c49a" }[k] || "#1b1b1b";
       return `<button class="part" data-add="${k}"><span class="sw" style="background:${col}"></span><span><b>${esc(t.name)}</b><span>${esc(t.blurb)}</span></span></button>`;
     }).join("")).join("");
 }
@@ -1095,7 +1225,7 @@ function showTab(name) {
 
 // ═════════════════════════ UI: inspector ═════════════════════════
 function srcOptions(c) {
-  const opts = [["manual", "Manual slider"]].concat(state.comps.filter(s => s.type !== "esp32" && !T[s.type].act && !["driver", "battery"].includes(s.type)).map(s => [s.id, `${s.name} (${T[s.type].name})`]));
+  const opts = [["manual", "Manual slider"]].concat(state.comps.filter(isSensor).map(s => [s.id, `${s.name} (${T[s.type].name})`]));
   return opts.map(([v, l]) => `<option value="${v}" ${c.props.src === v ? "selected" : ""}>${esc(l)}</option>`).join("");
 }
 function connText(key) {
@@ -1128,6 +1258,12 @@ function renderInspector() {
       </div>
       <h4>Tip</h4>
       <p class="muted">Hover any ESP32 pin to see what it can do: ADC channel, input-only, strapping, USB serial.</p>`;
+    return;
+  }
+  if (sel.kind === "probe") {
+    const html = API.probeInspector && API.probeInspector(sel.id);
+    if (!html) { state.sel = null; return renderInspector(); }
+    el.innerHTML = html;
     return;
   }
   if (sel.kind === "wire") {
@@ -1177,9 +1313,14 @@ function renderInspector() {
   const pct = v => Math.round(v * 100) + "%";
   if (c.type === "pot") controls += slider("value", "Knob position", 0, 1, 0.01, v => Math.round(v * 3300) + " mV");
   if (c.type === "button") controls += check("pressed", "Pressed (you can also click the red cap)") + check("leak", "Acts as the leak switch: pressing it stops every thruster");
-  if (c.type === "sonar") controls += check("divider", "1 kΩ / 2 kΩ divider on ECHO (5 V → 3.3 V)");
+  if (c.type === "sonar") controls += check("divider", "1 kΩ / 2 kΩ divider on ECHO (5 V → 3.3 V)") +
+    `<label class="field"><span>Mounting</span><select id="p-mount" data-prop="mount"><option value="upright" ${p.mount === "upright" ? "selected" : ""}>Upright: beam parallel to the ground (real use)</option><option value="flat" ${p.mount !== "upright" ? "selected" : ""}>Flat on the mat: beam points at the ceiling</option></select></label>` +
+    `<label class="field"><span>Distance comes from</span><select id="p-range" data-prop="range"><option value="obstacle" ${p.range === "obstacle" ? "selected" : ""}>Obstacle blocks in the beam</option><option value="slider" ${p.range !== "obstacle" ? "selected" : ""}>World tab slider</option></select></label>` +
+    (p.range === "obstacle" ? `<p class="muted" style="margin:4px 0 0">Add an <b>Obstacle block</b> from the parts bin and drag it in front of the sensor. The beam is 15° wide; ${p.mount === "upright" ? "rotate with <span class=\"kbd\">R</span> to aim it." : "flat on the mat it only sees the ceiling: set it upright."}</p>` : "");
   if (c.type === "turb") controls += check("divider", "Voltage divider on AO (4.5 V → 3 V)");
-  if (t.act) {
+  if (API.ext.controls[c.type]) controls += API.ext.controls[c.type](c, { slider, check, pct });
+  if (c.type === "resistor") controls += `<label class="field"><span>Value</span><select id="p-ohms" data-prop="ohms">${Object.keys(RES_BANDS).map(o => `<option value="${o}" ${+c.props.ohms === +o ? "selected" : ""}>${ohmsText(+o)} · ${{ 220: "LED current limit", 1000: "divider top", 2000: "divider bottom", 4700: "1-Wire / I²C pull-up", 10000: "button pull-up" }[o]}</option>`).join("")}</select></label>`;
+  if (t.act && !t.noDrive) {
     controls += `<label class="field"><span>Driven by</span><select id="p-src" data-prop="src">${srcOptions(c)}</select></label>`;
     if (!p.src || p.src === "manual") controls += slider("manual", c.type === "servo" ? "Angle" : c.type === "motor" ? "Throttle" : "Level", 0, 1, 0.01, v => c.type === "servo" ? Math.round(v * 180) + "°" : pct(v));
     controls += check("invert", "Invert (high reading → low output)");
@@ -1193,11 +1334,11 @@ function renderInspector() {
     <h3>${esc(t.name)} · ${esc(c.name)}</h3>
     <p class="muted">${esc(t.blurb)}</p>
     ${state.showChecks && mine.length ? `<div class="issues">${mine.map(issueHTML).join("")}</div>` : ""}
-    <h4>Pins</h4>
+    ${t.pins.length ? `<h4>Pins</h4>` : ""}
     <table class="pins"><tbody>${t.pins.map(([nm, , desc]) => `<tr><td>${esc(nm)}</td><td><div>${esc(desc)}</div><div class="to">→ ${connText(c.id + ":" + nm)}</div></td></tr>`).join("")}</tbody></table>
     ${controls ? `<h4>Settings</h4>${controls}` : ""}
     <h4>Live</h4>
-    <div class="live" id="liveVal">${state.running ? "…" : "Press Run to see live values."}</div>
+    <div class="live" id="liveVal">${state.running || t.object ? "…" : "Press Run to see live values."}</div>
     <div class="actions"><button class="btn small" data-act="rotate">Rotate <span class="kbd">R</span></button><button class="btn small danger" data-act="delete">Remove part</button></div>`;
 }
 function updateLive() {
@@ -1206,7 +1347,8 @@ function updateLive() {
   const c = byId(state.sel.id);
   if (!c || c.type === "esp32") return;
   let s;
-  if (!state.running) s = "Press Run to see live values.";
+  if (T[c.type].object) s = API.ext.live[c.type] ? API.ext.live[c.type](c) : "";
+  else if (!state.running) s = "Press Run to see live values.";
   else if (hasErr(c)) s = "No signal: fix the wiring errors above.";
   else if (T[c.type].act) {
     const o = outputs.get(c.id) || {};
@@ -1214,7 +1356,8 @@ function updateLive() {
     if (c.type === "buzzer") s = o.on ? "BEEPING" : "quiet";
     if (c.type === "servo") s = `${Math.round(o.angle ?? 90)}°`;
     if (c.type === "motor") s = !motorChainOk(c) ? "Driver chain has errors" : o.abort ? "ABORT: leak detected" : `${Math.round((o.speed || 0) * 100)}% throttle`;
-  } else if (["driver", "battery"].includes(c.type)) s = "Passes power, no reading.";
+    if (API.ext.live[c.type]) s = API.ext.live[c.type](c, o);
+  } else if (T[c.type].passive) s = API.meterText ? API.meterText(c) : "Passive part, no reading.";
   else { const r = readings.get(c.id); s = r ? r.text : "…"; }
   if (el.textContent !== s) el.textContent = s;
 }
@@ -1278,7 +1421,9 @@ function renderWorld() {
     <p class="muted">Sliders marked with a part name feed a sensor on the bench. Knobs and buttons live on the parts themselves.</p>
     ${WORLD.map(([k, l, mn, mx, st, u, types]) => {
       const users = state.comps.filter(c => types.includes(c.type)).map(c => c.name);
-      return `<label class="field"><span>${l}${users.length ? `<span class="world-used">${esc(users.join(", "))}</span>` : ""}</span><span class="row"><input type="range" id="env-${k}" data-env="${k}" min="${mn}" max="${mx}" step="${st}" value="${state.env[k]}"><output>${state.env[k]}${u}</output></span></label>`;
+      const used = users.length ? `<span class="world-used">${esc(users.join(", "))}</span>` : "";
+      if (u === "toggle") return `<label class="check"><input type="checkbox" id="env-${k}" data-env="${k}" ${state.env[k] ? "checked" : ""}><span>${l}${used}</span></label>`;
+      return `<label class="field"><span>${l}${used}</span><span class="row"><input type="range" id="env-${k}" data-env="${k}" min="${mn}" max="${mx}" step="${st}" value="${state.env[k]}"><output>${state.env[k]}${u}</output></span></label>`;
     }).join("")}`;
 }
 
@@ -1338,6 +1483,7 @@ function clearBench() {
 }
 function changed(opts = {}) {
   validate();
+  API.emit("change");
   renderStatus();
   if (opts.inspector !== false) renderInspector();
   if (activeTab === "checks") renderChecks();
@@ -1375,6 +1521,7 @@ function select(sel) {
   renderInspector();
   if (sel) showTab("inspect");
   updateHint();
+  API.emit("select", sel);
 }
 
 // ═════════════════════════ pointer interaction ═════════════════════════
@@ -1391,12 +1538,14 @@ function pick(ev) {
   const targets = [];
   state.comps.forEach(c => targets.push(c.group));
   state.wires.forEach(w => w.group && targets.push(w.group));
+  if (API.extraPick) targets.push(...API.extraPick());
   const hits = ray.intersectObjects(targets, true);
   for (const h of hits) {
     const u = h.object.userData;
     if (u.pinKey) return { kind: "pin", key: u.pinKey, point: h.point };
     if (u.press) return { kind: "press", id: u.press, point: h.point };
     if (u.wireId) return { kind: "wire", id: u.wireId, point: h.point };
+    if (u.probe) { if (state.pending || state.placing) continue; return { kind: "probe", id: u.probe, point: h.point }; }
     if (u.compId) return { kind: "comp", id: u.compId, point: h.point };
   }
   return null;
@@ -1425,8 +1574,9 @@ canvas.addEventListener("pointermove", ev => {
       const c = byId(down.hit.id), p = benchPoint(ev);
       if (p) {
         drag = c;
-        c.x = clamp(Math.round((p.x + down.offset.x) * 2) / 2, -MAT_W / 2 + 1, MAT_W / 2 - 1);
-        c.z = clamp(Math.round((p.z + down.offset.z) * 2) / 2, -MAT_D / 2 + 1, MAT_D / 2 - 1);
+        const far = T[c.type] && T[c.type].object ? 90 : 0;
+        c.x = clamp(Math.round((p.x + down.offset.x) * 2) / 2, -MAT_W / 2 + 1 - far, MAT_W / 2 - 1 + far);
+        c.z = clamp(Math.round((p.z + down.offset.z) * 2) / 2, -MAT_D / 2 + 1 - far, MAT_D / 2 - 1 + far);
         c.group.position.set(c.x, 0, c.z);
         rebuildWiresFor(c.id);
         if (state.sel && state.sel.id === c.id) updateSelRing();
@@ -1438,9 +1588,9 @@ canvas.addEventListener("pointermove", ev => {
   const hit = down ? null : pick(ev);
   const hp = hit && hit.kind === "pin" ? hit.key : null;
   if (hp !== hoverPin) { setPinHover(hoverPin, false); hoverPin = hp; setPinHover(hoverPin, true); }
-  canvas.style.cursor = hit ? (hit.kind === "comp" ? "grab" : "pointer") : (state.pending ? "crosshair" : "default");
+  canvas.style.cursor = hit ? (hit.kind === "comp" && !state.placing ? "grab" : "pointer") : (state.pending || state.placing ? "crosshair" : "default");
   showTip(ev, hit);
-  if (state.pending) updateGhost(ev, hit);
+  if (state.pending || state.placing) updateGhost(ev, hit);
 });
 canvas.addEventListener("pointerup", ev => {
   controls.enabled = true;
@@ -1450,6 +1600,11 @@ canvas.addEventListener("pointerup", ev => {
   if (drag) { drag = null; down = null; canvas.style.cursor = "grab"; changed({ inspector: false }); return; }
   down = null;
   if (moved > 5) return;
+  if (state.placing) {
+    if (hit && hit.kind === "pin") { const what = state.placing.what; stopPlacing(); API.emit("place", what, hit.key); }
+    else { stopPlacing(); flashHint("Probe placement cancelled."); }
+    return;
+  }
   if (!hit) { if (state.pending) cancelPending(); else select(null); return; }
   if (hit.kind === "pin") {
     if (!state.pending) { state.pending = hit.key; setPinHover(hit.key, true); updateHint(); return; }
@@ -1468,6 +1623,7 @@ canvas.addEventListener("pointerup", ev => {
     return;
   }
   if (hit.kind === "wire") return select({ kind: "wire", id: hit.id });
+  if (hit.kind === "probe") return select({ kind: "probe", id: hit.id });
   if (hit.kind === "comp") return select({ kind: "comp", id: hit.id });
 });
 canvas.addEventListener("pointerleave", () => { $("#tip").hidden = true; setPinHover(hoverPin, false); hoverPin = null; });
@@ -1489,15 +1645,28 @@ function cancelPending() {
   if (ghost) { scene.remove(ghost); ghost.geometry.dispose(); ghost = null; }
   updateHint();
 }
+function startPlacing(p) {
+  if (state.pending) cancelPending();
+  state.placing = p;
+  if (ghost) { scene.remove(ghost); ghost.geometry.dispose(); ghost = null; }
+  updateHint();
+  API.emit("placing", p);
+}
+function stopPlacing() {
+  state.placing = null;
+  if (ghost) { scene.remove(ghost); ghost.geometry.dispose(); ghost = null; }
+  updateHint();
+  API.emit("placing", null);
+}
 function updateGhost(ev, hit) {
-  const a = pinTop(state.pending);
+  const a = state.pending ? pinTop(state.pending) : API.jackPos && API.jackPos(state.placing.what);
   if (!a) return;
   let b = hit && hit.kind === "pin" ? pinTop(hit.key) : benchPoint(ev, 1.2);
   if (!b) return;
   const mid = a.clone().lerp(b, 0.5); mid.y += 1 + a.distanceTo(b) * 0.12;
   const pts = new THREE.QuadraticBezierCurve3(a, mid, b).getPoints(30);
   if (!ghost) {
-    ghost = new THREE.Line(new THREE.BufferGeometry(), new THREE.LineDashedMaterial({ color: 0xff8a3c, dashSize: 0.3, gapSize: 0.2 }));
+    ghost = new THREE.Line(new THREE.BufferGeometry(), new THREE.LineDashedMaterial({ color: state.placing ? new THREE.Color(state.placing.color) : 0xff8a3c, dashSize: 0.3, gapSize: 0.2 }));
     scene.add(ghost);
   }
   ghost.geometry.setFromPoints(pts);
@@ -1505,7 +1674,7 @@ function updateGhost(ev, hit) {
 }
 function showTip(ev, hit) {
   const tip = $("#tip");
-  if (!hit || (hit.kind !== "pin" && hit.kind !== "press" && hit.kind !== "wire")) { tip.hidden = true; return; }
+  if (!hit || (hit.kind !== "pin" && hit.kind !== "press" && hit.kind !== "wire" && hit.kind !== "probe")) { tip.hidden = true; return; }
   let html = "";
   if (hit.kind === "pin") {
     const m = pinMeta(hit.key);
@@ -1516,8 +1685,10 @@ function showTip(ev, hit) {
       if (m.gpio != null) html += `<div class="tags">${gpioTags(m.gpio).map(([t, k]) => `<span class="tag ${k}">${esc(t)}</span>`).join("")}</div>`;
       else html += `<div>${{ "3v3": "3.3 V out from the regulator, ~600 mA total", vin: "5 V from USB (or input 5–12 V)", gnd: "Ground", en: "Reset: LOW = chip held in reset" }[m.kind]}</div>`;
     } else html = `<b>${esc(m.c.name)} · ${esc(m.pin)}</b><div>${esc(m.desc)}</div>`;
-    html += `<div style="margin-top:4px;opacity:.8">${links.length ? "→ " + esc(links.join(", ")) : state.pending ? "Click to connect" : "Click to start a jumper"}</div>`;
+    if (state.placing && state.placing.what.startsWith("dmm") && API.meterReading) html += `<div class="tags"><span class="tag good">${esc(API.meterReading(hit.key))}</span></div>`;
+    html += `<div style="margin-top:4px;opacity:.8">${state.placing ? "Click to put the " + esc(state.placing.label) + " here" : links.length ? "→ " + esc(links.join(", ")) : state.pending ? "Click to connect" : "Click to start a jumper"}</div>`;
   } else if (hit.kind === "press") html = "<b>Button cap</b><div>Click to press / release</div>";
+  else if (hit.kind === "probe") { const p = (API.probes ? API.probes() : []).find(x => x.what === hit.id); html = p ? `<b>${esc({ "dmm+": "Meter red lead", "dmm-": "Meter black lead", ch1: "Scope CH1 probe", ch2: "Scope CH2 probe", gnd: "Scope ground clip" }[p.what])}</b><div>on ${esc(pinTitle(p.key))}</div><div style="margin-top:4px;opacity:.8">Click to select, then <span class="kbd">Del</span> to remove</div>` : ""; }
   else { const w = state.wires.find(x => x.id === hit.id); html = `<b>Jumper</b><div>${esc(pinTitle(w.a))} → ${esc(pinTitle(w.b))}</div>`; }
   tip.innerHTML = html;
   tip.hidden = false;
@@ -1531,10 +1702,12 @@ let hintTimer = 0;
 function updateHint() {
   const h = $("#hint");
   if (hintTimer) return;
-  h.classList.toggle("wiring", !!state.pending);
-  if (state.pending) h.innerHTML = `Jumper from <b>${esc(pinTitle(state.pending))}</b>. Click another pin to connect, <span class="kbd">Esc</span> to cancel.`;
+  h.classList.toggle("wiring", !!(state.pending || state.placing));
+  if (state.placing) h.innerHTML = `Placing the <b>${esc(state.placing.label)}</b>. Click the pin to probe, <span class="kbd">Esc</span> to cancel.`;
+  else if (state.pending) h.innerHTML = `Jumper from <b>${esc(pinTitle(state.pending))}</b>. Click another pin to connect, <span class="kbd">Esc</span> to cancel.`;
   else if (state.sel && state.sel.kind === "comp") h.innerHTML = `<b>${esc(byId(state.sel.id)?.name || "")}</b> selected. Drag to move, <span class="kbd">R</span> rotate, <span class="kbd">Del</span> remove.`;
   else if (state.sel && state.sel.kind === "wire") h.innerHTML = `Jumper selected. <span class="kbd">Del</span> removes it.`;
+  else if (state.sel && state.sel.kind === "probe") h.innerHTML = `Probe selected. <span class="kbd">Del</span> removes it.`;
   else h.innerHTML = `Click a <b>pin</b> to start a jumper. Drag a part to move it. Drag the mat to orbit, two fingers to pan, pinch or scroll wheel to zoom.`;
 }
 function flashHint(text) {
@@ -1546,13 +1719,14 @@ function flashHint(text) {
 
 window.addEventListener("keydown", ev => {
   if (ev.target.closest && ev.target.closest("input, select, textarea")) return;
-  if (ev.key === "Escape") { if (state.pending) cancelPending(); else select(null); }
+  if (ev.key === "Escape") { if (state.placing) stopPlacing(); else if (state.pending) cancelPending(); else select(null); }
   if ((ev.key === "Delete" || ev.key === "Backspace") && state.sel) { ev.preventDefault(); deleteSelection(); }
   if ((ev.key === "r" || ev.key === "R") && state.sel && state.sel.kind === "comp") rotateSelection();
 });
 function deleteSelection() {
   const s = state.sel;
   if (!s) return;
+  if (s.kind === "probe") { state.sel = null; API.emit("removeProbe", s.id); API.emit("select", null); updateHint(); renderInspector(); return; }
   if (s.kind === "wire") removeWire(s.id);
   else if (s.id === "esp") { flashHint("The ESP32 stays. It's the whole point."); return; }
   else removeComp(s.id);
@@ -1574,35 +1748,31 @@ document.addEventListener("click", ev => {
   const t = ev.target.closest("[data-add],[data-act],[data-show],[data-goto],[data-wcolor],.tab");
   if (!t) return;
   if (t.dataset.add) {
-    const [x, z] = freeSpot();
-    const c = addComp(t.dataset.add, x, z);
+    const place = API.ext.place[t.dataset.add];
+    const [x, z] = (place && place()) || freeSpot();
+    const c = addComp(t.dataset.add, x, z, Object.assign({}, T[t.dataset.add].newProps || {}));
     changed({ world: true });
     select({ kind: "comp", id: c.id });
-    flashHint(`${c.name} placed. Click pins to wire it.`);
+    flashHint(`${c.name} placed. Click its pins to wire it.`);
     if (window.innerWidth <= 900) setMobileView("bench");
   } else if (t.dataset.act === "delete") deleteSelection();
   else if (t.dataset.act === "rotate") rotateSelection();
   else if (t.dataset.act === "check") { setChecks(true); showTab("checks"); if (window.innerWidth <= 900) setMobileView("panel"); }
   else if (t.dataset.act === "pausechecks") setChecks(false);
   else if (t.dataset.show) { select({ kind: "comp", id: t.dataset.show }); if (window.innerWidth <= 900) setMobileView("bench"); }
-  else if (t.dataset.goto) {
-    showTab(t.dataset.goto);
-    if (window.innerWidth <= 900) setMobileView("panel");
-  }
+  else if (t.dataset.goto) { showTab(t.dataset.goto); if (window.innerWidth <= 900) setMobileView("panel"); }
   else if (t.dataset.wcolor) {
     const w = state.wires.find(x => x.id === state.sel.id);
     w.color = t.dataset.wcolor; buildWire(w); renderInspector(); save();
-  } else if (t.classList.contains("tab")) {
-    showTab(t.dataset.tab);
-  }
+  } else if (t.classList.contains("tab")) showTab(t.dataset.tab);
 });
 document.addEventListener("input", ev => {
   const el = ev.target;
   if (el.dataset.env) {
     const k = el.dataset.env;
-    state.env[k] = +el.value;
     const w = WORLD.find(x => x[0] === k);
-    el.nextElementSibling.textContent = state.env[k] + w[5];
+    state.env[k] = el.type === "checkbox" ? (el.checked ? 1 : 0) : +el.value;
+    if (el.type !== "checkbox") el.nextElementSibling.textContent = state.env[k] + w[5];
     save();
     return;
   }
@@ -1618,8 +1788,10 @@ document.addEventListener("input", ev => {
       if (activeTab === "code") renderCode();
       return;
     }
+    if (k === "ohms") { c.props.ohms = +v; rebuildComp(c); }
+    if (k === "mount" || k === "size") rebuildComp(c);
     if (k === "color") { c.anim.ledMat.color = new THREE.Color(v).multiplyScalar(0.55); c.anim.ledMat.emissive = new THREE.Color(v); c.anim.glow.material.color = new THREE.Color(v); }
-    changed({ inspector: k === "src" || k === "divider" || k === "leak" });
+    changed({ inspector: ["src", "divider", "leak", "mode", "trigger", "range", "mount", "size"].includes(k) });
   }
 });
 $("#wifi").addEventListener("change", ev => {
@@ -1627,6 +1799,7 @@ $("#wifi").addEventListener("change", ev => {
   ev.target.parentElement.lastChild.textContent = state.wifi ? "Wi-Fi on" : "Wi-Fi off";
   changed();
   if (state.running) serialPrint(state.wifi ? "# Wi-Fi: STA started (ADC2 now unavailable)" : "# Wi-Fi: stopped");
+  API.emit("wifi", state.wifi);
 });
 $("#run").addEventListener("click", () => {
   state.running = !state.running;
@@ -1637,6 +1810,7 @@ $("#run").addEventListener("click", () => {
   $("#runIcon").setAttribute("d", state.running ? "M2 1h8v10H2z" : "M2 1l9 5-9 5z");
   if (state.running) { simT = 0; serialAcc = 0; brownoutUntil = 0; brownoutAcc = 0; serialLines = []; bootLog(); showTab("serial"); }
   else { serialPrint("# stopped"); renderInspector(); }
+  API.emit("run", state.running);
 });
 $("#serialClear").addEventListener("click", () => { serialLines = []; renderSerial(); });
 $("#serialPause").addEventListener("click", ev => { serialPaused = !serialPaused; ev.target.textContent = serialPaused ? "Resume" : "Pause"; if (!serialPaused) renderSerial(); });
@@ -1646,6 +1820,14 @@ $("#copyCode").addEventListener("click", async ev => {
   catch { const r = document.createRange(); r.selectNodeContents($("#codeOut")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); ev.target.textContent = "Selected: press Ctrl+C"; }
   setTimeout(() => ev.target.textContent = "Copy sketch", 1800);
 });
+$("#resetView").addEventListener("click", () => resetView(false));
+$("#topView").addEventListener("click", () => resetView(true));
+$("#instView").addEventListener("click", () => {
+  if (window.innerWidth <= 900) setMobileView("dock");
+  else resetView("inst");
+});
+$("#preset").addEventListener("change", ev => { loadPreset(ev.target.value); });
+
 function setMobileView(view) {
   const app = $(".app");
   if (!app) return;
@@ -1654,20 +1836,29 @@ function setMobileView(view) {
     btn.classList.toggle("active", btn.dataset.view === view);
   });
   if (view === "bench") {
-    setTimeout(resize, 30);
+    setTimeout(resize, 40);
+  }
+  if (view === "dock") {
+    const dock = $("#dock");
+    if (dock && dock.classList.contains("collapsed")) {
+      dock.classList.remove("collapsed");
+    }
+    const btn = $("#dockToggle");
+    if (btn) {
+      btn.textContent = "Hide instruments";
+      btn.setAttribute("aria-expanded", "true");
+    }
   }
 }
+window.setMobileView = setMobileView;
 $$(".mobile-nav-btn").forEach(btn => {
   btn.addEventListener("click", () => setMobileView(btn.dataset.view));
 });
 $("#mobileAddPartBtn")?.addEventListener("click", () => setMobileView("parts"));
 $("#mobileViewCodeBtn")?.addEventListener("click", () => { showTab("code"); setMobileView("panel"); });
 $("#backToBenchFromParts")?.addEventListener("click", () => setMobileView("bench"));
+$("#backToBenchFromDock")?.addEventListener("click", () => setMobileView("bench"));
 $("#jumpToBench")?.addEventListener("click", () => setMobileView("bench"));
-
-$("#resetView").addEventListener("click", () => resetView(false));
-$("#topView").addEventListener("click", () => resetView(true));
-$("#preset").addEventListener("change", ev => { loadPreset(ev.target.value); });
 
 // ═════════════════════════ presets ═════════════════════════
 const PRESETS = {
@@ -1698,15 +1889,18 @@ const PRESETS = {
     env: { light: 25, airTemp: 26 },
   },
   parking: {
-    note: "HC-SR04 at 5 V with a divider on ECHO. The LED and buzzer get louder as you get closer.",
-    comps: [["sonar", "sonar1", 10, -4, { divider: true }], ["buzzer", "buz1", 10, 4, { src: "sonar1", invert: true, threshold: 0.85 }], ["led", "led1", -9.5, -2, { src: "sonar1", invert: true }]],
-    wires: [["sonar1:VCC", "esp:VIN"], ["sonar1:TRIG", "esp:19"], ["sonar1:ECHO", "esp:18"], ["sonar1:GND", "esp:GND2"],
-      ["buz1:SIG", "esp:23"], ["buz1:GND", "esp:GND2"], ["led1:SIG", "esp:25"], ["led1:GND", "esp:GND"]],
+    note: "HC-SR04 standing upright, aimed at a cardboard box. Drag the box: the LED and buzzer react as it gets closer.",
+    comps: [["sonar", "sonar1", 13, -3, { mount: "upright", range: "obstacle" }, 2], ["divider", "div1", 9.5, 1.5], ["rail", "rail1", 8.5, 10.5],
+      ["buzzer", "buz1", 18, 5, { src: "sonar1", invert: true, threshold: 0.93 }], ["led", "led1", -9.5, -2, { src: "sonar1", invert: true }],
+      ["obstacle", "box1", 13, 17, { size: "box" }]],
+    wires: [["rail1:+1", "esp:VIN"], ["rail1:-1", "esp:GND2"], ["sonar1:VCC", "rail1:+4"], ["sonar1:GND", "rail1:-4"],
+      ["sonar1:TRIG", "esp:19"], ["sonar1:ECHO", "div1:IN"], ["div1:OUT", "esp:18"], ["div1:GND", "rail1:-6"],
+      ["buz1:SIG", "esp:23"], ["buz1:GND", "rail1:-8"], ["led1:SIG", "esp:25"], ["led1:GND", "esp:GND"]],
     env: { distance: 40 },
   },
   bugs: {
     note: "Six wiring mistakes students really make. Open Checks and fix them one by one.",
-    comps: [["mpu", "mpu1", 9.5, -6], ["sonar", "sonar1", 10, 2], ["servo", "servo1", 10.5, 9.5, { src: "pot1" }],
+    comps: [["mpu", "mpu1", 9.5, -6], ["sonar", "sonar1", 10, 2, { range: "slider" }], ["servo", "servo1", 10.5, 9.5, { src: "pot1" }],
       ["pot", "pot1", -10, -7], ["led", "led1", -10, -1.5, { src: "pot1" }], ["motor", "thr1", -13, 7.5, { src: "pot1" }]],
     wires: [["mpu1:VCC", "esp:3V3"], ["mpu1:SCL", "esp:22"], ["mpu1:SDA", "esp:21"],
       ["sonar1:VCC", "esp:VIN"], ["sonar1:TRIG", "esp:12"], ["sonar1:ECHO", "esp:19"], ["sonar1:GND", "esp:GND2"],
@@ -1727,7 +1921,7 @@ function loadPreset(name) {
   clearBench();
   state.showChecks = name !== "empty";
   addComp("esp32", 0, 0, {}, "esp", "esp1");
-  p.comps.forEach(([type, nm, x, z, props]) => addComp(type, x, z, props, nm, nm));
+  p.comps.forEach(([type, nm, x, z, props, rot]) => addComp(type, x, z, props, nm, nm, rot || 0));
   state.env = Object.assign({}, DEFAULT_ENV, p.env || {});
   state.comps.forEach(c => c.group.updateMatrixWorld(true));
   p.wires.forEach(([a, b]) => addWire(a, b));
@@ -1736,6 +1930,7 @@ function loadPreset(name) {
   if (activeTab === "world") renderWorld();
   flashHint(p.note);
   resetView(false);
+  API.emit("preset", name);
 }
 
 // ═════════════════════════ save / restore (this browser only) ═════════════════════════
@@ -1787,9 +1982,25 @@ function frame() {
   const dt = Math.min(clock.getDelta(), 0.05);
   controls.update();
   tickSim(dt);
+  API.emit("tick", dt);
   renderer.render(scene, camera);
   requestAnimationFrame(frame);
 }
+
+
+// ═════════════════════════ public API for the instrument modules ═════════════════════════
+const listeners = {};
+const API = window.Bench = {
+  state, T, WIRE_COLORS, ESP_LEFT, ESP_RIGHT, ADC1, ADC2, INPUT_ONLY, STRAP, readings, outputs,
+  get nets() { return nets; }, get issues() { return issues; }, get simT() { return simT; }, get serialLines() { return serialLines; },
+  byId, pinMeta, pinTitle, espLabel, gpioOf, trace, hasErr, isSensor, srcLevel, leakActive, motorChainOk, driverOfMotor, batteryOfDriver,
+  serialPrint, changed, flashHint, select, showTab, save, clamp, esc, scene, camera, controls, renderer, pinTop, startPlacing, stopPlacing, MAT_W, MAT_D,
+  distanceFor: c => c.props.range === "obstacle" && API.rangeFor ? API.rangeFor(c) : state.env.distance,
+  CATS, WORLD, NORM, BUILD, DEFAULT_ENV, PRESETS, U, M, std, mesh, boxM, cylM, topBox, silk, canvasTex, addPin, addPinRow, moduleDraw, GLOW_TEX, hex6, rebuildComp, isSensor,
+  ext: { read: {}, tick: {}, serial: {}, live: {}, check: {}, controls: {}, codeSensor: {}, codeAct: {}, part: {}, espOut: {}, power: {}, i2c: {}, leak: {}, postBuild: {}, place: {} },
+  on(evt, fn) { (listeners[evt] = listeners[evt] || []).push(fn); },
+  emit(evt, ...a) { (listeners[evt] || []).forEach(fn => { try { fn(...a); } catch (e) { console.error(evt, e); } }); },
+};
 
 // ═════════════════════════ boot ═════════════════════════
 async function start() {
@@ -1807,5 +2018,6 @@ async function start() {
   $("#loading").hidden = true;
   frame();
 }
-start();
+// wait for every module script (instruments, MQTT, extra parts) before building the bench
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();
 })();

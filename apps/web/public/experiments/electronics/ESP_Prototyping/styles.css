@@ -63,7 +63,7 @@ button, select, input { font: inherit; color: inherit; }
 }
 
 /* ── top bar ── */
-.top { grid-area: top; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.top { grid-area: top; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding-right: 130px; }
 .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; min-width: 0; }
 .brand-mark { width: 34px; height: 34px; border-radius: 8px; background: var(--pcb); display: grid; place-items: center; flex: none; }
 .brand h1 { font: 700 20px/1.1 var(--display); letter-spacing: .01em; margin: 0; }
@@ -228,6 +228,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   .top {
     gap: 6px !important;
     padding-bottom: 4px !important;
+    padding-right: 105px !important;
     flex-shrink: 0 !important;
     align-items: center !important;
   }

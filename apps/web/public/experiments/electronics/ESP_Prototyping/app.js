@@ -1396,6 +1396,7 @@ let activeTab = "inspect";
 function showTab(name) {
   activeTab = name;
   $$(".tab").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === name)));
+  $$(".strip-tab-btn").forEach(b => b.setAttribute("aria-selected", String(b.dataset.panelTab === name)));
   $$(".pane").forEach(p => p.hidden = p.id !== "pane-" + name);
   if (name === "code") renderCode();
   if (name === "serial") renderSerial();
@@ -1583,6 +1584,11 @@ function renderStatus() {
   if (mb) {
     mb.textContent = e || w || "";
     mb.hidden = (!e && !w);
+  }
+  const sb = $("#stripCheckCount");
+  if (sb) {
+    sb.textContent = e || w || "";
+    sb.hidden = (!e && !w);
   }
 }
 const WORLD = [
@@ -2062,10 +2068,9 @@ function setLibOpen(open) {
   sidePanels.libOpen = open;
   const app = $(".app");
   if (app) app.classList.toggle("lib-collapsed", !open);
+  $(".lib")?.classList.toggle("collapsed", !open);
   $("#libCollapseBtn")?.setAttribute("aria-expanded", String(open));
   $("#toggleLibBtn")?.setAttribute("aria-pressed", String(open));
-  const peek = $("#openLibPeek");
-  if (peek) peek.hidden = open;
   try { localStorage.setItem("esp32bench.panels", JSON.stringify(sidePanels)); } catch (e) {}
   SOUND.playDialClick();
   setTimeout(resize, 40);
@@ -2076,23 +2081,29 @@ function setPanelOpen(open) {
   sidePanels.panelOpen = open;
   const app = $(".app");
   if (app) app.classList.toggle("panel-collapsed", !open);
+  $(".panel")?.classList.toggle("collapsed", !open);
   $("#panelCollapseBtn")?.setAttribute("aria-expanded", String(open));
   $("#togglePanelBtn")?.setAttribute("aria-pressed", String(open));
-  const peek = $("#openPanelPeek");
-  if (peek) peek.hidden = open;
   try { localStorage.setItem("esp32bench.panels", JSON.stringify(sidePanels)); } catch (e) {}
   SOUND.playDialClick();
   setTimeout(resize, 40);
   setTimeout(resize, 240);
 }
 
-$("#libCollapseBtn")?.addEventListener("click", () => setLibOpen(!sidePanels.libOpen));
+$("#libCollapseBtn")?.addEventListener("click", (e) => { e.stopPropagation(); setLibOpen(false); });
+$("#libShowBtn")?.addEventListener("click", (e) => { e.stopPropagation(); setLibOpen(true); });
+$("#libCollapsedStrip")?.addEventListener("click", () => setLibOpen(true));
 $("#toggleLibBtn")?.addEventListener("click", () => setLibOpen(!sidePanels.libOpen));
-$("#openLibPeek")?.addEventListener("click", () => setLibOpen(true));
 
-$("#panelCollapseBtn")?.addEventListener("click", () => setPanelOpen(!sidePanels.panelOpen));
+$("#panelCollapseBtn")?.addEventListener("click", (e) => { e.stopPropagation(); setPanelOpen(false); });
+$("#panelShowBtn")?.addEventListener("click", (e) => { e.stopPropagation(); setPanelOpen(true); });
+$("#panelCollapsedStrip")?.addEventListener("click", () => setPanelOpen(true));
+$$(".strip-tab-btn").forEach(btn => btn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  setPanelOpen(true);
+  showTab(btn.dataset.panelTab);
+}));
 $("#togglePanelBtn")?.addEventListener("click", () => setPanelOpen(!sidePanels.panelOpen));
-$("#openPanelPeek")?.addEventListener("click", () => setPanelOpen(true));
 
 if (window.innerWidth > 900) {
   if (!sidePanels.libOpen) setLibOpen(false);

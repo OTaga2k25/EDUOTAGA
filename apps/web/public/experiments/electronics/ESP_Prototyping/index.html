@@ -50,12 +50,19 @@
         </div>
         <div style="display:flex; gap:6px; align-items:center;">
           <button class="btn small mobile-only" id="backToBenchFromParts">← 3D Bench</button>
-          <button class="btn small desktop-only" id="libCollapseBtn" title="Hide parts bin" aria-expanded="true">Hide</button>
+          <button class="btn small desktop-only" id="libCollapseBtn" title="Hide parts bin" aria-expanded="true">Hide parts</button>
         </div>
       </div>
       <p>Click a part to drop it on the mat.</p>
     </div>
     <div class="lib-list" id="lib"></div>
+    <div class="lib-collapsed-strip desktop-only" id="libCollapsedStrip" title="Show parts bin">
+      <button class="btn small strip-btn" id="libShowBtn" title="Show parts bin">Show</button>
+      <div class="strip-label">
+        <span class="strip-icon">📦</span>
+        <span class="strip-text">PARTS BIN</span>
+      </div>
+    </div>
   </aside>
 
   <main class="stagecol">
@@ -72,12 +79,6 @@
       <button class="btn small mobile-only" id="mobileAddPartBtn">+ Add Part</button>
       <button class="btn small mobile-only" id="mobileViewCodeBtn">Code</button>
     </div>
-    <button class="panel-peek left desktop-only" id="openLibPeek" title="Show parts bin" hidden>
-      <span>📦 Parts ▶</span>
-    </button>
-    <button class="panel-peek right desktop-only" id="openPanelPeek" title="Show details panel" hidden>
-      <span>◀ 📋 Details</span>
-    </button>
     <div class="hint"><div class="msg" id="hint"></div></div>
     <div class="tip" id="tip" hidden></div>
   </div>
@@ -105,13 +106,15 @@
   </main>
 
   <section class="panel card" aria-label="Details">
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" data-tab="inspect" aria-selected="true">Inspect</button>
-      <button class="tab" role="tab" data-tab="checks" aria-selected="false">Checks <span class="n" id="checkCount">0</span></button>
-      <button class="tab" role="tab" data-tab="world" aria-selected="false">World</button>
-      <button class="tab" role="tab" data-tab="serial" aria-selected="false">Serial</button>
-      <button class="tab" role="tab" data-tab="code" aria-selected="false">Sketch</button>
-      <button class="btn small desktop-only" id="panelCollapseBtn" title="Hide details panel" aria-expanded="true" style="margin-left:auto">Hide</button>
+    <div class="panel-head">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" data-tab="inspect" aria-selected="true">Inspect</button>
+        <button class="tab" role="tab" data-tab="checks" aria-selected="false">Checks <span class="n" id="checkCount">0</span></button>
+        <button class="tab" role="tab" data-tab="world" aria-selected="false">World</button>
+        <button class="tab" role="tab" data-tab="serial" aria-selected="false">Serial</button>
+        <button class="tab" role="tab" data-tab="code" aria-selected="false">Sketch</button>
+      </div>
+      <button class="btn small desktop-only" id="panelCollapseBtn" title="Hide details panel" aria-expanded="true">Hide details</button>
     </div>
     <div class="pane" id="pane-inspect"></div>
     <div class="pane" id="pane-checks" hidden></div>
@@ -133,6 +136,20 @@
     </div>
     <div class="panel-footer mobile-only">
       <button class="btn small" id="jumpToBench">← Back to 3D Bench</button>
+    </div>
+    <div class="panel-collapsed-strip desktop-only" id="panelCollapsedStrip" title="Show details panel">
+      <button class="btn small strip-btn" id="panelShowBtn" title="Show details panel">Show</button>
+      <div class="panel-strip-tabs">
+        <button class="strip-tab-btn" data-panel-tab="inspect" title="Inspect">🔍</button>
+        <button class="strip-tab-btn" data-panel-tab="checks" title="Checks">⚠️<span class="strip-badge" id="stripCheckCount" hidden>0</span></button>
+        <button class="strip-tab-btn" data-panel-tab="world" title="World inputs">🌍</button>
+        <button class="strip-tab-btn" data-panel-tab="serial" title="Serial monitor">💻</button>
+        <button class="strip-tab-btn" data-panel-tab="code" title="Sketch code">📄</button>
+      </div>
+      <div class="strip-label">
+        <span class="strip-icon">📋</span>
+        <span class="strip-text">DETAILS</span>
+      </div>
     </div>
   </section>
 

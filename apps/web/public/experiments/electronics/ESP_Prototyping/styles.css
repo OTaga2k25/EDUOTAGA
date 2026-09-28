@@ -397,8 +397,15 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
     color: var(--accent) !important;
   }
   .mobile-nav-btn .nav-icon {
-    font-size: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     line-height: 1 !important;
+    color: inherit !important;
+  }
+  .mobile-nav-btn .nav-icon svg {
+    display: block !important;
+    pointer-events: none !important;
   }
   .mobile-badge {
     position: absolute !important;
@@ -536,9 +543,17 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   }
 
   .strip-label .strip-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transform: rotate(90deg);
-    font-size: 13px;
-    display: inline-block;
+    color: var(--muted);
+  }
+  .strip-label .strip-icon svg {
+    display: block;
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
   }
 
   .strip-label .strip-text {
@@ -564,21 +579,27 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
     position: relative;
-    transition: background 0.15s, border-color 0.15s;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
     padding: 0;
-    color: var(--ink);
+    color: var(--muted);
   }
 
   .strip-tab-btn:hover {
     background: var(--panel);
     border-color: var(--line);
+    color: var(--ink);
   }
 
   .strip-tab-btn[aria-selected="true"] {
     background: var(--panel-2);
     border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .strip-tab-btn svg {
+    display: block;
+    pointer-events: none;
   }
 
   .strip-badge {

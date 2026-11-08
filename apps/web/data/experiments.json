@@ -540,5 +540,255 @@
     "estimatedDurationMinutes": 25,
     "createdAt": "2026-09-27T00:00:00.000Z",
     "updatedAt": "2026-09-27T00:00:00.000Z"
+  },
+  {
+    "id": "potentiometer-internal-resistance",
+    "slug": "potentiometer-internal-resistance",
+    "title": "Potentiometer: Internal Resistance of a Cell",
+    "subjectId": "current-electricity",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Balance a cell against a potentiometer wire with and without a shunt resistance, then work out the cell's internal resistance from the two balance lengths.",
+    "theory": "A **potentiometer** is a long wire of uniform cross-section carrying a steady current from a driver cell. Because the wire is uniform, the potential difference across any length l is proportional to l, so the wire has a constant **potential gradient k** (volts per cm). A test cell is connected through a galvanometer to a sliding **jockey**; at the **null point** the galvanometer shows zero deflection, no current flows through the test cell, and the cell's voltage equals k l. **Open circuit (K₂ open):** the balance length l₁ measures the emf, E = k l₁. **Closed circuit (K₂ closed, resistance R across the cell):** a current I = E/(R + r) flows, so the terminal voltage drops to V = E − I r = k l₂. Dividing the two equations gives V/E = l₂/l₁ = R/(R + r), and therefore the internal resistance is **r = R (l₁ − l₂) / l₂**. Plotting (l₁ − l₂)/l₂ against 1/R gives a straight line through the origin whose slope is r. The driver cell's emf must be greater than the test cell's emf, and the positive terminals of both cells must be joined to the same end of the wire.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Check the driver circuit",
+        "description": "Leave the rheostat near 2 Ω and read the potential drop across the wire. It must be larger than the cell's emf; if the status bar warns about this, reduce the rheostat resistance."
+      },
+      {
+        "order": 2,
+        "title": "Find l₁ with K₂ open",
+        "description": "Drag the jockey along the wire (use the slider and ±0.1 cm buttons for fine control) until the galvanometer needle sits at zero, then press Record l₁."
+      },
+      {
+        "order": 3,
+        "title": "Choose a resistance and close K₂",
+        "description": "Pick a resistance R from the box (for example 5 Ω) and close key K₂ so that R is connected across the cell."
+      },
+      {
+        "order": 4,
+        "title": "Find l₂",
+        "description": "Slide the jockey to the new null point. It will be shorter than l₁ because the terminal voltage is lower. Press Record l₂."
+      },
+      {
+        "order": 5,
+        "title": "Repeat for other resistances",
+        "description": "Record l₂ for at least four values of R, such as 2, 5, 10 and 20 Ω. Do not change the rheostat, or the potential gradient changes and your readings are cleared."
+      },
+      {
+        "order": 6,
+        "title": "Calculate r",
+        "description": "For each row the table gives (l₁ − l₂)/l₂ and r = R(l₁ − l₂)/l₂. Take the mean of the r values."
+      },
+      {
+        "order": 7,
+        "title": "Plot the graph and check",
+        "description": "Study the graph of (l₁ − l₂)/l₂ against 1/R; its slope is r. Press Check my answer to compare with the cell's actual internal resistance, or try a new unknown cell."
+      }
+    ],
+    "observation": "With K₂ open the balance length l₁ is the longest, since it corresponds to the full emf. With K₂ closed the balance length l₂ is always shorter, and it increases towards l₁ as R is made larger because less current is drawn and less voltage is lost across r. The values of r calculated for different R agree closely, and the graph of (l₁ − l₂)/l₂ against 1/R is a straight line through the origin with slope equal to r.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "The working principle of a potentiometer is that, for a wire of uniform cross-section carrying a steady current, the potential difference across any length of the wire is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Inversely proportional to the length"
+          },
+          {
+            "id": "b",
+            "text": "Directly proportional to the length"
+          },
+          {
+            "id": "c",
+            "text": "Independent of the length"
+          },
+          {
+            "id": "d",
+            "text": "Proportional to the square of the length"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "V = I ρ l / A, and with I and A constant the potential difference is directly proportional to the length l."
+      },
+      {
+        "id": "q2",
+        "question": "At the null point the galvanometer shows zero deflection. This means:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The driver cell has no emf"
+          },
+          {
+            "id": "b",
+            "text": "The jockey is at end A"
+          },
+          {
+            "id": "c",
+            "text": "The wire has zero resistance"
+          },
+          {
+            "id": "d",
+            "text": "No current flows through the test cell, so the potentiometer reads its emf"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "At balance the voltage along the wire exactly equals the cell's voltage, so no current is drawn. That is why a potentiometer measures emf accurately where a voltmeter cannot."
+      },
+      {
+        "id": "q3",
+        "question": "With key K₂ closed and a resistance R across the cell, the balance length l₂ compared with l₁ is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Shorter"
+          },
+          {
+            "id": "b",
+            "text": "Longer"
+          },
+          {
+            "id": "c",
+            "text": "Equal"
+          },
+          {
+            "id": "d",
+            "text": "Zero"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "When current flows, part of the emf is lost across the internal resistance. The terminal voltage V = E − I r is less than E, so l₂ < l₁."
+      },
+      {
+        "id": "q4",
+        "question": "The internal resistance of the cell is given by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "r = R l₂ / (l₁ − l₂)"
+          },
+          {
+            "id": "b",
+            "text": "r = R (l₁ + l₂) / l₂"
+          },
+          {
+            "id": "c",
+            "text": "r = R (l₁ − l₂) / l₂"
+          },
+          {
+            "id": "d",
+            "text": "r = R l₁ / l₂"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "From E = k l₁ and V = k l₂ we get l₂/l₁ = R/(R + r). Rearranging gives r = R (l₁ − l₂)/l₂."
+      },
+      {
+        "id": "q5",
+        "question": "If a larger resistance R is connected across the cell, the balance length l₂ will:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Decrease towards zero"
+          },
+          {
+            "id": "b",
+            "text": "Become greater than l₁"
+          },
+          {
+            "id": "c",
+            "text": "Stay the same"
+          },
+          {
+            "id": "d",
+            "text": "Increase and approach l₁"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "A larger R draws less current, so less voltage is lost across r. The terminal voltage approaches E, and l₂ approaches l₁, but it can never exceed it."
+      },
+      {
+        "id": "q6",
+        "question": "No balance point can be found anywhere on the wire. The most likely reason is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The potential drop across the wire is less than the emf of the test cell"
+          },
+          {
+            "id": "b",
+            "text": "R is too small"
+          },
+          {
+            "id": "c",
+            "text": "The galvanometer is too sensitive"
+          },
+          {
+            "id": "d",
+            "text": "The jockey is too heavy"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "A null point exists only if the voltage across the whole wire exceeds the cell's voltage. Reduce the rheostat resistance, or use a driver cell of higher emf."
+      },
+      {
+        "id": "q7",
+        "question": "Why are the positive terminals of the driver cell and the test cell joined to the same end of the wire?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To keep the galvanometer cool"
+          },
+          {
+            "id": "b",
+            "text": "To increase the current in the wire"
+          },
+          {
+            "id": "c",
+            "text": "So that the two emfs oppose each other and a null point can be found"
+          },
+          {
+            "id": "d",
+            "text": "To make the potential gradient smaller"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "If the cells were connected the other way round, their emfs would add and the galvanometer could never be brought to zero."
+      },
+      {
+        "id": "q8",
+        "question": "How can the sensitivity of a potentiometer be increased?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Decrease the potential gradient, using a larger rheostat resistance or a longer wire"
+          },
+          {
+            "id": "b",
+            "text": "Use a shorter wire"
+          },
+          {
+            "id": "c",
+            "text": "Increase the potential gradient"
+          },
+          {
+            "id": "d",
+            "text": "Remove the galvanometer"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "A smaller potential gradient means a given error in balance length corresponds to a smaller error in voltage, so the measurement is more precise. The wire's total drop must still exceed the cell's emf."
+      }
+    ],
+    "tags": ["potentiometer", "internal resistance", "emf", "current electricity", "plus two", "kerala", "dhse", "practical", "null method"],
+    "isNew": true,
+    "estimatedDurationMinutes": 20,
+    "createdAt": "2026-11-08T00:00:00.000Z",
+    "updatedAt": "2026-11-08T00:00:00.000Z"
   }
 ]

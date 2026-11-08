@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Potentiometer — Internal Resistance of a Cell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Current Electricity</div>
+    <h1 class="disp">Potentiometer: <span class="thin">internal resistance of a cell</span></h1>
+    <p class="lede">Find the balance length with the cell on open circuit (<b>l₁</b>), then with a resistance <b>R</b> across it (<b>l₂</b>). The cell's internal resistance is <b class="mono">r = R (l₁ − l₂) / l₂</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ APPARATUS ============ -->
+  <section class="bench" aria-label="Potentiometer apparatus">
+    <svg id="apparatus" viewBox="0 0 900 380" role="img"
+         aria-label="Potentiometer circuit with driver cell, rheostat, test cell, galvanometer, resistance box and jockey">
+      <!-- potentiometer wire -->
+      <line x1="60" y1="215" x2="840" y2="215" class="wire"/>
+      <g id="ticks"></g>
+      <circle cx="60" cy="215" r="7" class="term"/>
+      <circle cx="840" cy="215" r="7" class="term"/>
+      <text x="60" y="198" class="lbl" text-anchor="middle">A</text>
+      <text x="840" y="198" class="lbl" text-anchor="middle">B</text>
+
+      <!-- driver circuit (bottom loop) -->
+      <polyline points="60,215 60,335 118,335" class="lead"/>
+      <circle cx="118" cy="335" r="3.5" class="node"/>
+      <line x1="126" y1="335" x2="150" y2="335" class="lead" stroke-dasharray="0"/>
+      <text x="138" y="318" class="lbl small" text-anchor="middle">K₁ (closed)</text>
+      <polyline points="150,335 244,335" class="lead"/>
+      <line x1="244" y1="321" x2="244" y2="349" class="plate long"/>
+      <line x1="258" y1="327" x2="258" y2="343" class="plate short"/>
+      <polyline points="258,335 440,335" class="lead"/>
+      <text x="251" y="366" class="lbl small" text-anchor="middle">Driver cell (2 V)</text>
+      <rect x="440" y="324" width="120" height="22" rx="3" class="box"/>
+      <line x1="452" y1="342" x2="548" y2="328" class="arrow"/>
+      <text x="500" y="366" class="lbl small" text-anchor="middle" id="rhLabel">Rheostat Rh = 2.0 Ω</text>
+      <polyline points="560,335 840,335 840,215" class="lead"/>
+
+      <!-- test-cell circuit (top) -->
+      <polyline points="60,215 60,95 112,95" class="lead"/>
+      <line x1="112" y1="80" x2="112" y2="110" class="plate long"/>
+      <line x1="124" y1="86" x2="124" y2="104" class="plate short"/>
+      <text x="118" y="124" class="lbl small" text-anchor="middle">Test cell E</text>
+      <text x="104" y="76" class="lbl small" text-anchor="end">+</text>
+      <polyline points="124,95 242,95" class="lead"/>
+
+      <!-- shunt branch: resistance box R and key K2 across the cell -->
+      <polyline points="85,95 85,40 100,40" class="lead"/>
+      <rect x="100" y="28" width="62" height="24" rx="3" class="box"/>
+      <text x="131" y="45" class="lbl" text-anchor="middle" id="rLabel">R = 5 Ω</text>
+      <polyline points="162,40 185,40" class="lead"/>
+      <circle cx="185" cy="40" r="3.5" class="node"/>
+      <circle cx="224" cy="40" r="3.5" class="node"/>
+      <line id="k2lever" x1="185" y1="40" x2="222" y2="40" class="lever"/>
+      <polyline points="224,40 232,40 232,95" class="lead"/>
+      <text x="205" y="22" class="lbl small" text-anchor="middle" id="k2Label">K₂ open</text>
+      <circle cx="85" cy="95" r="3.5" class="node"/>
+      <circle cx="232" cy="95" r="3.5" class="node"/>
+
+      <!-- galvanometer -->
+      <circle id="galCircle" cx="290" cy="95" r="34" class="gal"/>
+      <g id="galScale"></g>
+      <line id="needle" x1="290" y1="95" x2="290" y2="68" class="needle"/>
+      <circle cx="290" cy="95" r="4" class="pivot"/>
+      <text x="290" y="150" class="lbl small" text-anchor="middle">Galvanometer G</text>
+      <text id="galHint" x="290" y="170" class="lbl galhint" text-anchor="middle"></text>
+      <polyline points="242,95 256,95" class="lead"/>
+      <polyline points="324,95 400,95" class="lead"/>
+
+      <!-- lead to jockey -->
+      <line id="lead2jockey" x1="400" y1="95" x2="450" y2="196" class="lead"/>
+
+      <!-- jockey -->
+      <g id="jockey" transform="translate(450,0)">
+        <polygon points="-9,186 9,186 0,213" class="jockey"/>
+        <rect x="-5" y="170" width="10" height="18" rx="2" class="jockey"/>
+      </g>
+      <text id="lengthTag" x="450" y="282" class="lbl tag" text-anchor="middle">450.0 cm</text>
+
+      <!-- drag layer over the wire -->
+      <rect id="dragLayer" x="40" y="160" width="820" height="110" fill="transparent" style="cursor:ew-resize; touch-action:none"/>
+    </svg>
+    <p class="bench-hint">Tip: drag along the wire to get close, then use the slider and the −1 / −0.1 / +0.1 / +1 buttons for the final approach. The needle gets closer to zero as you near the balance point.</p>
+  </section>
+
+  <!-- ============ CONTROLS + READOUT ============ -->
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+
+    <div class="grid">
+      <div class="ctl">
+        <label for="rh" class="ctl-h">Rheostat <span class="mono" id="rhVal">2.0 Ω</span></label>
+        <input type="range" id="rh" min="0" max="10" step="0.5" value="2">
+        <div class="mini">Potential gradient <span class="mono" id="kVal">—</span> · wire drop <span class="mono" id="vwVal">—</span></div>
+      </div>
+
+      <div class="ctl">
+        <div class="ctl-h">Resistance box R</div>
+        <div class="chips" id="rChips" role="group" aria-label="Choose resistance"></div>
+      </div>
+
+      <div class="ctl">
+        <div class="ctl-h">Key K₂</div>
+        <button type="button" class="btn toggle" id="k2Btn" aria-pressed="false">K₂ is open — click to close</button>
+        <div class="mini" id="k2Hint">Open: cell on open circuit → measure l₁.</div>
+      </div>
+
+      <div class="ctl wide">
+        <label for="jock" class="ctl-h">Jockey position</label>
+        <input type="range" id="jock" min="0" max="1000" step="0.1" value="450">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-d="-1">−1</button>
+          <button type="button" class="btn sm" data-d="-0.1">−0.1</button>
+          <span class="readout mono"><span id="xVal">450.0</span> cm</span>
+          <button type="button" class="btn sm" data-d="0.1">+0.1</button>
+          <button type="button" class="btn sm" data-d="1">+1</button>
+        </div>
+      </div>
+
+      <div class="ctl wide">
+        <div class="ctl-h">Galvanometer</div>
+        <div class="galbar" aria-hidden="true"><i id="galDot"></i><b></b></div>
+        <div class="mini">Deflection <span class="mono" id="deflVal">0.0</span> div · <span id="deflHint"></span></div>
+        <button type="button" class="btn primary" id="recordBtn">Record l₁</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FORMULA ============ -->
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>The wire has a uniform potential gradient <b class="mono">k</b> (volts per cm). At the null point the galvanometer reads zero, so the potential across the length <b>l</b> equals the cell's voltage.</p>
+    <ul class="eqs mono">
+      <li>K₂ open: <b>E = k · l₁</b></li>
+      <li>K₂ closed: <b>V = k · l₂</b> &nbsp; (V = E − I r, I = E/(R + r))</li>
+      <li>Dividing: <b>r = R (l₁ − l₂) / l₂</b></li>
+    </ul>
+  </section>
+
+  <!-- ============ READINGS ============ -->
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <p class="l1line">l₁ (open circuit) = <b class="mono" id="l1Val">—</b></p>
+    <div class="tablewrap">
+      <table id="obs">
+        <thead>
+          <tr>
+            <th>R (Ω)</th><th>l₂ (cm)</th><th>(l₁ − l₂)/l₂</th><th>r = R(l₁−l₂)/l₂ (Ω)</th>
+          </tr>
+        </thead>
+        <tbody id="obsBody"></tbody>
+        <tfoot>
+          <tr><td colspan="3">Mean r</td><td class="mono" id="meanR">—</td></tr>
+        </tfoot>
+      </table>
+    </div>
+    <p class="resultline" id="resultLine"></p>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="resetAll">Clear readings</button>
+      <button type="button" class="btn sm" id="newCell">New unknown cell</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Graph</h2>
+    <p class="muted">Plot (l₁ − l₂)/l₂ against 1/R. This is a straight line through the origin whose slope equals r.</p>
+    <canvas id="graph" width="640" height="380" aria-label="Graph of (l1 - l2)/l2 against 1/R"></canvas>
+    <p class="mono slope" id="slopeLine">Add at least 2 readings to see the best-fit line.</p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Connect the positive terminals of the driver cell and the test cell to the same end (A) of the wire.</li>
+      <li>The driver cell's emf must be larger than the test cell's, otherwise no balance point exists.</li>
+      <li>Keep the key closed only while taking a reading, so the cells do not run down.</li>
+      <li>Use a high series resistance with the galvanometer while searching for the balance point, then remove it for the final adjustment.</li>
+      <li>Do not slide the jockey along the wire; tap it at each position.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

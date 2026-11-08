@@ -52,5 +52,14 @@
     "categoryId": "electronics",
     "icon": "cpu",
     "color": "emerald"
+  },
+  {
+    "id": "current-electricity",
+    "slug": "current-electricity",
+    "name": "Current Electricity",
+    "description": "Measure emf, internal resistance and resistance with Ohm's law, the meter bridge and the potentiometer.",
+    "categoryId": "physics",
+    "icon": "zap",
+    "color": "orange"
   }
 ]

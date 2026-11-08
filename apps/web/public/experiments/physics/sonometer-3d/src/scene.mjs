@@ -278,7 +278,7 @@ export function createScene(container, hooks) {
   // ---- views ----
   function fitDistance() {
     const aspect = camera.aspect || 1.6, vf = (camera.fov * Math.PI) / 180;
-    const needW = 150, dW = needW / (2 * Math.tan(vf / 2) * aspect), dH = 78 / (2 * Math.tan(vf / 2));
+    const needW = 134, dW = needW / (2 * Math.tan(vf / 2) * aspect), dH = 78 / (2 * Math.tan(vf / 2));
     return Math.max(dW, dH, 95);
   }
   function setView(name, instant) {

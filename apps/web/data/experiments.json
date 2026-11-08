@@ -1790,5 +1790,255 @@
     "estimatedDurationMinutes": 25,
     "createdAt": "2026-11-08T00:00:00.000Z",
     "updatedAt": "2026-11-08T00:00:00.000Z"
+  },
+  {
+    "id": "convex-lens-focal-length-uv",
+    "slug": "convex-lens-focal-length-uv",
+    "title": "Convex Lens (3D): Focal Length by the u–v Method",
+    "subjectId": "light-reflection-refraction",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Use a 3D optical bench to place a lit object at different distances from a convex lens, find the sharp image on a screen, and calculate the focal length from u and v, with a u–v graph and a 1/u–1/v graph.",
+    "theory": "A **convex lens** converges parallel rays to its **principal focus**, at a distance f called the **focal length**. If a luminous object is placed beyond the focal length, the rays from each point meet again on the other side and form a **real, inverted image** that can be caught on a screen. With the object at a distance u from the lens and the sharp image at a distance v, the **lens formula** applies: with the Cartesian sign convention **1/v − 1/u = 1/f**, and in magnitudes **1/u + 1/v = 1/f**, so **f = uv / (u + v)**. The linear magnification is **m = v / u**. For u = 2f the image is formed at v = 2f and is the same size as the object. For u < f no real image is formed. In the experiment the lens is fixed on the optical bench, the object is placed at a chosen distance u, and the screen is moved until the image is sharp, which gives v. The readings are repeated for several values of u and the mean f is found. A graph of v against u is a smooth curve. A graph of 1/v against 1/u is a straight line whose intercept on either axis is 1/f. The image is difficult to focus when u is close to f or when it is very large, so values of u between 1.5 f and 3 f are best. The lens, object and screen should be at the same height with their centres on the optical axis.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Set up the bench",
+        "description": "The lens is fixed at the 40 cm mark of the optical bench. The lit object and the screen slide along the bench on either side. Use the overview or the side view to see the arrangement."
+      },
+      {
+        "order": 2,
+        "title": "Choose an object distance u",
+        "description": "Set u with the slider, or drag the object along the bench. Try values between about 1.5 f and 3 f. If you do not know f yet, start with u about 25 to 35 cm."
+      },
+      {
+        "order": 3,
+        "title": "Find the sharp image",
+        "description": "Move the screen with the slider, the 0.1 cm buttons or by dragging it. The rays in the 3D view meet at a point when the image is in focus, and the sharpness bar fills up."
+      },
+      {
+        "order": 4,
+        "title": "Record u and v",
+        "description": "When the image is sharp, check it by moving the screen a little each side, then press Record. The table gives f = uv/(u + v) and 1/u, 1/v."
+      },
+      {
+        "order": 5,
+        "title": "Repeat for several values of u",
+        "description": "Take at least five readings for different u. If the image falls beyond the end of the bench, increase u."
+      },
+      {
+        "order": 6,
+        "title": "Find f from the table and the graphs",
+        "description": "Read the mean f. The graph of 1/v against 1/u should be a straight line, and its intercept on the 1/v axis is 1/f."
+      },
+      {
+        "order": 7,
+        "title": "Check your answer",
+        "description": "Press Check my answer to see the actual focal length and your percentage error, and the power of the lens in dioptres. Press New unknown lens to try a lens with a different focal length."
+      }
+    ],
+    "observation": "The sharp image on the screen is real and inverted. As u is decreased towards 2f the image moves away from the lens and grows larger, and for u between f and 2f it is larger than the object. The value of f = uv/(u + v) is nearly the same for every pair of readings. The graph of v against u is a smooth curve and the graph of 1/v against 1/u is a straight line with a slope close to −1 and equal intercepts on the two axes.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "For a thin convex lens, with u and v taken as magnitudes for a real image, the focal length is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "f = (u + v) / uv"
+          },
+          {
+            "id": "b",
+            "text": "f = u − v"
+          },
+          {
+            "id": "c",
+            "text": "f = uv / (u + v)"
+          },
+          {
+            "id": "d",
+            "text": "f = uv / (u − v)"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "With magnitudes the lens formula is 1/u + 1/v = 1/f, which gives f = uv / (u + v)."
+      },
+      {
+        "id": "q2",
+        "question": "When a convex lens of focal length f forms a real image of an object placed at u = 2f, the image is formed at:",
+        "options": [
+          {
+            "id": "a",
+            "text": "v = 2f, inverted and the same size as the object"
+          },
+          {
+            "id": "b",
+            "text": "v = f, upright and smaller"
+          },
+          {
+            "id": "c",
+            "text": "v = 3f, inverted and magnified"
+          },
+          {
+            "id": "d",
+            "text": "v = 2f, upright and the same size"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "1/v = 1/f − 1/(2f) = 1/(2f), so v = 2f. The magnification is v/u = 1, and the real image is inverted."
+      },
+      {
+        "id": "q3",
+        "question": "A graph of 1/v against 1/u for a convex lens is a straight line. Its intercept on the 1/v axis is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "f"
+          },
+          {
+            "id": "b",
+            "text": "−f"
+          },
+          {
+            "id": "c",
+            "text": "−1/f"
+          },
+          {
+            "id": "d",
+            "text": "1/f"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "With magnitudes 1/u + 1/v = 1/f, so 1/v = 1/f − 1/u. When 1/u = 0 the value of 1/v equals 1/f, which is the intercept on the 1/v axis."
+      },
+      {
+        "id": "q4",
+        "question": "With u = 30 cm, the sharp image on the screen is at v = 30 cm. The focal length is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "30 cm"
+          },
+          {
+            "id": "b",
+            "text": "15 cm"
+          },
+          {
+            "id": "c",
+            "text": "20 cm"
+          },
+          {
+            "id": "d",
+            "text": "60 cm"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "f = uv / (u + v) = 30 × 30 / 60 = 15 cm."
+      },
+      {
+        "id": "q5",
+        "question": "If the object is placed closer to the lens than its focal length (u < f), then:",
+        "options": [
+          {
+            "id": "a",
+            "text": "A sharp inverted image forms on a distant screen"
+          },
+          {
+            "id": "b",
+            "text": "The image is formed at the focus"
+          },
+          {
+            "id": "c",
+            "text": "No real image can be obtained on the screen"
+          },
+          {
+            "id": "d",
+            "text": "The image becomes very small"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "For u < f the rays leave the lens still diverging, so they do not meet. The image is virtual, erect and magnified, and cannot be caught on a screen."
+      },
+      {
+        "id": "q6",
+        "question": "The linear magnification produced by the lens is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "v / u"
+          },
+          {
+            "id": "b",
+            "text": "u / v"
+          },
+          {
+            "id": "c",
+            "text": "u + v"
+          },
+          {
+            "id": "d",
+            "text": "u v"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The magnitude of the magnification is the ratio of the image distance to the object distance, m = v / u."
+      },
+      {
+        "id": "q7",
+        "question": "With the Cartesian sign convention, the object distance u for a real object placed to the left of the lens is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Positive"
+          },
+          {
+            "id": "b",
+            "text": "Zero"
+          },
+          {
+            "id": "c",
+            "text": "Infinite"
+          },
+          {
+            "id": "d",
+            "text": "Negative"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "Distances are measured from the lens, positive in the direction of the incident light. An object on the left therefore has a negative u."
+      },
+      {
+        "id": "q8",
+        "question": "For a more accurate value of f, readings are taken with u between about 1.5 f and 3 f. This is because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The image is then magnified the most"
+          },
+          {
+            "id": "b",
+            "text": "Very near f the image distance is huge and hard to measure"
+          },
+          {
+            "id": "c",
+            "text": "The lens then has no aberrations at all"
+          },
+          {
+            "id": "d",
+            "text": "The image is then upright"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Near u = f the image goes far away and its position is hard to find precisely. For large u the image is tiny and v is almost f, so the readings are less informative."
+      }
+    ],
+    "tags": ["convex lens", "focal length", "u-v method", "lens formula", "real image", "ray optics", "optical bench", "3d", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-08T00:00:00.000Z",
+    "updatedAt": "2026-11-08T00:00:00.000Z"
   }
 ]

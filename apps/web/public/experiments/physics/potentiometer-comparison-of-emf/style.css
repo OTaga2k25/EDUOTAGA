@@ -128,3 +128,16 @@ tfoot td{font-weight:700;border-bottom:none;background:var(--paper);}
 #apparatus .lbl.key{fill:var(--amber);font-weight:700;}
 #apparatus .lever{stroke-width:3.5;}
 .table-note{font-size:13.5px;color:var(--muted);margin:8px 0 0;}
+
+/* ---------- compact header (all experiments) ---------- */
+.top{padding:22px 0 18px;}
+.top h1{font-size:clamp(24px,4.6vw,38px);margin:6px 0 8px;}
+.top .lede{font-size:clamp(15px,1.9vw,17px);}
+@media(max-width:640px){
+  .top{padding:10px 0 9px;}
+  .eyebrow{display:none;}
+  .top h1{font-size:21px;margin:0;line-height:1.15;}
+  .top h1 .thin{display:block;font-size:.66em;margin-top:2px;}
+  .top .lede{display:none;}
+  .bench{margin-top:12px;}
+}

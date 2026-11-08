@@ -276,3 +276,21 @@ function render() {
 }
 window.addEventListener('resize', renderGraph);
 render();
+
+/* ---------- full screen (with landscape lock where the browser allows it) ---------- */
+(function () {
+  const btn = $('fsBtn'), stage = $('stage'); if (!btn) return;
+  const isFs = () => document.fullscreenElement === stage || document.webkitFullscreenElement === stage;
+  const label = () => { btn.textContent = isFs() ? 'Exit full screen' : 'Full screen'; };
+  btn.addEventListener('click', () => {
+    try {
+      if (isFs()) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); return; }
+      const req = stage.requestFullscreen || stage.webkitRequestFullscreen; if (!req) { btn.style.display = 'none'; return; }
+      const p = req.call(stage);
+      const lock = () => { try { screen.orientation && screen.orientation.lock && screen.orientation.lock('landscape').catch(() => {}); } catch (e) {} };
+      if (p && p.then) p.then(lock).catch(() => {}); else lock();
+    } catch (e) {}
+  });
+  document.addEventListener('fullscreenchange', label); document.addEventListener('webkitfullscreenchange', label);
+  if (!(stage.requestFullscreen || stage.webkitRequestFullscreen)) btn.style.display = 'none';
+})();

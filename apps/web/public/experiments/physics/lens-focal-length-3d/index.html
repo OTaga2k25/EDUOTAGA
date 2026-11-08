@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Convex Lens (3D) — Focal Length by the u–v Method</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Ray Optics · 3D</div>
+    <h1 class="disp">Convex lens: <span class="thin">focal length by the u–v method</span></h1>
+    <p class="lede">Place a lit object at a distance <b class="mono">u</b> from a convex lens, move a screen until the image is sharp, and read its distance <b class="mono">v</b>. The lens formula gives <b class="mono">f = uv / (u + v)</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="stage" id="stage" aria-label="3D optical bench">
+    <div class="view" id="view"></div>
+    <div class="hud">
+      <div class="views" role="group" aria-label="Camera views">
+        <button type="button" data-view="overview">Overview</button>
+        <button type="button" data-view="side">Side view</button>
+        <button type="button" data-view="top">Top view</button>
+        <button type="button" class="fsbtn" id="fsBtn">Full screen</button>
+      </div>
+      <div class="hudtags"><div class="ltag" id="uTag">u = 25.0 cm</div><div class="ltag v" id="vTag">v = 40.0 cm</div></div>
+    </div>
+    <p class="stage-hint">Drag the object or the screen along the bench · drag the background to rotate · scroll or pinch to zoom</p>
+    <p class="rotatehint">Tap “Full screen” and turn your phone sideways for a bigger view</p>
+    <div class="nogl">3D view is not available on this device, but you can still do the whole experiment with the controls below.</div>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="grid">
+      <div class="ctl">
+        <label for="uSl" class="ctl-h">Object distance u</label>
+        <input type="range" id="uSl" min="5" max="40" step="0.1" value="25">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-t="u" data-d="-1">−1</button>
+          <button type="button" class="btn sm" data-t="u" data-d="-0.1">−0.1</button>
+          <span class="readout mono"><span id="uVal">25.0</span> cm</span>
+          <button type="button" class="btn sm" data-t="u" data-d="0.1">+0.1</button>
+          <button type="button" class="btn sm" data-t="u" data-d="1">+1</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <label for="vSl" class="ctl-h">Screen distance v</label>
+        <input type="range" id="vSl" min="0" max="80" step="0.1" value="40">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-t="v" data-d="-1">−1</button>
+          <button type="button" class="btn sm" data-t="v" data-d="-0.1">−0.1</button>
+          <span class="readout mono"><span id="vVal">40.0</span> cm</span>
+          <button type="button" class="btn sm" data-t="v" data-d="0.1">+0.1</button>
+          <button type="button" class="btn sm" data-t="v" data-d="1">+1</button>
+        </div>
+      </div>
+      <div class="ctl wide">
+        <div class="ctl-h">Image on the screen</div>
+        <div class="screenview">
+          <canvas id="screenView" width="256" height="256" aria-label="View of the screen"></canvas>
+          <div class="sv-text">
+            <div class="ampbar" aria-hidden="true"><i id="ampFill"></i><b></b></div>
+            <div class="mini">Sharpness <span class="mono" id="ampVal">0 %</span> · <span id="ampHint"></span></div>
+            <div class="mini">Image size: <span class="mono" id="magVal">—</span></div>
+            <button type="button" class="btn primary" id="recordBtn">Record u and v</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>A convex lens forms a real, inverted image on a screen when the object is beyond its focal length. The distances are measured from the lens. With the object at distance u and the sharp image at distance v, the lens formula holds for every position.</p>
+    <ul class="eqs mono">
+      <li>Lens formula: <b>1/v − 1/u = 1/f</b> (with the sign convention, u is negative)</li>
+      <li>In magnitudes: <b>1/u + 1/v = 1/f</b>, so <b>f = uv / (u + v)</b></li>
+      <li>Graph of 1/v against 1/u: a straight line with intercept <b>1/f</b> on both axes</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap">
+      <table id="obs">
+        <thead><tr><th>u (cm)</th><th>v (cm)</th><th>f = uv/(u+v) (cm)</th><th>1/u (cm⁻¹)</th><th>1/v (cm⁻¹)</th></tr></thead>
+        <tbody id="obsBody"></tbody>
+        <tfoot><tr><td colspan="4">Mean f</td><td class="mono" id="meanF">—</td></tr></tfoot>
+      </table>
+    </div>
+    <p class="resultline" id="resultLine"></p>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="resetAll">Clear readings</button>
+      <button type="button" class="btn sm" id="newLens">New unknown lens</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Graphs</h2>
+    <div class="graphs">
+      <div><h3>v against u</h3><canvas id="graph1" width="640" height="380" aria-label="Graph of v against u"></canvas></div>
+      <div><h3>1/v against 1/u</h3><canvas id="graph2" width="640" height="380" aria-label="Graph of 1 over v against 1 over u"></canvas></div>
+    </div>
+    <p class="mono slope" id="slopeLine">Record at least 2 readings to see the best-fit line.</p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>The lens, the object and the screen must be at the same height, with their centres on one straight line (the optical axis).</li>
+      <li>The tip of the object needle or arrow must lie on the axis of the lens, and the lens must be placed upright, perpendicular to the bench.</li>
+      <li>Keep u greater than f. If the object is inside the focal length no real image forms on the screen.</li>
+      <li>Find the position of best focus by moving the screen a little each side of the sharpest image and taking the middle.</li>
+      <li>Avoid values of u very close to f, where v becomes very large, and values near 2f where small errors matter more. Take readings between 1.5 f and 3 f.</li>
+      <li>Perform the experiment in a darkened room, with the object brightly lit, so that the image is easy to see.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

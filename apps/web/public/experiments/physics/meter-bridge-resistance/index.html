@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meter Bridge — Resistance and Resistivity of a Wire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Current Electricity</div>
+    <h1 class="disp">Meter bridge: <span class="thin">resistance and resistivity of a wire</span></h1>
+    <p class="lede">Balance a known resistance <b class="mono">R</b> against an unknown wire <b class="mono">X</b> on a one-metre wire. At the null point <b class="mono">X = R (100 − l) / l</b>, and the resistivity follows from <b class="mono">ρ = X π d² / 4L</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ APPARATUS ============ -->
+  <section class="bench" aria-label="Meter bridge apparatus">
+    <svg id="apparatus" viewBox="0 0 900 380" role="img"
+         aria-label="Meter bridge with a resistance box and an unknown wire in the two gaps, a galvanometer, a jockey, a cell and a key">
+      <!-- copper strips and gaps -->
+      <rect x="60" y="134" width="230" height="12" rx="2" class="strip"/>
+      <rect x="390" y="134" width="120" height="12" rx="2" class="strip"/>
+      <rect x="610" y="134" width="230" height="12" rx="2" class="strip"/>
+      <!-- gap 1: resistance box R -->
+      <polyline points="290,140 304,140" class="lead"/>
+      <rect x="304" y="126" width="72" height="28" rx="3" class="box"/>
+      <text x="340" y="145" class="lbl" text-anchor="middle" id="rLabel">R = 5 Ω</text>
+      <polyline points="376,140 390,140" class="lead"/>
+      <text x="340" y="116" class="lbl small" text-anchor="middle">Resistance box</text>
+      <!-- gap 2: unknown wire X -->
+      <polyline points="510,140 524,140 530,128 542,152 554,128 566,152 578,128 590,152 596,140 610,140" class="coil"/>
+            <text x="340" y="172" class="lbl small" text-anchor="middle">gap 1</text>
+      <text x="560" y="172" class="lbl small" text-anchor="middle">gap 2: unknown wire X</text>
+
+      <!-- bridge wire AB, posts, terminals -->
+      <polyline points="60,146 60,250" class="lead"/>
+      <polyline points="840,146 840,250" class="lead"/>
+      <line x1="60" y1="250" x2="840" y2="250" class="wire"/>
+      <g id="ticks"></g>
+      <circle cx="60" cy="250" r="7" class="term"/>
+      <circle cx="840" cy="250" r="7" class="term"/>
+      <text x="44" y="238" class="lbl" text-anchor="middle">A</text>
+      <text x="856" y="238" class="lbl" text-anchor="middle">B</text>
+      <circle cx="450" cy="140" r="4" class="node"/>
+      <text x="438" y="168" class="lbl small" text-anchor="end">D</text>
+
+      <!-- galvanometer: D -> G -> jockey -->
+      <polyline points="450,140 450,90" class="lead"/>
+      <circle id="galCircle" cx="450" cy="60" r="30" class="gal"/>
+      <g id="galScale"></g>
+      <line id="needle" x1="450" y1="60" x2="450" y2="36" class="needle"/>
+      <circle cx="450" cy="60" r="4" class="pivot"/>
+      <text x="450" y="22" class="lbl small" text-anchor="middle">Galvanometer G</text>
+      <text id="galHint" x="408" y="66" class="lbl galhint" text-anchor="end"></text>
+      <polyline points="480,60 560,60" class="lead"/>
+      <line id="lead2jockey" x1="560" y1="60" x2="450" y2="206" class="lead"/>
+
+      <!-- jockey -->
+      <g id="jockey" transform="translate(450,0)">
+        <polygon points="-9,222 9,222 0,247" class="jockey"/>
+        <rect x="-5" y="206" width="10" height="18" rx="2" class="jockey"/>
+      </g>
+
+      <!-- segment lengths -->
+      <line id="segA" x1="60" y1="318" x2="450" y2="318" class="seg"/>
+      <line id="segB" x1="450" y1="318" x2="840" y2="318" class="seg b"/>
+      <text id="segAtxt" x="255" y="312" class="lbl segtxt" text-anchor="middle">l = 50.0 cm</text>
+      <text id="segBtxt" x="645" y="312" class="lbl segtxt b" text-anchor="middle">100 − l = 50.0 cm</text>
+
+      <!-- cell and key -->
+      <polyline points="60,250 60,355 330,355" class="lead"/>
+      <line x1="330" y1="341" x2="330" y2="369" class="plate long"/>
+      <line x1="344" y1="347" x2="344" y2="363" class="plate short"/>
+      <polyline points="344,355 560,355" class="lead"/>
+      <circle cx="560" cy="355" r="3.5" class="node"/>
+      <line x1="568" y1="355" x2="600" y2="355" class="lead"/>
+      <polyline points="600,355 840,355 840,250" class="lead"/>
+      <text x="337" y="337" class="lbl small" text-anchor="middle">Cell (2 V)</text>
+      <text x="584" y="344" class="lbl small" text-anchor="middle">Key K (closed)</text>
+
+      <!-- drag layer over the wire -->
+      <rect id="dragLayer" x="40" y="190" width="820" height="90" fill="transparent" style="cursor:ew-resize; touch-action:none"/>
+    </svg>
+    <p class="bench-hint">Tip: drag along the wire to get close, then use the slider and the −1 / −0.1 / +0.1 / +1 buttons for the final approach. A balance point near the middle of the wire (about 50 cm) gives the most accurate X.</p>
+  </section>
+
+  <!-- ============ CONTROLS + READOUT ============ -->
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+
+    <div class="grid">
+      <div class="ctl">
+        <div class="ctl-h">Resistance box R</div>
+        <div class="chips" id="rChips" role="group" aria-label="Choose resistance"></div>
+        <div class="mini">R is in gap 1; the unknown wire X is in gap 2.</div>
+      </div>
+
+      <div class="ctl">
+        <div class="ctl-h">Unknown wire X</div>
+        <div class="wirecard" id="wireCard">—</div>
+      </div>
+
+      <div class="ctl wide">
+        <label for="jock" class="ctl-h">Jockey position (from A)</label>
+        <input type="range" id="jock" min="0" max="100" step="0.1" value="50">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-d="-1">−1</button>
+          <button type="button" class="btn sm" data-d="-0.1">−0.1</button>
+          <span class="readout mono"><span id="xVal">50.0</span> cm</span>
+          <button type="button" class="btn sm" data-d="0.1">+0.1</button>
+          <button type="button" class="btn sm" data-d="1">+1</button>
+        </div>
+      </div>
+
+      <div class="ctl wide">
+        <div class="ctl-h">Galvanometer</div>
+        <div class="galbar" aria-hidden="true"><i id="galDot"></i><b></b></div>
+        <div class="mini">Deflection <span class="mono" id="deflVal">0.0</span> div · <span id="deflHint"></span></div>
+        <button type="button" class="btn primary" id="recordBtn">Record l</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FORMULA ============ -->
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>The four resistances R, X and the two parts of the wire form a Wheatstone bridge. The wire is uniform, so the resistance of each part is proportional to its length. At the null point no current flows through the galvanometer and the resistances are in proportion.</p>
+    <ul class="eqs mono">
+      <li>Balance: <b>R / X = l / (100 − l)</b></li>
+      <li>Unknown resistance: <b>X = R (100 − l) / l</b></li>
+      <li>Resistivity: <b>ρ = X A / L = X π d² / 4L</b></li>
+    </ul>
+  </section>
+
+  <!-- ============ READINGS ============ -->
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap">
+      <table id="obs">
+        <thead>
+          <tr><th>R (Ω)</th><th>l (cm)</th><th>100 − l (cm)</th><th>X = R(100−l)/l (Ω)</th></tr>
+        </thead>
+        <tbody id="obsBody"></tbody>
+        <tfoot>
+          <tr><td colspan="3">Mean X</td><td class="mono" id="meanX">—</td></tr>
+        </tfoot>
+      </table>
+    </div>
+    <p class="resultline" id="resultLine"></p>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="resetAll">Clear readings</button>
+      <button type="button" class="btn sm" id="newWire">New unknown wire</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Graph</h2>
+    <p class="muted">Plot l / (100 − l) against R. This is a straight line through the origin whose slope is 1 / X.</p>
+    <canvas id="graph" width="640" height="380" aria-label="Graph of l over 100 minus l against R"></canvas>
+    <p class="mono slope" id="slopeLine">Add at least 2 readings to see the best-fit line.</p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>All connections must be clean and tight, and the copper strips must be free from oxide.</li>
+      <li>Choose R so that the balance point lies near the middle of the wire (between 40 cm and 60 cm), where the percentage error is smallest.</li>
+      <li>Keep the key closed only while taking a reading, so that the wire does not heat up and change its resistance.</li>
+      <li>Tap the jockey on the wire; do not slide it along the wire.</li>
+      <li>Interchanging R and X and repeating the reading removes the error due to the end resistances of the bridge.</li>
+      <li>Measure the diameter of the unknown wire at several places and in two perpendicular directions with a screw gauge, and take the mean.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

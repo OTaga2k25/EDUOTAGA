@@ -1290,5 +1290,255 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-08T00:00:00.000Z",
     "updatedAt": "2026-11-08T00:00:00.000Z"
+  },
+  {
+    "id": "meter-bridge-resistance",
+    "slug": "meter-bridge-resistance",
+    "title": "Meter Bridge: Resistance and Resistivity of a Wire",
+    "subjectId": "current-electricity",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Balance a known resistance against an unknown wire on a metre-long bridge wire, find the unknown resistance from the null point, and calculate the resistivity of the wire.",
+    "theory": "A **meter bridge** is a practical form of the **Wheatstone bridge**. A uniform wire AB of length 100 cm is stretched along a metre scale and joined to two gaps by thick copper strips. A known resistance **R** from a resistance box is placed in one gap and the unknown wire **X** in the other. A galvanometer is connected between the middle point D of the strips and a sliding **jockey** on the wire. A cell and a key send current through AB. When the jockey touches the wire at the **null point**, at a distance l from A, the galvanometer shows no deflection and the bridge is balanced. The resistance of each part of the uniform wire is proportional to its length, so **R / X = l / (100 − l)**, which gives **X = R (100 − l) / l**. The reading is repeated for several values of R and the mean of X is taken. A graph of l / (100 − l) against R is a straight line through the origin with slope 1/X. If the length L and the diameter d of the unknown wire are known, its **resistivity** is **ρ = X A / L = X π d² / 4L**. The balance point should lie near the middle of the wire, where the percentage error is smallest. The key must be kept closed only while taking a reading, so that the heating of the wire does not change its resistance.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Note the wire details",
+        "description": "Read the length L and the diameter d of the unknown wire from the card. In the laboratory d is measured with a screw gauge at several places."
+      },
+      {
+        "order": 2,
+        "title": "Choose a resistance R",
+        "description": "Pick a value of R from the resistance box. Start with about 5 Ω; a value close to the unknown resistance puts the balance point near the middle of the wire."
+      },
+      {
+        "order": 3,
+        "title": "Find the null point",
+        "description": "Drag the jockey along the wire, then use the slider and the 0.1 cm buttons until the galvanometer needle is at zero and the ring turns green."
+      },
+      {
+        "order": 4,
+        "title": "Record l",
+        "description": "Press Record. The table gives l, 100 − l and X = R(100 − l)/l. If the balance point is near an end of the wire, choose a different R."
+      },
+      {
+        "order": 5,
+        "title": "Repeat for other values of R",
+        "description": "Take at least four readings with different R, keeping the balance points between about 30 cm and 70 cm."
+      },
+      {
+        "order": 6,
+        "title": "Find the mean and the graph",
+        "description": "Read the mean X from the table. Check it with the graph of l/(100 − l) against R, whose slope is 1/X."
+      },
+      {
+        "order": 7,
+        "title": "Calculate the resistivity",
+        "description": "Use ρ = X π d² / 4L with the mean X. Press Check my answer to compare X and ρ with the actual values and see which material the wire is made of."
+      }
+    ],
+    "observation": "The balance length l increases as R is increased, because a larger R needs a longer part of the wire to balance. For every reading the value of X = R(100 − l)/l is nearly the same, and the graph of l/(100 − l) against R is a straight line through the origin. The mean X and the dimensions of the wire give its resistivity, which agrees with a standard value for materials such as constantan, manganin and nichrome.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "In a meter bridge, R is in the left gap and the unknown X in the right gap. If the balance length from the left end is l cm, then X equals:",
+        "options": [
+          {
+            "id": "a",
+            "text": "R l / (100 − l)"
+          },
+          {
+            "id": "b",
+            "text": "R (100 − l) / l"
+          },
+          {
+            "id": "c",
+            "text": "R (100 + l) / l"
+          },
+          {
+            "id": "d",
+            "text": "R l / 100"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "At balance R / X = l / (100 − l), because the resistance of each part of the uniform wire is proportional to its length. So X = R (100 − l) / l."
+      },
+      {
+        "id": "q2",
+        "question": "The balance point should be near the middle of the wire (about 50 cm) because then:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The galvanometer deflection is largest"
+          },
+          {
+            "id": "b",
+            "text": "The wire heats up least"
+          },
+          {
+            "id": "c",
+            "text": "R must be very large"
+          },
+          {
+            "id": "d",
+            "text": "The percentage error in X is smallest"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "The error in X caused by a given error in l is smallest when l is near 50 cm. Near the ends the same reading error produces a much larger error in X."
+      },
+      {
+        "id": "q3",
+        "question": "A meter bridge works on the principle of the:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Wheatstone bridge"
+          },
+          {
+            "id": "b",
+            "text": "Potentiometer"
+          },
+          {
+            "id": "c",
+            "text": "Joule heating effect"
+          },
+          {
+            "id": "d",
+            "text": "Magnetic effect of current"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The two gaps and the two parts of the wire form the four arms of a Wheatstone bridge, balanced when the galvanometer shows zero."
+      },
+      {
+        "id": "q4",
+        "question": "With R = 6 Ω the null point is at l = 40 cm. The unknown resistance X is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "4 Ω"
+          },
+          {
+            "id": "b",
+            "text": "6 Ω"
+          },
+          {
+            "id": "c",
+            "text": "9 Ω"
+          },
+          {
+            "id": "d",
+            "text": "15 Ω"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "X = R (100 − l) / l = 6 × 60 / 40 = 9 Ω."
+      },
+      {
+        "id": "q5",
+        "question": "After one reading, R and X are interchanged and the reading is repeated. This is done to:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Make the galvanometer more sensitive"
+          },
+          {
+            "id": "b",
+            "text": "Remove the error due to the end resistances of the bridge"
+          },
+          {
+            "id": "c",
+            "text": "Increase the current in the wire"
+          },
+          {
+            "id": "d",
+            "text": "Make the wire cooler"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The copper strips and connections add small resistances at the ends. Interchanging R and X and taking the mean cancels this error."
+      },
+      {
+        "id": "q6",
+        "question": "The resistivity of the material of the unknown wire, of length L and diameter d, is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "X d / L"
+          },
+          {
+            "id": "b",
+            "text": "X π d / 4L"
+          },
+          {
+            "id": "c",
+            "text": "X π d² / L"
+          },
+          {
+            "id": "d",
+            "text": "X π d² / 4L"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "ρ = X A / L and the area of cross-section is A = π d² / 4, so ρ = X π d² / 4L."
+      },
+      {
+        "id": "q7",
+        "question": "The key is kept closed only while a reading is taken because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The current heats the wire and changes its resistance"
+          },
+          {
+            "id": "b",
+            "text": "The cell would be short-circuited"
+          },
+          {
+            "id": "c",
+            "text": "The galvanometer would be damaged by a small current"
+          },
+          {
+            "id": "d",
+            "text": "The wire would expand and become longer"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "A steady current heats the wire. Its resistance then rises with temperature and the readings are no longer for the original resistance."
+      },
+      {
+        "id": "q8",
+        "question": "If the diameter of a wire is doubled, with the length and material unchanged, its resistance becomes:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Double"
+          },
+          {
+            "id": "b",
+            "text": "Half"
+          },
+          {
+            "id": "c",
+            "text": "One quarter"
+          },
+          {
+            "id": "d",
+            "text": "Four times"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "R = ρL/A and A is proportional to d². Doubling d makes A four times larger, so R falls to one quarter."
+      }
+    ],
+    "tags": ["meter bridge", "wheatstone bridge", "resistivity", "unknown resistance", "current electricity", "plus two", "kerala", "dhse", "practical", "null method"],
+    "isNew": true,
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-11-08T00:00:00.000Z",
+    "updatedAt": "2026-11-08T00:00:00.000Z"
   }
 ]

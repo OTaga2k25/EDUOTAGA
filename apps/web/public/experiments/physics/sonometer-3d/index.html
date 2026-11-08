@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sonometer (3D) — Frequency of a Tuning Fork</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Waves and Sound · 3D</div>
+    <h1 class="disp">Sonometer: <span class="thin">frequency of a tuning fork</span></h1>
+    <p class="lede">A stretched wire resonates with a fork when its vibrating length <b class="mono">L</b> fits the fork's frequency. Since <b class="mono">f × L</b> is constant for a fixed tension, a fork of unknown frequency can be found from its resonant length.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ 3D STAGE ============ -->
+  <section class="stage" id="stage" aria-label="3D sonometer">
+    <div class="view" id="view"></div>
+    <div class="hud">
+      <div class="views" role="group" aria-label="Camera views">
+        <button type="button" data-view="overview">Overview</button>
+        <button type="button" data-view="top">Top view</button>
+        <button type="button" data-view="close">Bridge close-up</button>
+      </div>
+      <div class="ltag" id="lTag">L = 60.0 cm</div>
+    </div>
+    <p class="stage-hint">Drag the orange bridge B₂ along the wire · drag the background to rotate · scroll or pinch to zoom</p>
+    <div class="nogl">3D view is not available on this device, but you can still do the whole experiment with the controls below.</div>
+  </section>
+
+  <!-- ============ CONTROLS ============ -->
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+
+    <div class="grid">
+      <div class="ctl">
+        <label for="wts" class="ctl-h">Slotted weights <span class="mono" id="wtsVal">4</span></label>
+        <input type="range" id="wts" min="1" max="12" step="1" value="4">
+        <div class="mini" id="wtsInfo">—</div>
+      </div>
+
+      <div class="ctl">
+        <div class="ctl-h">Tuning fork</div>
+        <div class="chips" id="forkChips" role="group" aria-label="Choose tuning fork"></div>
+        <button type="button" class="btn toggle" id="strikeBtn" aria-pressed="false" style="margin-top:8px">Strike fork and press it on the box</button>
+        <label class="soundrow"><input type="checkbox" id="soundChk"> Play the fork's sound</label>
+      </div>
+
+      <div class="ctl wide">
+        <label for="bridge" class="ctl-h">Movable bridge B₂ — vibrating length L</label>
+        <input type="range" id="bridge" min="0" max="100" step="0.1" value="60">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-d="-1">−1</button>
+          <button type="button" class="btn sm" data-d="-0.1">−0.1</button>
+          <span class="readout mono"><span id="xVal">60.0</span> cm</span>
+          <button type="button" class="btn sm" data-d="0.1">+0.1</button>
+          <button type="button" class="btn sm" data-d="1">+1</button>
+        </div>
+      </div>
+
+      <div class="ctl wide">
+        <div class="ctl-h">Paper rider</div>
+        <div class="ampbar" aria-hidden="true"><i id="ampFill"></i><b></b></div>
+        <div class="mini">Vibration <span class="mono" id="ampVal">0 %</span> · <span id="ampHint"></span></div>
+        <button type="button" class="btn primary" id="recordBtn">Record L</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FORMULA ============ -->
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>A wire of linear density <b class="mono">μ</b> under tension <b class="mono">T</b> carries waves at speed <b class="mono">v = √(T/μ)</b>. Between two bridges it vibrates in its fundamental mode, so the length is half a wavelength. When the wire's natural frequency equals the fork's, the wire resonates and the paper rider is thrown off.</p>
+    <ul class="eqs mono">
+      <li>Fundamental: <b>f = v / 2L = (1 / 2L) √(T/μ)</b></li>
+      <li>Fixed T: <b>f × L = constant = v / 2</b></li>
+      <li>Unknown fork: <b>f<sub>x</sub> = (f × L) / L<sub>x</sub></b></li>
+    </ul>
+    <p class="facts">Wire: steel, diameter 0.25 mm, <b>μ = 3.8 × 10⁻⁴ kg/m</b>. Hanger mass 0.5 kg, each slotted weight 0.5 kg, <b>g = 9.8 m/s²</b>.</p>
+  </section>
+
+  <!-- ============ READINGS ============ -->
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <p class="table-note muted">Tension is fixed for the whole set: <b class="mono" id="tNote">—</b>. Changing the weights clears the readings.</p>
+    <div class="tablewrap">
+      <table id="obs">
+        <thead>
+          <tr><th>Fork f (Hz)</th><th>L (cm)</th><th>f × L (Hz·cm)</th><th>1/L (m⁻¹)</th></tr>
+        </thead>
+        <tbody id="obsBody"></tbody>
+        <tfoot>
+          <tr><td colspan="3">Mean f × L</td><td class="mono" id="meanFL">—</td></tr>
+        </tfoot>
+      </table>
+    </div>
+    <p class="resultline" id="resultLine"></p>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="resetAll">Clear readings</button>
+      <button type="button" class="btn sm" id="newFork">New unknown fork</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Graph</h2>
+    <p class="muted">Plot f against 1/L for the known forks. This is a straight line through the origin whose slope is f × L, and the wave speed is v = 2 × slope.</p>
+    <canvas id="graph" width="640" height="380" aria-label="Graph of frequency against 1 over L"></canvas>
+    <p class="mono slope" id="slopeLine">Record at least 2 known forks to see the best-fit line.</p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>The wire must be uniform, free from kinks, and stretched taut by the weights.</li>
+      <li>The pulley must turn freely so that the hanging weight really sets the tension.</li>
+      <li>Press the stem of the fork firmly on the box, close to the wire, so the vibration passes into the wire.</li>
+      <li>Move the bridge slowly near resonance: the rider jumps off over a range of only a few millimetres.</li>
+      <li>Read the length from the same edge of the bridge every time, with your eye directly above the scale.</li>
+      <li>Do not change the weights while taking a set of readings.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

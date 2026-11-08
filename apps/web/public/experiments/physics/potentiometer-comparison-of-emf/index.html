@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Potentiometer — Comparing the EMFs of Two Cells</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Current Electricity</div>
+    <h1 class="disp">Potentiometer: <span class="thin">comparing the emfs of two cells</span></h1>
+    <p class="lede">Balance each cell in turn on the potentiometer wire. The potential drop is proportional to length, so <b class="mono">E₁ / E₂ = l₁ / l₂</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ APPARATUS ============ -->
+  <section class="bench" aria-label="Potentiometer apparatus">
+    <svg id="apparatus" viewBox="0 0 900 380" role="img"
+         aria-label="Potentiometer circuit with driver cell, rheostat, two test cells, two-way key, galvanometer and jockey">
+      <!-- potentiometer wire -->
+      <line x1="60" y1="215" x2="840" y2="215" class="wire"/>
+      <g id="ticks"></g>
+      <circle cx="60" cy="215" r="7" class="term"/>
+      <circle cx="840" cy="215" r="7" class="term"/>
+      <text x="60" y="198" class="lbl" text-anchor="middle">A</text>
+      <text x="840" y="198" class="lbl" text-anchor="middle">B</text>
+
+      <!-- driver circuit (bottom loop) -->
+      <polyline points="60,215 60,335 118,335" class="lead"/>
+      <circle cx="118" cy="335" r="3.5" class="node"/>
+      <line x1="126" y1="335" x2="150" y2="335" class="lead"/>
+      <text x="138" y="318" class="lbl small" text-anchor="middle">K₁ (closed)</text>
+      <polyline points="150,335 244,335" class="lead"/>
+      <line x1="244" y1="321" x2="244" y2="349" class="plate long"/>
+      <line x1="258" y1="327" x2="258" y2="343" class="plate short"/>
+      <polyline points="258,335 440,335" class="lead"/>
+      <text x="251" y="366" class="lbl small" text-anchor="middle">Driver cell (2 V)</text>
+      <rect x="440" y="324" width="120" height="22" rx="3" class="box"/>
+      <line x1="452" y1="342" x2="548" y2="328" class="arrow"/>
+      <text x="500" y="366" class="lbl small" text-anchor="middle" id="rhLabel">Rheostat Rh = 2.0 Ω</text>
+      <polyline points="560,335 840,335 840,215" class="lead"/>
+
+      <!-- bus from A up to both test cells (positive terminals at A) -->
+      <polyline points="60,215 60,45" class="lead"/>
+      <circle cx="60" cy="115" r="3.5" class="node"/>
+      <polyline points="60,45 105,45" class="lead"/>
+      <polyline points="60,115 105,115" class="lead"/>
+
+      <!-- test cell E1 -->
+      <line x1="105" y1="30" x2="105" y2="60" class="plate long"/>
+      <line x1="117" y1="36" x2="117" y2="54" class="plate short"/>
+      <text x="111" y="20" class="lbl small" text-anchor="middle">E₁</text>
+      <polyline points="117,45 240,45" class="lead"/>
+
+      <!-- test cell E2 -->
+      <line x1="105" y1="100" x2="105" y2="130" class="plate long"/>
+      <line x1="117" y1="106" x2="117" y2="124" class="plate short"/>
+      <text x="111" y="148" class="lbl small" text-anchor="middle">E₂</text>
+      <polyline points="117,115 240,115" class="lead"/>
+
+      <!-- two-way key -->
+      <circle id="contact1" cx="240" cy="45" r="4.5" class="node"/>
+      <circle id="contact2" cx="240" cy="115" r="4.5" class="node"/>
+      <circle cx="310" cy="80" r="4.5" class="node"/>
+      <line id="keyLever" x1="310" y1="80" x2="240" y2="45" class="lever"/>
+      <text x="252" y="30" class="lbl small" text-anchor="start">Two-way key</text>
+      <text id="keyLabel" x="252" y="130" class="lbl small key" text-anchor="start">E₁ connected</text>
+
+      <!-- galvanometer -->
+      <polyline points="310,80 398,80" class="lead"/>
+      <circle id="galCircle" cx="430" cy="80" r="32" class="gal"/>
+      <g id="galScale"></g>
+      <line id="needle" x1="430" y1="80" x2="430" y2="55" class="needle"/>
+      <circle cx="430" cy="80" r="4" class="pivot"/>
+      <text x="430" y="134" class="lbl small" text-anchor="middle">Galvanometer G</text>
+      <text id="galHint" x="430" y="154" class="lbl galhint" text-anchor="middle"></text>
+      <polyline points="462,80 520,80" class="lead"/>
+
+      <!-- lead to jockey -->
+      <line id="lead2jockey" x1="520" y1="80" x2="450" y2="172" class="lead"/>
+
+      <!-- jockey -->
+      <g id="jockey" transform="translate(450,0)">
+        <polygon points="-9,186 9,186 0,213" class="jockey"/>
+        <rect x="-5" y="170" width="10" height="18" rx="2" class="jockey"/>
+      </g>
+      <text id="lengthTag" x="450" y="282" class="lbl tag" text-anchor="middle">450.0 cm</text>
+
+      <!-- drag layer over the wire -->
+      <rect id="dragLayer" x="40" y="160" width="820" height="110" fill="transparent" style="cursor:ew-resize; touch-action:none"/>
+    </svg>
+    <p class="bench-hint">Tip: drag along the wire to get close, then use the slider and the −1 / −0.1 / +0.1 / +1 buttons for the final approach. The needle gets closer to zero as you near the balance point.</p>
+  </section>
+
+  <!-- ============ CONTROLS + READOUT ============ -->
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+
+    <div class="grid">
+      <div class="ctl">
+        <label for="rh" class="ctl-h">Rheostat <span class="mono" id="rhVal">2.0 Ω</span></label>
+        <input type="range" id="rh" min="0" max="10" step="0.5" value="2">
+        <div class="mini">Potential gradient <span class="mono" id="kVal">—</span> · wire drop <span class="mono" id="vwVal">—</span></div>
+      </div>
+
+      <div class="ctl">
+        <div class="ctl-h">Two-way key</div>
+        <div class="seg" role="group" aria-label="Choose which cell is connected">
+          <button type="button" class="chip" id="keyE1" aria-pressed="true">Connect E₁</button>
+          <button type="button" class="chip" id="keyE2" aria-pressed="false">Connect E₂</button>
+        </div>
+        <div class="mini">Only one cell is in the galvanometer circuit at a time.</div>
+      </div>
+
+      <div class="ctl wide">
+        <label for="jock" class="ctl-h">Jockey position</label>
+        <input type="range" id="jock" min="0" max="1000" step="0.1" value="450">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-d="-1">−1</button>
+          <button type="button" class="btn sm" data-d="-0.1">−0.1</button>
+          <span class="readout mono"><span id="xVal">450.0</span> cm</span>
+          <button type="button" class="btn sm" data-d="0.1">+0.1</button>
+          <button type="button" class="btn sm" data-d="1">+1</button>
+        </div>
+      </div>
+
+      <div class="ctl wide">
+        <div class="ctl-h">Galvanometer</div>
+        <div class="galbar" aria-hidden="true"><i id="galDot"></i><b></b></div>
+        <div class="mini">Deflection <span class="mono" id="deflVal">0.0</span> div · <span id="deflHint"></span></div>
+        <button type="button" class="btn primary" id="recordBtn">Record l₁</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FORMULA ============ -->
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>The wire has a uniform potential gradient <b class="mono">k</b> (volts per cm). At the null point the galvanometer reads zero, no current flows through the cell, and its emf equals the potential drop along the balance length.</p>
+    <ul class="eqs mono">
+      <li>Cell E₁ connected: <b>E₁ = k · l₁</b></li>
+      <li>Cell E₂ connected: <b>E₂ = k · l₂</b></li>
+      <li>Dividing: <b>E₁ / E₂ = l₁ / l₂</b></li>
+    </ul>
+    <p class="muted" style="margin-top:12px">Changing the rheostat changes k, so both lengths change, but their ratio does not. That is why the experiment is repeated for several rheostat settings.</p>
+  </section>
+
+  <!-- ============ READINGS ============ -->
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap">
+      <table id="obs">
+        <thead>
+          <tr>
+            <th>Rh (Ω)</th><th>l₁ (cm)</th><th>l₂ (cm)</th><th>E₁/E₂ = l₁/l₂</th>
+          </tr>
+        </thead>
+        <tbody id="obsBody"></tbody>
+        <tfoot>
+          <tr><td colspan="3">Mean E₁/E₂</td><td class="mono" id="meanRatio">—</td></tr>
+        </tfoot>
+      </table>
+    </div>
+    <p class="resultline" id="resultLine"></p>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="resetAll">Clear readings</button>
+      <button type="button" class="btn sm" id="newCells">New unknown cells</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Graph</h2>
+    <p class="muted">Plot l₁ against l₂ for the completed sets. This is a straight line through the origin whose slope equals E₁/E₂.</p>
+    <canvas id="graph" width="640" height="380" aria-label="Graph of l1 against l2"></canvas>
+    <p class="mono slope" id="slopeLine">Complete at least 2 sets to see the best-fit line.</p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Connect the positive terminals of the driver cell and of both test cells to the same end (A) of the wire.</li>
+      <li>The driver cell's emf must be larger than the emf of either test cell, otherwise no balance point exists.</li>
+      <li>Use the two-way key so that only one cell is connected to the galvanometer at a time.</li>
+      <li>Keep the key closed only while taking a reading, so the cells do not run down.</li>
+      <li>Do not slide the jockey along the wire; tap it at each position.</li>
+      <li>Do not change the rheostat while the two lengths of one set are being measured.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

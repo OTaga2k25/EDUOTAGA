@@ -40,7 +40,7 @@ html{-ms-overflow-style:none;scrollbar-width:none;}
 #apparatus .lever{stroke:#f4efe4;stroke-width:3;stroke-linecap:round;transform-box:view-box;transition:transform .18s ease;}
 #apparatus .gal{fill:#0e2433;stroke:#cfd8dc;stroke-width:2;}
 #apparatus .gal.null{stroke:#3ddc84;stroke-width:3.5;}
-#apparatus .lbl.galhint{fill:var(--amber);font-size:13px;font-weight:700;}
+#apparatus .lbl.galhint{fill:var(--amber);font-size:13px;font-weight:700;paint-order:stroke;stroke:#0e2433;stroke-width:5px;stroke-linejoin:round;}
 #apparatus .lbl.galhint.null{fill:#3ddc84;}
 #apparatus .needle{stroke:var(--fire);stroke-width:3;stroke-linecap:round;}
 #apparatus .pivot{fill:#f4efe4;}

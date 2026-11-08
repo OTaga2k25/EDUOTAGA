@@ -790,5 +790,505 @@
     "estimatedDurationMinutes": 20,
     "createdAt": "2026-11-08T00:00:00.000Z",
     "updatedAt": "2026-11-08T00:00:00.000Z"
+  },
+  {
+    "id": "potentiometer-comparison-of-emf",
+    "slug": "potentiometer-comparison-of-emf",
+    "title": "Potentiometer: Comparing the EMFs of Two Cells",
+    "subjectId": "current-electricity",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Balance two cells in turn on a potentiometer wire using a two-way key, and find the ratio of their emfs from the two balance lengths.",
+    "theory": "A **potentiometer** is a long wire of uniform cross-section carrying a steady current from a driver cell, so the potential difference across any length l of the wire is proportional to l. The wire therefore has a constant **potential gradient k** (volts per cm). A test cell is joined, through a galvanometer, to a sliding **jockey**; at the **null point** the galvanometer shows zero deflection, no current flows through the cell, and its emf equals the potential drop along the balance length. With a **two-way key** the two cells are connected one at a time: for cell E₁ the balance length is l₁, so E₁ = k l₁, and for cell E₂ the balance length is l₂, so E₂ = k l₂. Dividing the equations gives **E₁ / E₂ = l₁ / l₂**, because the gradient k cancels. Changing the rheostat changes k, and therefore both lengths, but not their ratio, so the experiment is repeated for several rheostat settings and the mean ratio is taken. Plotting l₁ against l₂ gives a straight line through the origin whose slope is E₁/E₂. The driver cell's emf must be greater than the emf of either test cell, and the positive terminals of all cells must be joined to the same end of the wire.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Check the driver circuit",
+        "description": "Start with the rheostat near 2 Ω and read the potential drop across the wire. It must be larger than the emf of either cell; if the status bar warns about this, reduce the rheostat resistance."
+      },
+      {
+        "order": 2,
+        "title": "Find l₁ with E₁ connected",
+        "description": "Set the two-way key to E₁. Drag the jockey along the wire (use the slider and ±0.1 cm buttons for fine control) until the galvanometer needle sits at zero, then press Record l₁."
+      },
+      {
+        "order": 3,
+        "title": "Find l₂ with E₂ connected",
+        "description": "Without changing the rheostat, switch the two-way key to E₂, find its null point and press Record l₂. The table row for this rheostat setting is now complete."
+      },
+      {
+        "order": 4,
+        "title": "Read the ratio",
+        "description": "The table shows E₁/E₂ = l₁/l₂ for the completed set."
+      },
+      {
+        "order": 5,
+        "title": "Repeat for other rheostat settings",
+        "description": "Change the rheostat (for example 0, 0.5, 1 and 2 Ω) and repeat steps 2 and 3, taking at least three sets. Both lengths change with the rheostat, but their ratio should stay almost constant."
+      },
+      {
+        "order": 6,
+        "title": "Find the mean ratio",
+        "description": "Take the mean of E₁/E₂ over all completed sets and write the result."
+      },
+      {
+        "order": 7,
+        "title": "Plot the graph and check",
+        "description": "Study the graph of l₁ against l₂; its slope is E₁/E₂. Press Check my answer to compare with the actual emfs, or try two new unknown cells."
+      }
+    ],
+    "observation": "For every rheostat setting the balance length of the cell with the larger emf is longer than that of the other cell. Increasing the rheostat resistance lengthens both balance lengths because the potential gradient falls, but the ratio l₁/l₂ stays nearly constant. The graph of l₁ against l₂ is a straight line through the origin whose slope equals E₁/E₂, in agreement with the mean of the table values.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "At the null point with E₁ connected, the potential drop across the balance length l₁ equals:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The emf of the driver cell"
+          },
+          {
+            "id": "b",
+            "text": "Half the emf of E₁"
+          },
+          {
+            "id": "c",
+            "text": "The emf of cell E₁"
+          },
+          {
+            "id": "d",
+            "text": "Zero"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "At balance no current flows through the cell, so the potential drop k l₁ along the wire exactly equals the emf E₁."
+      },
+      {
+        "id": "q2",
+        "question": "The ratio of the emfs of the two cells is given by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "E₁/E₂ = l₁/l₂"
+          },
+          {
+            "id": "b",
+            "text": "E₁/E₂ = l₂/l₁"
+          },
+          {
+            "id": "c",
+            "text": "E₁/E₂ = l₁ × l₂"
+          },
+          {
+            "id": "d",
+            "text": "E₁/E₂ = l₁ − l₂"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "E₁ = k l₁ and E₂ = k l₂, so dividing gives E₁/E₂ = l₁/l₂. The gradient k cancels."
+      },
+      {
+        "id": "q3",
+        "question": "A student finds l₁ = 800 cm and l₂ = 500 cm. The ratio E₁/E₂ is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "0.625"
+          },
+          {
+            "id": "b",
+            "text": "300"
+          },
+          {
+            "id": "c",
+            "text": "1300"
+          },
+          {
+            "id": "d",
+            "text": "1.6"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "E₁/E₂ = l₁/l₂ = 800/500 = 1.6. Note it is a ratio of lengths, so it has no units."
+      },
+      {
+        "id": "q4",
+        "question": "The rheostat resistance is increased and the experiment is repeated. The balance lengths l₁ and l₂ will:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Both decrease, and l₁/l₂ decreases"
+          },
+          {
+            "id": "b",
+            "text": "Both increase, but l₁/l₂ stays the same"
+          },
+          {
+            "id": "c",
+            "text": "Stay the same"
+          },
+          {
+            "id": "d",
+            "text": "Both increase, and l₁/l₂ increases"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "More rheostat resistance means less current and a smaller potential gradient k, so longer lengths are needed to balance the same emfs. Since k cancels in l₁/l₂, the ratio is unchanged."
+      },
+      {
+        "id": "q5",
+        "question": "No balance point can be found for cell E₁, although one is found for E₂. The most likely reason is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The cell E₂ has no internal resistance"
+          },
+          {
+            "id": "b",
+            "text": "The wire is too long"
+          },
+          {
+            "id": "c",
+            "text": "The potential drop across the whole wire is smaller than the emf of E₁"
+          },
+          {
+            "id": "d",
+            "text": "The jockey is pressed too hard"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "A null point exists only if the voltage across the entire wire exceeds the cell's emf. E₁ is the larger emf, so reduce the rheostat resistance."
+      },
+      {
+        "id": "q6",
+        "question": "Why is a two-way key used in this experiment?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To connect either cell to the galvanometer circuit, one at a time, without changing the rest of the circuit"
+          },
+          {
+            "id": "b",
+            "text": "To increase the emf of the driver cell"
+          },
+          {
+            "id": "c",
+            "text": "To reduce the current in the wire"
+          },
+          {
+            "id": "d",
+            "text": "To connect both cells in series"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The two-way key lets one test cell be balanced and then the other, using the same wire, jockey and galvanometer."
+      },
+      {
+        "id": "q7",
+        "question": "Why must the positive terminals of the driver cell and both test cells be joined to the same end of the wire?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To increase the potential gradient"
+          },
+          {
+            "id": "b",
+            "text": "To keep the galvanometer cool"
+          },
+          {
+            "id": "c",
+            "text": "To make E₁ equal to E₂"
+          },
+          {
+            "id": "d",
+            "text": "So that each test cell opposes the potential drop along the wire and a null point can be found"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "If a test cell were connected the other way round, its emf would add to the wire's potential and the galvanometer could never be brought to zero."
+      },
+      {
+        "id": "q8",
+        "question": "How can the sensitivity of a potentiometer be increased?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Increase the potential gradient"
+          },
+          {
+            "id": "b",
+            "text": "Decrease the potential gradient, using a larger rheostat resistance or a longer wire"
+          },
+          {
+            "id": "c",
+            "text": "Use a shorter wire"
+          },
+          {
+            "id": "d",
+            "text": "Remove the rheostat"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "A smaller potential gradient means a given error in balance length corresponds to a smaller error in voltage. The wire's total drop must still exceed both emfs."
+      }
+    ],
+    "tags": ["potentiometer", "emf", "comparison of emf", "two-way key", "current electricity", "plus two", "kerala", "dhse", "practical", "null method"],
+    "isNew": true,
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-11-08T00:00:00.000Z",
+    "updatedAt": "2026-11-08T00:00:00.000Z"
+  },
+  {
+    "id": "sonometer-frequency-of-tuning-fork",
+    "slug": "sonometer-frequency-of-tuning-fork",
+    "title": "Sonometer (3D): Frequency of a Tuning Fork",
+    "subjectId": "waves-and-sound",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Use a 3D sonometer to find the resonant lengths of known tuning forks, verify that f × L is constant at fixed tension, and then find the frequency of an unknown fork.",
+    "theory": "A **sonometer** is a hollow wooden box with a wire stretched along its top between two bridges. The tension comes from weights hung over a pulley. A wire of length L, tension T and mass per unit length μ carries waves at speed **v = √(T/μ)**. When it vibrates in its fundamental mode, the length L is half a wavelength, so its natural frequency is **f = v / 2L = (1/2L)√(T/μ)**. If a tuning fork is sounded and pressed on the box, the wire is forced to vibrate at the fork's frequency. When the length is adjusted until the wire's natural frequency equals the fork's, **resonance** occurs: the wire vibrates with a large amplitude and a small **paper rider** placed on it is thrown off. For a fixed wire and tension, **f × L = v/2 is constant**, so f is proportional to 1/L and a graph of f against 1/L is a straight line through the origin with slope v/2. This allows the unknown frequency of a fork to be found from its resonant length: **f_x = (f × L) / L_x**. The resonant length is proportional to √T for a given fork. The wire must be uniform and taut, the pulley frictionless, and the bridge must be moved slowly near resonance.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Set the tension",
+        "description": "Choose the number of slotted weights. The hanger and weights give the tension T = Mg. Keep it the same for the whole experiment, because changing it clears your readings."
+      },
+      {
+        "order": 2,
+        "title": "Select a known fork",
+        "description": "Pick one of the known tuning forks, for example 256 Hz, from the chips and note its frequency."
+      },
+      {
+        "order": 3,
+        "title": "Strike the fork and place it on the box",
+        "description": "Press the strike button. The fork is sounding and its stem is pressed on the box close to the wire. The paper rider sits at the middle of the vibrating length."
+      },
+      {
+        "order": 4,
+        "title": "Slide the bridge B₂ slowly",
+        "description": "Drag B₂ in the 3D view, or use the slider and the 0.1 cm buttons. Watch the rider and the vibration bar. Near resonance the rider trembles, and at resonance it is thrown off the wire."
+      },
+      {
+        "order": 5,
+        "title": "Record the resonant length",
+        "description": "With the rider off, read the length from the scale. The top view shows the reading mark clearly. Press Record. Repeat for the other known forks."
+      },
+      {
+        "order": 6,
+        "title": "Find the unknown fork",
+        "description": "Select Fork X and repeat the procedure at the same tension to find its resonant length L_x."
+      },
+      {
+        "order": 7,
+        "title": "Calculate and plot",
+        "description": "Find f × L for each fork and take the mean. Calculate f_x = (mean f × L) / L_x. Plot f against 1/L and use twice the slope to find the wave speed v. Press Check my answer to compare with the actual values."
+      }
+    ],
+    "observation": "The resonant length is shorter for a fork of higher frequency and longer for a larger tension. For every known fork f × L is almost the same, so the graph of f against 1/L is a straight line through the origin. The unknown fork has a frequency f_x = (f × L) / L_x, found from its resonant length. With a tension of about 25 N the wave speed in the wire is about 250 m/s.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "The fundamental frequency of a wire of vibrating length L, tension T and mass per unit length μ is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "(1/L)√(T/μ)"
+          },
+          {
+            "id": "b",
+            "text": "2L√(T/μ)"
+          },
+          {
+            "id": "c",
+            "text": "(L/2)√(T/μ)"
+          },
+          {
+            "id": "d",
+            "text": "(1/2L)√(T/μ)"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "The fundamental mode has a loop in the middle, so L is half a wavelength. With wave speed v = √(T/μ), f = v/λ = v/2L = (1/2L)√(T/μ)."
+      },
+      {
+        "id": "q2",
+        "question": "With the tension fixed, the vibrating length of the wire is doubled. Its fundamental frequency becomes:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Double"
+          },
+          {
+            "id": "b",
+            "text": "Half"
+          },
+          {
+            "id": "c",
+            "text": "Four times"
+          },
+          {
+            "id": "d",
+            "text": "Unchanged"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "f is proportional to 1/L when T and μ are fixed, so doubling L halves f."
+      },
+      {
+        "id": "q3",
+        "question": "With the wire and tension unchanged, which quantity stays constant for forks of different frequency?",
+        "options": [
+          {
+            "id": "a",
+            "text": "f × L"
+          },
+          {
+            "id": "b",
+            "text": "f / L"
+          },
+          {
+            "id": "c",
+            "text": "f + L"
+          },
+          {
+            "id": "d",
+            "text": "f / L²"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Because f = v/2L, the product f × L = v/2 is the same for every fork, as long as the tension does not change."
+      },
+      {
+        "id": "q4",
+        "question": "The paper rider is thrown off the wire when:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The length of the wire equals one full wavelength"
+          },
+          {
+            "id": "b",
+            "text": "The fork has stopped vibrating"
+          },
+          {
+            "id": "c",
+            "text": "The natural frequency of the wire equals the frequency of the fork"
+          },
+          {
+            "id": "d",
+            "text": "The tension in the wire becomes zero"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "At resonance the wire vibrates with a large amplitude, which throws off the paper rider."
+      },
+      {
+        "id": "q5",
+        "question": "A 256 Hz fork resonates at L = 50 cm. An unknown fork resonates at L = 40 cm under the same tension. Its frequency is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "205 Hz"
+          },
+          {
+            "id": "b",
+            "text": "256 Hz"
+          },
+          {
+            "id": "c",
+            "text": "280 Hz"
+          },
+          {
+            "id": "d",
+            "text": "320 Hz"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "f × L is constant, so f = 256 × 50 / 40 = 320 Hz."
+      },
+      {
+        "id": "q6",
+        "question": "A graph of frequency f against 1/L for a wire at fixed tension is a straight line through the origin. Its slope equals:",
+        "options": [
+          {
+            "id": "a",
+            "text": "v"
+          },
+          {
+            "id": "b",
+            "text": "v / 2"
+          },
+          {
+            "id": "c",
+            "text": "2v"
+          },
+          {
+            "id": "d",
+            "text": "v²"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "f = (v/2)(1/L), so the slope of f against 1/L is v/2 and the wave speed is v = 2 × slope."
+      },
+      {
+        "id": "q7",
+        "question": "For the same fork, the tension in the wire is made four times larger. The resonant length becomes:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Four times"
+          },
+          {
+            "id": "b",
+            "text": "Half"
+          },
+          {
+            "id": "c",
+            "text": "Twice"
+          },
+          {
+            "id": "d",
+            "text": "Unchanged"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "L = (1/2f)√(T/μ), so L is proportional to √T. Four times the tension gives twice the length."
+      },
+      {
+        "id": "q8",
+        "question": "The sonometer wire is stretched over a hollow wooden box because the box:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Acts as a sounding board that makes the wire vibrate strongly"
+          },
+          {
+            "id": "b",
+            "text": "Reduces the tension in the wire"
+          },
+          {
+            "id": "c",
+            "text": "Makes the wire lighter"
+          },
+          {
+            "id": "d",
+            "text": "Insulates the wire from the fork"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The hollow box is a sounding board. It takes up the vibrations of the fork and passes them to the wire, and it makes the sound of the vibrating wire louder."
+      }
+    ],
+    "tags": ["sonometer", "tuning fork", "resonance", "frequency", "waves and sound", "stretched string", "3d", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-08T00:00:00.000Z",
+    "updatedAt": "2026-11-08T00:00:00.000Z"
   }
 ]

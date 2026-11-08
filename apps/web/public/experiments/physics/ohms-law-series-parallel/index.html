@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ohm's Law — V–I Graph, Series and Parallel Resistances</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Current Electricity</div>
+    <h1 class="disp">Ohm's law: <span class="thin">V–I graph, series and parallel</span></h1>
+    <p class="lede">Vary the current with a rheostat and read the voltmeter and ammeter. For a resistor, <b class="mono">V = I R</b>, so the V–I graph is a straight line through the origin with slope <b class="mono">R</b>. Then check how resistances combine in series and in parallel.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="bench" aria-label="Ohm's law circuit">
+    <svg id="apparatus" viewBox="0 0 900 380" role="img" aria-label="Circuit with a cell, key, rheostat, ammeter, resistors and a voltmeter">
+      <!-- main loop -->
+      <polyline points="60,60 140,60" class="lead"/>
+      <polyline points="60,185 60,60" class="lead"/>
+      <polyline points="60,200 60,320 760,320" class="lead"/>
+      <line x1="46" y1="185" x2="74" y2="185" class="plate long"/>
+      <line x1="52" y1="200" x2="68" y2="200" class="plate short"/>
+      <text x="86" y="198" class="lbl small" text-anchor="start">Cell 4.5 V</text>
+      <!-- key -->
+      <circle cx="140" cy="60" r="3.5" class="node"/>
+      <circle cx="190" cy="60" r="3.5" class="node"/>
+      <line x1="140" y1="60" x2="190" y2="60" class="lever"/>
+      <text x="165" y="42" class="lbl small" text-anchor="middle">Key K (closed)</text>
+      <!-- rheostat -->
+      <polyline points="190,60 240,60" class="lead"/>
+      <rect x="240" y="48" width="150" height="24" rx="3" class="box"/>
+      <line id="slide" x1="250" y1="46" x2="250" y2="30" class="slide"/>
+      <text id="rhLabel" x="315" y="94" class="lbl small" text-anchor="middle">Rheostat Rh = 5.0 Ω</text>
+      <polyline points="390,60 466,60" class="lead"/>
+      <!-- ammeter -->
+      <circle cx="500" cy="60" r="34" class="meter"/>
+      <g id="aScale"></g>
+      <line id="aNeedle" x1="500" y1="60" x2="500" y2="36" class="needle"/>
+      <circle cx="500" cy="60" r="3.5" class="pivot"/>
+      <text x="500" y="64" class="lbl" text-anchor="middle" style="display:none"></text>
+      <text x="500" y="18" class="lbl small" text-anchor="middle">Ammeter A</text>
+      <text id="aDigi" x="500" y="116" class="digi" text-anchor="middle">0.000 A</text>
+      <polyline points="534,60 760,60 760,110" class="lead"/>
+
+      <!-- voltmeter across the network -->
+      <polyline points="620,110 760,110" class="lead"/>
+      <polyline points="620,270 760,270" class="lead"/>
+      <polyline points="620,110 620,162" class="lead"/>
+      <polyline points="620,238 620,270" class="lead"/>
+      <circle cx="620" cy="200" r="38" class="meter"/>
+      <g id="vScale"></g>
+      <line id="vNeedle" x1="620" y1="200" x2="620" y2="174" class="needle"/>
+      <circle cx="620" cy="200" r="3.5" class="pivot"/>
+      <text x="620" y="258" class="lbl small" text-anchor="middle" style="display:none"></text>
+      <text x="548" y="204" class="lbl small" text-anchor="end">Voltmeter V</text>
+      <text id="vDigi" x="620" y="298" class="digi" text-anchor="middle">0.00 V</text>
+
+      <!-- network (drawn by script) -->
+      <g id="net"></g>
+      <polyline points="760,270 760,320" class="lead"/>
+    </svg>
+    <p class="bench-hint">The voltmeter is connected across the resistor network. The ammeter is in series with it. Change the rheostat to change the current.</p>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="grid">
+      <div class="ctl">
+        <div class="ctl-h">Connect</div>
+        <div class="chips" id="modeChips" role="group" aria-label="Choose resistor arrangement"></div>
+        <div class="mini" id="modeHint">—</div>
+      </div>
+      <div class="ctl">
+        <label for="rh" class="ctl-h">Rheostat <span class="mono" id="rhVal">5.0 Ω</span></label>
+        <input type="range" id="rh" min="0" max="10" step="0.5" value="5">
+        <div class="mini">Current <span class="mono" id="iNow">—</span> · voltage <span class="mono" id="vNow">—</span></div>
+      </div>
+      <div class="ctl wide">
+        <button type="button" class="btn primary" id="recordBtn">Take reading</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>For a metallic conductor at constant temperature the current is proportional to the potential difference across it (<b>Ohm's law</b>). The ratio V/I is the resistance R, and it does not depend on the current.</p>
+    <ul class="eqs mono">
+      <li>Single resistor: <b>V = I R</b>, so R = V / I (slope of the V–I graph)</li>
+      <li>In series: <b>R<sub>s</sub> = R₁ + R₂</b></li>
+      <li>In parallel: <b>1/R<sub>p</sub> = 1/R₁ + 1/R₂</b>, or R<sub>p</sub> = R₁R₂ / (R₁ + R₂)</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <p class="table-note muted" id="obsTitle">—</p>
+    <div class="tablewrap">
+      <table id="obs">
+        <thead><tr><th>Rh (Ω)</th><th>I (A)</th><th>V (V)</th><th>R = V / I (Ω)</th></tr></thead>
+        <tbody id="obsBody"></tbody>
+        <tfoot><tr><td colspan="3">Mean R</td><td class="mono" id="meanR">—</td></tr></tfoot>
+      </table>
+    </div>
+    <p class="resultline" id="resultLine"></p>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="resetAll">Clear this table</button>
+      <button type="button" class="btn sm" id="newSet">New resistors</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Summary of all four arrangements</h2>
+    <div class="tablewrap">
+      <table class="sumtable" id="sum">
+        <thead><tr><th>Arrangement</th><th>Readings</th><th>Measured R (Ω)</th><th>Expected (Ω)</th></tr></thead>
+        <tbody id="sumBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Graph</h2>
+    <p class="muted">Plot V against I for the arrangement selected above. This is a straight line through the origin whose slope is R.</p>
+    <canvas id="graph" width="640" height="380" aria-label="Graph of V against I"></canvas>
+    <p class="mono slope" id="slopeLine">Take at least 2 readings to see the best-fit line.</p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Connect the ammeter in series and the voltmeter in parallel, with the positive terminals towards the positive of the cell.</li>
+      <li>Check the zero error of both meters before starting.</li>
+      <li>Keep the key closed only while taking a reading, so that the resistor does not heat up and change its resistance.</li>
+      <li>Use the rheostat to keep the current small enough that the resistor does not become hot.</li>
+      <li>Take readings with the needle well deflected, not near the zero of the scale, to reduce the percentage error.</li>
+      <li>A real voltmeter draws a small current, so the measured resistance is very slightly less than the true value.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

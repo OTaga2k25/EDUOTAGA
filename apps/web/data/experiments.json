@@ -1540,5 +1540,255 @@
     "estimatedDurationMinutes": 25,
     "createdAt": "2026-11-08T00:00:00.000Z",
     "updatedAt": "2026-11-08T00:00:00.000Z"
+  },
+  {
+    "id": "ohms-law-series-parallel",
+    "slug": "ohms-law-series-parallel",
+    "title": "Ohm's Law: V–I Graph, Series and Parallel Resistances",
+    "subjectId": "current-electricity",
+    "categoryId": "physics",
+    "difficulty": "beginner",
+    "summary": "Vary the current with a rheostat, read a voltmeter and an ammeter, find an unknown resistance from the V–I graph, and verify the laws for resistors in series and in parallel.",
+    "theory": "**Ohm's law** states that, at constant temperature, the current I through a conductor is proportional to the potential difference V across its ends, so **V = I R**. The constant R is the **resistance** of the conductor, and the graph of V against I is a straight line through the origin whose slope is R. In the experiment a cell, a key, a rheostat and an **ammeter** are connected in series with the resistor, and a **voltmeter** is connected in parallel across it. The rheostat changes the current, and for each setting V and I are read. The ratio V / I is calculated for every reading and the mean is taken, which is checked against the slope of the graph. For two resistors in **series** the same current flows through both and the total resistance is **R_s = R₁ + R₂**. For two resistors in **parallel** the same potential difference is across both, and **1/R_p = 1/R₁ + 1/R₂**, so R_p = R₁R₂ / (R₁ + R₂), which is smaller than either resistance. The key is kept closed only while taking a reading, so that heating does not change the resistance. A real voltmeter draws a small current, so the value of V / I is very slightly smaller than the true resistance.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Connect R₁ alone",
+        "description": "Select R₁. The circuit shows the cell, key, rheostat, ammeter in series and the voltmeter across the resistor."
+      },
+      {
+        "order": 2,
+        "title": "Set the rheostat and take a reading",
+        "description": "Move the rheostat to a setting and press Take reading. The ammeter and voltmeter values are entered in the table with V / I."
+      },
+      {
+        "order": 3,
+        "title": "Repeat for at least five settings",
+        "description": "Change the rheostat to vary the current over a wide range. Keep the current below about 2 A so that the resistor does not heat up."
+      },
+      {
+        "order": 4,
+        "title": "Find R₁ from the table and the graph",
+        "description": "Read the mean V / I. Check it against the slope of the V–I graph, which is a straight line through the origin."
+      },
+      {
+        "order": 5,
+        "title": "Repeat for R₂",
+        "description": "Select R₂ and repeat the readings to find its resistance."
+      },
+      {
+        "order": 6,
+        "title": "Series and parallel",
+        "description": "Select Series and then Parallel and take readings for each. Compare the measured resistance with R₁ + R₂ and with R₁R₂/(R₁ + R₂) in the summary table."
+      },
+      {
+        "order": 7,
+        "title": "Check your answer",
+        "description": "Press Check my answer to see the actual resistances and your percentage errors. Press New resistors to practise with different values."
+      }
+    ],
+    "observation": "For each resistor, V / I is nearly the same for every rheostat setting, so the V–I graph is a straight line through the origin. The measured resistance of the series combination is close to R₁ + R₂ and is larger than either resistor. The measured resistance of the parallel combination is close to R₁R₂/(R₁ + R₂) and is smaller than either resistor.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "For a conductor obeying Ohm's law, the graph of potential difference V against current I is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "A curve through the origin"
+          },
+          {
+            "id": "b",
+            "text": "A straight line through the origin"
+          },
+          {
+            "id": "c",
+            "text": "A straight line parallel to the I axis"
+          },
+          {
+            "id": "d",
+            "text": "A straight line with a negative slope"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Ohm's law says V is proportional to I at constant temperature, so V–I is a straight line through the origin."
+      },
+      {
+        "id": "q2",
+        "question": "The slope of the V–I graph of a resistor gives its:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Conductance"
+          },
+          {
+            "id": "b",
+            "text": "Power"
+          },
+          {
+            "id": "c",
+            "text": "Resistance"
+          },
+          {
+            "id": "d",
+            "text": "Resistivity"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "V = I R, so the slope of V against I is the resistance R."
+      },
+      {
+        "id": "q3",
+        "question": "The ammeter and the voltmeter are connected, respectively:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Both in series"
+          },
+          {
+            "id": "b",
+            "text": "Both in parallel"
+          },
+          {
+            "id": "c",
+            "text": "In parallel and in series"
+          },
+          {
+            "id": "d",
+            "text": "In series and in parallel"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "The ammeter must carry the whole current, so it is in series. The voltmeter measures the potential difference across the resistor, so it is in parallel with it."
+      },
+      {
+        "id": "q4",
+        "question": "Two resistors of 4 Ω and 12 Ω are connected in series. The equivalent resistance is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "16 Ω"
+          },
+          {
+            "id": "b",
+            "text": "3 Ω"
+          },
+          {
+            "id": "c",
+            "text": "8 Ω"
+          },
+          {
+            "id": "d",
+            "text": "48 Ω"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "R_s = R₁ + R₂ = 4 + 12 = 16 Ω."
+      },
+      {
+        "id": "q5",
+        "question": "Two resistors of 6 Ω and 12 Ω are connected in parallel. The equivalent resistance is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "18 Ω"
+          },
+          {
+            "id": "b",
+            "text": "4 Ω"
+          },
+          {
+            "id": "c",
+            "text": "9 Ω"
+          },
+          {
+            "id": "d",
+            "text": "72 Ω"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "R_p = R₁R₂ / (R₁ + R₂) = 6 × 12 / 18 = 4 Ω."
+      },
+      {
+        "id": "q6",
+        "question": "The equivalent resistance of two resistors in parallel is always:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Greater than the larger resistance"
+          },
+          {
+            "id": "b",
+            "text": "Equal to the sum of the two"
+          },
+          {
+            "id": "c",
+            "text": "Equal to the mean of the two"
+          },
+          {
+            "id": "d",
+            "text": "Smaller than the smaller resistance"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "Each branch gives the current an extra path, so the combination conducts more easily than either resistor alone."
+      },
+      {
+        "id": "q7",
+        "question": "The key is kept closed only while taking a reading because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The current heats the resistor and changes its resistance"
+          },
+          {
+            "id": "b",
+            "text": "The cell would be short-circuited"
+          },
+          {
+            "id": "c",
+            "text": "The voltmeter would be damaged"
+          },
+          {
+            "id": "d",
+            "text": "The ammeter would read zero"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Heating raises the temperature of the resistor, so Ohm's law no longer holds with a constant R."
+      },
+      {
+        "id": "q8",
+        "question": "A real voltmeter has a very large but finite resistance. The measured value of V / I for a resistor is therefore:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Exactly equal to R"
+          },
+          {
+            "id": "b",
+            "text": "Very slightly less than R"
+          },
+          {
+            "id": "c",
+            "text": "Very slightly more than R"
+          },
+          {
+            "id": "d",
+            "text": "Exactly twice R"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The voltmeter takes a small current, so the ammeter reads slightly more than the current in the resistor. V / I is then slightly less than R."
+      }
+    ],
+    "tags": ["ohm's law", "v-i graph", "series", "parallel", "resistance", "ammeter", "voltmeter", "rheostat", "current electricity", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-11-08T00:00:00.000Z",
+    "updatedAt": "2026-11-08T00:00:00.000Z"
   }
 ]

@@ -70,5 +70,14 @@
     "categoryId": "physics",
     "icon": "atom",
     "color": "sky"
+  },
+  {
+    "id": "semiconductor-electronics",
+    "slug": "semiconductor-electronics",
+    "name": "Semiconductor Electronics",
+    "description": "Study p-n junction diodes, their forward and reverse characteristics, and other semiconductor devices.",
+    "categoryId": "physics",
+    "icon": "cpu",
+    "color": "purple"
   }
 ]

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>p-n Junction Diode — Forward and Reverse Bias Characteristics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Semiconductor Electronics</div>
+    <h1 class="disp">p-n junction diode: <span class="thin">forward and reverse bias characteristics</span></h1>
+    <p class="lede">Increase the voltage across a diode and read the current. In forward bias the current stays tiny until the <b class="mono">knee voltage</b>, then rises steeply. In reverse bias only a few microamperes flow. Find the knee voltage, the forward and reverse resistances, and tell whether the diode is silicon or germanium.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="bench" aria-label="Diode circuit">
+    <svg id="apparatus" viewBox="0 0 900 380" role="img" aria-label="Circuit with a battery, key, rheostat, protective resistor, ammeter, diode and voltmeter">
+      <!-- battery -->
+      <polyline points="60,185 60,60 110,60" class="lead"/>
+      <polyline points="60,200 60,320 760,320" class="lead"/>
+      <line x1="46" y1="185" x2="74" y2="185" class="plate long"/>
+      <line x1="52" y1="200" x2="68" y2="200" class="plate short"/>
+      <text x="80" y="178" class="lbl small" text-anchor="start">+</text>
+      <text id="batLabel" x="82" y="214" class="lbl small" text-anchor="start">Battery</text>
+      <!-- key -->
+      <circle cx="110" cy="60" r="3.5" class="node"/><circle cx="150" cy="60" r="3.5" class="node"/>
+      <line x1="110" y1="60" x2="150" y2="60" class="lever"/>
+      <text x="130" y="42" class="lbl small" text-anchor="middle">Key K</text>
+      <!-- rheostat (potential divider) -->
+      <polyline points="150,60 180,60" class="lead"/>
+      <rect x="180" y="48" width="140" height="24" rx="3" class="box"/>
+      <line id="slide" x1="190" y1="46" x2="190" y2="28" class="slide"/>
+      <text x="250" y="94" class="lbl small" text-anchor="middle">Rheostat (potential divider)</text>
+      <text id="vsLabel" x="250" y="112" class="lbl" text-anchor="middle">Supply 0.00 V</text>
+      <polyline points="320,60 360,60" class="lead"/>
+      <!-- protective resistor -->
+      <g id="rprot">
+        <rect x="360" y="50" width="70" height="20" rx="3" class="res"/>
+        <text x="395" y="38" class="lbl small" text-anchor="middle">R = 100 Ω</text>
+      </g>
+      <polyline id="rprotWire" points="360,60 430,60" class="lead" style="display:none"/>
+      <polyline points="430,60 496,60" class="lead"/>
+      <!-- ammeter -->
+      <circle cx="530" cy="60" r="34" class="meter"/>
+      <g id="aScale"></g>
+      <line id="aNeedle" x1="530" y1="60" x2="530" y2="36" class="needle"/>
+      <circle cx="530" cy="60" r="3.5" class="pivot"/>
+      <text id="aName" x="530" y="16" class="lbl small" text-anchor="middle">Milliammeter</text>
+      <text id="aDigi" x="530" y="116" class="digi" text-anchor="middle">0.0 mA</text>
+      <polyline points="564,60 760,60 760,110" class="lead"/>
+      <!-- diode -->
+      <polyline points="760,110 760,160" class="lead"/>
+      <polyline points="760,230 760,320" class="lead"/>
+      <g id="diode"></g>
+      <!-- voltmeter across the diode -->
+      <polyline points="620,110 760,110" class="lead"/>
+      <polyline points="620,270 760,270" class="lead"/>
+      <polyline points="620,110 620,162" class="lead"/>
+      <polyline points="620,238 620,270" class="lead"/>
+      <circle cx="620" cy="200" r="38" class="meter"/>
+      <g id="vScale"></g>
+      <line id="vNeedle" x1="620" y1="200" x2="620" y2="174" class="needle"/>
+      <circle cx="620" cy="200" r="3.5" class="pivot"/>
+      <text x="572" y="204" class="lbl small" text-anchor="end">Voltmeter V</text>
+      <text id="vDigi" x="620" y="298" class="digi" text-anchor="middle">0.000 V</text>
+      <polyline id="flow" points="110,60 760,60 760,320 60,320" class="flow" style="display:none"/>
+    </svg>
+    <p class="bench-hint" id="benchHint">Forward bias: the p side of the diode is connected to the positive terminal. The protective resistor limits the current.</p>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="grid">
+      <div class="ctl">
+        <div class="ctl-h">Bias</div>
+        <div class="chips" id="modeChips" role="group" aria-label="Choose forward or reverse bias">
+          <button type="button" class="chip" data-m="f">Forward bias</button>
+          <button type="button" class="chip" data-m="r">Reverse bias</button>
+        </div>
+        <div class="mini" id="modeHint">—</div>
+      </div>
+      <div class="ctl">
+        <label for="vs" class="ctl-h">Supply voltage <span class="mono" id="vsVal">0.00 V</span></label>
+        <input type="range" id="vs" min="0" max="3" step="0.05" value="0">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-d="-10">−−</button>
+          <button type="button" class="btn sm" data-d="-1">−</button>
+          <span class="readout mono" id="liveRead">—</span>
+          <button type="button" class="btn sm" data-d="1">+</button>
+          <button type="button" class="btn sm" data-d="10">++</button>
+        </div>
+      </div>
+      <div class="ctl wide">
+        <button type="button" class="btn primary" id="recordBtn">Take reading</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>A p-n junction has a depletion layer with a small potential barrier. In <b>forward bias</b> (p side to +) the applied voltage lowers the barrier. Very little current flows until the voltage reaches the barrier potential, the <b>knee (cut-in) voltage</b>: about 0.7 V for silicon and 0.3 V for germanium. Beyond it the current rises steeply. In <b>reverse bias</b> the barrier grows, and only a tiny reverse saturation current of minority carriers flows (nanoamperes for silicon, microamperes for germanium).</p>
+    <ul class="eqs mono">
+      <li>Knee voltage: extend the straight, steep part of the forward curve to meet the V axis</li>
+      <li>Forward (dynamic) resistance: <b>r<sub>f</sub> = ΔV / ΔI</b> on the steep part (a few ohms)</li>
+      <li>Reverse resistance: <b>r<sub>r</sub> = ΔV / ΔI</b> on the reverse curve (megaohms)</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="twotab">
+      <div>
+        <h3>Forward bias</h3>
+        <div class="tablewrap"><table><thead><tr><th>Sl.</th><th>V (V)</th><th>I (mA)</th></tr></thead><tbody id="fBody"></tbody></table></div>
+      </div>
+      <div>
+        <h3>Reverse bias</h3>
+        <div class="tablewrap"><table><thead><tr><th>Sl.</th><th>V (V)</th><th>I (µA)</th></tr></thead><tbody id="rBody"></tbody></table></div>
+      </div>
+    </div>
+    <div class="res3">
+      <div><b>Knee voltage</b><span id="kneeOut">—</span></div>
+      <div><b>Forward resistance</b><span id="rfOut">—</span></div>
+      <div><b>Reverse resistance</b><span id="rrOut">—</span></div>
+    </div>
+    <p class="resultline" id="resultLine"></p>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="resetAll">Clear this table</button>
+      <button type="button" class="btn sm" id="newDiode">New unknown diode</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Characteristic curve</h2>
+    <p class="muted">Forward readings are plotted in the first quadrant (mA) and reverse readings in the third quadrant (µA). The two quadrants use different scales, as in your record book.</p>
+    <canvas id="graph" width="640" height="420" aria-label="I-V characteristic of the diode"></canvas>
+    <p class="mono slope" id="slopeLine">Take readings in forward and reverse bias to draw the curve.</p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Always use a protective resistor in forward bias, or the current can rise enough to damage the diode.</li>
+      <li>Use a milliammeter in forward bias and a microammeter in reverse bias. Check the polarity of the meters.</li>
+      <li>Near the knee the current changes quickly, so increase the voltage in small steps there.</li>
+      <li>Do not exceed the safe current in forward bias, and keep the reverse voltage well below the breakdown voltage.</li>
+      <li>Take readings with the key closed only for a short time, so that the diode does not heat up.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

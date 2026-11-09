@@ -2285,5 +2285,250 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-09T00:00:00.000Z",
     "updatedAt": "2026-11-09T00:00:00.000Z"
+  },
+  {
+    "id": "pn-junction-diode",
+    "slug": "pn-junction-diode",
+    "title": "p-n Junction Diode: Forward and Reverse Bias Characteristics",
+    "subjectId": "semiconductor-electronics",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Plot the I–V characteristic of a p-n junction diode in forward and reverse bias, find the knee voltage and the forward and reverse resistances, and decide whether the diode is silicon or germanium.",
+    "theory": "A **p-n junction** has a thin depletion layer with a potential barrier. In **forward bias** (p side to the positive terminal) the barrier is lowered. Almost no current flows until the applied voltage reaches the **knee (cut-in) voltage**, about **0.7 V for silicon** and **0.3 V for germanium**; beyond it the current rises steeply.\n\nIn **reverse bias** (n side to the positive terminal) the barrier and the depletion layer grow. Only a very small **reverse saturation current** of minority carriers flows: nanoamperes for silicon and microamperes for germanium.\n\nThe **forward (dynamic) resistance r_f = ΔV/ΔI** is measured on the steep part of the forward curve and is a few ohms. The **reverse resistance r_r = ΔV/ΔI** on the reverse curve is of the order of megaohms. The knee voltage is found by extending the straight, steep part of the forward curve to meet the voltage axis.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Connect in forward bias",
+        "description": "Join the p side of the diode to the positive terminal through the rheostat, a 100 Ω protective resistor and a milliammeter. Connect the voltmeter across the diode."
+      },
+      {
+        "order": 2,
+        "title": "Take forward readings",
+        "description": "Raise the supply from zero in small steps and record the voltage V across the diode and the current I in mA. Take closer readings near the knee, up to about 25 mA."
+      },
+      {
+        "order": 3,
+        "title": "Connect in reverse bias",
+        "description": "Switch to reverse bias: the n side goes to the positive terminal and the milliammeter is replaced by a microammeter."
+      },
+      {
+        "order": 4,
+        "title": "Take reverse readings",
+        "description": "Increase the reverse voltage in steps of 2 V up to 20 V and record the reverse current in µA."
+      },
+      {
+        "order": 5,
+        "title": "Draw the characteristic",
+        "description": "Plot forward readings in the first quadrant (mA) and reverse readings in the third quadrant (µA) with different scales."
+      },
+      {
+        "order": 6,
+        "title": "Find the results",
+        "description": "Extend the steep part of the forward curve to the V axis for the knee voltage. Find r_f and r_r from ΔV/ΔI. Use the knee voltage to decide whether the diode is silicon or germanium."
+      }
+    ],
+    "observation": "Record V (V) and I (mA) in forward bias and V (V) and I (µA) in reverse bias. The forward current stays almost zero up to the knee and then rises steeply; the reverse current is tiny and grows slowly. Knee voltage about 0.7 V (Si) or 0.3 V (Ge); r_f a few ohms; r_r of the order of megaohms.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "In forward bias, the p side of the diode is connected to:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The negative terminal of the battery"
+          },
+          {
+            "id": "b",
+            "text": "The positive terminal of the battery"
+          },
+          {
+            "id": "c",
+            "text": "The microammeter only"
+          },
+          {
+            "id": "d",
+            "text": "Earth"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Forward bias means the p side is at a higher potential, so it is joined to the positive terminal."
+      },
+      {
+        "id": "q2",
+        "question": "The knee voltage of a silicon diode is about:",
+        "options": [
+          {
+            "id": "a",
+            "text": "0.1 V"
+          },
+          {
+            "id": "b",
+            "text": "0.3 V"
+          },
+          {
+            "id": "c",
+            "text": "1.5 V"
+          },
+          {
+            "id": "d",
+            "text": "0.7 V"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "Silicon has a barrier potential of about 0.7 V; germanium about 0.3 V."
+      },
+      {
+        "id": "q3",
+        "question": "Why is a protective resistor used in the forward bias circuit?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To limit the current and protect the diode"
+          },
+          {
+            "id": "b",
+            "text": "To increase the knee voltage"
+          },
+          {
+            "id": "c",
+            "text": "To measure the voltage"
+          },
+          {
+            "id": "d",
+            "text": "To make the diode conduct in reverse"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Beyond the knee the current rises very steeply; the series resistor limits it to a safe value."
+      },
+      {
+        "id": "q4",
+        "question": "In reverse bias, a microammeter is used instead of a milliammeter because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The reverse current is very large"
+          },
+          {
+            "id": "b",
+            "text": "The battery voltage is small"
+          },
+          {
+            "id": "c",
+            "text": "The reverse current is very small (µA or less)"
+          },
+          {
+            "id": "d",
+            "text": "The diode stops working"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Only a tiny reverse saturation current of minority carriers flows, which a milliammeter cannot read."
+      },
+      {
+        "id": "q5",
+        "question": "The forward (dynamic) resistance of a diode is found from:",
+        "options": [
+          {
+            "id": "a",
+            "text": "V/I at any single point"
+          },
+          {
+            "id": "b",
+            "text": "ΔV/ΔI on the steep part of the forward curve"
+          },
+          {
+            "id": "c",
+            "text": "ΔI/ΔV on the reverse curve"
+          },
+          {
+            "id": "d",
+            "text": "The knee voltage divided by 1 mA"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "r_f = ΔV/ΔI is the reciprocal of the slope of the steep, nearly straight part of the forward characteristic."
+      },
+      {
+        "id": "q6",
+        "question": "Compared with the forward resistance, the reverse resistance of a diode is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "About the same"
+          },
+          {
+            "id": "b",
+            "text": "Smaller"
+          },
+          {
+            "id": "c",
+            "text": "Zero"
+          },
+          {
+            "id": "d",
+            "text": "Much larger (megaohms)"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "A diode conducts easily in one direction only: r_f is a few ohms while r_r is of the order of megaohms."
+      },
+      {
+        "id": "q7",
+        "question": "In reverse bias, the width of the depletion layer:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Increases"
+          },
+          {
+            "id": "b",
+            "text": "Decreases"
+          },
+          {
+            "id": "c",
+            "text": "Becomes zero"
+          },
+          {
+            "id": "d",
+            "text": "Does not change"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The reverse voltage pulls the majority carriers away from the junction, widening the depletion layer and raising the barrier."
+      },
+      {
+        "id": "q8",
+        "question": "A diode has a knee voltage of 0.29 V and a reverse current of about 20 µA at 10 V. It is most likely made of:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Silicon"
+          },
+          {
+            "id": "b",
+            "text": "Germanium"
+          },
+          {
+            "id": "c",
+            "text": "Copper"
+          },
+          {
+            "id": "d",
+            "text": "Carbon"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "A low knee voltage (about 0.3 V) and a reverse current of microamperes are typical of germanium."
+      }
+    ],
+    "tags": ["p-n junction", "diode", "forward bias", "reverse bias", "knee voltage", "characteristic curve", "semiconductor", "silicon", "germanium", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-09T00:00:00.000Z",
+    "updatedAt": "2026-11-09T00:00:00.000Z"
   }
 ]

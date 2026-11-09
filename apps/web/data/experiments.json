@@ -2775,5 +2775,250 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-09T00:00:00.000Z",
     "updatedAt": "2026-11-09T00:00:00.000Z"
+  },
+  {
+    "id": "zener-diode",
+    "slug": "zener-diode",
+    "title": "Zener Diode: I–V Characteristic and Reverse Breakdown Voltage",
+    "subjectId": "semiconductor-electronics",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Draw the forward and reverse characteristics of a Zener diode, find its breakdown (Zener) voltage from the graph, and see how it holds the voltage steady as a voltage regulator.",
+    "theory": "A **Zener diode** is a heavily doped p-n junction designed to work in **reverse breakdown**. In **forward bias** it behaves like an ordinary silicon diode, with a knee near **0.7 V**.\n\nIn **reverse bias** only a tiny current flows until the reverse voltage reaches the **Zener voltage V_Z**. Because heavy doping makes the depletion layer very thin, the electric field there is strong enough to break covalent bonds (**Zener breakdown**), and the reverse current rises sharply.\n\nBeyond breakdown the **voltage across the diode stays almost constant at V_Z** over a wide range of current. Any extra supply voltage appears across the **series resistor**, which also limits the current: **V_supply = V_Z + I R**. This makes the Zener diode a **voltage regulator**. The small **dynamic resistance r_Z = ΔV/ΔI** after breakdown measures how well it regulates.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Forward bias",
+        "description": "Connect the p side to the positive terminal through the 220 Ω series resistor and a milliammeter, with a voltmeter across the Zener diode."
+      },
+      {
+        "order": 2,
+        "title": "Take forward readings",
+        "description": "Raise the supply from zero up to 5 V and record V and I. Note the knee near 0.7 V."
+      },
+      {
+        "order": 3,
+        "title": "Reverse bias",
+        "description": "Switch to reverse bias so that the n side (the banded end) goes to the positive terminal."
+      },
+      {
+        "order": 4,
+        "title": "Take reverse readings",
+        "description": "Raise the supply in small steps up to 12 V. Record V and I, taking closer readings where the current begins to rise sharply."
+      },
+      {
+        "order": 5,
+        "title": "Notice the regulation",
+        "description": "After breakdown, see that the voltage across the Zener hardly changes while the current keeps increasing."
+      },
+      {
+        "order": 6,
+        "title": "Draw the curve and find V_Z",
+        "description": "Plot forward readings in the first quadrant and reverse readings in the third. Extend the steep breakdown part to the V axis to get V_Z, and compare it with standard ratings."
+      }
+    ],
+    "observation": "In reverse bias the current is nearly zero until the breakdown voltage and then rises steeply, while the voltage stays almost constant. The Zener voltage V_Z is read where the steep part meets the voltage axis. The forward characteristic shows a knee at about 0.7 V.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "A Zener diode is normally operated in:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Forward bias"
+          },
+          {
+            "id": "b",
+            "text": "Reverse bias beyond the breakdown voltage"
+          },
+          {
+            "id": "c",
+            "text": "Reverse bias below the breakdown voltage"
+          },
+          {
+            "id": "d",
+            "text": "Zero bias"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "A Zener is designed to work in the reverse breakdown region, where its voltage stays nearly constant."
+      },
+      {
+        "id": "q2",
+        "question": "After breakdown, as the reverse current through a Zener diode increases, the voltage across it:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Increases sharply"
+          },
+          {
+            "id": "b",
+            "text": "Falls to zero"
+          },
+          {
+            "id": "c",
+            "text": "Remains nearly constant"
+          },
+          {
+            "id": "d",
+            "text": "Reverses its sign"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "In breakdown the voltage stays almost equal to V_Z over a wide range of current. This is the basis of voltage regulation."
+      },
+      {
+        "id": "q3",
+        "question": "Zener breakdown occurs in a heavily doped junction because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The thin depletion layer has a very strong electric field"
+          },
+          {
+            "id": "b",
+            "text": "The junction melts"
+          },
+          {
+            "id": "c",
+            "text": "Holes stop moving"
+          },
+          {
+            "id": "d",
+            "text": "The forward current is large"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Heavy doping makes the depletion layer thin, so even a few volts give a field strong enough to pull electrons out of covalent bonds."
+      },
+      {
+        "id": "q4",
+        "question": "Why is a resistor connected in series with a Zener diode in the circuit?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To raise the breakdown voltage"
+          },
+          {
+            "id": "b",
+            "text": "To make the diode conduct in forward bias"
+          },
+          {
+            "id": "c",
+            "text": "To measure the voltage"
+          },
+          {
+            "id": "d",
+            "text": "To limit the current after breakdown"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "Beyond breakdown the diode voltage stays near V_Z, so without a series resistor the current could rise enough to destroy it."
+      },
+      {
+        "id": "q5",
+        "question": "In the Zener circuit, the supply is 10 V, V_Z = 6.2 V and the series resistance is 220 Ω. The current is about:",
+        "options": [
+          {
+            "id": "a",
+            "text": "45 mA"
+          },
+          {
+            "id": "b",
+            "text": "17 mA"
+          },
+          {
+            "id": "c",
+            "text": "28 mA"
+          },
+          {
+            "id": "d",
+            "text": "6 mA"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "I = (10 − 6.2) / 220 = 0.0173 A ≈ 17 mA."
+      },
+      {
+        "id": "q6",
+        "question": "In forward bias, a silicon Zener diode:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Never conducts"
+          },
+          {
+            "id": "b",
+            "text": "Breaks down at V_Z"
+          },
+          {
+            "id": "c",
+            "text": "Conducts like an ordinary diode after about 0.7 V"
+          },
+          {
+            "id": "d",
+            "text": "Conducts at any voltage with a constant current"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "In forward bias a Zener behaves like an ordinary silicon diode, with a knee near 0.7 V."
+      },
+      {
+        "id": "q7",
+        "question": "The breakdown voltage V_Z is found from the characteristic by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Extending the steep reverse breakdown part of the curve to the voltage axis"
+          },
+          {
+            "id": "b",
+            "text": "Reading the forward knee voltage"
+          },
+          {
+            "id": "c",
+            "text": "Dividing the supply voltage by 2"
+          },
+          {
+            "id": "d",
+            "text": "Finding the largest forward current"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The nearly vertical breakdown part, extended to meet the V axis, gives V_Z."
+      },
+      {
+        "id": "q8",
+        "question": "A common use of a Zener diode is as a:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Rectifier for large currents"
+          },
+          {
+            "id": "b",
+            "text": "Light source"
+          },
+          {
+            "id": "c",
+            "text": "Amplifier"
+          },
+          {
+            "id": "d",
+            "text": "Voltage regulator"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "Because its voltage stays nearly constant in breakdown, a Zener keeps the output voltage steady when the input or load changes."
+      }
+    ],
+    "tags": ["zener diode", "breakdown voltage", "reverse bias", "voltage regulator", "characteristic curve", "semiconductor", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-09T00:00:00.000Z",
+    "updatedAt": "2026-11-09T00:00:00.000Z"
   }
 ]

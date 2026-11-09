@@ -1043,7 +1043,7 @@
   },
   {
     "id": "sonometer-frequency-of-tuning-fork",
-    "slug": "sonometer-frequency-of-tuning-fork",
+    "slug": "sonometer-3d",
     "title": "Sonometer (3D): Frequency of a Tuning Fork",
     "subjectId": "waves-and-sound",
     "categoryId": "physics",
@@ -1793,7 +1793,7 @@
   },
   {
     "id": "convex-lens-focal-length-uv",
-    "slug": "convex-lens-focal-length-uv",
+    "slug": "lens-focal-length-3d",
     "title": "Convex Lens (3D): Focal Length by the u–v Method",
     "subjectId": "light-reflection-refraction",
     "categoryId": "physics",
@@ -2040,5 +2040,250 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-08T00:00:00.000Z",
     "updatedAt": "2026-11-08T00:00:00.000Z"
+  },
+  {
+    "id": "prism-minimum-deviation-3d",
+    "slug": "prism-minimum-deviation-3d",
+    "title": "Prism (3D): Angle of Minimum Deviation and Refractive Index",
+    "subjectId": "light-reflection-refraction",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Turn a 60° glass prism on a drawing board in 3D, read the deviation of the emergent ray on a protractor, plot the i–δ curve, find the minimum deviation and calculate the refractive index.",
+    "theory": "When a ray of light passes through a prism it bends towards the base, and the angle between the incident ray and the emergent ray is the **angle of deviation δ**. For a prism of angle A, **δ = i + e − A**, where i is the angle of incidence and e the angle of emergence.\n\nAs i is increased, δ first decreases, reaches a **minimum deviation D**, and then increases again. At minimum deviation the ray passes symmetrically through the prism: **i = e** and **r₁ = r₂ = A/2**, and the ray inside is parallel to the base.\n\nApplying Snell's law at the first face with i = (A + D)/2 and r = A/2 gives the **refractive index n = sin((A + D)/2) / sin(A/2)**. For A = 60° this becomes n = sin(30° + D/2) / sin 30°.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Set up the prism",
+        "description": "Place the prism on the drawing board with its refracting edge upright. The prism angle is A = 60°. A narrow beam from the light source falls on the first face at the point marked M₁."
+      },
+      {
+        "order": 2,
+        "title": "Choose the angle of incidence",
+        "description": "Turn the prism with the slider or by dragging it. Start at about i = 35° and increase in steps of about 5°."
+      },
+      {
+        "order": 3,
+        "title": "Read the deviation",
+        "description": "Read δ on the protractor where the emergent ray crosses the scale. This is the angle between the emergent ray and the straight-on direction of the incident ray."
+      },
+      {
+        "order": 4,
+        "title": "Record readings",
+        "description": "Press Record i and δ. Take at least ten readings, with smaller steps near the lowest δ where the emergent ray hardly moves."
+      },
+      {
+        "order": 5,
+        "title": "Find the minimum",
+        "description": "Study the i–δ graph. The lowest point of the smooth curve gives the minimum deviation D and the angle of incidence at which i = e."
+      },
+      {
+        "order": 6,
+        "title": "Calculate n",
+        "description": "Use n = sin((A + D)/2) / sin(A/2). Press New unknown prism and repeat to practise with a different glass."
+      }
+    ],
+    "observation": "Angle of the prism A = 60°. Record i and δ for about ten angles of incidence from 35° to 70°. The graph of δ against i is a U-shaped curve. The minimum deviation D is read at its lowest point, and n = sin((A + D)/2) / sin(A/2). Typical glass gives n between 1.48 and 1.66.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "A ray passes through a prism. The angle between the incident ray and the emergent ray is called the:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Angle of refraction"
+          },
+          {
+            "id": "b",
+            "text": "Angle of deviation"
+          },
+          {
+            "id": "c",
+            "text": "Angle of emergence"
+          },
+          {
+            "id": "d",
+            "text": "Critical angle"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The angle through which the ray is turned from its original direction is the angle of deviation δ."
+      },
+      {
+        "id": "q2",
+        "question": "When the angle of incidence i is increased from a small value, the deviation δ:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Keeps increasing"
+          },
+          {
+            "id": "b",
+            "text": "Keeps decreasing"
+          },
+          {
+            "id": "c",
+            "text": "First decreases to a minimum, then increases"
+          },
+          {
+            "id": "d",
+            "text": "Stays constant"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "The i–δ curve is U-shaped: δ falls, reaches the minimum deviation D, and then rises."
+      },
+      {
+        "id": "q3",
+        "question": "At the position of minimum deviation:",
+        "options": [
+          {
+            "id": "a",
+            "text": "i = e and r₁ = r₂"
+          },
+          {
+            "id": "b",
+            "text": "i = r₁ and e = r₂ only"
+          },
+          {
+            "id": "c",
+            "text": "i = A"
+          },
+          {
+            "id": "d",
+            "text": "e = 0"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "At minimum deviation the ray passes symmetrically, so the angle of emergence equals the angle of incidence and r₁ = r₂ = A/2."
+      },
+      {
+        "id": "q4",
+        "question": "At minimum deviation, the ray inside the prism is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Along the normal to the second face"
+          },
+          {
+            "id": "b",
+            "text": "Reflected from the second face"
+          },
+          {
+            "id": "c",
+            "text": "Perpendicular to the base"
+          },
+          {
+            "id": "d",
+            "text": "Parallel to the base"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "Since r₁ = r₂ the ray inside makes equal angles with both faces, so it runs parallel to the base."
+      },
+      {
+        "id": "q5",
+        "question": "The refractive index of the prism material in terms of the prism angle A and the minimum deviation D is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "sin A / sin D"
+          },
+          {
+            "id": "b",
+            "text": "sin((A + D)/2) / sin(A/2)"
+          },
+          {
+            "id": "c",
+            "text": "sin(A/2) / sin((A + D)/2)"
+          },
+          {
+            "id": "d",
+            "text": "cos((A + D)/2) / cos(A/2)"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Putting i = (A + D)/2 and r = A/2 in Snell's law gives n = sin((A + D)/2) / sin(A/2)."
+      },
+      {
+        "id": "q6",
+        "question": "For a prism of angle 60° the minimum deviation is 37°. The refractive index is nearly:",
+        "options": [
+          {
+            "id": "a",
+            "text": "1.73"
+          },
+          {
+            "id": "b",
+            "text": "1.41"
+          },
+          {
+            "id": "c",
+            "text": "1.50"
+          },
+          {
+            "id": "d",
+            "text": "1.62"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "n = sin((60° + 37°)/2) / sin 30° = sin 48.5° / 0.5 = 1.50."
+      },
+      {
+        "id": "q7",
+        "question": "If the angle of incidence is made too small, the ray may not emerge from the second face. This is due to:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Diffraction"
+          },
+          {
+            "id": "b",
+            "text": "Polarisation"
+          },
+          {
+            "id": "c",
+            "text": "Dispersion"
+          },
+          {
+            "id": "d",
+            "text": "Total internal reflection"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "Inside the glass the ray meets the second face at more than the critical angle, so it is totally reflected."
+      },
+      {
+        "id": "q8",
+        "question": "Why are several readings taken near the lowest point of the i–δ graph, and a smooth curve drawn through them?",
+        "options": [
+          {
+            "id": "a",
+            "text": "The curve is flat there, so the minimum is found more reliably from the smooth curve than from one reading"
+          },
+          {
+            "id": "b",
+            "text": "The deviation is largest there"
+          },
+          {
+            "id": "c",
+            "text": "The prism angle changes there"
+          },
+          {
+            "id": "d",
+            "text": "The ray becomes parallel to the normal there"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Near the minimum δ changes very little with i, so single readings are close together; the lowest point of the smooth curve gives D reliably."
+      }
+    ],
+    "tags": ["prism", "minimum deviation", "refractive index", "angle of deviation", "refraction", "ray optics", "i-delta curve", "3d", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-09T00:00:00.000Z",
+    "updatedAt": "2026-11-09T00:00:00.000Z"
   }
 ]

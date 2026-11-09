@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prism (3D) — Angle of Minimum Deviation and Refractive Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Ray Optics · 3D</div>
+    <h1 class="disp">Glass prism: <span class="thin">angle of minimum deviation</span></h1>
+    <p class="lede">Turn a prism of angle <b class="mono">A = 60°</b> and watch the emergent ray. The deviation <b class="mono">δ</b> first falls, reaches a minimum <b class="mono">D</b>, then rises. The refractive index is <b class="mono">n = sin((A + D)/2) / sin(A/2)</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="stage" id="stage" aria-label="3D prism table">
+    <div class="view" id="view"></div>
+    <div class="hud">
+      <div class="views" role="group" aria-label="Camera views">
+        <button type="button" data-view="overview">Overview</button>
+        <button type="button" data-view="top">Top view</button>
+        <button type="button" data-view="side">Side view</button>
+        <button type="button" class="fsbtn" id="fsBtn">Full screen</button>
+      </div>
+      <div class="hudtags"><div class="ltag" id="iTag">i = 50.0°</div><div class="ltag v" id="dTag">δ = 47.0°</div></div>
+    </div>
+    <p class="stage-hint">Drag the prism to turn it · drag the background to rotate the view · scroll or pinch to zoom</p>
+    <p class="rotatehint">Tap “Full screen” and turn your phone sideways for a bigger view</p>
+    <div class="nogl">3D view is not available on this device, but you can still do the whole experiment with the controls below.</div>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="grid">
+      <div class="ctl">
+        <label for="iSl" class="ctl-h">Angle of incidence i</label>
+        <input type="range" id="iSl" min="30" max="75" step="0.1" value="50">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-d="-1">−1°</button>
+          <button type="button" class="btn sm" data-d="-0.1">−0.1°</button>
+          <span class="readout mono"><span id="iVal">50.0</span>°</span>
+          <button type="button" class="btn sm" data-d="0.1">+0.1°</button>
+          <button type="button" class="btn sm" data-d="1">+1°</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <div class="ctl-h">Deviation read from the protractor</div>
+        <div class="bigread mono"><span id="dVal">47.0</span>°</div>
+        <div class="mini" id="trend"></div>
+        <button type="button" class="btn primary" id="recordBtn">Record i and δ</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>Light bends towards the normal on entering the glass and away from it on leaving, so the ray is turned towards the base of the prism. The angle between the incident ray and the emergent ray is the angle of deviation δ. It depends on the angle of incidence i.</p>
+    <ul class="eqs mono">
+      <li>Deviation: <b>δ = i + e − A</b> (e is the angle of emergence)</li>
+      <li>At minimum deviation: <b>i = e</b> and <b>r₁ = r₂ = A/2</b>, and the ray inside is parallel to the base</li>
+      <li>Refractive index: <b>n = sin((A + D)/2) / sin(A/2)</b>, where D is the minimum deviation</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap">
+      <table id="obs">
+        <thead><tr><th>Sl. no.</th><th>i (°)</th><th>δ (°)</th></tr></thead>
+        <tbody id="obsBody"></tbody>
+      </table>
+    </div>
+    <p class="resultline" id="resultLine"></p>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="resetAll">Clear readings</button>
+      <button type="button" class="btn sm" id="newPrism">New unknown prism</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Graph of δ against i</h2>
+    <canvas id="graph1" width="640" height="420" aria-label="Graph of deviation against angle of incidence" style="width:100%"></canvas>
+    <p class="mono slope" id="slopeLine">Record at least 5 readings on both sides of the minimum to see the curve.</p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Fix the prism on the drawing board with its refracting edge perpendicular to the paper, and mark its outline before removing it.</li>
+      <li>Use bright, thin pins (or a narrow beam) and keep the ray close to the base of the prism where it passes through the glass.</li>
+      <li>Take readings for i from about 35° to 70° so that the curve falls, turns and rises again, with at least five points near the minimum.</li>
+      <li>Near the minimum the emergent ray hardly moves, so take readings at small steps there and fit the smooth curve through the points.</li>
+      <li>If the angle of incidence is too small, the ray cannot leave the second face because of total internal reflection. Increase i.</li>
+      <li>Read the deviation at the lowest point of the curve, not from the lowest single reading.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

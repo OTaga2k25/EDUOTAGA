@@ -2530,5 +2530,250 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-09T00:00:00.000Z",
     "updatedAt": "2026-11-09T00:00:00.000Z"
+  },
+  {
+    "id": "concave-mirror-3d",
+    "slug": "concave-mirror-3d",
+    "title": "Concave Mirror (3D): Focal Length by the u–v Method",
+    "subjectId": "light-reflection-refraction",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Set up a lit object, a concave mirror and a screen on a 3D optical bench, focus the inverted real image for several object distances, and find the focal length from f = uv/(u + v) and the 1/u–1/v graph.",
+    "theory": "A **concave mirror** converges light. When an object is placed beyond its focus, a **real, inverted image** forms in front of the mirror and can be caught on a screen placed on the same side as the object.\n\nThe distances are related by the **mirror formula 1/v + 1/u = 1/f**. With the Cartesian sign convention u, v and f are all negative for a real image, so in magnitudes **f = uv/(u + v)**. The **radius of curvature is R = 2f**.\n\nWhen the object is at the **centre of curvature (u = 2f)** the image also forms there, so u = v = 2f. A graph of v against u is a rectangular hyperbola, and a graph of **1/v against 1/u is a straight line** cutting both axes at 1/f.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Find a rough focal length",
+        "description": "Focus the image of a distant object on the screen. The distance from the mirror to the screen is roughly f. Here the hidden mirror has f between 10 and 20 cm."
+      },
+      {
+        "order": 2,
+        "title": "Place the object",
+        "description": "Set the object at a distance u from the mirror, beyond the focus. Start at about 1.5 f."
+      },
+      {
+        "order": 3,
+        "title": "Focus the image",
+        "description": "Slide the screen until the inverted image of the arrow is sharpest. Move it a little either side and settle on the middle of the sharp range."
+      },
+      {
+        "order": 4,
+        "title": "Record u and v",
+        "description": "Read u and v on the bench scale and press Record u and v. The table works out f = uv/(u + v)."
+      },
+      {
+        "order": 5,
+        "title": "Repeat",
+        "description": "Repeat for at least five values of u between 1.5 f and 3 f, including one where u and v are nearly equal."
+      },
+      {
+        "order": 6,
+        "title": "Graphs and result",
+        "description": "Find the mean f. Plot v against u and 1/v against 1/u; the intercepts of the straight line give 1/f. Then R = 2f."
+      }
+    ],
+    "observation": "For each object distance u, record the image distance v at best focus, and calculate f = uv/(u + v). The values of f agree closely; their mean is the focal length. The 1/v–1/u graph is a straight line with slope about −1 and intercept 1/f on both axes. R = 2f.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "For a concave mirror, the mirror formula is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "1/v − 1/u = 1/f"
+          },
+          {
+            "id": "b",
+            "text": "1/v + 1/u = 1/f"
+          },
+          {
+            "id": "c",
+            "text": "v + u = f"
+          },
+          {
+            "id": "d",
+            "text": "v − u = f"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "For mirrors, 1/v + 1/u = 1/f, with all distances measured from the pole using the sign convention."
+      },
+      {
+        "id": "q2",
+        "question": "A concave mirror forms a real image on a screen only when the object is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Between the pole and the focus"
+          },
+          {
+            "id": "b",
+            "text": "At the pole"
+          },
+          {
+            "id": "c",
+            "text": "Beyond the focus"
+          },
+          {
+            "id": "d",
+            "text": "Behind the mirror"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "If the object is inside the focal length the reflected rays diverge, and only a virtual image forms behind the mirror."
+      },
+      {
+        "id": "q3",
+        "question": "When the object is at the centre of curvature, the image is formed:",
+        "options": [
+          {
+            "id": "a",
+            "text": "At the focus"
+          },
+          {
+            "id": "b",
+            "text": "At infinity"
+          },
+          {
+            "id": "c",
+            "text": "Behind the mirror"
+          },
+          {
+            "id": "d",
+            "text": "At the centre of curvature itself"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "With u = 2f the mirror formula gives v = 2f, so object and image coincide in position at C."
+      },
+      {
+        "id": "q4",
+        "question": "The radius of curvature R of a spherical mirror is related to its focal length f by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "R = 2f"
+          },
+          {
+            "id": "b",
+            "text": "R = f/2"
+          },
+          {
+            "id": "c",
+            "text": "R = f"
+          },
+          {
+            "id": "d",
+            "text": "R = f²"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "For a spherical mirror of small aperture, f = R/2."
+      },
+      {
+        "id": "q5",
+        "question": "In the u–v method for a concave mirror, the real image on the screen is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Upright and virtual"
+          },
+          {
+            "id": "b",
+            "text": "Inverted and real"
+          },
+          {
+            "id": "c",
+            "text": "Upright and real"
+          },
+          {
+            "id": "d",
+            "text": "Always smaller than the object"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "A real image formed by a concave mirror is always inverted. It can be larger or smaller than the object."
+      },
+      {
+        "id": "q6",
+        "question": "A student records u = 30 cm and v = 20 cm for a concave mirror. The focal length is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "50 cm"
+          },
+          {
+            "id": "b",
+            "text": "10 cm"
+          },
+          {
+            "id": "c",
+            "text": "12 cm"
+          },
+          {
+            "id": "d",
+            "text": "25 cm"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "f = uv/(u + v) = (30 × 20)/50 = 12 cm."
+      },
+      {
+        "id": "q7",
+        "question": "With the Cartesian sign convention, the focal length of a concave mirror is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Negative"
+          },
+          {
+            "id": "b",
+            "text": "Positive"
+          },
+          {
+            "id": "c",
+            "text": "Zero"
+          },
+          {
+            "id": "d",
+            "text": "Infinite"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The focus of a concave mirror lies in front of it, against the direction of the incident light, so f is negative."
+      },
+      {
+        "id": "q8",
+        "question": "A quick way to find the rough focal length of a concave mirror before the experiment is to:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Measure the diameter of the mirror"
+          },
+          {
+            "id": "b",
+            "text": "Touch the mirror surface"
+          },
+          {
+            "id": "c",
+            "text": "Use the mirror to view your face closely"
+          },
+          {
+            "id": "d",
+            "text": "Focus the image of a distant object, such as a window, on a screen"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "Rays from a distant object are nearly parallel, so their image forms at the focus; the mirror-to-screen distance is then about f."
+      }
+    ],
+    "tags": ["concave mirror", "focal length", "u-v method", "mirror formula", "real image", "radius of curvature", "ray optics", "optical bench", "3d", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-09T00:00:00.000Z",
+    "updatedAt": "2026-11-09T00:00:00.000Z"
   }
 ]

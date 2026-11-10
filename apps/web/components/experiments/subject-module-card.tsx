@@ -97,6 +97,10 @@ export function SubjectModuleCard({
     'bg-neo-yellow dark:bg-neo-yellow';
 
   const subjectHref = subjectSlug ? `/subjects/${subjectSlug}` : undefined;
+  // Keep every card short: show a few labs and link to the subject page for the rest
+  const MAX_SHOWN = 3;
+  const shownExperiments = subjectHref ? experiments.slice(0, MAX_SHOWN) : experiments;
+  const hiddenCount = experiments.length - shownExperiments.length;
   const hasNewExperiment = experiments.some((exp) => Boolean(exp.isNew || exp.slug === 'ESP_Prototyping'));
 
   return (
@@ -152,60 +156,43 @@ export function SubjectModuleCard({
             <span>{experiments.length}</span>
           </div>
 
-          <div className="flex flex-col gap-3">
-            {experiments.map((exp) => {
+          <div className="flex flex-col gap-2">
+            {shownExperiments.map((exp) => {
               const isNew = Boolean(exp.isNew || exp.slug === 'ESP_Prototyping');
               return (
                 <Link
                   key={exp.id}
                   href={`/experiments/${exp.slug}`}
-                  className={`group/exp relative block overflow-hidden rounded-lg border-2 border-black p-3.5 transition-all hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:border-white/40 dark:hover:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.7)] ${
+                  title={exp.title}
+                  className={`group/exp flex items-center gap-2 rounded-lg border-2 border-black px-3 py-2.5 transition-all hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:border-white/40 dark:hover:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.7)] ${
                     isNew
-                      ? 'bg-[#ffde59]/10 border-black dark:border-white dark:bg-[#ffde59]/15 hover:bg-[#ffde59]/20'
+                      ? 'bg-[#ffde59]/10 hover:bg-[#ffde59]/20 dark:bg-[#ffde59]/15'
                       : 'bg-black/[0.02] hover:bg-black/[0.05] dark:bg-white/[0.03] dark:hover:bg-white/[0.07]'
                   }`}
                 >
-                  {/* ── Corner Ribbon ── */}
+                  <h4 className="text-foreground group-hover/exp:text-primary min-w-0 flex-1 line-clamp-2 text-sm leading-snug font-black transition-colors">
+                    {exp.title}
+                  </h4>
                   {isNew && (
-                    <div className="absolute top-0 right-0 overflow-hidden w-20 h-20 pointer-events-none z-10">
-                      <div className="absolute transform rotate-45 bg-[#ffde59] text-black font-black text-[9px] py-1 right-[-28px] top-[14px] w-[95px] text-center border-y-2 border-black shadow-[0_2px_0_rgba(0,0,0,0.3)] tracking-wider uppercase">
-                        ★ NEW ★
-                      </div>
-                    </div>
-                  )}
-
-                  <div className={isNew ? 'pr-12' : ''}>
-                    <h4 className="text-foreground group-hover/exp:text-primary text-sm leading-snug font-black transition-colors">
-                      {exp.title}
-                    </h4>
-                  </div>
-
-                  {exp.summary && (
-                    <p className="text-muted mt-1.5 line-clamp-2 text-xs leading-relaxed font-medium">
-                      {exp.summary}
-                    </p>
-                  )}
-
-                  <div className="mt-3 flex items-center justify-between border-t border-black/10 pt-2 dark:border-white/10">
-                    <span className="text-muted max-w-[150px] truncate text-[11px] font-bold">
-                      {isNew ? (
-                        <span className="inline-flex items-center gap-1 font-black text-amber-700 dark:text-amber-300">
-                          <Sparkles className="h-3 w-3 fill-current" />
-                          Newly Added
-                        </span>
-                      ) : (
-                        'Interactive Lab'
-                      )}
+                    <span className="shrink-0 rounded-full border-2 border-black bg-[#ffde59] px-1.5 py-px text-[9px] font-black tracking-wider text-black uppercase dark:border-white">
+                      New
                     </span>
-                    <span className="text-primary inline-flex items-center gap-1 text-xs font-black group-hover/exp:underline">
-                      Launch Lab
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/exp:translate-x-1" />
-                    </span>
-                  </div>
+                  )}
+                  <ArrowRight className="text-primary h-4 w-4 shrink-0 transition-transform group-hover/exp:translate-x-1" />
                 </Link>
               );
             })}
           </div>
+
+          {hiddenCount > 0 && subjectHref && (
+            <Link
+              href={subjectHref}
+              className="text-primary mt-2 inline-flex items-center gap-1 text-xs font-black hover:underline"
+            >
+              +{hiddenCount} more {hiddenCount === 1 ? 'lab' : 'labs'}
+              <span aria-hidden="true">→</span>
+            </Link>
+          )}
         </div>
       </div>
 

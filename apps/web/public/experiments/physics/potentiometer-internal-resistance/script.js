@@ -334,6 +334,29 @@ if (typeof document !== 'undefined') {
       el.className = 'status' + (st.kind ? ' ' + st.kind : '');
     }
 
+    function renderChecks(items) {
+      var list = $('checks'); list.innerHTML = '';
+      items.forEach(function (c) { var li = document.createElement('li'); li.className = c.k; li.textContent = c.t; list.appendChild(li); });
+      $('checksH').hidden = !items.length;
+    }
+    // Checks on the recorded readings, so the student knows what to improve
+    function readingChecks() {
+      var out = [], rows = rowsDerived(), n = rows.length;
+      if (state.l1 === null) return out;
+      if (state.l1 < Pot.L / 2) out.push({ k: 'warn', t: 'l₁ = ' + fmt(state.l1, 1) + ' cm is less than half the wire, so each length has a larger percentage error. Increase the rheostat resistance a little (smaller potential gradient) so the balance point moves further along the wire, but stays on it, then start again.' });
+      else out.push({ k: 'ok', t: 'l₁ = ' + fmt(state.l1, 1) + ' cm uses most of the wire, which keeps the percentage errors small.' });
+      if (!n) { out.push({ k: 'tip', t: 'Next: choose a shunt resistance R, close K₂ and find the new balance length l₂.' }); return out; }
+      out.push(n >= 4 ? { k: 'ok', t: n + ' readings with different R.' } : { k: 'warn', t: 'Only ' + n + ' reading' + (n > 1 ? 's' : '') + ' of l₂. Take at least 4, each with a different R, and use the mean r.' });
+      var close = rows.filter(function (r) { return (state.l1 - r.l2) / state.l1 < 0.1; });
+      if (close.length) out.push({ k: 'warn', t: 'With R = ' + close.map(function (r) { return r.R + ' Ω'; }).join(', ') + ', l₂ is within 10% of l₁. Then l₁ − l₂ is small and a 0.1 cm error changes r a lot. Use smaller values of R as well.' });
+      if (n >= 3) {
+        var rs = rows.map(function (r) { return r.r; }), worst = -1, dev = 0, m = rs.reduce(function (a, b) { return a + b; }, 0) / n;
+        rs.forEach(function (x, k) { var o = rs.filter(function (_, j) { return j !== k; }).sort(function (a, b) { return a - b; }), med = o[Math.floor(o.length / 2)], d = Math.abs(x - med) / med; if (d > dev) { dev = d; worst = k; } });
+        if (dev > 0.1) out.push({ k: 'warn', t: 'The reading with R = ' + rows[worst].R + ' Ω gives r = ' + fmt(rs[worst], 2) + ' Ω, ' + fmt(dev * 100, 0) + '% away from the others. Select that R again, find l₂ carefully and re-record it.' });
+        else out.push({ k: 'ok', t: 'Your values of r agree with each other within ' + fmt((Math.max.apply(null, rs) - Math.min.apply(null, rs)) / m * 100, 0) + '%.' });
+      }
+      return out;
+    }
     function renderTable() {
       $('l1Val').textContent = state.l1 === null ? '—' : fmt(state.l1, 1) + ' cm';
       var body = $('obsBody');
@@ -356,16 +379,17 @@ if (typeof document !== 'undefined') {
         $('resultLine').innerHTML = 'Result: the internal resistance of the given cell, r = <b>' +
           fmt(sum / rows.length, 2) + ' Ω</b> (mean of ' + rows.length + ' reading' + (rows.length > 1 ? 's' : '') + ').';
       }
+      renderChecks(readingChecks());
       var box = $('revealBox');
       if (state.revealed) {
         if (!rows.length) {
-          box.innerHTML = 'Take at least one reading first, then check your answer.';
+          box.innerHTML = state.l1 === null ? 'Not yet: first find the balance length l₁ with K₂ open, then l₂ with K₂ closed for some R.' : 'Not yet: now close K₂, choose R and record at least one l₂.';
         } else {
           var mean = rows.reduce(function (a, r) { return a + r.r; }, 0) / rows.length;
           var err = (Math.abs(mean - state.cell.r) / state.cell.r) * 100;
           box.innerHTML = 'Actual internal resistance: <b>' + fmt(state.cell.r, 1) + ' Ω</b> (emf ' +
             fmt(state.cell.E, 2) + ' V). Your mean r = <b>' + fmt(mean, 2) + ' Ω</b>, an error of ' +
-            fmt(err, 1) + '%.';
+            fmt(err, 1) + '%.' + (rows.length < 4 ? ' With only ' + rows.length + ' reading' + (rows.length > 1 ? 's' : '') + ' this is not yet reliable: take at least 4.' : err > 5 ? ' To improve it, follow the checks above (a longer l₁ and R values that make l₂ clearly shorter than l₁).' : ' Well done: that is within normal laboratory accuracy.');
         }
         box.hidden = false;
       } else { box.hidden = true; }

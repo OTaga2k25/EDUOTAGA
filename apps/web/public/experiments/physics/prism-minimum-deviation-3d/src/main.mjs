@@ -76,6 +76,26 @@ function needMore() {
   if (a.reason === 'right') return 'Your lowest δ (' + ld + '°) is at your largest angle, i = ' + li + '°, so δ is still falling there and the minimum lies at larger i. Take a few readings between i = ' + li + '° and ' + fmt(Math.min(P.I_MAX, a.low.x + 15), 0) + '°.';
   return 'The lowest δ is near i = ' + li + '°. Take a few more readings close to it (within about 5° on each side) so the bottom of the curve is clear.';
 }
+function readingChecks() {
+  const n = state.rows.length, out = []; if (!n) return out;
+  const a = analysis();
+  if (!a.ok) { out.push({ k: 'warn', t: needMore() }); return out; }
+  out.push(n >= 8 ? { k: 'ok', t: n + ' readings recorded.' } : { k: 'warn', t: n + ' readings so far. Take about 8–10 so the curve is well defined; a single wrong reading then matters less.' });
+  const f = a.fit, near = state.rows.filter((r) => Math.abs(r.i - f.xmin) <= 5).length;
+  out.push(near >= 3 ? { k: 'ok', t: near + ' readings lie within 5° of the minimum, so D is well defined.' }
+    : { k: 'warn', t: 'Only ' + near + ' reading' + (near === 1 ? '' : 's') + ' within 5° of the minimum (i ≈ ' + fmt(f.xmin, 1) + '°). The curve is flat there, so add 2–3 readings between ' + fmt(f.xmin - 5, 0) + '° and ' + fmt(f.xmin + 5, 0) + '°.' });
+  let worst = -1, res = 0;
+  state.rows.forEach((r, k) => { if (Math.abs(r.i - f.xmin) > 12) return; const e = Math.abs(r.d - (f.a * r.i * r.i + f.b * r.i + f.c)); if (e > res) { res = e; worst = k; } });
+  if (res > 0.4) out.push({ k: 'warn', t: 'Reading ' + (worst + 1) + ' (i = ' + fmt(state.rows[worst].i, 1) + '°) is ' + fmt(res, 1) + '° off the smooth curve. Set that i again and re-record it (the new value replaces the old one).' });
+  else out.push({ k: 'ok', t: 'The readings near the minimum lie close to a smooth curve.' });
+  out.push({ k: 'tip', t: 'At minimum deviation i = e and the ray inside the prism runs parallel to the base. Turn the prism to i ≈ ' + fmt(f.xmin, 0) + '° and look at the top view to see it.' });
+  return out;
+}
+function renderChecks() {
+  const list = $('checks'), items = readingChecks(); list.innerHTML = '';
+  items.forEach((c) => { const li = document.createElement('li'); li.className = c.k; li.textContent = c.t; list.appendChild(li); });
+  $('checksH').hidden = !items.length;
+}
 function renderTable() {
   const body = $('obsBody'); body.innerHTML = '';
   if (!state.rows.length) body.innerHTML = '<tr class="empty"><td colspan="3">No readings yet</td></tr>';
@@ -86,12 +106,13 @@ function renderTable() {
   });
   const res = result();
   $('resultLine').textContent = res ? 'Minimum deviation from the graph: D = ' + fmt(res.dm, 1) + '° (at i ≈ ' + fmt(res.im, 1) + '°). So n = sin((60° + ' + fmt(res.dm, 1) + '°)/2) / sin 30° = ' + fmt(res.n, 3) + '.'
-    : state.rows.length ? needMore() : '';
+    : '';
+  renderChecks();
   const rv = $('revealBox');
   if (state.revealed) {
     rv.hidden = false;
     if (!res) rv.textContent = 'Not yet: ' + needMore().charAt(0).toLowerCase() + needMore().slice(1);
-    else { const dm = P.minDeviation(state.prism.n); rv.textContent = 'Actual refractive index: ' + fmt(state.prism.n, 3) + ' (minimum deviation ' + fmt(dm, 1) + '°). Your n = ' + fmt(res.n, 3) + ', an error of ' + fmt(Math.abs(res.n - state.prism.n) / state.prism.n * 100, 2) + '%.'; }
+    else { const dm = P.minDeviation(state.prism.n); rv.textContent = 'Actual refractive index: ' + fmt(state.prism.n, 3) + ' (minimum deviation ' + fmt(dm, 1) + '°). Your n = ' + fmt(res.n, 3) + ', an error of ' + fmt(Math.abs(res.n - state.prism.n) / state.prism.n * 100, 2) + '%.' + (Math.abs(res.n - state.prism.n) / state.prism.n > 0.01 ? ' To improve it, add readings close to the minimum, as suggested above.' : ' Well done: that is within normal laboratory accuracy.'); }
   } else rv.hidden = true;
 }
 

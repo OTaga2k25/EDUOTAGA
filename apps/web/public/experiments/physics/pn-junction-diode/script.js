@@ -225,6 +225,33 @@ if (typeof document !== 'undefined') {
       renderTables(); renderGraph();
     }
 
+    function renderChecks(items) {
+      var list = $('checks'); list.innerHTML = '';
+      items.forEach(function (c) { var li = document.createElement('li'); li.className = c.k; li.textContent = c.t; list.appendChild(li); });
+      $('checksH').hidden = !items.length;
+    }
+    // Checks on the recorded readings, so the student knows what to improve
+    function readingChecks() {
+      var out = [], f = state.data.f, nf = f.length;
+      if (nf) {
+        var imax = Math.max.apply(null, f.map(function (x) { return x.I; }));
+        var off = f.filter(function (x) { return x.I < 0.5; }).length, knee = f.filter(function (x) { return x.I >= 0.5 && x.I < 5; }).length, steep = f.filter(function (x) { return x.I >= Math.max(3, 0.4 * imax); }).length;
+        out.push(nf >= 8 ? { k: 'ok', t: 'Forward bias: ' + nf + ' readings.' } : { k: 'warn', t: 'Forward bias: only ' + nf + ' reading' + (nf > 1 ? 's' : '') + '. Take about 10, so the curve is clear before, at and after the knee.' });
+        if (imax < 10) out.push({ k: 'warn', t: 'Forward bias: the largest current is only ' + fmt(imax, 1) + ' mA. Raise the supply further (to about 15–20 mA) so the straight steep part is long enough to extend.' });
+        if (off < 2) out.push({ k: 'warn', t: 'Forward bias: take at least 2 readings below the knee, where the current is almost zero, so the graph shows the diode not conducting yet.' });
+        if (imax >= 5 && !knee) out.push({ k: 'warn', t: 'Forward bias: no reading lies on the bend of the curve (0.5–5 mA). Near the knee, raise the supply in small steps (0.05 V) to see where the current starts to rise.' });
+        if (steep >= 3) out.push({ k: 'ok', t: 'Forward bias: ' + steep + ' readings on the steep part, enough to find the knee voltage.' });
+        else if (imax >= 3) out.push({ k: 'warn', t: 'Forward bias: only ' + steep + ' reading' + (steep === 1 ? '' : 's') + ' on the steep part (current above ' + fmt(Math.max(3, 0.4 * imax), 1) + ' mA). Take at least 3 there, in small steps, so the straight part can be extended to find the knee voltage.' });
+      }
+      var r = state.data.r, nr = r.length;
+      if (nr) {
+        var top = Math.max.apply(null, r.map(function (x) { return x.V; }));
+        out.push(nr >= 5 ? { k: 'ok', t: 'Reverse bias: ' + nr + ' readings.' } : { k: 'warn', t: 'Reverse bias: only ' + nr + ' reading' + (nr > 1 ? 's' : '') + '. Take at least 5, in steps of about 2 V.' });
+        if (top < 15) out.push({ k: 'warn', t: 'Reverse bias: your highest voltage is ' + fmt(top, 1) + ' V. Go up to about 20 V so the slow rise of the reverse current is clear.' });
+        if (r.filter(function (x) { return x.V >= 2; }).length < 3) out.push({ k: 'warn', t: 'Reverse bias: take at least 3 readings above 2 V to find the reverse resistance.' });
+      } else if (state.data.f.length >= 8) out.push({ k: 'tip', t: 'Next: switch to reverse bias and take readings up to 20 V.' });
+      return out;
+    }
     function results() {
       return { fa: Diode.forwardAnalysis(state.data.f), ra: Diode.reverseAnalysis(state.data.r) };
     }
@@ -250,10 +277,11 @@ if (typeof document !== 'undefined') {
       if (R.ra) lines.push('Reverse resistance is about ' + fmtOhm(R.ra.rr) + ', far larger than the forward resistance: the diode conducts well in one direction only.');
       else if (state.data.r.length) lines.push('Take at least three reverse readings above 2 V to find the reverse resistance.');
       $('resultLine').textContent = lines.join(' ');
+      renderChecks(readingChecks());
       var rv = $('revealBox');
       if (state.revealed) {
         rv.hidden = false;
-        if (!R.fa && !R.ra) { rv.textContent = 'Take readings in forward and reverse bias first, then check your answer.'; return; }
+        if (!R.fa && !R.ra) { rv.textContent = 'Not yet: ' + (state.data.f.length || state.data.r.length ? 'the curve is not complete enough to find the results. Follow the checks above, then check again.' : 'take readings in forward and reverse bias first, then check your answer.'); return; }
         var T = Diode.truthFor(state.d, state.data.f.map(function (r) { return r.vs; }), state.data.r.map(function (r) { return r.vs; }));
         var out = ['This is a ' + (state.d.type === 'Si' ? 'silicon' : 'germanium') + ' diode.'];
         if (R.fa) {
@@ -263,6 +291,8 @@ if (typeof document !== 'undefined') {
           else out.push('Your knee voltage points to the wrong material; check the readings on the steep part.');
         }
         if (R.ra) out.push('Reverse resistance: ' + fmtOhm(T.rr) + ' (yours ' + fmtOhm(R.ra.rr) + ', error ' + fmt(Math.abs(R.ra.rr - T.rr) / T.rr * 100, 1) + '%).');
+        var warns = readingChecks().filter(function (c) { return c.k === 'warn'; }).length;
+        out.push(warns ? 'Some checks above still need attention; fixing them makes your graph and results more reliable.' : 'All the checks on your readings are met. Well done.');
         rv.textContent = out.join(' ');
       } else rv.hidden = true;
     }

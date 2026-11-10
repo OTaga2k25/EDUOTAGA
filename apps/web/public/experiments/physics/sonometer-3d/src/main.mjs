@@ -91,7 +91,7 @@ function record() {
   if (!state.sounding) { say('err', 'Strike the tuning fork and press it on the box first.'); return render(); }
   const lr = Lres();
   if (!P.inRange(lr)) { say('warn', 'This fork has no resonance on the wire at this tension. Change the number of weights.'); return render(); }
-  if (P.amplitude(state.L, lr) < P.JUMP_AMP) { say('err', 'The rider has not jumped off at this length. Move the bridge slowly until it is thrown off, then record.'); return render(); }
+  if (P.amplitude(state.L, lr) < P.JUMP_AMP) { say('err', 'The rider has not jumped off at this length, so this is not the resonant length. Move the bridge slowly in one direction and watch the rider: it shakes more as you get closer to resonance. Record when it is thrown off.'); return render(); }
   if (state.fork === 'X') {
     state.Lx = state.L;
     say('good', 'Recorded L for the unknown fork X = ' + fmt(state.L, 1) + ' cm. ' + (knownRows().length ? 'Its frequency is now in the result line.' : 'Now record at least one known fork to find its frequency.'));
@@ -178,6 +178,31 @@ function renderControls() {
   const st = $('status'); const m = state.msg || defaultStatus(); st.textContent = m.text; st.className = 'status' + (m.kind ? ' ' + m.kind : '');
 }
 
+// Checks on the recorded readings, so the student knows what to improve
+function readingChecks() {
+  const rows = knownRows(), n = rows.length, out = [];
+  if (!n && state.Lx == null) return out;
+  out.push(n >= 4 ? { k: 'ok', t: n + ' known forks recorded.' } : { k: 'warn', t: (n ? 'Only ' + n + ' known fork' + (n > 1 ? 's' : '') : 'No known forks yet') + '. Record at least 4 different forks, so you can check that f × L stays constant and draw the f–1/L graph.' });
+  const short = rows.filter((r) => r.L < 20);
+  if (short.length) out.push({ k: 'warn', t: 'The resonant length' + (short.length > 1 ? 's' : '') + ' for ' + short.map((r) => r.f + ' Hz').join(', ') + (short.length > 1 ? ' are' : ' is') + ' below 20 cm, so a 0.2 cm error is over 1%. Add weights (more tension) to make all resonant lengths longer, then record again.' });
+  if (n >= 3) {
+    const ps = rows.map((r) => r.f * r.L); let worst = -1, dev = 0;
+    ps.forEach((x, k) => { const o = ps.filter((_, j) => j !== k).sort((a, b) => a - b), med = o[Math.floor(o.length / 2)], d = Math.abs(x - med) / med; if (d > dev) { dev = d; worst = k; } });
+    if (dev > 0.02) out.push({ k: 'warn', t: 'For the ' + rows[worst].f + ' Hz fork, f × L = ' + fmt(ps[worst], 0) + ' Hz·cm, ' + fmt(dev * 100, 1) + '% away from the others. Its resonant length was probably not exact: select that fork and find the length where the rider jumps again.' });
+    else out.push({ k: 'ok', t: 'f × L is constant within ' + fmt((Math.max(...ps) - Math.min(...ps)) / meanFL() * 100, 1) + '%, so f ∝ 1/L at constant tension (first law of vibrating strings).' });
+  }
+  if (state.Lx == null) out.push({ k: 'tip', t: 'Next: select Fork X (the unknown fork), find its resonant length and use f = (f × L) / L to find its frequency.' });
+  else if (n) {
+    const above = rows.filter((r) => r.L > state.Lx).sort((a, b) => a.L - b.L)[0], below = rows.filter((r) => r.L < state.Lx).sort((a, b) => b.L - a.L)[0];
+    if (above && below) out.push({ k: 'tip', t: 'L for fork X lies between those of the ' + above.f + ' Hz and ' + below.f + ' Hz forks, so its frequency must lie between ' + above.f + ' and ' + below.f + ' Hz. Check that your answer does.' });
+  }
+  return out;
+}
+function renderChecks() {
+  const list = $('checks'), items = readingChecks(); list.innerHTML = '';
+  items.forEach((c) => { const li = document.createElement('li'); li.className = c.k; li.textContent = c.t; list.appendChild(li); });
+  $('checksH').hidden = !items.length;
+}
 function renderTable() {
   const body = $('obsBody'); body.innerHTML = '';
   const rows = knownRows();
@@ -209,16 +234,20 @@ function renderTable() {
     if (fx != null) t += ' Unknown fork: f = (f × L) / L_x = ' + fmt(fx, 1) + ' Hz.';
     rl.textContent = t;
   }
+  renderChecks();
   const rv = $('revealBox');
   if (state.revealed) {
     rv.hidden = false;
     const trueV = P.waveSpeed(state.n);
-    if (m == null && state.Lx == null) rv.textContent = 'Record at least one reading first, then check.';
+    if (m == null && state.Lx == null) rv.textContent = 'Not yet: strike a fork, find the length where the rider jumps off and record it, then check.';
     else {
       let t = 'Actual wave speed at this tension: ' + fmt(trueV, 1) + ' m/s' + (m != null ? ' (yours ' + fmt((2 * m) / 100, 1) + ' m/s, error ' + fmt(Math.abs((2 * m) / 100 - trueV) / trueV * 100, 2) + '%).' : '.');
       const fx = fxEstimate();
       if (fx != null) t += ' The unknown fork X is actually ' + state.sess.fx + ' Hz (yours ' + fmt(fx, 1) + ' Hz, error of ' + fmt(Math.abs(fx - state.sess.fx) / state.sess.fx * 100, 2) + '%).';
       else t += ' Record the unknown fork X and at least one known fork to see its frequency checked.';
+      if (rows.length < 4) t += ' With only ' + rows.length + ' known fork' + (rows.length === 1 ? '' : 's') + ' the result is not yet reliable: record at least 4.';
+      else if (m != null && Math.abs((2 * m) / 100 - trueV) / trueV > 0.02) t += ' To improve it, follow the checks above.';
+      else t += ' Well done: that is within normal laboratory accuracy.';
       rv.textContent = t;
     }
   } else rv.hidden = true;

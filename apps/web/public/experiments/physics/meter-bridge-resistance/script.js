@@ -232,6 +232,29 @@ if (typeof document !== 'undefined') {
       el.textContent = st.text; el.className = 'status' + (st.kind ? ' ' + st.kind : '');
     }
 
+    function renderChecks(items) {
+      var list = $('checks'); list.innerHTML = '';
+      items.forEach(function (c) { var li = document.createElement('li'); li.className = c.k; li.textContent = c.t; list.appendChild(li); });
+      $('checksH').hidden = !items.length;
+    }
+    // Checks on the recorded readings, so the student knows what to improve
+    function readingChecks() {
+      var rows = rowsDerived(), n = rows.length, out = [], m = meanX();
+      if (!n) return out;
+      out.push(n >= 4 ? { k: 'ok', t: n + ' readings with different R.' } : { k: 'warn', t: 'Only ' + n + ' reading' + (n > 1 ? 's' : '') + ' so far. Take at least 4, each with a different R, and use the mean of X.' });
+      var bad = rows.filter(function (r) { return r.l < 30 || r.l > 70; });
+      if (bad.length) out.push({ k: 'warn', t: 'Balance point' + (bad.length > 1 ? 's' : '') + ' at ' + bad.map(function (r) { return fmt(r.l, 1) + ' cm (R = ' + r.R + ' Ω)'; }).join(', ') + (bad.length > 1 ? ' are' : ' is') +
+        ' far from the middle of the wire. There a small error in l causes a large error in X. Choose R closer to X (about ' + fmt(m, 1) + ' Ω) so that l falls between 30 and 70 cm.' });
+      else out.push({ k: 'ok', t: 'All balance points are between 30 and 70 cm, where the bridge is most sensitive.' });
+      if (n >= 3) {
+        var xs = rows.map(function (r) { return r.X; }), worst = -1, dev = 0;
+        xs.forEach(function (x, k) { var o = xs.filter(function (_, j) { return j !== k; }).sort(function (a, b) { return a - b; }), med = o[Math.floor(o.length / 2)], d = Math.abs(x - med) / med; if (d > dev) { dev = d; worst = k; } });
+        if (dev > 0.03) out.push({ k: 'warn', t: 'The reading with R = ' + rows[worst].R + ' Ω gives X = ' + fmt(xs[worst], 2) + ' Ω, ' + fmt(dev * 100, 0) + '% away from the others. Select that R again, find the null point carefully and re-record (the new value replaces the old one).' });
+        else out.push({ k: 'ok', t: 'Your values of X agree with each other within ' + fmt((Math.max.apply(null, xs) - Math.min.apply(null, xs)) / m * 100, 1) + '%.' });
+      }
+      out.push({ k: 'tip', t: 'In the laboratory, also interchange R and X in the gaps and repeat. Taking the mean of both cancels the end errors at the ends of the wire.' });
+      return out;
+    }
     function renderTable() {
       var body = $('obsBody'), rows = rowsDerived();
       body.innerHTML = '';
@@ -251,16 +274,18 @@ if (typeof document !== 'undefined') {
         $('resultLine').textContent = 'Mean X = ' + fmt(m, 2) + ' Ω (mean of ' + rows.length + ' reading' + (rows.length > 1 ? 's' : '') +
           '). Resistivity ρ = X π d² / 4L = ' + fmtRho(rhoOf(m)) + '.';
       }
+      renderChecks(readingChecks());
       var rv = $('revealBox');
       if (state.revealed) {
         rv.hidden = false;
         var m2 = meanX();
-        if (m2 === null) rv.textContent = 'Add at least one reading first, then check your answer.';
+        if (m2 === null) rv.textContent = 'Not yet: find a null point and record at least one reading first, then check your answer.';
         else {
           var w = state.wire, X = w.X, rho = w.rho;
           rv.textContent = 'Actual X = ' + fmt(X, 2) + ' Ω (your mean ' + fmt(m2, 2) + ' Ω, error of ' +
             fmt(Math.abs(m2 - X) / X * 100, 2) + '%). Actual resistivity = ' + fmtRho(rho) + ' (your value ' + fmtRho(rhoOf(m2)) +
-            ', error ' + fmt(Math.abs(rhoOf(m2) - rho) / rho * 100, 2) + '%). The wire is ' + w.material + '.';
+            ', error ' + fmt(Math.abs(rhoOf(m2) - rho) / rho * 100, 2) + '%). The wire is ' + w.material + '.' +
+            (rows.length < 4 ? ' With only ' + rows.length + ' reading' + (rows.length > 1 ? 's' : '') + ' this is not yet reliable: take at least 4.' : Math.abs(m2 - X) / X > 0.02 ? ' An error above 2% usually comes from balance points near the ends of the wire; see the checks above.' : ' Well done: that is within normal laboratory accuracy.');
         }
       } else rv.hidden = true;
     }

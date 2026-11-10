@@ -176,6 +176,38 @@ if (typeof document !== 'undefined') {
       renderTables(); renderGraph();
     }
 
+    function renderChecks(items) {
+      var list = $('checks'); list.innerHTML = '';
+      items.forEach(function (c) { var li = document.createElement('li'); li.className = c.k; li.textContent = c.t; list.appendChild(li); });
+      $('checksH').hidden = !items.length;
+    }
+    // Checks on the recorded readings, so the student knows what to improve
+    function readingChecks() {
+      var arr = rows(), n = arr.length, out = [], md = state.mode, name = MODE_NAME[md];
+      if (n) {
+        out.push(n >= 5 ? { k: 'ok', t: n + ' readings for ' + name + '.' } : { k: 'warn', t: 'Only ' + n + ' reading' + (n > 1 ? 's' : '') + ' for ' + name + '. Take at least 5 with different rheostat settings so the V–I graph is a clear straight line.' });
+        if (n >= 2) {
+          var is = arr.map(function (r) { return r.I; }), lo = Math.min.apply(null, is), hi = Math.max.apply(null, is);
+          if (hi < 2 * lo) out.push({ k: 'warn', t: 'Your currents are bunched together (' + fmt(lo, 3) + '–' + fmt(hi, 3) + ' A). Move the rheostat over its whole range so the current changes by a factor of 2 or more.' });
+          else out.push({ k: 'ok', t: 'The currents cover a good range (' + fmt(lo, 3) + '–' + fmt(hi, 3) + ' A).' });
+        }
+        var small = arr.filter(function (r) { return r.V < 0.5; });
+        if (small.length) out.push({ k: 'warn', t: small.length + ' reading' + (small.length > 1 ? 's have' : ' has') + ' V below 0.5 V. The voltmeter reads to 0.01 V, so small voltages carry a large percentage error. Prefer readings with larger V.' });
+        if (n >= 3) {
+          var rs = arr.map(function (r) { return r.V / r.I; }), worst = -1, dev = 0;
+          rs.forEach(function (x, k) { var o = rs.filter(function (_, j) { return j !== k; }).sort(function (a, b) { return a - b; }), med = o[Math.floor(o.length / 2)], d = Math.abs(x - med) / med; if (d > dev) { dev = d; worst = k; } });
+          if (dev > 0.03) out.push({ k: 'warn', t: 'The reading with I = ' + fmt(arr[worst].I, 3) + ' A gives V/I = ' + fmt(rs[worst], 2) + ' Ω, ' + fmt(dev * 100, 0) + '% away from the others. Set the rheostat to that position again and re-take it.' });
+          else out.push({ k: 'ok', t: 'V/I is the same for all readings within ' + fmt((Math.max.apply(null, rs) - Math.min.apply(null, rs)) / mean(rs) * 100, 1) + '%: the resistor obeys Ohm’s law.' });
+        }
+      }
+      var r1 = measuredR('r1'), r2 = measuredR('r2'), rsr = measuredR('series'), rp = measuredR('parallel');
+      if (r1 !== null && r2 !== null) {
+        if (rsr !== null) { var e1 = Math.abs(rsr - (r1 + r2)) / (r1 + r2) * 100; out.push({ k: e1 < 2 ? 'ok' : 'warn', t: 'Series: measured ' + fmt(rsr, 2) + ' Ω, R₁ + R₂ = ' + fmt(r1 + r2, 2) + ' Ω (' + fmt(e1, 1) + '% apart)' + (e1 < 2 ? ', so the series law is verified.' : '. Take more readings for the series combination.') }); }
+        if (rp !== null) { var pp = (r1 * r2) / (r1 + r2), e2 = Math.abs(rp - pp) / pp * 100; out.push({ k: e2 < 2 ? 'ok' : 'warn', t: 'Parallel: measured ' + fmt(rp, 2) + ' Ω, R₁R₂/(R₁ + R₂) = ' + fmt(pp, 2) + ' Ω (' + fmt(e2, 1) + '% apart)' + (e2 < 2 ? ', so the parallel law is verified.' : '. Take more readings for the parallel combination.') }); }
+        if (rsr === null || rp === null) out.push({ k: 'tip', t: 'Next: connect R₁ and R₂ in ' + (rsr === null ? 'series' : 'parallel') + ' and measure the combination, then compare with the formula.' });
+      } else if (n) out.push({ k: 'tip', t: 'Measure R₁ and R₂ separately first; then the series and parallel results can be checked against the formulas.' });
+      return out;
+    }
     function renderTables() {
       $('obsTitle').textContent = 'Readings for ' + MODE_NAME[state.mode] + '.';
       var body = $('obsBody'), arr = rows(); body.innerHTML = '';
@@ -199,15 +231,17 @@ if (typeof document !== 'undefined') {
         [MODE_NAME[md], String(state.data[md].length), mr === null ? '—' : fmt(mr, 2), exp].forEach(function (v) { var td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
         sb.appendChild(tr);
       });
+      renderChecks(readingChecks());
       var rv = $('revealBox');
       if (state.revealed) {
         rv.hidden = false;
         var any = Ohm.MODES.filter(function (md) { return state.data[md].length; });
-        if (!any.length) rv.textContent = 'Take at least one reading first, then check your answer.';
+        if (!any.length) rv.textContent = 'Not yet: take at least one reading first, then check your answer.';
         else rv.textContent = any.map(function (md) {
           var t = expectedR(md), mr = measuredR(md);
           return MODE_NAME[md] + ': actual ' + fmt(t, 2) + ' Ω, yours ' + fmt(mr, 2) + ' Ω (error ' + fmt(Math.abs(mr - t) / t * 100, 2) + '%)';
-        }).join('. ') + '. The values are R₁ = ' + fmt(state.set.R1, 1) + ' Ω and R₂ = ' + fmt(state.set.R2, 1) + ' Ω.';
+        }).join('. ') + '. The values are R₁ = ' + fmt(state.set.R1, 1) + ' Ω and R₂ = ' + fmt(state.set.R2, 1) + ' Ω.' +
+          (any.some(function (md) { return state.data[md].length < 5; }) ? ' Some arrangements have fewer than 5 readings, so those results are less reliable.' : any.every(function (md) { return Math.abs(measuredR(md) - expectedR(md)) / expectedR(md) <= 0.02; }) ? ' Well done: every result is within 2%.' : ' Results more than 2% off usually come from readings with small V; see the checks above.');
       } else rv.hidden = true;
     }
 

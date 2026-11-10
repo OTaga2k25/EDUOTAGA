@@ -57,7 +57,11 @@ function record() {
   const f = state.lens.f;
   if (P.imageDistance(f, state.u) === null) { say('err', 'The object is inside the focal length, so no real image forms on the screen. Move the object further from the lens.'); return render(); }
   if (P.bestScreen(state.lens, state.u) === null) { say('err', 'The image falls beyond the end of the bench. Move the object further from the lens.'); return render(); }
-  if (sharp() < P.SHARP_OK) { say('err', 'The image is not sharp at this screen position. Move the screen to the position of best focus and try again.'); return render(); }
+  if (sharp() < P.SHARP_OK) {
+    const further = state.vs < P.bestScreen(state.lens, state.u);
+    say('err', 'The image is still blurred, so this v would give a wrong f. Move the screen ' + (further ? 'further from' : 'closer to') + ' the lens in small steps until the arrow’s edges look sharpest, then record.');
+    return render();
+  }
   const row = { u: state.u, v: state.vs }, ex = state.rows.findIndex((r) => r.u === state.u);
   if (ex >= 0) state.rows[ex] = row; else state.rows.push(row);
   state.rows.sort((a, b) => a.u - b.u); state.revealed = false;
@@ -99,6 +103,31 @@ function renderControls() {
   const st = $('status'), m = state.msg || defaultStatus(); st.textContent = m.text; st.className = 'status' + (m.kind ? ' ' + m.kind : '');
 }
 
+// Checks on the recorded readings, so the student knows what to improve
+function readingChecks() {
+  const n = state.rows.length, out = []; if (!n) return out;
+  const fs = state.rows.map(rowF), m = meanF();
+  out.push(n >= 5 ? { k: 'ok', t: n + ' readings recorded.' } : { k: 'warn', t: 'Only ' + n + ' reading' + (n > 1 ? 's' : '') + ' so far. Take at least 5, each with a different u, so that one careless reading cannot spoil the mean.' });
+  if (n >= 2) {
+    const us = state.rows.map((r) => r.u), lo = Math.min.apply(null, us), hi = Math.max.apply(null, us);
+    const want = Math.min(P.U_MAX, 3 * m) - 1.5 * m;
+    if (hi - lo < 0.6 * want) out.push({ k: 'warn', t: 'Your object distances are bunched together (' + fmt(lo, 1) + '–' + fmt(hi, 1) + ' cm). Spread u from about 1.5f to 3f, that is roughly ' + fmt(1.5 * m, 0) + ' to ' + fmt(Math.min(P.U_MAX, 3 * m), 0) + ' cm, so the graphs show the full curve.' });
+    else out.push({ k: 'ok', t: 'Object distances are well spread (' + fmt(lo, 1) + '–' + fmt(hi, 1) + ' cm).' });
+  }
+  if (n >= 3) {
+    let worst = -1, dev = 0;
+    fs.forEach((f, k) => { const others = fs.filter((_, j) => j !== k).sort((a, b) => a - b), med = others[Math.floor(others.length / 2)], d = Math.abs(f - med) / med; if (d > dev) { dev = d; worst = k; } });
+    if (dev > 0.04) out.push({ k: 'warn', t: 'Reading ' + (worst + 1) + ' (u = ' + fmt(state.rows[worst].u, 1) + ' cm) gives f = ' + fmt(fs[worst], 2) + ' cm, ' + fmt(dev * 100, 0) + '% away from the others. The screen was probably not at the sharpest position: set the same u and repeat it (the new reading replaces the old one).' });
+    else { const sp = (Math.max.apply(null, fs) - Math.min.apply(null, fs)) / m * 100; out.push({ k: 'ok', t: 'Your values of f agree with each other within ' + fmt(sp, 1) + '%.' }); }
+  }
+  if (n >= 2 && !state.rows.some((r) => Math.abs(r.u - r.v) / r.u < 0.12)) out.push({ k: 'tip', t: 'Tip: try one reading with the object near u = 2f (about ' + fmt(2 * m, 0) + ' cm). There the image is the same size as the object and u ≈ v, a quick check that f = u/2.' });
+  return out;
+}
+function renderChecks() {
+  const list = $('checks'), items = readingChecks(); list.innerHTML = '';
+  items.forEach((c) => { const li = document.createElement('li'); li.className = c.k; li.textContent = c.t; list.appendChild(li); });
+  $('checksH').hidden = !items.length;
+}
 function renderTable() {
   const body = $('obsBody'); body.innerHTML = '';
   if (!state.rows.length) body.innerHTML = '<tr class="empty"><td colspan="5">No readings yet</td></tr>';
@@ -110,11 +139,12 @@ function renderTable() {
   const m = meanF();
   $('meanF').textContent = m === null ? '—' : fmt(m, 2) + ' cm';
   $('resultLine').textContent = m === null ? '' : 'Mean f = ' + fmt(m, 2) + ' cm (' + state.rows.length + ' reading' + (state.rows.length > 1 ? 's' : '') + '), so the power of the lens is P = 100 / f = ' + fmt(100 / m, 2) + ' D.';
+  renderChecks();
   const rv = $('revealBox');
   if (state.revealed) {
     rv.hidden = false;
-    if (m === null) rv.textContent = 'Record at least one reading first, then check your answer.';
-    else rv.textContent = 'Actual focal length: ' + fmt(state.lens.f, 1) + ' cm (power ' + fmt(100 / state.lens.f, 2) + ' D). Your mean f = ' + fmt(m, 2) + ' cm, an error of ' + fmt(Math.abs(m - state.lens.f) / state.lens.f * 100, 2) + '%.';
+    if (m === null) rv.textContent = 'Not yet: record at least one sharp-image reading first, then check your answer.';
+    else rv.textContent = 'Actual focal length: ' + fmt(state.lens.f, 1) + ' cm (power ' + fmt(100 / state.lens.f, 2) + ' D). Your mean f = ' + fmt(m, 2) + ' cm, an error of ' + fmt(Math.abs(m - state.lens.f) / state.lens.f * 100, 2) + '%.' + (state.rows.length < 5 ? ' With only ' + state.rows.length + ' reading' + (state.rows.length > 1 ? 's' : '') + ' this is not yet a reliable result: take at least 5.' : Math.abs(m - state.lens.f) / state.lens.f > 0.02 ? ' An error above 2% usually means some screen positions were not at the sharpest image; repeat the readings flagged above.' : ' Well done: that is within normal laboratory accuracy.');
   } else rv.hidden = true;
 }
 

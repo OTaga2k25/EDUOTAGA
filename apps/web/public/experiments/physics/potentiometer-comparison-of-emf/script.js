@@ -306,6 +306,29 @@ if (typeof document !== 'undefined') {
       el.className = 'status' + (st.kind ? ' ' + st.kind : '');
     }
 
+    function renderChecks(items) {
+      var list = $('checks'); list.innerHTML = '';
+      items.forEach(function (c) { var li = document.createElement('li'); li.className = c.k; li.textContent = c.t; list.appendChild(li); });
+      $('checksH').hidden = !items.length;
+    }
+    // Checks on the recorded readings, so the student knows what to improve
+    function readingChecks() {
+      var out = [], done = completeRows(), n = done.length;
+      if (!state.rows.length) return out;
+      var half = state.rows.filter(function (r) { return r.l1 === null || r.l2 === null; });
+      if (half.length) out.push({ k: 'warn', t: 'Incomplete set' + (half.length > 1 ? 's' : '') + ' at Rh = ' + half.map(function (r) { return fmt(r.rh, 1) + ' Ω'; }).join(', ') + ': ' +
+        half.map(function (r) { return r.l1 === null ? 'l₁ missing' : 'l₂ missing'; }).join(', ') + '. Keep the rheostat at the same value, switch the key to the other cell and find its balance length. Both lengths must use the same potential gradient.' });
+      out.push(n >= 3 ? { k: 'ok', t: n + ' complete sets, each at a different rheostat setting.' } : { k: 'warn', t: (n ? 'Only ' + n + ' complete set' + (n > 1 ? 's' : '') : 'No complete set yet') + '. Take at least 3 sets at different rheostat settings; the ratio should come out the same each time.' });
+      var short = state.rows.filter(function (r) { return (r.l1 !== null && r.l1 < Pot.L * 0.4) || (r.l2 !== null && r.l2 < Pot.L * 0.4); });
+      if (short.length) out.push({ k: 'warn', t: 'Some balance lengths are shorter than ' + fmt(Pot.L * 0.4, 0) + ' cm, less than 40% of the wire (at Rh = ' + short.map(function (r) { return fmt(r.rh, 1) + ' Ω'; }).join(', ') + '). Short lengths have a larger percentage error. Use a larger rheostat resistance so the balance points move further along the wire.' });
+      if (n >= 3) {
+        var rs = done.map(function (r) { return r.l1 / r.l2; }), worst = -1, dev = 0, m = meanRatio();
+        rs.forEach(function (x, k) { var o = rs.filter(function (_, j) { return j !== k; }).sort(function (a, b) { return a - b; }), med = o[Math.floor(o.length / 2)], d = Math.abs(x - med) / med; if (d > dev) { dev = d; worst = k; } });
+        if (dev > 0.015) out.push({ k: 'warn', t: 'The set at Rh = ' + fmt(done[worst].rh, 1) + ' Ω gives E₁/E₂ = ' + fmt(rs[worst], 3) + ', ' + fmt(dev * 100, 1) + '% away from the others. Repeat that set carefully (same rheostat value, both cells).' });
+        else out.push({ k: 'ok', t: 'Your ratios agree within ' + fmt((Math.max.apply(null, rs) - Math.min.apply(null, rs)) / m * 100, 1) + '%: the ratio does not depend on the potential gradient, as expected.' });
+      }
+      return out;
+    }
     function renderTable() {
       var body = $('obsBody');
       body.innerHTML = '';
@@ -326,16 +349,17 @@ if (typeof document !== 'undefined') {
         'Result: the ratio of the emfs of the two cells, E₁/E₂ = <b>' + fmt(mean, 3) +
         '</b> (mean of ' + n + ' set' + (n > 1 ? 's' : '') + ').';
 
+      renderChecks(readingChecks());
       var box = $('revealBox');
       if (state.revealed) {
         if (mean === null) {
-          box.innerHTML = 'Complete at least one set (both l₁ and l₂) first, then check your answer.';
+          box.innerHTML = 'Not yet: complete at least one set (l₁ with E₁ and l₂ with E₂ at the same rheostat setting) first, then check your answer.';
         } else {
           var tE1 = state.cells.E1, tE2 = state.cells.E2, truth = tE1 / tE2;
           var err = (Math.abs(mean - truth) / truth) * 100;
           box.innerHTML = 'Actual emfs: E₁ = <b>' + fmt(tE1, 2) + ' V</b>, E₂ = <b>' + fmt(tE2, 2) +
             ' V</b>, so E₁/E₂ = <b>' + fmt(truth, 3) + '</b>. Your mean = <b>' + fmt(mean, 3) +
-            '</b>, an error of ' + fmt(err, 2) + '%.';
+            '</b>, an error of ' + fmt(err, 2) + '%.' + (n < 3 ? ' With only ' + n + ' set' + (n > 1 ? 's' : '') + ' this is not yet reliable: take at least 3.' : err > 1 ? ' To improve it, follow the checks above.' : ' Well done: that is within normal laboratory accuracy.');
         }
         box.hidden = false;
       } else { box.hidden = true; }

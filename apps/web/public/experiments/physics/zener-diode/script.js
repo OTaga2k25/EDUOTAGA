@@ -205,6 +205,36 @@ if (typeof document !== 'undefined') {
       renderTables(); renderGraph();
     }
 
+    function renderChecks(items) {
+      var list = $('checks'); list.innerHTML = '';
+      items.forEach(function (c) { var li = document.createElement('li'); li.className = c.k; li.textContent = c.t; list.appendChild(li); });
+      $('checksH').hidden = !items.length;
+    }
+    // Checks on the recorded readings, so the student knows what to improve
+    function readingChecks() {
+      var out = [], f = state.data.f, nf = f.length;
+      if (nf) {
+        var imax = Math.max.apply(null, f.map(function (x) { return x.I; }));
+        var off = f.filter(function (x) { return x.I < 0.5; }).length, knee = f.filter(function (x) { return x.I >= 0.5 && x.I < 5; }).length, steep = f.filter(function (x) { return x.I >= Math.max(3, 0.4 * imax); }).length;
+        out.push(nf >= 8 ? { k: 'ok', t: 'Forward bias: ' + nf + ' readings.' } : { k: 'warn', t: 'Forward bias: only ' + nf + ' reading' + (nf > 1 ? 's' : '') + '. Take about 10, so the curve is clear before, at and after the knee.' });
+        if (imax < 10) out.push({ k: 'warn', t: 'Forward bias: the largest current is only ' + fmt(imax, 1) + ' mA. Raise the supply further (to about 15–20 mA) so the straight steep part is long enough to extend.' });
+        if (off < 2) out.push({ k: 'warn', t: 'Forward bias: take at least 2 readings below the knee, where the current is almost zero, so the graph shows the diode not conducting yet.' });
+        if (imax >= 5 && !knee) out.push({ k: 'warn', t: 'Forward bias: no reading lies on the bend of the curve (0.5–5 mA). Near the knee, raise the supply in small steps (0.05 V) to see where the current starts to rise.' });
+        if (steep >= 3) out.push({ k: 'ok', t: 'Forward bias: ' + steep + ' readings on the steep part, enough to find the knee voltage.' });
+        else if (imax >= 3) out.push({ k: 'warn', t: 'Forward bias: only ' + steep + ' reading' + (steep === 1 ? '' : 's') + ' on the steep part (current above ' + fmt(Math.max(3, 0.4 * imax), 1) + ' mA). Take at least 3 there, in small steps, so the straight part can be extended to find the knee voltage.' });
+      }
+      var r = state.data.r, nr = r.length;
+      if (nr) {
+        var rmax = Math.max.apply(null, r.map(function (x) { return x.I; })), past = r.filter(function (x) { return x.I >= Math.max(3, 0.4 * rmax); }).length, before = r.filter(function (x) { return x.I < 0.5; }).length, bend = r.filter(function (x) { return x.I >= 0.5 && x.I < 5; }).length;
+        if (!past) out.push({ k: 'warn', t: 'Reverse bias: no reading has gone past breakdown yet. Keep raising the supply (up to 12 V) until the current rises sharply.' });
+        else if (past < 3) out.push({ k: 'warn', t: 'Reverse bias: only ' + past + ' reading' + (past > 1 ? 's' : '') + ' after breakdown. Take at least 3 with currents above ' + fmt(Math.max(3, 0.4 * rmax), 1) + ' mA, so the steep line can be extended to find V_Z.' });
+        else out.push({ k: 'ok', t: 'Reverse bias: ' + past + ' readings after breakdown, enough to extend the steep line to the V axis.' });
+        if (before < 3) out.push({ k: 'warn', t: 'Reverse bias: take at least 3 readings before breakdown too (current nearly zero), so the graph shows that the Zener does not conduct below V_Z.' });
+        if (past && !bend) out.push({ k: 'warn', t: 'Reverse bias: there is no reading on the bend itself (current between 0.5 and 5 mA). Raise the supply in 0.1 V steps around breakdown so you see where it starts.' });
+        if (past >= 3) { var v = r.filter(function (x) { return x.I >= Math.max(3, 0.4 * rmax); }).map(function (x) { return x.V; }); out.push({ k: 'tip', t: 'After breakdown the Zener voltage changed only from ' + fmt(Math.min.apply(null, v), 2) + ' to ' + fmt(Math.max.apply(null, v), 2) + ' V while the current changed a lot: this is voltage regulation.' }); }
+      } else if (state.data.f.length >= 6) out.push({ k: 'tip', t: 'Next: switch to reverse bias. That is where the Zener does its job.' });
+      return out;
+    }
     function results() {
       return { fa: Diode.forwardAnalysis(state.data.f), ra: Diode.reverseAnalysis(state.data.r) };
     }
@@ -231,10 +261,11 @@ if (typeof document !== 'undefined') {
       if (R.ra) lines.push('Zener (breakdown) voltage V_Z = ' + fmt(R.ra.vz, 2) + ' V: the nearest standard rating is ' + nearestRating(R.ra.vz) + ' V. Beyond breakdown the voltage stays nearly constant (dynamic resistance about ' + fmtOhm(R.ra.rz) + ').');
       else if (state.data.r.length) lines.push('Take at least three reverse readings after breakdown (current above a few mA) to find the Zener voltage.');
       $('resultLine').textContent = lines.join(' ');
+      renderChecks(readingChecks());
       var rv = $('revealBox');
       if (state.revealed) {
         rv.hidden = false;
-        if (!R.fa && !R.ra) { rv.textContent = 'Take readings in forward and reverse bias first, then check your answer.'; return; }
+        if (!R.fa && !R.ra) { rv.textContent = 'Not yet: ' + (state.data.f.length || state.data.r.length ? 'the curve is not complete enough to find the results. Follow the checks above, then check again.' : 'take readings in forward and reverse bias first, then check your answer.'); return; }
         var T = Diode.truthFor(state.d, state.data.f.map(function (r) { return r.vs; }), state.data.r.map(function (r) { return r.vs; }));
         var out = ['This is a ' + state.d.rating + ' V Zener diode (actual breakdown about ' + fmt(T.vz !== null ? T.vz : state.d.vz, 2) + ' V, within its 5% tolerance).'];
         if (R.ra) {
@@ -242,6 +273,8 @@ if (typeof document !== 'undefined') {
           out.push(nearestRating(R.ra.vz) === state.d.rating ? 'You identified the rating correctly.' : 'The nearest standard rating to your value is ' + nearestRating(R.ra.vz) + ' V; this diode is so far off its nominal value that it sits closer to the neighbouring rating.');
         } else out.push('Take reverse readings past breakdown to find V_Z.');
         if (R.fa) out.push('Forward knee: ' + fmt(T.knee, 2) + ' V (yours ' + fmt(R.fa.knee, 2) + ' V).');
+        var warns = readingChecks().filter(function (c) { return c.k === 'warn'; }).length;
+        out.push(warns ? 'Some checks above still need attention; fixing them makes your graph and results more reliable.' : 'All the checks on your readings are met. Well done.');
         rv.textContent = out.join(' ');
       } else rv.hidden = true;
     }

@@ -104,12 +104,23 @@ export function quadFit(pts) {
   const xmin = -b / (2 * a); return { a, b, c, xmin, ymin: a * xmin * xmin + b * xmin + c };
 }
 
-// Estimate the minimum from recorded points: fit a parabola only to readings within +/-7.5 deg of the lowest one
-export function fitMinimum(pts, halfWidth = 7.5) {
-  if (!pts || pts.length < 5) return null;
-  const low = pts.reduce((a, p) => (p.y < a.y ? p : a), pts[0]);
-  const sel = pts.filter((p) => Math.abs(p.x - low.x) <= halfWidth + 1e-9);
-  if (sel.length < 4) return null;
-  const f = quadFit(sel);
-  return f && f.xmin != null ? f : null;
+// Find the minimum from recorded points. The lowest reading must have readings on both sides of it;
+// a parabola is fitted to the readings near it (the window widens if there are too few close by).
+// Returns { ok: true, fit } or { ok: false, reason: 'few' | 'left' | 'right' | 'sparse', low }.
+export function analyseMinimum(pts) {
+  if (!pts || pts.length < 5) return { ok: false, reason: 'few', low: null };
+  const sorted = pts.slice().sort((a, b) => a.x - b.x);
+  let li = 0; sorted.forEach((p, k) => { if (p.y < sorted[li].y) li = k; });
+  const low = sorted[li];
+  if (li === 0) return { ok: false, reason: 'left', low };
+  if (li === sorted.length - 1) return { ok: false, reason: 'right', low };
+  const x0 = sorted[0].x, x1 = sorted[sorted.length - 1].x;
+  for (const hw of [7.5, 10, 12.5, 15, 20]) {
+    const sel = sorted.filter((p) => Math.abs(p.x - low.x) <= hw + 1e-9);
+    if (sel.length < 4 || !sel.some((p) => p.x < low.x) || !sel.some((p) => p.x > low.x)) continue;
+    const f = quadFit(sel);
+    if (f && f.xmin != null && f.xmin > x0 && f.xmin < x1) return { ok: true, fit: f, low };
+  }
+  return { ok: false, reason: 'sparse', low };
 }
+export function fitMinimum(pts) { const a = analyseMinimum(pts); return a.ok ? a.fit : null; }

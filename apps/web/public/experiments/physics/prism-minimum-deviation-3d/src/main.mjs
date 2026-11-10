@@ -14,7 +14,7 @@ if (!scene) $('stage').classList.add('nogl-on');
 
 const curDelta = () => P.deltaReading(state.prism, state.i);
 const pts = () => state.rows.map((r) => ({ x: r.i, y: r.d }));
-const fit = () => P.fitMinimum(pts());
+const analysis = () => P.analyseMinimum(pts());
 function say(kind, text) { state.msg = { kind, text }; }
 
 function setI(v) { state.i = round1(clamp(v, P.I_MIN, P.I_MAX)); state.msg = null; render(); }
@@ -63,9 +63,18 @@ function renderControls() {
 }
 
 function result() {
-  if (state.rows.length < 5) return null;
-  const f = fit(); if (!f) return null;
+  const a = analysis(); if (!a.ok) return null;
+  const f = a.fit;
   return { dm: f.ymin, im: f.xmin, n: P.indexFrom(f.ymin), f };
+}
+// tells the student exactly what is missing before D can be found
+function needMore() {
+  const a = analysis(), n = state.rows.length;
+  if (a.reason === 'few') return 'You have ' + n + ' reading' + (n === 1 ? '' : 's') + '. Take at least five, from about i = 35° to 70°, so the curve can fall, turn and rise.';
+  const li = fmt(a.low.x, 1), ld = fmt(a.low.y, 1);
+  if (a.reason === 'left') return 'Your lowest δ (' + ld + '°) is at your smallest angle, i = ' + li + '°, so δ is still falling there and the minimum lies at smaller i. Take a few readings between i = ' + fmt(Math.max(P.I_MIN, a.low.x - 15), 0) + '° and ' + li + '°.';
+  if (a.reason === 'right') return 'Your lowest δ (' + ld + '°) is at your largest angle, i = ' + li + '°, so δ is still falling there and the minimum lies at larger i. Take a few readings between i = ' + li + '° and ' + fmt(Math.min(P.I_MAX, a.low.x + 15), 0) + '°.';
+  return 'The lowest δ is near i = ' + li + '°. Take a few more readings close to it (within about 5° on each side) so the bottom of the curve is clear.';
 }
 function renderTable() {
   const body = $('obsBody'); body.innerHTML = '';
@@ -77,11 +86,11 @@ function renderTable() {
   });
   const res = result();
   $('resultLine').textContent = res ? 'Minimum deviation from the graph: D = ' + fmt(res.dm, 1) + '° (at i ≈ ' + fmt(res.im, 1) + '°). So n = sin((60° + ' + fmt(res.dm, 1) + '°)/2) / sin 30° = ' + fmt(res.n, 3) + '.'
-    : state.rows.length ? 'Record at least five readings, with some on both sides of the lowest δ, to find D from the graph.' : '';
+    : state.rows.length ? needMore() : '';
   const rv = $('revealBox');
   if (state.revealed) {
     rv.hidden = false;
-    if (!res) rv.textContent = 'Record at least five readings around the minimum first, then check your answer.';
+    if (!res) rv.textContent = 'Not yet: ' + needMore().charAt(0).toLowerCase() + needMore().slice(1);
     else { const dm = P.minDeviation(state.prism.n); rv.textContent = 'Actual refractive index: ' + fmt(state.prism.n, 3) + ' (minimum deviation ' + fmt(dm, 1) + '°). Your n = ' + fmt(res.n, 3) + ', an error of ' + fmt(Math.abs(res.n - state.prism.n) / state.prism.n * 100, 2) + '%.'; }
   } else rv.hidden = true;
 }

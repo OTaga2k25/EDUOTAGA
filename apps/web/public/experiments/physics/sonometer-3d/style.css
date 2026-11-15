@@ -231,3 +231,8 @@ tfoot td{font-weight:700;border-bottom:none;background:var(--paper);}
 }
 .stage:fullscreen .view{height:100vh !important;max-height:none !important;}
 .stage:-webkit-full-screen .view{height:100vh !important;max-height:none !important;}
+/* the lab scrolls inside its own box, so the apparatus can stay pinned even inside the site's frame */
+html:has(body.pinned){height:100%;overflow:hidden;}
+body.pinned{height:100%;overflow:hidden;}
+.scroller{height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;scrollbar-width:none;}
+@media (max-width:640px){.pin-area>.stage .rotatehint{font-size:11px;bottom:6px;opacity:.9;}}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liquid Lens (3D) — Refractive Index of a Liquid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Ray Optics · 3D</div>
+    <h1 class="disp">Liquid lens: <span class="thin">refractive index of a liquid with a convex lens and a plane mirror</span></h1>
+    <p class="lede">Find the focal length of a convex lens by removing parallax between a needle and its image (<b class="mono">f₁</b>). Put a few drops of liquid under the lens and repeat (<b class="mono">F</b>). The liquid forms a plano-concave lens of focal length <b class="mono">f = f₁F / (F − f₁)</b>, and <b class="mono">n = 1 + R/f</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="stage" id="stage" aria-label="3D lens, mirror and needle">
+    <div class="view" id="view"></div>
+    <div class="hud">
+      <div class="views" role="group" aria-label="Camera views">
+        <button type="button" data-view="overview">Overview</button>
+        <button type="button" data-view="side">Side view</button>
+        <button type="button" data-view="close">Close-up</button>
+        <button type="button" class="fsbtn" id="fsBtn">Full screen</button>
+      </div>
+      <div class="hudtags"><div class="ltag" id="modeTag">No liquid</div></div>
+    </div>
+    <p class="stage-hint">Drag the needle up or down · drag the background to rotate the view · scroll or pinch to zoom</p>
+    <p class="rotatehint">Tap “Full screen” and turn your phone sideways for a bigger view</p>
+    <div class="nogl">3D view is not available on this device, but you can still do the whole experiment with the controls below.</div>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <ol class="steps" id="steps">
+      <li data-s="0"><b>1</b> No liquid: remove parallax, record f₁</li>
+      <li data-s="1"><b>2</b> Liquid under the lens: remove parallax, record F</li>
+      <li data-s="2"><b>3</b> Spherometer: find R</li>
+    </ol>
+    <div class="grid two">
+      <div class="ctl">
+        <div class="ctl-h">Looking down from above the needle</div>
+        <canvas id="eyeView" width="300" height="220" aria-label="The needle tip and its inverted image, seen from above"></canvas>
+        <label for="eyeSl" class="ctl-h" style="margin-top:8px;display:block">Move your eye sideways</label>
+        <input type="range" id="eyeSl" min="-1" max="1" step="0.01" value="0">
+        <div class="nudge"><button type="button" class="btn sm" id="swayBtn">Stop swaying</button></div>
+        <div class="mini" id="parallaxLine">—</div>
+      </div>
+      <div class="ctl">
+        <label for="uSl" class="ctl-h">Needle height (raise or lower the clamp)</label>
+        <input type="range" id="uSl" min="3" max="60" step="0.1" value="30">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-d="-5">▼ 5</button><button type="button" class="btn sm" data-d="-1">▼ 1</button><button type="button" class="btn sm" data-d="-0.1">▼ 0.1</button>
+          <button type="button" class="btn sm" data-d="0.1">▲ 0.1</button><button type="button" class="btn sm" data-d="1">▲ 1</button><button type="button" class="btn sm" data-d="5">▲ 5</button>
+        </div>
+        <div class="readings mono" id="scaleLine">Scale: needle tip to lens top x₁ = — · to mirror x₂ = —</div>
+        <div class="actions">
+          <button type="button" class="btn" id="liqBtn">Put liquid under the lens</button>
+          <button type="button" class="btn primary" id="recordBtn">No parallax: record x₁ and x₂</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>Light from the needle passes through the lens, reflects from the mirror and passes through the lens again. When the needle is at the focus of the lens, the rays leave the lens parallel, return along their own path and form an inverted image exactly at the needle. Then there is <b>no parallax</b>: the image tip stays on the needle tip as you move your eye. The distance from the needle to the lens is then its focal length.</p>
+    <p>A few drops of liquid between the lens and the mirror form a <b>plano-concave liquid lens</b> in contact with the convex lens. The combination has focal length F, larger than f₁.</p>
+    <ul class="eqs mono">
+      <li>Focal length = mean of the needle's distance to the top of the lens (x₁) and to the mirror (x₂)</li>
+      <li>Lenses in contact: <b>1/F = 1/f₁ + 1/f<sub>l</sub></b>, so |f<sub>l</sub>| = <b>f₁F / (F − f₁)</b></li>
+      <li>Liquid lens (one face radius R, the other flat): <b>1/|f<sub>l</sub>| = (n − 1)/R</b>, so <b>n = 1 + R/|f<sub>l</sub>|</b></li>
+      <li>Spherometer: <b>R = l²/(6h) + h/2</b>, where l is the distance between the legs and h the height of the central screw</li>
+      <li>Parallax rule: of the needle and the image, the one farther from your eye moves with your eye</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="twotab">
+      <div><h3>Without liquid</h3><div class="tablewrap"><table><thead><tr><th>Trial</th><th>x₁ (cm)</th><th>x₂ (cm)</th><th>f₁ (cm)</th></tr></thead><tbody id="dryBody"></tbody></table></div></div>
+      <div><h3>With liquid</h3><div class="tablewrap"><table><thead><tr><th>Trial</th><th>x₁ (cm)</th><th>x₂ (cm)</th><th>F (cm)</th></tr></thead><tbody id="wetBody"></tbody></table></div></div>
+    </div>
+    <h3 class="sub">Spherometer (curved surface of the lens)</h3>
+    <p class="mono" id="sphLine">—</p>
+    <p class="resultline" id="resultLine"></p>
+    <h3 class="checks-h" id="checksH" hidden>Check your readings</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="newSet">New unknown liquid</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>The plane mirror and the lens must be clean, and the needle must be vertically above the centre of the lens.</li>
+      <li>Remove parallax tip to tip: keep your eye at least 30 cm above the needle and move it sideways.</li>
+      <li>Use only a few drops of liquid, so it forms a thin layer just under the lens without spreading over its edge.</li>
+      <li>Measure x₁ and x₂ carefully and take their mean, which is the distance to the middle of the lens.</li>
+      <li>Repeat each setting at least twice and take the mean.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

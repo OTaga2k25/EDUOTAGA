@@ -3505,5 +3505,250 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-15T00:00:00.000Z",
     "updatedAt": "2026-11-15T00:00:00.000Z"
+  },
+  {
+    "id": "liquid-lens-refractive-index-3d",
+    "slug": "liquid-lens-refractive-index-3d",
+    "title": "Liquid Lens (3D): Refractive Index of a Liquid using a Convex Lens and a Plane Mirror",
+    "subjectId": "light-reflection-refraction",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Find the focal length of a convex lens on a plane mirror by removing parallax, repeat with liquid under the lens, and use a spherometer's R to find the refractive index of the liquid.",
+    "theory": "A convex lens placed on a plane mirror with a needle above it forms an **inverted image that coincides with the needle** when the needle is at the **focus** of the lens: the rays leave the lens parallel, reflect normally from the mirror and retrace their path. Finding the point of **no parallax** gives the focal length **f₁**.\n\nA few drops of liquid between the lens and the mirror form a **plano-concave liquid lens** in contact with the convex lens. The combination has a larger focal length **F**. For lenses in contact, **1/F = 1/f₁ + 1/f_l**, so the liquid lens has **|f_l| = f₁F/(F − f₁)**.\n\nFor the liquid lens (one face of radius R, the other plane), **1/|f_l| = (n − 1)/R**, so **n = 1 + R/|f_l|**. The radius of curvature is found with a **spherometer**: **R = l²/(6h) + h/2**.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Set up",
+        "description": "Place the convex lens on the plane mirror and clamp a needle above it, with its tip over the centre of the lens."
+      },
+      {
+        "order": 2,
+        "title": "Remove parallax",
+        "description": "Look down at the needle tip and its inverted image while moving your eye sideways. Raise or lower the needle until the image tip stays on the needle tip (no parallax)."
+      },
+      {
+        "order": 3,
+        "title": "Measure f₁",
+        "description": "Measure the distance from the needle tip to the top of the lens (x₁) and to the mirror (x₂). Their mean is f₁. Repeat."
+      },
+      {
+        "order": 4,
+        "title": "Add the liquid",
+        "description": "Put a few drops of the liquid on the mirror and place the lens over it. Find the new no-parallax position and measure F in the same way. Repeat."
+      },
+      {
+        "order": 5,
+        "title": "Find R",
+        "description": "Use the spherometer readings (l and h) to find the radius of curvature R = l²/(6h) + h/2 of the lens surface."
+      },
+      {
+        "order": 6,
+        "title": "Calculate n",
+        "description": "Calculate |f_l| = f₁F/(F − f₁) and n = 1 + R/|f_l|."
+      }
+    ],
+    "observation": "Without liquid the no-parallax distance gives f₁; with liquid it gives a larger F. The liquid lens focal length is |f_l| = f₁F/(F − f₁), and with R from the spherometer, n = 1 + R/|f_l| (about 1.33 for water, 1.44–1.48 for oils).",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "When the needle is at the focus of a convex lens resting on a plane mirror, its image:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Forms at infinity"
+          },
+          {
+            "id": "b",
+            "text": "Coincides with the needle, with no parallax"
+          },
+          {
+            "id": "c",
+            "text": "Is virtual and erect"
+          },
+          {
+            "id": "d",
+            "text": "Forms on the mirror"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Rays from the focus leave the lens parallel, reflect normally from the mirror and retrace their path, so the inverted image forms at the needle itself."
+      },
+      {
+        "id": "q2",
+        "question": "Liquid placed between the convex lens and the plane mirror forms:",
+        "options": [
+          {
+            "id": "a",
+            "text": "A convex liquid lens"
+          },
+          {
+            "id": "b",
+            "text": "A plane glass plate"
+          },
+          {
+            "id": "c",
+            "text": "A plano-concave liquid lens"
+          },
+          {
+            "id": "d",
+            "text": "A prism"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "The liquid fills the space between the curved lower face of the lens and the flat mirror, so it takes the shape of a plano-concave lens."
+      },
+      {
+        "id": "q3",
+        "question": "With liquid under the lens, the no-parallax distance F compared with f₁ is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Larger"
+          },
+          {
+            "id": "b",
+            "text": "Smaller"
+          },
+          {
+            "id": "c",
+            "text": "Equal"
+          },
+          {
+            "id": "d",
+            "text": "Zero"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The plano-concave liquid lens is diverging, so the combination has a longer focal length than the convex lens alone."
+      },
+      {
+        "id": "q4",
+        "question": "The focal length of the liquid lens (magnitude) is given by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "f₁ + F"
+          },
+          {
+            "id": "b",
+            "text": "f₁F/(f₁ + F)"
+          },
+          {
+            "id": "c",
+            "text": "F − f₁"
+          },
+          {
+            "id": "d",
+            "text": "f₁F/(F − f₁)"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "From 1/F = 1/f₁ + 1/f_l with f_l negative, |f_l| = f₁F/(F − f₁)."
+      },
+      {
+        "id": "q5",
+        "question": "If the liquid lens has |f_l| = 60 cm and R = 20 cm, the refractive index of the liquid is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "1.50"
+          },
+          {
+            "id": "b",
+            "text": "1.33"
+          },
+          {
+            "id": "c",
+            "text": "1.25"
+          },
+          {
+            "id": "d",
+            "text": "3.0"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "n = 1 + R/|f_l| = 1 + 20/60 = 1.33 (water)."
+      },
+      {
+        "id": "q6",
+        "question": "The radius of curvature R of the lens surface is found with a:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Spherometer"
+          },
+          {
+            "id": "b",
+            "text": "Vernier caliper"
+          },
+          {
+            "id": "c",
+            "text": "Screw gauge"
+          },
+          {
+            "id": "d",
+            "text": "Travelling microscope"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "A spherometer measures the height h of a spherical surface over its legs; R = l²/(6h) + h/2."
+      },
+      {
+        "id": "q7",
+        "question": "While removing parallax, the image moves with your eye. This means:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The needle is exactly at the focus"
+          },
+          {
+            "id": "b",
+            "text": "The image is nearer to your eye than the needle"
+          },
+          {
+            "id": "c",
+            "text": "The image is farther from your eye than the needle, so the needle should be lowered"
+          },
+          {
+            "id": "d",
+            "text": "The mirror is not plane"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Of two objects, the one farther from the eye moves with the eye. Here the image lies below the needle tip, so lower the needle."
+      },
+      {
+        "id": "q8",
+        "question": "Why is the focal length taken as the mean of x₁ (needle to lens top) and x₂ (needle to mirror)?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To give the distance to the middle of the lens"
+          },
+          {
+            "id": "b",
+            "text": "To double the focal length"
+          },
+          {
+            "id": "c",
+            "text": "To remove the effect of the liquid"
+          },
+          {
+            "id": "d",
+            "text": "To measure the radius of curvature"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The focal length is measured from the optical centre of the lens, which is midway between its top surface and the mirror."
+      }
+    ],
+    "tags": ["liquid lens", "refractive index", "convex lens", "plane mirror", "parallax", "spherometer", "ray optics", "3d", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-15T00:00:00.000Z",
+    "updatedAt": "2026-11-15T00:00:00.000Z"
   }
 ]

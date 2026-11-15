@@ -7,9 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=1">
+<link rel="stylesheet" href="style.css?v=2">
 </head>
-<body>
+<body class="pinned">
 
 <header class="top">
   <div class="wrap">
@@ -21,6 +21,7 @@
 
 <main class="wrap">
 
+  <div class="pin-scope"><div class="pin-area">
   <section class="bench" aria-label="IC trainer board">
     <svg id="apparatus" viewBox="0 0 900 380" role="img" aria-label="Trainer board with input switches A and B, a 14-pin gate IC, and an output LED">
       <line x1="40" y1="40" x2="860" y2="40" class="rail"/><text x="44" y="32" class="lbl small">+5 V</text>
@@ -78,6 +79,7 @@
       <button type="button" class="btn sm" id="newMystery" hidden>New mystery IC</button>
     </div>
   </section>
+  </div>
 
   <section class="card formula">
     <h2 class="disp">The gates</h2>
@@ -103,6 +105,7 @@
     </ul>
   </section>
 
+</div>
 </main>
 
 <footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>

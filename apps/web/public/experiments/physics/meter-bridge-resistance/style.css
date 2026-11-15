@@ -157,3 +157,33 @@ tfoot td{font-weight:700;border-bottom:none;background:var(--paper);}
 .checks li.warn::before{content:'!';left:15px;color:#c25e00;font-weight:800;}
 .checks li.tip{background:#e9f1fb;color:#14304d;}
 .checks li.tip::before{content:'i';left:15px;color:#2860b5;font-style:italic;font-family:serif;font-weight:700;}
+
+/* ---------- pinned visual: the apparatus stays on screen while the rest scrolls ---------- */
+.pin-scope,.pin-area{display:block;}
+@media (max-width:999px){
+  .pin-area>.stage,.pin-area>.bench{position:sticky;top:0;z-index:30;margin-top:10px;box-shadow:0 8px 18px rgba(8,20,30,.28);}
+  .pin-area>.stage .view{aspect-ratio:auto;height:44vh;height:44svh;min-height:220px;max-height:520px;}
+  .pin-area>.bench{padding:8px 6px 4px;}
+  .pin-area>.bench svg{max-height:40vh;max-height:40svh;}
+  .pin-area>.bench .bench-hint{display:none;}
+}
+@media (max-width:640px){
+  .pin-area>.stage{margin-top:6px;}
+  .pin-area>.stage .view{height:42svh;min-height:210px;}
+}
+@media (min-width:1000px), (orientation:landscape) and (min-width:600px) and (max-height:540px){
+  body.pinned .wrap{max-width:1480px;}
+  .pin-scope{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);column-gap:22px;align-items:start;}
+  .pin-area{display:contents;}
+  .pin-area>.stage,.pin-area>.bench{grid-column:1;grid-row:1/span 60;position:sticky;top:12px;margin-top:14px;align-self:start;z-index:5;}
+  .pin-area>:not(.stage):not(.bench),.pin-scope>:not(.pin-area){grid-column:2;min-width:0;}
+  .pin-area>.stage .view{aspect-ratio:auto;height:calc(100vh - 40px);min-height:300px;max-height:820px;}
+  .pin-area>.bench svg{max-height:calc(100vh - 80px);}
+}
+@media (orientation:landscape) and (max-height:540px){
+  .pin-area>.stage,.pin-area>.bench{top:6px;margin-top:6px;}
+  .pin-area>.stage .view{height:calc(100vh - 16px);min-height:200px;}
+  .pin-area>.bench svg{max-height:calc(100vh - 30px);}
+}
+.stage:fullscreen .view{height:100vh !important;max-height:none !important;}
+.stage:-webkit-full-screen .view{height:100vh !important;max-height:none !important;}

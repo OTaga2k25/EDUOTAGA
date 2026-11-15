@@ -3990,5 +3990,240 @@
     "estimatedDurationMinutes": 25,
     "createdAt": "2026-11-15T00:00:00.000Z",
     "updatedAt": "2026-11-15T00:00:00.000Z"
+  },
+  {
+    "id": "concave-lens-combination-3d",
+    "slug": "concave-lens-combination-3d",
+    "title": "Concave Lens (3D): Focal Length using a Convex Lens in Contact",
+    "subjectId": "light-reflection-refraction",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Measure a convex lens by the u–v method, put a concave lens in contact with it and measure the combination, then find the concave lens focal length from 1/F = 1/f₁ + 1/f₂.",
+    "theory": "A **concave lens** always forms a **virtual image**, so its focal length cannot be measured directly with a screen. Placed **in contact** with a stronger **convex lens**, the combination is converging and forms real images.\n\nFor thin lenses in contact the **powers add**: **1/F = 1/f₁ + 1/f₂**. Measure f₁ (convex lens alone) and F (combination) by the **u–v method** (f = uv/(u + v)). Then **f₂ = f₁F/(f₁ − F)**, which is **negative** for the diverging lens.\n\nBecause the concave lens weakens the combination, **F > f₁**. f₂ depends on the small difference F − f₁, so careful readings are needed.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Convex lens alone",
+        "description": "Mount the convex lens. For several object distances u, move the screen to the sharpest image and record v. Find f₁ = uv/(u + v) and its mean."
+      },
+      {
+        "order": 2,
+        "title": "Put the lenses in contact",
+        "description": "Place the concave lens in contact with the convex lens (press “Convex + concave in contact”)."
+      },
+      {
+        "order": 3,
+        "title": "Measure the combination",
+        "description": "Repeat the u–v readings for the combination and find the mean F. Use larger u, since F is longer."
+      },
+      {
+        "order": 4,
+        "title": "Calculate f₂",
+        "description": "Calculate f₂ = f₁F/(f₁ − F). It is negative, showing a diverging lens. Its power is 100/f₂ dioptre (f in cm)."
+      }
+    ],
+    "observation": "The convex lens alone gives f₁; the combination gives a larger F. The focal length of the concave lens, f₂ = f₁F/(f₁ − F), is negative, typically −25 to −60 cm here.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Why can't the focal length of a concave lens be found directly with a screen?",
+        "options": [
+          {
+            "id": "a",
+            "text": "It has no focal length"
+          },
+          {
+            "id": "b",
+            "text": "It always forms a virtual image"
+          },
+          {
+            "id": "c",
+            "text": "It forms images only at infinity"
+          },
+          {
+            "id": "d",
+            "text": "It reflects all the light"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "A concave lens diverges light, so its images are virtual and cannot be caught on a screen."
+      },
+      {
+        "id": "q2",
+        "question": "For two thin lenses in contact, the focal length F of the combination is given by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "F = f₁ + f₂"
+          },
+          {
+            "id": "b",
+            "text": "F = f₁f₂"
+          },
+          {
+            "id": "c",
+            "text": "1/F = 1/f₁ + 1/f₂"
+          },
+          {
+            "id": "d",
+            "text": "1/F = 1/f₁ − 1/f₂ always"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "The powers of thin lenses in contact add: P = P₁ + P₂, so 1/F = 1/f₁ + 1/f₂."
+      },
+      {
+        "id": "q3",
+        "question": "For the combination to form a real image, the convex lens must:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Have a shorter focal length (greater power) than the concave lens"
+          },
+          {
+            "id": "b",
+            "text": "Have a longer focal length than the concave lens"
+          },
+          {
+            "id": "c",
+            "text": "Be thinner than the concave lens"
+          },
+          {
+            "id": "d",
+            "text": "Be placed far from the concave lens"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The combined power P₁ + P₂ must be positive, so the convex lens must be the stronger of the two (|f₁| < |f₂|)."
+      },
+      {
+        "id": "q4",
+        "question": "If f₁ = 12 cm and F = 20 cm, the focal length of the concave lens is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "−8 cm"
+          },
+          {
+            "id": "b",
+            "text": "−32 cm"
+          },
+          {
+            "id": "c",
+            "text": "+30 cm"
+          },
+          {
+            "id": "d",
+            "text": "−30 cm"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "f₂ = f₁F/(f₁ − F) = (12 × 20)/(12 − 20) = 240/(−8) = −30 cm."
+      },
+      {
+        "id": "q5",
+        "question": "Compared with the convex lens alone, the combination has:",
+        "options": [
+          {
+            "id": "a",
+            "text": "A longer focal length (weaker)"
+          },
+          {
+            "id": "b",
+            "text": "A shorter focal length (stronger)"
+          },
+          {
+            "id": "c",
+            "text": "The same focal length"
+          },
+          {
+            "id": "d",
+            "text": "No focal length"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Adding a diverging lens reduces the total power, so F > f₁."
+      },
+      {
+        "id": "q6",
+        "question": "The power of a concave lens of focal length −25 cm is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "+4 D"
+          },
+          {
+            "id": "b",
+            "text": "−4 D"
+          },
+          {
+            "id": "c",
+            "text": "−0.25 D"
+          },
+          {
+            "id": "d",
+            "text": "+0.04 D"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "P = 100/f (f in cm) = 100/(−25) = −4 dioptre."
+      },
+      {
+        "id": "q7",
+        "question": "Why do small errors in f₁ and F give a larger error in f₂?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Because f₂ depends on the difference F − f₁, which is small"
+          },
+          {
+            "id": "b",
+            "text": "Because the lenses are thin"
+          },
+          {
+            "id": "c",
+            "text": "Because the screen is blurred"
+          },
+          {
+            "id": "d",
+            "text": "Because the concave lens is virtual"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "f₂ = f₁F/(f₁ − F); the denominator is a small difference of two measured values, so its percentage error is large."
+      },
+      {
+        "id": "q8",
+        "question": "In the u–v method, f for each setting is found from:",
+        "options": [
+          {
+            "id": "a",
+            "text": "f = u + v"
+          },
+          {
+            "id": "b",
+            "text": "f = uv/(u + v)"
+          },
+          {
+            "id": "c",
+            "text": "f = (u + v)/uv"
+          },
+          {
+            "id": "d",
+            "text": "f = v − u"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "From the lens formula with magnitudes, 1/u + 1/v = 1/f, so f = uv/(u + v)."
+      }
+    ],
+    "tags": ["concave lens", "convex lens", "lenses in contact", "focal length", "power", "u-v method", "optical bench", "3d", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-15T00:00:00.000Z",
+    "updatedAt": "2026-11-15T00:00:00.000Z"
   }
 ]

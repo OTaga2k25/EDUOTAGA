@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acid–Base Titration — Volumetric Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body class="pinned" style="height:100%"><div class="scroller" id="scroller">
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Chemistry · Volumetric Analysis</div>
+    <h1 class="disp">Acid–base titration: <span class="thin">estimating the strength of a solution</span></h1>
+    <p class="lede">A known volume of acid is neutralised by a base run in from a burette. Phenolphthalein turns from colourless to <b>pale pink</b> at the end point. From the volumes, <b class="mono">M₁V₁/n₁ = M₂V₂/n₂</b> gives the molarity, and <b class="mono">strength = molarity × molar mass</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="pin-scope"><div class="pin-area">
+  <section class="bench" aria-label="Titration apparatus">
+    <svg id="apparatus" viewBox="0 0 640 420" role="img" aria-label="Burette, conical flask and a close-up of the burette scale"><g id="app"></g></svg>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="chips" id="modeChips" role="group" aria-label="Experiment">
+      <button type="button" class="chip" data-m="single">Estimate NaOH / KOH (standard oxalic acid)</button>
+      <button type="button" class="chip" data-m="link">Estimate HCl (NaOH as link solution)</button>
+    </div>
+    <div class="given mono" id="given"></div>
+    <ol class="steps" id="steps">
+      <li data-s="0"><b>1</b> Rinse and fill the burette</li>
+      <li data-s="1"><b>2</b> Pipette 20 mL acid, add indicator</li>
+      <li data-s="2"><b>3</b> Note the initial reading</li>
+      <li data-s="3"><b>4</b> Titrate to pale pink, note the final reading</li>
+    </ol>
+    <div class="chips" id="titChips" role="group" aria-label="Titration" hidden>
+      <button type="button" class="chip" data-t="ox">Titration I: standard oxalic acid in the flask</button>
+      <button type="button" class="chip" data-t="hcl">Titration II: HCl in the flask</button>
+    </div>
+    <div class="grid">
+      <div class="ctl">
+        <div class="ctl-h">Rinsing</div>
+        <div class="rinse" id="rinse"></div>
+        <div class="actrow">
+          <button type="button" class="btn sm" id="fillBtn">Fill the burette</button>
+          <button type="button" class="btn sm" id="bubbleBtn">Remove the air bubble</button>
+        </div>
+        <div class="actrow">
+          <button type="button" class="btn sm" id="pipBtn">Pipette 20 mL into the flask</button>
+          <button type="button" class="btn sm" id="indBtn">Add 2 drops phenolphthalein</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <div class="ctl-h">Burette readings</div>
+        <div class="readline"><label>Initial reading (mL)<input id="inInit" inputmode="decimal" placeholder="e.g. 0.40"></label><button type="button" class="btn sm" id="initBtn">Note</button></div>
+        <div class="noted" id="initNoted"></div>
+        <div class="ctl-h" style="margin-top:10px">Run in the base</div>
+        <div class="drops">
+          <button type="button" class="btn" data-add="1">+1 mL</button>
+          <button type="button" class="btn" data-add="0.5">+0.5 mL</button>
+          <button type="button" class="btn" data-add="0.1">+2 drops</button>
+          <button type="button" class="btn" data-add="0.05">+1 drop</button>
+        </div>
+        <div class="readline"><label>Final reading (mL)<input id="inFinal" inputmode="decimal" placeholder="read the close-up"></label><button type="button" class="btn primary" id="recordBtn" style="margin-top:0;width:auto">Record</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>At the end point the acid in the flask is exactly neutralised. One more drop of base makes the solution slightly alkaline, and phenolphthalein turns pale pink.</p>
+    <ul class="eqs mono">
+      <li>Oxalic acid with alkali: <b>H₂C₂O₄ + 2NaOH → Na₂C₂O₄ + 2H₂O</b> (n₁ = 1, n₂ = 2)</li>
+      <li>Hydrochloric acid with NaOH: <b>HCl + NaOH → NaCl + H₂O</b> (n₁ = n₂ = 1)</li>
+      <li>Molarity equation: <b>M₁V₁/n₁ = M₂V₂/n₂</b> (1 = acid, 2 = base)</li>
+      <li>Strength (g/L) = <b>molarity × molar mass</b> (NaOH 40, KOH 56, HCl 36.5)</li>
+      <li>Use the <b>concordant</b> titre: two titres that agree within 0.1 mL</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap"><table><thead><tr><th>Titration</th><th>Trial</th><th>Initial (mL)</th><th>Final (mL)</th><th>Volume of base (mL)</th><th>Note</th></tr></thead><tbody id="obsBody"></tbody></table></div>
+    <p class="resultline" id="resultLine"></p>
+    <h3 class="checks-h" id="checksH" hidden>Check your readings</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="ctl" style="margin-top:12px">
+      <div class="ctl-h">Your calculation</div>
+      <div class="readin" id="calcInputs"></div>
+      <button type="button" class="btn" id="checkCalc">Check my calculation</button>
+      <div class="mini" id="calcFb"></div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="newSet">New sample</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+  </div>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Rinse the burette with the solution it is to hold, and the pipette with the solution it is to measure. Rinse the conical flask with distilled water only.</li>
+      <li>Remove the air bubble from the burette nozzle before taking the initial reading, and remove the funnel.</li>
+      <li>Read the bottom of the meniscus with your eye at the same level (to avoid parallax).</li>
+      <li>Do a rough titration first, then add the base drop by drop near the end point while swirling the flask.</li>
+      <li>Place the flask on a white tile so that the first permanent pale pink is easy to see.</li>
+      <li>Repeat until two titres agree within 0.1 mL (concordant values).</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</div>
+</body>
+</html>

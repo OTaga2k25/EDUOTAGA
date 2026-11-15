@@ -5190,5 +5190,255 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "acid-base-titration",
+    "slug": "acid-base-titration",
+    "title": "Acid–Base Titration: Strength of NaOH, KOH or HCl",
+    "subjectId": "volumetric-analysis",
+    "categoryId": "chemistry",
+    "difficulty": "intermediate",
+    "summary": "Rinse and fill a burette, pipette standard oxalic acid, titrate to the first permanent pale pink with phenolphthalein, read the burette yourself, get concordant titres, and calculate molarity and strength. Includes double titration with NaOH as a link solution to estimate HCl.",
+    "theory": "In an acid–base titration a solution of known concentration (the **standard solution**) reacts with a solution of unknown concentration. The **end point** is shown by an indicator: **phenolphthalein** is colourless in acid and turns **pale pink** as soon as there is a slight excess of alkali.\n\n**Oxalic acid with alkali:** H₂C₂O₄ + 2NaOH → Na₂C₂O₄ + 2H₂O. So n₁ = 1 (acid) and n₂ = 2 (base).\n\n**Molarity equation:** **M₁V₁/n₁ = M₂V₂/n₂**. With V₁ = 20 mL of standard oxalic acid and V₂ the concordant burette reading, M₂ = 2M₁V₁/V₂.\n\n**Strength (g/L) = molarity × molar mass** (NaOH 40, KOH 56, HCl 36.5).\n\n**Link solution (double titration):** to estimate HCl, NaOH of unknown strength is first standardised against oxalic acid (titration I). The same NaOH is then titrated against the HCl (titration II): HCl + NaOH → NaCl + H₂O, so M(HCl) × 20 = M(NaOH) × V(NaOH).\n\nTitres are repeated until two agree within 0.1 mL (**concordant values**).",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Rinse",
+        "description": "Rinse the burette with the alkali it will hold and the pipette with the acid it will measure. Rinse the conical flask with distilled water only."
+      },
+      {
+        "order": 2,
+        "title": "Fill the burette",
+        "description": "Fill the burette with the alkali, remove the funnel, and run out a little to remove the air bubble from the nozzle."
+      },
+      {
+        "order": 3,
+        "title": "Pipette the acid",
+        "description": "Pipette 20 mL of the standard oxalic acid (or HCl) into the conical flask on a white tile, and add two drops of phenolphthalein."
+      },
+      {
+        "order": 4,
+        "title": "Initial reading",
+        "description": "Read the bottom of the meniscus with your eye at its level and note the initial reading."
+      },
+      {
+        "order": 5,
+        "title": "Titrate",
+        "description": "Run in the alkali while swirling. Do a rough titration first; then add drop by drop near the end point until the first permanent pale pink."
+      },
+      {
+        "order": 6,
+        "title": "Final reading",
+        "description": "Note the final reading. The titre is final − initial. Repeat until two titres agree within 0.1 mL."
+      },
+      {
+        "order": 7,
+        "title": "Calculate",
+        "description": "Use M₁V₁/n₁ = M₂V₂/n₂ with the concordant titre to find the molarity, then strength = molarity × molar mass."
+      }
+    ],
+    "observation": "The colourless acid turns pale pink at the end point. Repeated accurate titres agree within 0.1 mL; the concordant value gives the molarity and strength of the unknown solution.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "The colour change of phenolphthalein at the end point (alkali added to acid) is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Pink to colourless"
+          },
+          {
+            "id": "b",
+            "text": "Colourless to pale pink"
+          },
+          {
+            "id": "c",
+            "text": "Yellow to red"
+          },
+          {
+            "id": "d",
+            "text": "Colourless to blue"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Phenolphthalein is colourless in acid and turns pink as soon as there is a slight excess of alkali."
+      },
+      {
+        "id": "q2",
+        "question": "The burette should be rinsed with:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Distilled water only"
+          },
+          {
+            "id": "b",
+            "text": "The solution it is to hold"
+          },
+          {
+            "id": "c",
+            "text": "The acid in the flask"
+          },
+          {
+            "id": "d",
+            "text": "Tap water"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Water left inside would dilute the solution and make the titre too high."
+      },
+      {
+        "id": "q3",
+        "question": "The conical flask should be rinsed with:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The acid to be pipetted"
+          },
+          {
+            "id": "b",
+            "text": "The alkali"
+          },
+          {
+            "id": "c",
+            "text": "Distilled water only"
+          },
+          {
+            "id": "d",
+            "text": "Phenolphthalein"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Water does not change the amount of acid pipetted in, but acid left on the walls would add extra acid."
+      },
+      {
+        "id": "q4",
+        "question": "For oxalic acid and NaOH, the values of n₁ (acid) and n₂ (base) in M₁V₁/n₁ = M₂V₂/n₂ are:",
+        "options": [
+          {
+            "id": "a",
+            "text": "1 and 1"
+          },
+          {
+            "id": "b",
+            "text": "2 and 1"
+          },
+          {
+            "id": "c",
+            "text": "1 and 2"
+          },
+          {
+            "id": "d",
+            "text": "2 and 2"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "H₂C₂O₄ + 2NaOH → Na₂C₂O₄ + 2H₂O: one mole of acid reacts with two moles of base."
+      },
+      {
+        "id": "q5",
+        "question": "20 mL of 0.05 M oxalic acid needs 20 mL of NaOH. The molarity of NaOH is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "0.05 M"
+          },
+          {
+            "id": "b",
+            "text": "0.025 M"
+          },
+          {
+            "id": "c",
+            "text": "0.2 M"
+          },
+          {
+            "id": "d",
+            "text": "0.1 M"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "M₂ = 2 × 0.05 × 20 / 20 = 0.1 M."
+      },
+      {
+        "id": "q6",
+        "question": "If an air bubble in the burette nozzle is not removed before the initial reading, the titre will be:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Too high"
+          },
+          {
+            "id": "b",
+            "text": "Too low"
+          },
+          {
+            "id": "c",
+            "text": "Unchanged"
+          },
+          {
+            "id": "d",
+            "text": "Zero"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The bubble fills with liquid during the titration, so the burette shows more volume than actually entered the flask."
+      },
+      {
+        "id": "q7",
+        "question": "Strength of 0.1 M NaOH in g/L is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "0.4"
+          },
+          {
+            "id": "b",
+            "text": "4.0"
+          },
+          {
+            "id": "c",
+            "text": "40"
+          },
+          {
+            "id": "d",
+            "text": "0.1"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Strength = molarity × molar mass = 0.1 × 40 = 4.0 g/L."
+      },
+      {
+        "id": "q8",
+        "question": "Why is NaOH called a link solution when HCl is estimated using standard oxalic acid?",
+        "options": [
+          {
+            "id": "a",
+            "text": "It is the indicator"
+          },
+          {
+            "id": "b",
+            "text": "Its strength is found first using oxalic acid, and then used to find the HCl"
+          },
+          {
+            "id": "c",
+            "text": "It reacts with neither acid"
+          },
+          {
+            "id": "d",
+            "text": "It is a primary standard"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "NaOH links the two titrations: titration I standardises it, titration II uses it to find the HCl."
+      }
+    ],
+    "tags": ["titration", "volumetric analysis", "acidimetry", "alkalimetry", "oxalic acid", "sodium hydroxide", "phenolphthalein", "molarity", "link solution", "double titration", "plus two", "kerala", "dhse", "practical", "chemistry"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

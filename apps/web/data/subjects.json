@@ -79,5 +79,14 @@
     "categoryId": "physics",
     "icon": "cpu",
     "color": "purple"
+  },
+  {
+    "id": "volumetric-analysis",
+    "slug": "volumetric-analysis",
+    "name": "Volumetric Analysis",
+    "description": "Titrations: find the strength of an acid or alkali from burette readings, using a standard solution and an indicator.",
+    "categoryId": "chemistry",
+    "icon": "flask",
+    "color": "emerald"
   }
 ]

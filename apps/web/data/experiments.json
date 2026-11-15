@@ -3750,5 +3750,245 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-15T00:00:00.000Z",
     "updatedAt": "2026-11-15T00:00:00.000Z"
+  },
+  {
+    "id": "convex-lens-displacement-3d",
+    "slug": "convex-lens-displacement-3d",
+    "title": "Convex Lens (3D): Focal Length by the Displacement Method",
+    "subjectId": "light-reflection-refraction",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Fix an object and a screen more than 4f apart, slide a convex lens between them to find its two sharp positions, and find f = (D² − d²)/4D without measuring from the lens.",
+    "theory": "When an object and a screen are fixed a distance **D** apart and **D > 4f**, a convex lens between them gives a **sharp image at two positions**. At the first the image is **magnified**, at the second **diminished**: the object and image distances simply **interchange**.\n\nIf the two positions are a distance **d** apart, then **u = (D − d)/2** and **v = (D + d)/2**. The lens formula gives **f = uv/(u + v) = (D² − d²)/4D**.\n\nThe magnifications satisfy **m₁m₂ = 1**. Since only **D** and **d** are measured, the position of the optical centre of the lens does not matter. At **D = 4f** the two positions merge into one, and for D < 4f there is no sharp image at all.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Rough focal length",
+        "description": "Estimate f roughly, then place the screen at a distance D greater than 4f from the object."
+      },
+      {
+        "order": 2,
+        "title": "First sharp position",
+        "description": "Slide the lens from near the object towards the screen until a sharp, magnified image appears. Record the lens position."
+      },
+      {
+        "order": 3,
+        "title": "Second sharp position",
+        "description": "Without moving the object or the screen, slide the lens further until a sharp, diminished image appears. Record this position."
+      },
+      {
+        "order": 4,
+        "title": "Calculate f",
+        "description": "Find d, the distance between the two lens positions, and f = (D² − d²)/4D."
+      },
+      {
+        "order": 5,
+        "title": "Repeat",
+        "description": "Repeat for at least three values of D and take the mean of f."
+      }
+    ],
+    "observation": "For each D the two lens positions add up to about D (they are symmetric), the images are magnified and diminished, and f = (D² − d²)/4D comes out the same for every D.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "In the displacement method, the focal length is given by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "f = (D² − d²)/4D"
+          },
+          {
+            "id": "b",
+            "text": "f = (D² + d²)/4D"
+          },
+          {
+            "id": "c",
+            "text": "f = D/4"
+          },
+          {
+            "id": "d",
+            "text": "f = Dd/(D + d)"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "With u = (D − d)/2 and v = (D + d)/2 in the lens formula, f = uv/(u + v) = (D² − d²)/4D."
+      },
+      {
+        "id": "q2",
+        "question": "Two sharp positions of the lens exist only when the object–screen distance D is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Less than 2f"
+          },
+          {
+            "id": "b",
+            "text": "Equal to f"
+          },
+          {
+            "id": "c",
+            "text": "Greater than 4f"
+          },
+          {
+            "id": "d",
+            "text": "Exactly 2f"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "The quadratic for the lens position has two real roots only if D² − 4Df > 0, that is D > 4f."
+      },
+      {
+        "id": "q3",
+        "question": "At the two lens positions, the object and image distances:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Are both equal to f"
+          },
+          {
+            "id": "b",
+            "text": "Are interchanged"
+          },
+          {
+            "id": "c",
+            "text": "Are both equal to D/2"
+          },
+          {
+            "id": "d",
+            "text": "Do not change"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "If the first position has u = x and v = D − x, the second has u = D − x and v = x."
+      },
+      {
+        "id": "q4",
+        "question": "The product of the magnifications at the two positions is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Zero"
+          },
+          {
+            "id": "b",
+            "text": "2"
+          },
+          {
+            "id": "c",
+            "text": "Equal to D"
+          },
+          {
+            "id": "d",
+            "text": "1"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "m₁ = (D − x)/x and m₂ = x/(D − x), so m₁m₂ = 1, which also gives h = √(h₁h₂)."
+      },
+      {
+        "id": "q5",
+        "question": "With D = 100 cm and d = 60 cm, the focal length is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "16 cm"
+          },
+          {
+            "id": "b",
+            "text": "25 cm"
+          },
+          {
+            "id": "c",
+            "text": "40 cm"
+          },
+          {
+            "id": "d",
+            "text": "10 cm"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "f = (100² − 60²)/(4 × 100) = (10000 − 3600)/400 = 16 cm."
+      },
+      {
+        "id": "q6",
+        "question": "An advantage of the displacement method is that:",
+        "options": [
+          {
+            "id": "a",
+            "text": "It works when D is less than f"
+          },
+          {
+            "id": "b",
+            "text": "The position of the optical centre of the lens need not be known"
+          },
+          {
+            "id": "c",
+            "text": "It needs only one reading"
+          },
+          {
+            "id": "d",
+            "text": "The image is always magnified"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Only D and the distance d between the two lens positions are measured, so the uncertain position of the lens centre does not matter."
+      },
+      {
+        "id": "q7",
+        "question": "At the lens position nearer the object, the image on the screen is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Diminished"
+          },
+          {
+            "id": "b",
+            "text": "Virtual"
+          },
+          {
+            "id": "c",
+            "text": "The same size"
+          },
+          {
+            "id": "d",
+            "text": "Magnified"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "There u is small and v large, so the image is magnified; at the other position it is diminished."
+      },
+      {
+        "id": "q8",
+        "question": "When D is exactly 4f, the two sharp positions:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Move to the ends of the bench"
+          },
+          {
+            "id": "b",
+            "text": "Disappear completely"
+          },
+          {
+            "id": "c",
+            "text": "Merge into one, at the midpoint"
+          },
+          {
+            "id": "d",
+            "text": "Become virtual"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "At D = 4f the two roots coincide at u = v = 2f, so there is only one sharp position, midway between object and screen."
+      }
+    ],
+    "tags": ["convex lens", "focal length", "displacement method", "conjugate foci", "optical bench", "ray optics", "3d", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-11-15T00:00:00.000Z",
+    "updatedAt": "2026-11-15T00:00:00.000Z"
   }
 ]

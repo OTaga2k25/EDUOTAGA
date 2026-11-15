@@ -3265,5 +3265,245 @@
     "estimatedDurationMinutes": 35,
     "createdAt": "2026-11-15T00:00:00.000Z",
     "updatedAt": "2026-11-15T00:00:00.000Z"
+  },
+  {
+    "id": "galvanometer-half-deflection",
+    "slug": "galvanometer-half-deflection",
+    "title": "Galvanometer: Resistance by Half Deflection and Figure of Merit",
+    "subjectId": "current-electricity",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Pass a small current through a galvanometer with a high resistance, then shunt it until the deflection halves. Find its resistance G = RS/(R − S) and its figure of merit k = E/((R + G)θ).",
+    "theory": "A **galvanometer** gives a deflection θ proportional to the current through it. The **figure of merit k** is the current needed for one division, **k = I/θ**.\n\nWith a high resistance **R** in series and the shunt key open, the current is **I = E/(R + G)**, so **k = E/((R + G)θ)**.\n\nNext a **shunt S** is connected across the galvanometer and adjusted, with R unchanged, until the deflection falls to **θ/2**. Solving the circuit gives the **galvanometer resistance G = RS/(R − S)**. Because R ≫ S, **G ≈ S**.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Set a high resistance",
+        "description": "Set the resistance box R to a few thousand ohms before closing the main key K₁, to protect the galvanometer."
+      },
+      {
+        "order": 2,
+        "title": "Record θ",
+        "description": "With K₂ open, adjust R until the deflection is large (20–30 div, preferably even) and record θ."
+      },
+      {
+        "order": 3,
+        "title": "Close the shunt key",
+        "description": "Close K₂. Without changing R, adjust the shunt S until the deflection is exactly θ/2. Record S."
+      },
+      {
+        "order": 4,
+        "title": "Calculate G and k",
+        "description": "Calculate G = RS/(R − S) and k = E/((R + G)θ) with E = 2 V."
+      },
+      {
+        "order": 5,
+        "title": "Repeat",
+        "description": "Open K₂, choose another value of R and repeat. Take at least four sets and find the mean G and mean k."
+      }
+    ],
+    "observation": "For each R record θ (K₂ open) and the S that gives θ/2 (K₂ closed). G = RS/(R − S) is nearly equal to S and is the same for every set. The figure of merit k = E/((R + G)θ) is of the order of 10⁻⁵ A per division.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "In the half-deflection method, the galvanometer resistance is given by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "G = RS/(R + S)"
+          },
+          {
+            "id": "b",
+            "text": "G = (R − S)/RS"
+          },
+          {
+            "id": "c",
+            "text": "G = RS/(R − S)"
+          },
+          {
+            "id": "d",
+            "text": "G = R − S"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "When the shunt S halves the deflection with R unchanged, solving the circuit gives G = RS/(R − S)."
+      },
+      {
+        "id": "q2",
+        "question": "Why is G approximately equal to S in this experiment?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Because R is much larger than S"
+          },
+          {
+            "id": "b",
+            "text": "Because the battery has no resistance"
+          },
+          {
+            "id": "c",
+            "text": "Because S is larger than R"
+          },
+          {
+            "id": "d",
+            "text": "Because θ is halved"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "G = RS/(R − S) ≈ S when R ≫ S, since R/(R − S) is then very close to 1."
+      },
+      {
+        "id": "q3",
+        "question": "The figure of merit of a galvanometer is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The number of divisions per ampere"
+          },
+          {
+            "id": "b",
+            "text": "The current needed for a deflection of one division"
+          },
+          {
+            "id": "c",
+            "text": "Its resistance per division"
+          },
+          {
+            "id": "d",
+            "text": "The maximum current it can carry"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Figure of merit k is the current that produces one division of deflection, k = I/θ."
+      },
+      {
+        "id": "q4",
+        "question": "With E = 2 V, R = 4950 Ω, G = 50 Ω and θ = 20 div, the figure of merit is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "2 × 10⁻⁵ A/div"
+          },
+          {
+            "id": "b",
+            "text": "4 × 10⁻⁴ A/div"
+          },
+          {
+            "id": "c",
+            "text": "1 × 10⁻⁵ A/div"
+          },
+          {
+            "id": "d",
+            "text": "2 × 10⁻⁴ A/div"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "k = E/((R + G)θ) = 2/(5000 × 20) = 2 × 10⁻⁵ A/div."
+      },
+      {
+        "id": "q5",
+        "question": "Why must R be set to a high value before closing the main key?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To increase the deflection"
+          },
+          {
+            "id": "b",
+            "text": "To make the shunt work"
+          },
+          {
+            "id": "c",
+            "text": "To protect the galvanometer from a large current"
+          },
+          {
+            "id": "d",
+            "text": "To reduce the emf of the cell"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "A galvanometer is very sensitive; without a large series resistance the current would be large enough to damage it."
+      },
+      {
+        "id": "q6",
+        "question": "While adjusting S for half deflection, the value of R must:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Be doubled"
+          },
+          {
+            "id": "b",
+            "text": "Be kept the same"
+          },
+          {
+            "id": "c",
+            "text": "Be halved"
+          },
+          {
+            "id": "d",
+            "text": "Be made equal to S"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The formula assumes the same R in both steps, so R must not be changed while S is adjusted."
+      },
+      {
+        "id": "q7",
+        "question": "If the deflection with the shunt is more than θ/2, you should:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Increase S"
+          },
+          {
+            "id": "b",
+            "text": "Increase R"
+          },
+          {
+            "id": "c",
+            "text": "Open K₂"
+          },
+          {
+            "id": "d",
+            "text": "Decrease S"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "A smaller shunt resistance takes more current away from the galvanometer, so its deflection falls."
+      },
+      {
+        "id": "q8",
+        "question": "Why is R chosen so that θ is large and even?",
+        "options": [
+          {
+            "id": "a",
+            "text": "So θ/2 is a whole number and reading errors are a small fraction"
+          },
+          {
+            "id": "b",
+            "text": "So the galvanometer gets hot"
+          },
+          {
+            "id": "c",
+            "text": "So that S becomes zero"
+          },
+          {
+            "id": "d",
+            "text": "So that G becomes larger"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "A large deflection reduces the percentage error, and an even θ makes θ/2 easy to read."
+      }
+    ],
+    "tags": ["galvanometer", "half deflection", "figure of merit", "shunt", "resistance", "moving coil galvanometer", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-15T00:00:00.000Z",
+    "updatedAt": "2026-11-15T00:00:00.000Z"
   }
 ]

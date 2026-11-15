@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galvanometer — Resistance by Half Deflection and Figure of Merit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Moving Charges and Magnetism</div>
+    <h1 class="disp">Galvanometer: <span class="thin">resistance by half deflection and figure of merit</span></h1>
+    <p class="lede">Pass a small current through a galvanometer with a high resistance <b class="mono">R</b> and note the deflection <b class="mono">θ</b>. Then shunt it with <b class="mono">S</b> until the deflection is halved. The galvanometer resistance is <b class="mono">G = RS / (R − S)</b> and its figure of merit is <b class="mono">k = E / ((R + G) θ)</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="bench" aria-label="Half deflection circuit">
+    <svg id="apparatus" viewBox="0 0 900 380" role="img" aria-label="Circuit with an accumulator, key K1, high resistance box R, galvanometer G, and a shunt resistance box S with key K2 across the galvanometer">
+      <!-- battery -->
+      <polyline points="60,185 60,60 110,60" class="lead"/>
+      <polyline points="60,200 60,340 800,340 800,150" class="lead"/>
+      <line x1="46" y1="185" x2="74" y2="185" class="plate long"/>
+      <line x1="52" y1="200" x2="68" y2="200" class="plate short"/>
+      <text x="80" y="178" class="lbl small" text-anchor="start">+</text>
+      <text x="82" y="214" class="lbl small" text-anchor="start">E = 2 V</text>
+      <!-- key K1 -->
+      <circle cx="110" cy="60" r="3.5" class="node"/><circle cx="150" cy="60" r="3.5" class="node"/>
+      <line id="k1lever" x1="110" y1="60" x2="150" y2="60" class="lever"/>
+      <text x="130" y="42" class="lbl small" text-anchor="middle">K₁</text>
+      <!-- high resistance box R -->
+      <polyline points="150,60 200,60" class="lead"/>
+      <rect x="200" y="40" width="210" height="40" rx="4" class="res"/>
+      <g id="rPlugs"></g>
+      <text x="305" y="100" class="lbl rname" text-anchor="middle">R (high resistance box)</text>
+      <text id="rLabel" x="305" y="120" class="lbl" text-anchor="middle">R = 5000 Ω</text>
+      <polyline points="410,60 520,60 520,150 576,150" class="lead"/>
+      <!-- galvanometer -->
+      <circle id="gBody" cx="650" cy="150" r="74" class="meter"/>
+      <g id="gScale"></g>
+      <line id="gNeedle" x1="650" y1="180" x2="650" y2="96" class="needle"/>
+      <circle cx="650" cy="180" r="4.5" class="pivot"/>
+      <text x="650" y="208" class="lbl tag" text-anchor="middle">G</text>
+      <polyline points="724,150 800,150" class="lead"/>
+      <text id="gDigi" x="650" y="246" class="digi" text-anchor="middle">θ = 0.0 div</text>
+      <!-- shunt S with key K2 -->
+      <polyline points="520,150 520,290 560,290" class="lead"/>
+      <rect x="560" y="276" width="120" height="28" rx="4" class="res"/>
+      <text x="620" y="295" class="lbl rname" text-anchor="middle">S</text>
+      <text id="sLabel" x="620" y="324" class="lbl small" text-anchor="middle">S = 100 Ω</text>
+      <polyline points="680,290 720,290" class="lead"/>
+      <circle cx="720" cy="290" r="3.5" class="node"/><circle cx="760" cy="290" r="3.5" class="node"/>
+      <line id="k2lever" x1="720" y1="290" x2="760" y2="290" class="lever"/>
+      <text x="740" y="272" class="lbl small" text-anchor="middle">K₂</text>
+      <polyline points="760,290 800,290" class="lead"/>
+      <circle cx="520" cy="150" r="4" class="node"/><circle cx="800" cy="150" r="4" class="node"/><circle cx="800" cy="290" r="4" class="node"/>
+    </svg>
+    <p class="bench-hint" id="benchHint">Close K₁ to pass current through R and the galvanometer. K₂ connects the shunt S across the galvanometer.</p>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <ol class="steps" id="steps">
+      <li data-s="0"><b>1</b> K₂ open: choose R for a large deflection θ and record it</li>
+      <li data-s="1"><b>2</b> Close K₂: adjust S until the deflection is θ/2 and record S</li>
+    </ol>
+    <div class="grid">
+      <div class="ctl">
+        <div class="ctl-h">Keys</div>
+        <div class="chips">
+          <button type="button" class="chip" id="k1Btn" aria-pressed="false">K₁ (main)</button>
+          <button type="button" class="chip" id="k2Btn" aria-pressed="false">K₂ (shunt)</button>
+        </div>
+        <div class="mini" id="keyHint">—</div>
+      </div>
+      <div class="ctl">
+        <label for="rSl" class="ctl-h">High resistance R <span class="mono" id="rVal">5000 Ω</span></label>
+        <input type="range" id="rSl" min="0" max="10000" step="10" value="5000">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-r="-500">−500</button><button type="button" class="btn sm" data-r="-50">−50</button><button type="button" class="btn sm" data-r="-10">−10</button>
+          <button type="button" class="btn sm" data-r="10">+10</button><button type="button" class="btn sm" data-r="50">+50</button><button type="button" class="btn sm" data-r="500">+500</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <label for="sSl" class="ctl-h">Shunt S <span class="mono" id="sVal">100 Ω</span></label>
+        <input type="range" id="sSl" min="0" max="400" step="1" value="100">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-s="-10">−10</button><button type="button" class="btn sm" data-s="-1">−1</button>
+          <button type="button" class="btn sm" data-s="1">+1</button><button type="button" class="btn sm" data-s="10">+10</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <div class="ctl-h">Galvanometer deflection</div>
+        <div class="bigread mono" id="thetaBig">0.0 div</div>
+        <div class="mini" id="targetLine"></div>
+        <button type="button" class="btn primary" id="recordBtn">Record θ</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>With K₂ open, the current through the galvanometer is I = E / (R + G) and it gives a deflection θ. The <b>figure of merit</b> k is the current needed for one division, so <b>k = I/θ = E / ((R + G) θ)</b>.</p>
+    <p>When the shunt S is connected across the galvanometer and adjusted so the deflection falls to θ/2, the galvanometer carries half its earlier current. Working this out gives <b>G = RS / (R − S)</b>. Because R is very large compared with S, <b>G ≈ S</b>.</p>
+    <ul class="eqs mono">
+      <li>Galvanometer resistance: <b>G = RS / (R − S)</b></li>
+      <li>Figure of merit: <b>k = E / ((R + G) θ)</b> ampere per division</li>
+      <li>Choose R so that θ is large (20–30 div) and preferably even, so θ/2 is easy to read</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <p class="table-note muted">E = 2.0 V</p>
+    <div class="tablewrap">
+      <table id="obs">
+        <thead><tr><th>R (Ω)</th><th>θ (div)</th><th>θ/2 (div)</th><th>S (Ω)</th><th>G = RS/(R − S) (Ω)</th><th>k = E/((R + G)θ) (µA/div)</th></tr></thead>
+        <tbody id="obsBody"></tbody>
+      </table>
+    </div>
+    <p class="resultline" id="resultLine"></p>
+    <h3 class="checks-h" id="checksH" hidden>Check your readings</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="newG">New unknown galvanometer</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Before closing K₁, set R to a high value (several thousand ohms), or the galvanometer can be damaged by a large current.</li>
+      <li>Choose R so that the deflection is large, preferably an even number of divisions, so that θ/2 is a whole number.</li>
+      <li>Close K₂ only after recording θ, and do not change R while finding the half deflection.</li>
+      <li>Read the deflection without parallax, with your eye directly above the pointer.</li>
+      <li>Take readings for at least four values of R and find the mean of G and of k.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

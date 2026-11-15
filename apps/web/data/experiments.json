@@ -4225,5 +4225,245 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-15T00:00:00.000Z",
     "updatedAt": "2026-11-15T00:00:00.000Z"
+  },
+  {
+    "id": "transistor-ce-characteristics",
+    "slug": "transistor-ce-characteristics",
+    "title": "Transistor (n-p-n, CE): Input and Output Characteristics",
+    "subjectId": "semiconductor-electronics",
+    "categoryId": "physics",
+    "difficulty": "advanced",
+    "summary": "Plot the input (I_B–V_BE) and output (I_C–V_CE) characteristics of an n-p-n transistor in common-emitter mode, and find its input resistance, output resistance and current gain β.",
+    "theory": "In the **common-emitter (CE)** configuration the input is applied between **base and emitter** and the output is taken between **collector and emitter**. For active operation the **base–emitter junction is forward biased** and the **collector–base junction is reverse biased**.\n\nThe **input characteristic** (I_B against V_BE at constant V_CE) is like that of a forward-biased diode. The **input resistance** is **r_i = ΔV_BE/ΔI_B**, about 1 kΩ.\n\nThe **output characteristic** (I_C against V_CE at constant I_B) rises steeply at small V_CE (**saturation region**), then becomes nearly flat (**active region**), where I_C is controlled by I_B. The **output resistance** is **r_o = ΔV_CE/ΔI_C**, tens of kΩ.\n\nThe **current gain** is **β = ΔI_C/ΔI_B** at constant V_CE, found from two or more output curves.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Input characteristic",
+        "description": "Set V_CE to a fixed value (1 V) with the collector rheostat. Increase V_BB with the base rheostat in small steps, recording V_BE and I_B each time."
+      },
+      {
+        "order": 2,
+        "title": "Second input curve (optional)",
+        "description": "Repeat with V_CE = 5 V and compare the two input curves."
+      },
+      {
+        "order": 3,
+        "title": "Output characteristic",
+        "description": "Set I_B = 20 µA with the base rheostat. Vary V_CE from 0 to 10 V, recording I_C. After each change, readjust the base rheostat so I_B stays at 20 µA."
+      },
+      {
+        "order": 4,
+        "title": "More output curves",
+        "description": "Repeat for I_B = 40 µA and 60 µA."
+      },
+      {
+        "order": 5,
+        "title": "Calculate",
+        "description": "Find r_i from the steep part of the input curve, r_o from the slope of an output curve in the active region, and β = ΔI_C/ΔI_B at V_CE = 5 V."
+      }
+    ],
+    "observation": "The input curve shows almost no I_B until V_BE ≈ 0.6 V, then a steep rise (r_i ≈ 1 kΩ). The output curves rise steeply up to V_CE ≈ 0.5 V and then are nearly flat (r_o of tens of kΩ). Equal steps of I_B give nearly equal steps of I_C, and β = ΔI_C/ΔI_B is typically 100–200.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "In the common-emitter configuration, the input is applied between:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Collector and emitter"
+          },
+          {
+            "id": "b",
+            "text": "Base and emitter"
+          },
+          {
+            "id": "c",
+            "text": "Base and collector"
+          },
+          {
+            "id": "d",
+            "text": "Emitter and earth only"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "In CE mode the input is between base and emitter and the output between collector and emitter; the emitter is common."
+      },
+      {
+        "id": "q2",
+        "question": "For normal (active) operation of an n-p-n transistor:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Both junctions are forward biased"
+          },
+          {
+            "id": "b",
+            "text": "Both junctions are reverse biased"
+          },
+          {
+            "id": "c",
+            "text": "The base–emitter junction is forward biased and the collector–base junction reverse biased"
+          },
+          {
+            "id": "d",
+            "text": "The base–emitter junction is reverse biased"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Forward bias at the emitter junction injects carriers; reverse bias at the collector junction collects them."
+      },
+      {
+        "id": "q3",
+        "question": "The input characteristic of a CE transistor resembles that of a:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Forward-biased p-n junction diode"
+          },
+          {
+            "id": "b",
+            "text": "Resistor"
+          },
+          {
+            "id": "c",
+            "text": "Zener diode in breakdown"
+          },
+          {
+            "id": "d",
+            "text": "Capacitor"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "I_B against V_BE is the characteristic of the forward-biased base–emitter junction, with a knee near 0.6–0.7 V for silicon."
+      },
+      {
+        "id": "q4",
+        "question": "The current gain β in CE mode is defined as:",
+        "options": [
+          {
+            "id": "a",
+            "text": "ΔV_CE/ΔI_C"
+          },
+          {
+            "id": "b",
+            "text": "ΔI_B/ΔI_C"
+          },
+          {
+            "id": "c",
+            "text": "ΔI_C/ΔI_E"
+          },
+          {
+            "id": "d",
+            "text": "ΔI_C/ΔI_B at constant V_CE"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "β = ΔI_C/ΔI_B with V_CE held constant."
+      },
+      {
+        "id": "q5",
+        "question": "If I_B changes from 20 µA to 40 µA and I_C changes from 3.0 mA to 6.2 mA at the same V_CE, β is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "160"
+          },
+          {
+            "id": "b",
+            "text": "62"
+          },
+          {
+            "id": "c",
+            "text": "0.16"
+          },
+          {
+            "id": "d",
+            "text": "320"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "β = ΔI_C/ΔI_B = 3.2 mA / 20 µA = 160."
+      },
+      {
+        "id": "q6",
+        "question": "In the active region of the output characteristic, I_C:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Rises steeply with V_CE"
+          },
+          {
+            "id": "b",
+            "text": "Is almost independent of V_CE and controlled by I_B"
+          },
+          {
+            "id": "c",
+            "text": "Falls to zero"
+          },
+          {
+            "id": "d",
+            "text": "Equals I_B"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Beyond about 1 V the output curves are nearly flat: I_C depends mainly on I_B, so the output resistance is high."
+      },
+      {
+        "id": "q7",
+        "question": "Typical values: the input resistance of a CE transistor is about ___ and its output resistance about ___.",
+        "options": [
+          {
+            "id": "a",
+            "text": "10 kΩ, 1 Ω"
+          },
+          {
+            "id": "b",
+            "text": "1 Ω, 1 MΩ"
+          },
+          {
+            "id": "c",
+            "text": "1 kΩ, 10–50 kΩ"
+          },
+          {
+            "id": "d",
+            "text": "Equal values"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "r_i = ΔV_BE/ΔI_B is of the order of 1 kΩ; r_o = ΔV_CE/ΔI_C is tens of kilo-ohms."
+      },
+      {
+        "id": "q8",
+        "question": "While plotting an output characteristic, I_B drifts when V_CE is changed. You should:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Ignore it"
+          },
+          {
+            "id": "b",
+            "text": "Readjust the base rheostat to bring I_B back to its set value"
+          },
+          {
+            "id": "c",
+            "text": "Change the collector rheostat only"
+          },
+          {
+            "id": "d",
+            "text": "Start a new input curve"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Each output curve must be at constant I_B, so the base current is readjusted after every change of V_CE."
+      }
+    ],
+    "tags": ["transistor", "n-p-n", "common emitter", "input characteristic", "output characteristic", "current gain", "beta", "semiconductor", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 40,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

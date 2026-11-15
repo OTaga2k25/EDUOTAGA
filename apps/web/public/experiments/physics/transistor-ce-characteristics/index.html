@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transistor (CE) — Input and Output Characteristics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Semiconductor Electronics</div>
+    <h1 class="disp">n-p-n transistor: <span class="thin">common-emitter input and output characteristics</span></h1>
+    <p class="lede">Plot the base current <b class="mono">I<sub>B</sub></b> against <b class="mono">V<sub>BE</sub></b> (input characteristic), and the collector current <b class="mono">I<sub>C</sub></b> against <b class="mono">V<sub>CE</sub></b> for fixed base currents (output characteristic). From them find the input resistance, the output resistance and the current gain <b class="mono">β = ΔI<sub>C</sub>/ΔI<sub>B</sub></b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="bench" aria-label="Common-emitter circuit">
+    <svg id="apparatus" viewBox="0 0 900 380" role="img" aria-label="Common-emitter circuit: base supply with rheostat, microammeter and base resistor; collector supply with rheostat and milliammeter; voltmeters across base-emitter and collector-emitter">
+      <!-- base supply -->
+      <polyline points="60,185 60,90 100,90" class="lead"/>
+      <polyline points="60,200 60,330 840,330 840,200" class="lead"/>
+      <line x1="46" y1="185" x2="74" y2="185" class="plate long"/><line x1="52" y1="200" x2="68" y2="200" class="plate short"/>
+      <text x="80" y="214" class="lbl small" text-anchor="start">V<tspan baseline-shift="sub" font-size="70%">BB</tspan></text>
+      <rect x="100" y="78" width="120" height="24" rx="3" class="box"/>
+      <line id="bSlide" x1="110" y1="76" x2="110" y2="60" class="slide"/>
+      <text x="160" y="124" class="lbl small" text-anchor="middle">base rheostat</text>
+      <polyline points="220,90 260,90 260,190 274,190" class="lead"/>
+      <circle cx="300" cy="190" r="26" class="meter"/>
+      <line id="ibNeedle" x1="300" y1="196" x2="300" y2="172" class="needle"/><circle cx="300" cy="196" r="3" class="pivot"/>
+      <text x="300" y="160" class="lbl small" text-anchor="middle">µA</text>
+      <text id="ibDigi" x="300" y="236" class="digi" text-anchor="middle">I_B</text>
+      <polyline points="326,190 340,190" class="lead"/>
+      <rect x="340" y="181" width="44" height="18" rx="3" class="res"/>
+      <text x="362" y="174" class="lbl small" text-anchor="middle">R<tspan baseline-shift="sub" font-size="70%">B</tspan></text>
+      <polyline points="384,190 440,190" class="lead"/>
+      <circle cx="408" cy="190" r="3.5" class="node"/>
+      <!-- VBE voltmeter -->
+      <polyline points="408,190 408,246" class="lead"/><polyline points="408,294 408,330" class="lead"/>
+      <circle cx="408" cy="270" r="24" class="meter"/>
+      <line id="vbeNeedle" x1="408" y1="276" x2="408" y2="254" class="needle"/><circle cx="408" cy="276" r="3" class="pivot"/>
+      <text x="374" y="274" class="lbl small" text-anchor="end">V<tspan baseline-shift="sub" font-size="70%">BE</tspan></text>
+      <text id="vbeDigi" x="408" y="314" class="digi" text-anchor="middle">V_BE</text>
+      <!-- transistor -->
+      <circle cx="470" cy="190" r="40" class="tbody"/>
+      <line x1="452" y1="165" x2="452" y2="215" class="tbar"/>
+      <polyline points="452,178 492,150 492,90" class="lead"/>
+      <polyline points="452,202 492,230 492,330" class="lead"/>
+      <polygon points="492,230 478,228 486,218" class="tarrow"/>
+      <text x="500" y="146" class="lbl small">C</text><text x="430" y="182" class="lbl small">B</text><text x="500" y="244" class="lbl small">E</text>
+      <!-- collector side -->
+      <polyline points="492,90 640,90" class="lead"/>
+      <circle cx="560" cy="90" r="3.5" class="node"/>
+      <circle cx="666" cy="90" r="26" class="meter"/>
+      <line id="icNeedle" x1="666" y1="96" x2="666" y2="72" class="needle"/><circle cx="666" cy="96" r="3" class="pivot"/>
+      <text x="666" y="54" class="lbl small" text-anchor="middle">mA</text>
+      <text id="icDigi" x="666" y="134" class="digi" text-anchor="middle">I_C</text>
+      <polyline points="692,90 720,90" class="lead"/>
+      <rect x="720" y="78" width="100" height="24" rx="3" class="box"/>
+      <line id="cSlide" x1="730" y1="76" x2="730" y2="60" class="slide"/>
+      <text x="770" y="124" class="lbl small" text-anchor="middle">collector rheostat</text>
+      <polyline points="820,90 840,90 840,185" class="lead"/>
+      <line x1="826" y1="185" x2="854" y2="185" class="plate long"/><line x1="832" y1="200" x2="848" y2="200" class="plate short"/>
+      <text x="820" y="214" class="lbl small" text-anchor="end">V<tspan baseline-shift="sub" font-size="70%">CC</tspan></text>
+      <!-- VCE voltmeter -->
+      <polyline points="560,90 560,186" class="lead"/><polyline points="560,234 560,330" class="lead"/>
+      <circle cx="560" cy="210" r="24" class="meter"/>
+      <line id="vceNeedle" x1="560" y1="216" x2="560" y2="194" class="needle"/><circle cx="560" cy="216" r="3" class="pivot"/>
+      <text x="592" y="214" class="lbl small" text-anchor="start">V<tspan baseline-shift="sub" font-size="70%">CE</tspan></text>
+      <text id="vceDigi" x="560" y="258" class="digi" text-anchor="middle">V_CE</text>
+      <circle cx="560" cy="330" r="3.5" class="node"/><circle cx="492" cy="330" r="3.5" class="node"/><circle cx="408" cy="330" r="3.5" class="node"/>
+    </svg>
+    <p class="bench-hint">The base rheostat sets the base current. The collector rheostat sets V<sub>CE</sub>. Common emitter: the emitter is shared by the input and output circuits.</p>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="modebar">
+      <div class="chips" id="modeChips" role="group" aria-label="Characteristic">
+        <button type="button" class="chip" data-m="in">Input characteristic</button>
+        <button type="button" class="chip" data-m="out">Output characteristic</button>
+      </div>
+      <div class="chips" id="curveChips" role="group" aria-label="Curve"></div>
+      <div class="mini" id="curveHint">—</div>
+    </div>
+    <div class="grid">
+      <div class="ctl">
+        <label for="vbbSl" class="ctl-h"><span>Base rheostat: V<sub>BB</sub> =</span> <span class="mono" id="vbbVal">0.000 V</span></label>
+        <input type="range" id="vbbSl" min="0" max="2" step="0.005" value="0">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-b="-0.1">−0.1</button><button type="button" class="btn sm" data-b="-0.01">−0.01</button><button type="button" class="btn sm" data-b="-0.005">−0.005</button>
+          <button type="button" class="btn sm" data-b="0.005">+0.005</button><button type="button" class="btn sm" data-b="0.01">+0.01</button><button type="button" class="btn sm" data-b="0.1">+0.1</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <label for="vceSl" class="ctl-h"><span>Collector rheostat (sets V<sub>CE</sub>)</span></label>
+        <input type="range" id="vceSl" min="0" max="12" step="0.05" value="0">
+        <div class="nudge">
+          <button type="button" class="btn sm" data-c="-1">−1</button><button type="button" class="btn sm" data-c="-0.1">−0.1</button><button type="button" class="btn sm" data-c="-0.05">−0.05</button>
+          <button type="button" class="btn sm" data-c="0.05">+0.05</button><button type="button" class="btn sm" data-c="0.1">+0.1</button><button type="button" class="btn sm" data-c="1">+1</button>
+        </div>
+      </div>
+      <div class="ctl wide">
+        <div class="meters mono" id="meters"></div>
+        <button type="button" class="btn primary" id="recordBtn">Take reading</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>In the common-emitter (CE) arrangement the input is applied between base and emitter, and the output is taken between collector and emitter. The base–emitter junction is forward biased and the collector–base junction is reverse biased, so a small base current controls a much larger collector current.</p>
+    <ul class="eqs mono">
+      <li>Input characteristic (I<sub>B</sub> against V<sub>BE</sub> at constant V<sub>CE</sub>): like a forward-biased diode. Input resistance <b>r<sub>i</sub> = ΔV<sub>BE</sub>/ΔI<sub>B</sub></b> (about 1 kΩ)</li>
+      <li>Output characteristic (I<sub>C</sub> against V<sub>CE</sub> at constant I<sub>B</sub>): I<sub>C</sub> rises quickly (saturation region), then becomes almost flat (active region). Output resistance <b>r<sub>o</sub> = ΔV<sub>CE</sub>/ΔI<sub>C</sub></b> (tens of kΩ)</li>
+      <li>Current gain: <b>β = ΔI<sub>C</sub>/ΔI<sub>B</sub></b> at constant V<sub>CE</sub>, from two output curves</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="twotab">
+      <div><h3>Input characteristic</h3><div class="tablewrap"><table><thead><tr><th>V<sub>CE</sub> (V)</th><th>V<sub>BE</sub> (V)</th><th>I<sub>B</sub> (µA)</th></tr></thead><tbody id="inBody"></tbody></table></div></div>
+      <div><h3>Output characteristic</h3><div class="tablewrap"><table><thead><tr><th>I<sub>B</sub> (µA)</th><th>V<sub>CE</sub> (V)</th><th>I<sub>C</sub> (mA)</th></tr></thead><tbody id="outBody"></tbody></table></div></div>
+    </div>
+    <div class="res3">
+      <div><b>Input resistance r<sub>i</sub></b><span id="riOut">—</span></div>
+      <div><b>Output resistance r<sub>o</sub></b><span id="roOut">—</span></div>
+      <div><b>Current gain β</b><span id="betaOut">—</span></div>
+    </div>
+    <p class="resultline" id="resultLine"></p>
+    <h3 class="checks-h" id="checksH" hidden>Check your readings</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="newT">New unknown transistor</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Characteristic curves</h2>
+    <div class="graphs">
+      <div><h3>Input: I<sub>B</sub> against V<sub>BE</sub></h3><canvas id="gIn" width="640" height="420" aria-label="Input characteristic"></canvas></div>
+      <div><h3>Output: I<sub>C</sub> against V<sub>CE</sub></h3><canvas id="gOut" width="640" height="420" aria-label="Output characteristic"></canvas></div>
+    </div>
+    <p class="mono slope" id="slopeLine"></p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Identify the emitter, base and collector leads correctly before connecting.</li>
+      <li>Keep the base–emitter junction forward biased and the collector–base junction reverse biased (for n-p-n: base and collector positive with respect to the emitter).</li>
+      <li>For the input characteristic keep V<sub>CE</sub> constant; for the output characteristic keep I<sub>B</sub> constant, readjusting the base rheostat if it drifts.</li>
+      <li>Take closer readings where the curves bend: near the knee of the input curve and at small V<sub>CE</sub> on the output curves.</li>
+      <li>Do not exceed the maximum collector current or power rating of the transistor.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

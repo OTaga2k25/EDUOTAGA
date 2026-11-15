@@ -4705,5 +4705,245 @@
     "estimatedDurationMinutes": 20,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "galvanometer-conversion",
+    "slug": "galvanometer-conversion",
+    "title": "Galvanometer: Conversion into a Voltmeter and an Ammeter",
+    "subjectId": "current-electricity",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Use the galvanometer's resistance and figure of merit to calculate a series resistance (voltmeter) or a shunt wire (ammeter), set it, and verify the converted meter against a standard meter.",
+    "theory": "A galvanometer with **N** divisions and figure of merit **k** gives full-scale deflection for **I_g = N k**, typically below 1 mA.\n\n**Voltmeter:** connect a **high resistance R in series**. At the full range V₀ the current must be I_g: **I_g(G + R) = V₀**, so **R = V₀/I_g − G**.\n\n**Ammeter:** connect a **low resistance S (shunt) in parallel**. At the full range I₀ only I_g flows through the galvanometer: **I_g G = (I₀ − I_g)S**, so **S = I_g G/(I₀ − I_g)**. A shunt wire of resistance ρ per cm needs a length **l = S/ρ**.\n\nThe converted meter's scale reads **(θ/N) × full range**, and it is checked against a standard meter.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Calculate I_g",
+        "description": "From G and k (half-deflection experiment), find I_g = N k."
+      },
+      {
+        "order": 2,
+        "title": "Voltmeter",
+        "description": "Calculate R = V₀/I_g − G, set it in the resistance box in series with the galvanometer, and connect the combination in parallel with a standard voltmeter across a potential divider."
+      },
+      {
+        "order": 3,
+        "title": "Verify the voltmeter",
+        "description": "For several settings of the rheostat, compare the standard voltmeter with the converted reading (θ/N) × V₀."
+      },
+      {
+        "order": 4,
+        "title": "Ammeter",
+        "description": "Calculate S = I_g G/(I₀ − I_g) and the wire length l = S/ρ. Connect the shunt wire across the galvanometer and the combination in series with a standard ammeter."
+      },
+      {
+        "order": 5,
+        "title": "Verify the ammeter",
+        "description": "For several currents, compare the standard ammeter with the converted reading (θ/N) × I₀."
+      }
+    ],
+    "observation": "With the calculated R (or shunt length) the converted meter agrees with the standard meter over the whole range, and a graph of converted against standard readings lies on the 45° line.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "To convert a galvanometer into a voltmeter, we connect:",
+        "options": [
+          {
+            "id": "a",
+            "text": "A low resistance in parallel"
+          },
+          {
+            "id": "b",
+            "text": "A high resistance in series"
+          },
+          {
+            "id": "c",
+            "text": "A high resistance in parallel"
+          },
+          {
+            "id": "d",
+            "text": "A low resistance in series"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "A high series resistance limits the current to I_g when the full voltage V₀ is applied."
+      },
+      {
+        "id": "q2",
+        "question": "To convert a galvanometer into an ammeter, we connect:",
+        "options": [
+          {
+            "id": "a",
+            "text": "A low resistance (shunt) in parallel"
+          },
+          {
+            "id": "b",
+            "text": "A high resistance in series"
+          },
+          {
+            "id": "c",
+            "text": "A capacitor in parallel"
+          },
+          {
+            "id": "d",
+            "text": "A battery in series"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The shunt carries most of the current, so only I_g flows through the galvanometer at full scale."
+      },
+      {
+        "id": "q3",
+        "question": "The series resistance for a voltmeter of range V₀ is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "R = V₀ I_g − G"
+          },
+          {
+            "id": "b",
+            "text": "R = V₀/(I_g G)"
+          },
+          {
+            "id": "c",
+            "text": "R = V₀/I_g − G"
+          },
+          {
+            "id": "d",
+            "text": "R = G − V₀/I_g"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "I_g(G + R) = V₀ gives R = V₀/I_g − G."
+      },
+      {
+        "id": "q4",
+        "question": "The shunt for an ammeter of range I₀ is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "S = (I₀ − I_g)G/I_g"
+          },
+          {
+            "id": "b",
+            "text": "S = I_g G/(I₀ − I_g)"
+          },
+          {
+            "id": "c",
+            "text": "S = I₀G/I_g"
+          },
+          {
+            "id": "d",
+            "text": "S = G/(I₀ + I_g)"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The galvanometer and shunt have the same p.d.: I_g G = (I₀ − I_g)S."
+      },
+      {
+        "id": "q5",
+        "question": "A galvanometer of G = 50 Ω gives full-scale deflection for 1 mA. The resistance needed to make a 0–5 V voltmeter is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "5000 Ω"
+          },
+          {
+            "id": "b",
+            "text": "4950 Ω"
+          },
+          {
+            "id": "c",
+            "text": "5050 Ω"
+          },
+          {
+            "id": "d",
+            "text": "50 Ω"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "R = V₀/I_g − G = 5/0.001 − 50 = 4950 Ω."
+      },
+      {
+        "id": "q6",
+        "question": "Compared with the galvanometer, the resistance of an ammeter made from it is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Much higher"
+          },
+          {
+            "id": "b",
+            "text": "Equal"
+          },
+          {
+            "id": "c",
+            "text": "Much lower"
+          },
+          {
+            "id": "d",
+            "text": "Infinite"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "The shunt in parallel makes the total resistance smaller than S itself, which is very small. An ideal ammeter has zero resistance."
+      },
+      {
+        "id": "q7",
+        "question": "The full-scale current of a galvanometer with figure of merit k and N divisions is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "I_g = k/N"
+          },
+          {
+            "id": "b",
+            "text": "I_g = N/k"
+          },
+          {
+            "id": "c",
+            "text": "I_g = N + k"
+          },
+          {
+            "id": "d",
+            "text": "I_g = N k"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "Each division needs a current k, so N divisions need I_g = N k."
+      },
+      {
+        "id": "q8",
+        "question": "If a converted voltmeter reads higher than the standard voltmeter, the series resistance is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Too small, so it should be increased"
+          },
+          {
+            "id": "b",
+            "text": "Too large, so it should be decreased"
+          },
+          {
+            "id": "c",
+            "text": "Correct"
+          },
+          {
+            "id": "d",
+            "text": "Irrelevant"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Too small a series resistance lets too much current through the galvanometer, so it over-reads."
+      }
+    ],
+    "tags": ["galvanometer", "voltmeter", "ammeter", "shunt", "conversion", "figure of merit", "moving coil galvanometer", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galvanometer Conversion — Voltmeter and Ammeter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Moving Charges and Magnetism</div>
+    <h1 class="disp">Galvanometer: <span class="thin">conversion into a voltmeter and an ammeter</span></h1>
+    <p class="lede">A galvanometer gives full-scale deflection for a tiny current <b class="mono">I<sub>g</sub> = N k</b>. With a high resistance <b class="mono">R = V₀/I<sub>g</sub> − G</b> in series it becomes a voltmeter of range V₀. With a low shunt <b class="mono">S = I<sub>g</sub>G/(I₀ − I<sub>g</sub>)</b> in parallel it becomes an ammeter of range I₀.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="bench" aria-label="Verification circuit">
+    <svg id="apparatus" viewBox="0 0 900 380" role="img" aria-label="Verification circuit"><g id="circ"></g></svg>
+    <p class="bench-hint" id="benchHint"></p>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="chips" id="modeChips" role="group" aria-label="Convert into">
+      <button type="button" class="chip" data-m="V">Convert into a voltmeter</button>
+      <button type="button" class="chip" data-m="A">Convert into an ammeter</button>
+    </div>
+    <div class="given mono" id="given"></div>
+    <ol class="steps" id="steps">
+      <li data-s="0"><b>1</b> Calculate</li>
+      <li data-s="1"><b>2</b> Set the resistance</li>
+      <li data-s="2"><b>3</b> Verify with a standard meter</li>
+    </ol>
+    <div class="grid">
+      <div class="ctl" id="calcBox">
+        <div class="ctl-h">Step 1: your calculation</div>
+        <div class="readin" id="calcInputs"></div>
+        <button type="button" class="btn" id="checkCalc">Check my calculation</button>
+        <div class="mini" id="calcFb"></div>
+      </div>
+      <div class="ctl">
+        <label for="setSl" class="ctl-h" id="setH">Step 2: set R</label>
+        <input type="range" id="setSl" min="0" max="20000" step="1" value="0">
+        <div class="nudge" id="setNudge"></div>
+        <div class="readout mono big" id="setVal">—</div>
+      </div>
+      <div class="ctl">
+        <label for="appSl" class="ctl-h" id="appH">Step 3: applied voltage</label>
+        <input type="range" id="appSl" min="0" max="1" step="0.01" value="0">
+        <div class="meters mono" id="meters"></div>
+        <button type="button" class="btn primary" id="recordBtn">Record reading</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>A galvanometer of resistance G gives full-scale deflection (N divisions) for a current I<sub>g</sub> = N k, where k is its figure of merit. This is usually below a milliampere.</p>
+    <ul class="eqs mono">
+      <li>Voltmeter of range V₀: the full-scale current must flow when V₀ is applied, so I<sub>g</sub>(G + R) = V₀, giving <b>R = V₀/I<sub>g</sub> − G</b> (a high resistance in <b>series</b>)</li>
+      <li>Ammeter of range I₀: only I<sub>g</sub> flows through the galvanometer and the rest through the shunt, so I<sub>g</sub>G = (I₀ − I<sub>g</sub>)S, giving <b>S = I<sub>g</sub>G/(I₀ − I<sub>g</sub>)</b> (a low resistance in <b>parallel</b>)</li>
+      <li>Shunt wire: length <b>l = S/ρ</b>, where ρ is the resistance per centimetre of the wire</li>
+      <li>The converted scale reads (θ/N) × full range</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap"><table><thead id="obsHead"></thead><tbody id="obsBody"></tbody></table></div>
+    <p class="resultline" id="resultLine"></p>
+    <h3 class="checks-h" id="checksH" hidden>Check your readings</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="newG">New galvanometer</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Graph: converted meter against standard meter</h2>
+    <canvas id="graph" width="640" height="420" aria-label="Converted meter reading against standard meter reading" style="width:100%"></canvas>
+    <p class="mono slope" id="slopeLine">A perfect conversion gives points on the 45° line.</p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Find G and k carefully first (half-deflection method), since every later value depends on them.</li>
+      <li>The series resistance for a voltmeter is large: check the resistance box plugs are tight.</li>
+      <li>The shunt wire is thick and short: measure its length between the binding screws accurately, and remove the insulation at the ends.</li>
+      <li>Connect the converted voltmeter in parallel with the standard voltmeter, and the converted ammeter in series with the standard ammeter.</li>
+      <li>Start with the rheostat at its safe end so that the meters are not overloaded.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

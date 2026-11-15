@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tangent Galvanometer (3D) — Reduction Factor and Earth's Field</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2">
+</head>
+<body class="pinned">
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Moving Charges and Magnetism · 3D</div>
+    <h1 class="disp">Tangent galvanometer: <span class="thin">reduction factor and the Earth's horizontal field</span></h1>
+    <p class="lede">A current in a circular coil makes a field <b class="mono">B = μ₀nI/2r</b> at its centre, at right angles to the Earth's horizontal field <b class="mono">B<sub>H</sub></b>. The compass needle settles at <b class="mono">θ</b> with <b class="mono">tan θ = B/B<sub>H</sub></b>. So <b class="mono">I = K tan θ</b>, with reduction factor <b class="mono">K = 2rB<sub>H</sub>/μ₀n</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="pin-scope"><div class="pin-area">
+  <section class="stage" id="stage" aria-label="3D tangent galvanometer">
+    <div class="view" id="view"></div>
+    <div class="hud">
+      <div class="views" role="group" aria-label="Camera views">
+        <button type="button" data-view="overview">Overview</button>
+        <button type="button" data-view="top">Top view</button>
+        <button type="button" data-view="side">Side view</button>
+        <button type="button" class="fsbtn" id="fsBtn">Full screen</button>
+      </div>
+      <div class="hudtags"><div class="ltag" id="tTag">θ = 0°</div><div class="ltag v" id="iTag">I = 0.00 A</div></div>
+    </div>
+    <p class="stage-hint">Drag to rotate the view · use “Top view” to look into the compass box</p>
+    <p class="rotatehint">Tap “Full screen” and turn your phone sideways for a bigger view</p>
+    <div class="nogl">3D view is not available on this device, but you can still do the whole experiment with the controls below.</div>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <ol class="steps" id="steps">
+      <li data-s="0"><b>1</b> No current: turn the coil into the magnetic meridian (pointer 0–0)</li>
+      <li data-s="1"><b>2</b> Read both pointer ends, current direct</li>
+      <li data-s="2"><b>3</b> Reverse the current and read again</li>
+    </ol>
+    <div class="grid two">
+      <div class="ctl">
+        <div class="ctl-h">Looking into the compass box</div>
+        <canvas id="dialView" width="260" height="260" aria-label="Compass box scale and pointer"></canvas>
+        <div class="meters mono" id="meters"></div>
+      </div>
+      <div class="ctl">
+        <label for="aSl" class="ctl-h"><span>Turn the whole instrument</span></label>
+        <input type="range" id="aSl" min="-30" max="30" step="0.5" value="0">
+        <div class="nudge"><button type="button" class="btn sm" data-a="-5">↺ 5°</button><button type="button" class="btn sm" data-a="-0.5">↺ 0.5°</button><button type="button" class="btn sm" data-a="0.5">↻ 0.5°</button><button type="button" class="btn sm" data-a="5">↻ 5°</button></div>
+        <div class="ctl-h" style="margin-top:10px">Number of turns used</div>
+        <div class="chips" id="nChips"></div>
+        <label for="iSl" class="ctl-h" style="margin-top:10px;display:block"><span>Current (rheostat)</span></label>
+        <input type="range" id="iSl" min="0" max="1" step="0.01" value="0">
+        <div class="nudge"><button type="button" class="btn sm" data-i="-0.1">−0.1</button><button type="button" class="btn sm" data-i="-0.01">−0.01</button><button type="button" class="btn sm" data-i="0.01">+0.01</button><button type="button" class="btn sm" data-i="0.1">+0.1</button></div>
+        <div class="toggles">
+          <button type="button" class="tog" id="keyBtn" aria-pressed="false">Key open</button>
+          <button type="button" class="tog" id="commBtn" aria-pressed="false">Commutator: direct</button>
+        </div>
+        <button type="button" class="btn primary" id="recordBtn">Record both pointer ends</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>The coil is set in the magnetic meridian, so its field at the centre (along the axis) is perpendicular to B<sub>H</sub>. The needle sets along the resultant of the two fields.</p>
+    <ul class="eqs mono">
+      <li>Field of the coil at its centre: <b>B = μ₀ n I / 2r</b></li>
+      <li>Tangent law: <b>B = B<sub>H</sub> tan θ</b>, so <b>I = K tan θ</b> with <b>K = 2r B<sub>H</sub>/(μ₀ n)</b></li>
+      <li>Reduction factor from readings: <b>K = I / tan θ</b>; then <b>B<sub>H</sub> = μ₀ n K / 2r</b></li>
+      <li>Radius from the measured circumference: <b>r = C / 2π</b></li>
+      <li>Most sensitive near <b>θ = 45°</b>: choose the current (and turns) so θ is between 30° and 60°</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <p class="mono" id="circLine"></p>
+    <div class="tablewrap"><table><thead><tr><th>n</th><th>I (A)</th><th>θ₁</th><th>θ₂</th><th>θ₃ (rev.)</th><th>θ₄ (rev.)</th><th>Mean θ</th><th>tan θ</th><th>K = I/tan θ (A)</th></tr></thead><tbody id="obsBody"></tbody></table></div>
+    <p class="resultline" id="resultLine"></p>
+    <h3 class="checks-h" id="checksH" hidden>Check your readings</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last row</button>
+      <button type="button" class="btn sm" id="newSet">New location (new B<sub>H</sub>)</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+  </div>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Keep magnets, iron objects and current-carrying wires away from the tangent galvanometer.</li>
+      <li>Set the plane of the coil in the magnetic meridian: with no current, turn the instrument until the pointer reads 0–0.</li>
+      <li>Level the instrument, so the needle moves freely in a horizontal plane.</li>
+      <li>Read both ends of the pointer (to remove eccentricity error) and reverse the current (to remove error from imperfect setting in the meridian).</li>
+      <li>Adjust the current so that the deflection is between 30° and 60°.</li>
+      <li>Tap the box gently before reading to overcome friction at the pivot.</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

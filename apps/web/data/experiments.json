@@ -4945,5 +4945,250 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "tangent-galvanometer-3d",
+    "slug": "tangent-galvanometer-3d",
+    "title": "Tangent Galvanometer (3D): Reduction Factor and B_H",
+    "subjectId": "current-electricity",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Set the coil in the magnetic meridian, pass currents through 2, 5 or 50 turns, read both pointer ends for direct and reversed current, and find the reduction factor K and the Earth's horizontal field B_H.",
+    "theory": "A current **I** in a circular coil of **n** turns and radius **r** produces a field **B = μ₀nI/2r** at its centre, along the axis of the coil.\n\nIf the plane of the coil is in the **magnetic meridian**, this field is perpendicular to the Earth's horizontal field **B_H**. A compass needle at the centre sets along the resultant, at an angle **θ** to the meridian, where **tan θ = B/B_H** (tangent law).\n\nSo **I = K tan θ**, where the **reduction factor** is **K = 2rB_H/(μ₀n)**. From the readings, **K = I/tan θ** and **B_H = μ₀nK/2r**. The radius is found from the circumference: **r = C/2π**.\n\nThe instrument is most sensitive near **θ = 45°**, so currents are chosen to give deflections between 30° and 60°. Reading both ends of the pointer removes the error from an off-centre pivot, and reversing the current removes the error from imperfect setting in the meridian.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Set in the meridian",
+        "description": "Level the instrument. With no current, turn the whole instrument until the coil is in the magnetic meridian and the aluminium pointer reads 0–0."
+      },
+      {
+        "order": 2,
+        "title": "Connect the circuit",
+        "description": "Connect the battery, key, rheostat, ammeter and commutator in series with the chosen number of turns (2, 5 or 50)."
+      },
+      {
+        "order": 3,
+        "title": "Direct current",
+        "description": "Close the key, adjust the rheostat for a deflection between 30° and 60°, and read both ends of the pointer (θ₁, θ₂) and the ammeter."
+      },
+      {
+        "order": 4,
+        "title": "Reverse the current",
+        "description": "Reverse the current with the commutator, keeping the same current, and read both ends again (θ₃, θ₄)."
+      },
+      {
+        "order": 5,
+        "title": "Repeat",
+        "description": "Repeat for 3–4 different currents. For each, find mean θ and K = I/tan θ."
+      },
+      {
+        "order": 6,
+        "title": "Calculate B_H",
+        "description": "Measure the circumference C of the coil with a thread, find r = C/2π, and calculate B_H = μ₀nK/2r using the mean K."
+      }
+    ],
+    "observation": "I/tan θ is constant for a given number of turns (the tangent law). The reduction factor K is smaller for more turns, while B_H comes out about 3–4 × 10⁻⁵ T for every set of turns.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "The tangent galvanometer is based on the relation:",
+        "options": [
+          {
+            "id": "a",
+            "text": "B = B_H tan θ"
+          },
+          {
+            "id": "b",
+            "text": "B = B_H sin θ"
+          },
+          {
+            "id": "c",
+            "text": "B = B_H cos θ"
+          },
+          {
+            "id": "d",
+            "text": "B_H = B tan θ"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The needle sets along the resultant of two perpendicular fields, so tan θ = B/B_H."
+      },
+      {
+        "id": "q2",
+        "question": "Before passing current, the plane of the coil is set:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Perpendicular to the magnetic meridian"
+          },
+          {
+            "id": "b",
+            "text": "In the magnetic meridian"
+          },
+          {
+            "id": "c",
+            "text": "At 45° to the meridian"
+          },
+          {
+            "id": "d",
+            "text": "In any direction"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Only then is the coil's field (along its axis) perpendicular to B_H."
+      },
+      {
+        "id": "q3",
+        "question": "The reduction factor K of a tangent galvanometer is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "μ₀n/2rB_H"
+          },
+          {
+            "id": "b",
+            "text": "2rB_H/μ₀n"
+          },
+          {
+            "id": "c",
+            "text": "μ₀nB_H/2r"
+          },
+          {
+            "id": "d",
+            "text": "2r/μ₀nB_H"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "From μ₀nI/2r = B_H tan θ, I = (2rB_H/μ₀n) tan θ."
+      },
+      {
+        "id": "q4",
+        "question": "Why are deflections kept between 30° and 60°?",
+        "options": [
+          {
+            "id": "a",
+            "text": "The needle cannot move beyond 60°"
+          },
+          {
+            "id": "b",
+            "text": "The scale is only marked to 60°"
+          },
+          {
+            "id": "c",
+            "text": "The instrument is most sensitive near 45°"
+          },
+          {
+            "id": "d",
+            "text": "To save battery"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "The fractional error in tan θ, dθ/(sin θ cos θ), is least at θ = 45°."
+      },
+      {
+        "id": "q5",
+        "question": "Reading both ends of the pointer removes the error due to:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Imperfect setting in the meridian"
+          },
+          {
+            "id": "b",
+            "text": "Eccentricity of the pivot"
+          },
+          {
+            "id": "c",
+            "text": "The Earth's vertical field"
+          },
+          {
+            "id": "d",
+            "text": "Heating of the coil"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "If the pivot is off-centre, one end reads high and the other low; their mean is correct."
+      },
+      {
+        "id": "q6",
+        "question": "Reversing the current with the commutator removes the error due to:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Eccentricity of the pivot"
+          },
+          {
+            "id": "b",
+            "text": "Ammeter zero error"
+          },
+          {
+            "id": "c",
+            "text": "The coil not being exactly in the magnetic meridian"
+          },
+          {
+            "id": "d",
+            "text": "Friction at the pivot"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "If the coil is slightly off the meridian, deflections on the two sides differ; their mean cancels the error."
+      },
+      {
+        "id": "q7",
+        "question": "If the number of turns is increased from 5 to 50 (other things the same), the reduction factor:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Becomes 10 times larger"
+          },
+          {
+            "id": "b",
+            "text": "Stays the same"
+          },
+          {
+            "id": "c",
+            "text": "Becomes one tenth"
+          },
+          {
+            "id": "d",
+            "text": "Becomes 100 times smaller"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "K = 2rB_H/μ₀n is inversely proportional to n."
+      },
+      {
+        "id": "q8",
+        "question": "A tangent galvanometer cannot be used near the magnetic poles because there:",
+        "options": [
+          {
+            "id": "a",
+            "text": "B_H is nearly zero"
+          },
+          {
+            "id": "b",
+            "text": "B_H is very large"
+          },
+          {
+            "id": "c",
+            "text": "The coil cannot be set in the meridian"
+          },
+          {
+            "id": "d",
+            "text": "μ₀ changes"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "At the poles the Earth's field is almost vertical, so B_H ≈ 0 and the needle has no horizontal restoring field."
+      }
+    ],
+    "tags": ["tangent galvanometer", "reduction factor", "earth's magnetic field", "horizontal component", "tangent law", "magnetic meridian", "moving charges and magnetism", "plus two", "kerala", "dhse", "practical", "3d"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

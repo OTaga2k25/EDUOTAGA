@@ -88,5 +88,14 @@
     "categoryId": "chemistry",
     "icon": "flask",
     "color": "emerald"
+  },
+  {
+    "id": "qualitative-analysis",
+    "slug": "qualitative-analysis",
+    "name": "Qualitative Analysis",
+    "description": "Salt analysis and tests for functional groups: identify ions and compounds from what you observe.",
+    "categoryId": "chemistry",
+    "icon": "flask",
+    "color": "orange"
   }
 ]

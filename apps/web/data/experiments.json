@@ -5440,5 +5440,255 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "salt-analysis",
+    "slug": "salt-analysis",
+    "title": "Salt Analysis: Identify the Anion and Cation",
+    "subjectId": "qualitative-analysis",
+    "categoryId": "chemistry",
+    "difficulty": "intermediate",
+    "summary": "Analyse an unknown simple salt systematically: preliminary tests, anion tests and cation group tests, writing the observation and inference for each, and report the salt only after confirmatory tests. A new random salt each time.",
+    "theory": "A simple salt contains one **anion** (acid radical) and one **cation** (basic radical). They are identified by characteristic reactions: gases, precipitates, colours and smells.\n\n**Anions** are first detected with dilute and concentrated H₂SO₄ (carbonate: effervescence of CO₂; acetate: smell of vinegar; chloride: HCl gas giving white fumes with NH₃; nitrate: brown NO₂ fumes with copper) and then confirmed: lime water, AgNO₃, brown ring test, BaCl₂, neutral FeCl₃ or the ester test.\n\n**Cations:** NH₄⁺ is tested first with NaOH (ammonia). The others are separated into **groups** by group reagents, which must be used in order: group I dil. HCl (Pb²⁺), group III NH₄Cl + NH₄OH (Al³⁺), group IV H₂S in ammoniacal solution (Zn²⁺), group V (NH₄)₂CO₃ (Ba²⁺, Ca²⁺), group VI Na₂HPO₄ (Mg²⁺). The group precipitate is then confirmed by a specific test.\n\nEach test is recorded as **experiment – observation – inference**, and an ion is reported only after its confirmatory test.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Preliminary tests",
+        "description": "Note the colour and appearance, and dissolve a little salt in distilled water to make the original solution (OS)."
+      },
+      {
+        "order": 2,
+        "title": "Test for NH₄⁺",
+        "description": "Warm the salt with NaOH solution. A smell of ammonia that turns red litmus blue shows NH₄⁺."
+      },
+      {
+        "order": 3,
+        "title": "Anion: preliminary",
+        "description": "Treat the salt with dil. H₂SO₄, then with conc. H₂SO₄ (and copper turnings), and note gases, fumes and smells."
+      },
+      {
+        "order": 4,
+        "title": "Anion: confirmatory",
+        "description": "Do the confirmatory test suggested by the preliminary tests (lime water, AgNO₃, brown ring, BaCl₂, FeCl₃ or ester test)."
+      },
+      {
+        "order": 5,
+        "title": "Cation: group tests",
+        "description": "Add the group reagents to the OS in order (I, III, IV, V, VI) until a precipitate appears."
+      },
+      {
+        "order": 6,
+        "title": "Cation: confirmatory",
+        "description": "Confirm the cation of that group with its specific test (KI, blue lake, potassium ferrocyanide, flame test, ammonium oxalate, phosphate)."
+      },
+      {
+        "order": 7,
+        "title": "Report",
+        "description": "Write the anion and cation, and the name of the salt."
+      }
+    ],
+    "observation": "Each test gives a characteristic observation; the preliminary tests narrow down the possibilities and the confirmatory tests establish one anion and one cation.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "A salt gives brisk effervescence with dil. H₂SO₄, and the gas turns lime water milky. The anion is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Cl⁻"
+          },
+          {
+            "id": "b",
+            "text": "CO₃²⁻"
+          },
+          {
+            "id": "c",
+            "text": "NO₃⁻"
+          },
+          {
+            "id": "d",
+            "text": "SO₄²⁻"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "CO₂ from a carbonate turns lime water milky (CaCO₃)."
+      },
+      {
+        "id": "q2",
+        "question": "The brown ring test is used to confirm:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Nitrate"
+          },
+          {
+            "id": "b",
+            "text": "Chloride"
+          },
+          {
+            "id": "c",
+            "text": "Sulphate"
+          },
+          {
+            "id": "d",
+            "text": "Acetate"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "NO from the nitrate forms a brown complex with Fe²⁺ at the junction of the layers."
+      },
+      {
+        "id": "q3",
+        "question": "A white precipitate with AgNO₃ that dissolves in NH₄OH shows:",
+        "options": [
+          {
+            "id": "a",
+            "text": "SO₄²⁻"
+          },
+          {
+            "id": "b",
+            "text": "Cl⁻"
+          },
+          {
+            "id": "c",
+            "text": "CO₃²⁻"
+          },
+          {
+            "id": "d",
+            "text": "CH₃COO⁻"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "AgCl dissolves in ammonia forming [Ag(NH₃)₂]⁺."
+      },
+      {
+        "id": "q4",
+        "question": "The group reagent for group III cations is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "dil. HCl"
+          },
+          {
+            "id": "b",
+            "text": "(NH₄)₂CO₃"
+          },
+          {
+            "id": "c",
+            "text": "NH₄Cl + NH₄OH"
+          },
+          {
+            "id": "d",
+            "text": "Na₂HPO₄"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Group III hydroxides (e.g. Al(OH)₃) precipitate with NH₄OH in the presence of NH₄Cl."
+      },
+      {
+        "id": "q5",
+        "question": "An apple-green flame in the flame test indicates:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Ca²⁺"
+          },
+          {
+            "id": "b",
+            "text": "Pb²⁺"
+          },
+          {
+            "id": "c",
+            "text": "Ba²⁺"
+          },
+          {
+            "id": "d",
+            "text": "Zn²⁺"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Barium gives an apple-green flame; calcium gives brick red."
+      },
+      {
+        "id": "q6",
+        "question": "Why is NH₄Cl added along with NH₄OH in group III?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To dissolve the salt"
+          },
+          {
+            "id": "b",
+            "text": "To suppress the ionisation of NH₄OH so that only group III hydroxides precipitate"
+          },
+          {
+            "id": "c",
+            "text": "To give white fumes"
+          },
+          {
+            "id": "d",
+            "text": "To oxidise the cation"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The common ion NH₄⁺ lowers the OH⁻ concentration, so Mg(OH)₂ and others of later groups do not precipitate."
+      },
+      {
+        "id": "q7",
+        "question": "Smell of vinegar with dil. H₂SO₄ and a deep red colour with neutral FeCl₃ indicate:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Carbonate"
+          },
+          {
+            "id": "b",
+            "text": "Nitrate"
+          },
+          {
+            "id": "c",
+            "text": "Chloride"
+          },
+          {
+            "id": "d",
+            "text": "Acetate"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "Acetic acid smells of vinegar; acetate gives a red complex with Fe³⁺."
+      },
+      {
+        "id": "q8",
+        "question": "Ammonium ion is tested by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Adding dil. HCl"
+          },
+          {
+            "id": "b",
+            "text": "Warming with NaOH: ammonia turns red litmus blue"
+          },
+          {
+            "id": "c",
+            "text": "The flame test"
+          },
+          {
+            "id": "d",
+            "text": "Adding BaCl₂"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "NH₄⁺ + OH⁻ → NH₃ + H₂O on warming; ammonia is alkaline and has a pungent smell."
+      }
+    ],
+    "tags": ["salt analysis", "qualitative analysis", "anion", "cation", "acid radical", "basic radical", "group analysis", "confirmatory test", "brown ring test", "flame test", "plus two", "kerala", "dhse", "practical", "chemistry"],
+    "isNew": true,
+    "estimatedDurationMinutes": 30,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salt Analysis — Identify the Anion and Cation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body class="pinned" style="height:100%"><div class="scroller" id="scroller">
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Chemistry · Qualitative Analysis</div>
+    <h1 class="disp">Salt analysis: <span class="thin">identify one anion and one cation</span></h1>
+    <p class="lede">Work through the tests systematically: preliminary tests, then the anion (acid radical), then the cation (basic radical) group by group. For every test write the <b>observation</b> and the <b>inference</b>, and report an ion only after its <b>confirmatory test</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="pin-scope"><div class="pin-area">
+  <section class="bench" aria-label="Test tube">
+    <svg id="apparatus" viewBox="0 0 640 420" role="img" aria-label="Test tube showing the result of the test"><g id="app"></g></svg>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="ctl-h" style="margin-top:10px">Experiment</div>
+    <div class="picker">
+      <select id="testSel" aria-label="Choose a test"></select>
+      <button type="button" class="btn primary" id="doTest" style="margin-top:0;width:auto">Do the test</button>
+    </div>
+    <div class="curtest" id="curTest"></div>
+    <div class="ctl-h">Inference</div>
+    <div id="infChips"></div>
+    <div class="ctl-h" style="margin-top:14px">Result</div>
+    <div class="result">
+      <select id="anSel" aria-label="Anion"></select>
+      <select id="caSel" aria-label="Cation"></select>
+      <button type="button" class="btn accent" id="submit">Report the salt</button>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The scheme</h2>
+    <ul class="eqs mono">
+      <li><b>NH₄⁺</b>: warm with NaOH → smell of ammonia, red litmus blue; Nessler’s reagent → brown ppt</li>
+      <li><b>CO₃²⁻</b>: dil. H₂SO₄ → brisk effervescence; gas turns lime water milky</li>
+      <li><b>CH₃COO⁻</b>: dil. H₂SO₄ → vinegar smell; neutral FeCl₃ → deep red; ester test → fruity smell</li>
+      <li><b>Cl⁻</b>: conc. H₂SO₄ → white fumes with NH₄OH rod; AgNO₃ → curdy white ppt soluble in NH₄OH</li>
+      <li><b>NO₃⁻</b>: conc. H₂SO₄ + Cu → brown fumes; brown ring test</li>
+      <li><b>SO₄²⁻</b>: BaCl₂ → white ppt insoluble in conc. HCl</li>
+      <li>Cation groups: <b>I</b> dil. HCl (Pb²⁺) · <b>III</b> NH₄Cl + NH₄OH (Al³⁺) · <b>IV</b> H₂S in ammoniacal solution (Zn²⁺) · <b>V</b> (NH₄)₂CO₃ (Ba²⁺, Ca²⁺) · <b>VI</b> Na₂HPO₄ (Mg²⁺)</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap"><table><thead><tr><th>No.</th><th>Experiment</th><th>Observation</th><th>Inference</th></tr></thead><tbody id="obsBody"></tbody></table></div>
+    <p class="mini">✱ inference corrected after two tries.</p>
+    <h3 class="checks-h" id="checksH" hidden>Check your work</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="actions">
+      <button type="button" class="btn sm" id="newSalt">New salt</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+  </div>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Use clean test tubes, and only a small amount of salt for each test.</li>
+      <li>Smell gases by wafting them towards your nose, never directly.</li>
+      <li>Add conc. H₂SO₄ carefully, and point the test tube away from yourself and others while heating.</li>
+      <li>Do the group tests in order (I → VI): ions of an earlier group also precipitate with later group reagents.</li>
+      <li>Report an ion only after a confirmatory test.</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</div>
+</body>
+</html>

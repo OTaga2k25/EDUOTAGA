@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glass Slab (3D) — Refractive Index with a Travelling Microscope</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Ray Optics · 3D</div>
+    <h1 class="disp">Glass slab: <span class="thin">refractive index with a travelling microscope</span></h1>
+    <p class="lede">A mark seen through a glass slab looks raised. Focus a travelling microscope on the mark, on its image through the slab, and on powder on top of the slab. Then <b class="mono">n = real thickness / apparent thickness = (R₃ − R₁) / (R₃ − R₂)</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="stage" id="stage" aria-label="3D travelling microscope">
+    <div class="view" id="view"></div>
+    <div class="hud">
+      <div class="views" role="group" aria-label="Camera views">
+        <button type="button" data-view="overview">Overview</button>
+        <button type="button" data-view="side">Side view</button>
+        <button type="button" data-view="close">Close-up</button>
+        <button type="button" class="fsbtn" id="fsBtn">Full screen</button>
+      </div>
+      <div class="hudtags"><div class="ltag" id="stepTag">Step 1 · mark</div><div class="ltag v" id="slabTag">Slab 1 of 3</div></div>
+    </div>
+    <p class="stage-hint">Drag the microscope up or down for coarse focus · use the fine buttons below · drag the background to rotate</p>
+    <p class="rotatehint">Tap “Full screen” and turn your phone sideways for a bigger view</p>
+    <div class="nogl">3D view is not available on this device, but you can still do the whole experiment with the controls below.</div>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <ol class="steps" id="steps">
+      <li data-s="0"><b>R₁</b> Focus on the mark</li>
+      <li data-s="1"><b>R₂</b> Slab on the mark: focus on its image</li>
+      <li data-s="2"><b>R₃</b> Powder on top: focus on the powder</li>
+    </ol>
+    <div class="grid two">
+      <div class="ctl">
+        <div class="ctl-h">Eyepiece view</div>
+        <canvas id="eyeView" width="260" height="260" aria-label="What you see through the microscope"></canvas>
+        <label for="rSl" class="ctl-h" style="margin-top:10px;display:block">Focus (raise or lower the microscope)</label>
+        <input type="range" id="rSl" min="0" max="12" step="0.001" value="6" aria-label="Microscope height">
+        <div class="nudge wrapn">
+          <button type="button" class="btn sm" data-d="-0.1">▼ 1 mm</button>
+          <button type="button" class="btn sm" data-d="-0.01">▼ 0.1</button>
+          <button type="button" class="btn sm" data-d="-0.001">▼ fine</button>
+          <button type="button" class="btn sm" data-d="0.001">▲ fine</button>
+          <button type="button" class="btn sm" data-d="0.01">▲ 0.1</button>
+          <button type="button" class="btn sm" data-d="0.1">▲ 1 mm</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <div class="ctl-h">Vernier scale (magnified) <span class="mini">main scale 1 div = 0.05 cm · vernier 50 div · least count 0.001 cm</span></div>
+        <canvas id="vernier" width="560" height="120" aria-label="Main scale and vernier; tap to move the magnifier"></canvas>
+        <div class="maghead"><span class="mini">Magnifier (tap the scale above or use the arrows to move it)</span>
+          <span class="magbtns"><button type="button" class="btn sm" id="magL" aria-label="Move magnifier left">◀</button><button type="button" class="btn sm" id="magR" aria-label="Move magnifier right">▶</button></span></div>
+        <canvas id="vmag" width="560" height="120" aria-label="Magnified part of the vernier"></canvas>
+        <div class="readin">
+          <label>Main scale reading <span class="mono">(cm)</span><input type="number" id="msr" step="0.05" min="0" max="14" inputmode="decimal" placeholder="e.g. 3.20"></label>
+          <label>Vernier coincidence <span class="mono">(div)</span><input type="number" id="vsc" step="1" min="0" max="49" inputmode="numeric" placeholder="0–49"></label>
+        </div>
+        <div class="mini mono" id="totalLine">Total reading = MSR + VSC × 0.001 cm</div>
+        <button type="button" class="btn primary" id="recordBtn">Record R₁</button>
+      </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn" id="slabBtn">Place slab on the mark</button>
+      <button type="button" class="btn" id="powderBtn">Sprinkle powder on the slab</button>
+      <button type="button" class="btn" id="nextBtn">Next slab</button>
+      <button type="button" class="btn sm" id="undoBtn">Undo last reading</button>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <p>Light from a mark under a glass slab bends away from the normal as it leaves the top surface, so the mark appears raised. The <b>real thickness</b> of the slab is t, and the <b>apparent thickness</b> (the depth at which the mark seems to lie) is t/n.</p>
+    <ul class="eqs mono">
+      <li>R₁: microscope focused on the mark (no slab)</li>
+      <li>R₂: focused on the image of the mark seen through the slab</li>
+      <li>R₃: focused on the powder on top of the slab</li>
+      <li>Real thickness = <b>R₃ − R₁</b>, apparent thickness = <b>R₃ − R₂</b></li>
+      <li>Refractive index: <b>n = (R₃ − R₁) / (R₃ − R₂)</b>; the mark is raised by R₂ − R₁ = t(1 − 1/n)</li>
+    </ul>
+    <p>Reading the vernier: the <b>main scale reading</b> is the last main scale mark at or below the vernier zero. Then find the vernier line that lines up exactly with a main scale line: that number is the <b>vernier coincidence</b>. Reading = MSR + VSC × LC, with LC = 1 MSD / 50 = 0.05/50 = 0.001 cm.</p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap">
+      <table id="obs">
+        <thead><tr><th>Slab</th><th>R₁ (cm)</th><th>R₂ (cm)</th><th>R₃ (cm)</th><th>Real t = R₃ − R₁</th><th>Apparent t = R₃ − R₂</th><th>n</th></tr></thead>
+        <tbody id="obsBody"></tbody>
+      </table>
+    </div>
+    <p class="resultline" id="resultLine"></p>
+    <h3 class="checks-h" id="checksH" hidden>Check your readings</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="actions">
+      <button type="button" class="btn sm" id="newGlass">New unknown glass</button>
+      <button type="button" class="btn sm accent" id="reveal">Check my answer</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Graph of real against apparent thickness</h2>
+    <canvas id="graph1" width="640" height="420" aria-label="Graph of real thickness against apparent thickness" style="width:100%"></canvas>
+    <p class="mono slope" id="slopeLine">Complete the readings for the slabs to plot the graph. Its slope is n.</p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Focus the eyepiece on the cross-wires first, so they look sharp, before focusing on the mark.</li>
+      <li>Move the microscope in one direction only when focusing (always upwards, say) to avoid backlash error in the screw.</li>
+      <li>Remove parallax: the image of the mark should not move against the cross-wires when you move your eye slightly.</li>
+      <li>Use a very thin layer of fine powder, just enough to focus on the top surface.</li>
+      <li>Read the vernier carefully: note the main scale reading below the vernier zero, then the vernier line that coincides exactly.</li>
+      <li>Repeat with slabs of different thickness and take the mean of n.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

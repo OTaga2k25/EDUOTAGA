@@ -3020,5 +3020,250 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-09T00:00:00.000Z",
     "updatedAt": "2026-11-09T00:00:00.000Z"
+  },
+  {
+    "id": "glass-slab-microscope-3d",
+    "slug": "glass-slab-microscope-3d",
+    "title": "Glass Slab (3D): Refractive Index with a Travelling Microscope",
+    "subjectId": "light-reflection-refraction",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Focus a 3D travelling microscope on a mark, on its image through a glass slab and on powder on the slab, read the vernier yourself, and find n = real thickness / apparent thickness.",
+    "theory": "A mark seen through a glass slab looks **raised**, because rays leaving the glass bend **away from the normal**. For near-normal viewing the **apparent thickness is t/n**, where t is the real thickness and n the refractive index, so the mark appears raised by **t(1 − 1/n)**.\n\nA **travelling microscope** moves up and down on a vertical scale with a vernier. Its **least count** is 1 main scale division / number of vernier divisions; here **0.05 cm / 50 = 0.001 cm**. A reading is the **main scale reading** plus the **vernier coincidence × least count**.\n\nFocus on the mark (**R₁**), place the slab and focus on the image of the mark (**R₂**), then sprinkle powder on top and focus on it (**R₃**). The **real thickness is R₃ − R₁**, the **apparent thickness is R₃ − R₂**, and **n = (R₃ − R₁)/(R₃ − R₂)**.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Find the least count",
+        "description": "Note the value of one main scale division (0.05 cm) and the number of vernier divisions (50). Least count = 0.05/50 = 0.001 cm."
+      },
+      {
+        "order": 2,
+        "title": "Focus on the mark (R₁)",
+        "description": "Lower the microscope until the cross mark on the paper is sharp. Read the main scale and the vernier coincidence and record R₁."
+      },
+      {
+        "order": 3,
+        "title": "Place the slab (R₂)",
+        "description": "Put the glass slab on the mark. The mark goes out of focus. Raise the microscope until the image of the mark is sharp again and record R₂."
+      },
+      {
+        "order": 4,
+        "title": "Sprinkle powder (R₃)",
+        "description": "Sprinkle a little powder on top of the slab. Raise the microscope until the powder is sharp and record R₃."
+      },
+      {
+        "order": 5,
+        "title": "Repeat with other slabs",
+        "description": "Repeat for the three slabs of different thickness. For each, real thickness = R₃ − R₁ and apparent thickness = R₃ − R₂."
+      },
+      {
+        "order": 6,
+        "title": "Calculate and plot",
+        "description": "Find n = (R₃ − R₁)/(R₃ − R₂) for each slab and take the mean. Plot real against apparent thickness: the slope is n."
+      }
+    ],
+    "observation": "For each slab record R₁, R₂ and R₃ using MSR + VSC × 0.001 cm. Real thickness = R₃ − R₁, apparent thickness = R₃ − R₂, n = real/apparent. The values of n agree, and the real–apparent graph is a straight line through the origin with slope n (about 1.5 for glass).",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "A mark under a glass slab appears raised because light from it:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Reflects from the top surface"
+          },
+          {
+            "id": "b",
+            "text": "Bends away from the normal as it leaves the glass"
+          },
+          {
+            "id": "c",
+            "text": "Bends towards the normal as it leaves the glass"
+          },
+          {
+            "id": "d",
+            "text": "Travels faster inside the glass"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "On passing from glass to air the rays bend away from the normal, so they seem to come from a point above the real mark."
+      },
+      {
+        "id": "q2",
+        "question": "With a travelling microscope, the refractive index of the slab is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "(R₃ − R₂)/(R₃ − R₁)"
+          },
+          {
+            "id": "b",
+            "text": "(R₂ − R₁)/(R₃ − R₁)"
+          },
+          {
+            "id": "c",
+            "text": "(R₃ − R₁)/(R₃ − R₂)"
+          },
+          {
+            "id": "d",
+            "text": "R₃/R₁"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "n = real thickness / apparent thickness = (R₃ − R₁)/(R₃ − R₂)."
+      },
+      {
+        "id": "q3",
+        "question": "A travelling microscope has a main scale division of 0.05 cm and 50 vernier divisions. Its least count is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "0.01 cm"
+          },
+          {
+            "id": "b",
+            "text": "0.005 cm"
+          },
+          {
+            "id": "c",
+            "text": "0.0005 cm"
+          },
+          {
+            "id": "d",
+            "text": "0.001 cm"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "LC = 1 MSD / number of vernier divisions = 0.05/50 = 0.001 cm."
+      },
+      {
+        "id": "q4",
+        "question": "The main scale reading is 3.20 cm and the 18th vernier division coincides. With LC = 0.001 cm the reading is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "3.218 cm"
+          },
+          {
+            "id": "b",
+            "text": "3.380 cm"
+          },
+          {
+            "id": "c",
+            "text": "3.2018 cm"
+          },
+          {
+            "id": "d",
+            "text": "3.38 cm"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Reading = MSR + VSC × LC = 3.20 + 18 × 0.001 = 3.218 cm."
+      },
+      {
+        "id": "q5",
+        "question": "Why is fine powder sprinkled on the top of the slab?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To make the slab heavier"
+          },
+          {
+            "id": "b",
+            "text": "So the microscope has something to focus on at the top surface"
+          },
+          {
+            "id": "c",
+            "text": "To change the refractive index"
+          },
+          {
+            "id": "d",
+            "text": "To remove parallax from the mark"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "A clean glass surface cannot be focused on; the powder particles mark the top surface, giving R₃."
+      },
+      {
+        "id": "q6",
+        "question": "A slab of real thickness 3.0 cm has refractive index 1.5. The mark under it appears raised by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "2.0 cm"
+          },
+          {
+            "id": "b",
+            "text": "1.5 cm"
+          },
+          {
+            "id": "c",
+            "text": "1.0 cm"
+          },
+          {
+            "id": "d",
+            "text": "0.5 cm"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Apparent thickness = 3.0/1.5 = 2.0 cm, so the mark is raised by 3.0 − 2.0 = 1.0 cm = t(1 − 1/n)."
+      },
+      {
+        "id": "q7",
+        "question": "Why is the microscope moved in one direction only while focusing?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To avoid backlash error in the screw"
+          },
+          {
+            "id": "b",
+            "text": "To save time"
+          },
+          {
+            "id": "c",
+            "text": "To keep the slab cool"
+          },
+          {
+            "id": "d",
+            "text": "To increase the magnification"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Reversing direction lets the screw slip a little before the carriage moves (backlash), which shifts the reading."
+      },
+      {
+        "id": "q8",
+        "question": "A graph of real thickness against apparent thickness for slabs of the same glass is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "A parabola"
+          },
+          {
+            "id": "b",
+            "text": "A straight line through the origin with slope 1/n"
+          },
+          {
+            "id": "c",
+            "text": "A straight line through the origin with slope n"
+          },
+          {
+            "id": "d",
+            "text": "A horizontal line"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Real = n × apparent, so the graph is a straight line through the origin whose slope is n."
+      }
+    ],
+    "tags": ["glass slab", "travelling microscope", "refractive index", "real and apparent depth", "vernier", "least count", "ray optics", "3d", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 35,
+    "createdAt": "2026-11-15T00:00:00.000Z",
+    "updatedAt": "2026-11-15T00:00:00.000Z"
   }
 ]

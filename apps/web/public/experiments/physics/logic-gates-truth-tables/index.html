@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logic Gates — Truth Tables on an IC Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Physics · Semiconductor Electronics</div>
+    <h1 class="disp">Logic gates: <span class="thin">verifying truth tables with ICs</span></h1>
+    <p class="lede">Connect the inputs A and B of a gate IC to switches and its output Y to an LED. A switch up (+5 V) is logic <b class="mono">1</b>, down (0 V) is logic <b class="mono">0</b>; a glowing LED means <b class="mono">Y = 1</b>. Try every combination of inputs and build the truth table.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="bench" aria-label="IC trainer board">
+    <svg id="apparatus" viewBox="0 0 900 380" role="img" aria-label="Trainer board with input switches A and B, a 14-pin gate IC, and an output LED">
+      <line x1="40" y1="40" x2="860" y2="40" class="rail"/><text x="44" y="32" class="lbl small">+5 V</text>
+      <line x1="40" y1="355" x2="860" y2="355" class="rail gnd"/><text x="44" y="374" class="lbl small">GND (0 V)</text>
+      <g id="board"></g>
+    </svg>
+    <p class="bench-hint" id="benchHint">Pin 14 of the IC goes to +5 V and pin 7 to ground. The notch marks the pin-1 end.</p>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="modebar">
+      <div class="chips" id="modeChips" role="group" aria-label="Mode">
+        <button type="button" class="chip" data-m="learn">Learn each gate</button>
+        <button type="button" class="chip" data-m="mystery">Mystery IC</button>
+      </div>
+      <div class="chips" id="gateChips" role="group" aria-label="Gate IC"></div>
+    </div>
+    <div class="grid">
+      <div class="ctl">
+        <div class="ctl-h">Inputs and power</div>
+        <div class="toggles">
+          <button type="button" class="tog" id="aBtn" aria-pressed="false">A = 0</button>
+          <button type="button" class="tog" id="bBtn" aria-pressed="false">B = 0</button>
+          <button type="button" class="tog pwr" id="pBtn" aria-pressed="true">Power ON</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <div class="ctl-h">What does the LED show?</div>
+        <div class="toggles">
+          <button type="button" class="btn" id="rec0">Record Y = 0 (LED off)</button>
+          <button type="button" class="btn" id="rec1">Record Y = 1 (LED on)</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <div class="ctl-h" id="symH">Gate symbol</div>
+        <svg id="sym" viewBox="0 0 120 70" width="180" height="105" aria-label="Logic symbol"></svg>
+        <div class="mini mono" id="exprLine"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="disp" id="ttTitle">Truth table</h2>
+    <div class="tablewrap"><table id="tt"><thead id="ttHead"></thead><tbody id="ttBody"></tbody></table></div>
+    <div class="quiz" id="quizBox" hidden>
+      <div class="ctl-h" id="quizQ"></div>
+      <div class="chips" id="quizOpts"></div>
+      <div class="mini" id="quizFb"></div>
+    </div>
+    <h3 class="checks-h" id="checksH" hidden>Your progress</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="actions">
+      <button type="button" class="btn sm" id="clearT">Clear this table</button>
+      <button type="button" class="btn sm" id="newMystery" hidden>New mystery IC</button>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The gates</h2>
+    <ul class="eqs mono">
+      <li>AND (7408): <b>Y = A · B</b>. Output 1 only when both inputs are 1</li>
+      <li>OR (7432): <b>Y = A + B</b>. Output 1 when at least one input is 1</li>
+      <li>NOT (7404): <b>Y = Ā</b>. Output is the opposite of the input</li>
+      <li>NAND (7400): <b>Y = (A · B)‾</b>. AND followed by NOT: 0 only when both inputs are 1</li>
+      <li>NOR (7402): <b>Y = (A + B)‾</b>. OR followed by NOT: 1 only when both inputs are 0</li>
+      <li>XOR (7486): <b>Y = A ⊕ B</b>. Output 1 when the inputs are different</li>
+    </ul>
+    <p>NAND and NOR are <b>universal gates</b>: any other gate can be built from them alone. Each 14-pin IC holds several identical gates (four 2-input gates, or six NOT gates), powered through pin 14 (+5 V) and pin 7 (ground).</p>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Identify pin 1 from the notch or dot on the IC, and check the pin diagram before wiring.</li>
+      <li>Connect pin 14 to +5 V and pin 7 to ground. Never reverse the supply.</li>
+      <li>Use only 0 V and +5 V as inputs. Do not leave inputs unconnected (a floating TTL input behaves as 1).</li>
+      <li>Switch the power off while changing connections.</li>
+      <li>Try every combination of inputs: 4 for a two-input gate, 2 for NOT.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</body>
+</html>

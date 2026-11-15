@@ -4465,5 +4465,245 @@
     "estimatedDurationMinutes": 40,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "logic-gates-truth-tables",
+    "slug": "logic-gates-truth-tables",
+    "title": "Logic Gates: Verifying Truth Tables with ICs",
+    "subjectId": "semiconductor-electronics",
+    "categoryId": "physics",
+    "difficulty": "beginner",
+    "summary": "Wire AND, OR, NOT, NAND, NOR and XOR gate ICs on a trainer board, verify each truth table with switches and an LED, and identify an unlabelled mystery IC.",
+    "theory": "A **logic gate** has inputs and an output that can each be **0 (0 V)** or **1 (+5 V)**. Its behaviour is described by a **truth table** listing the output for every combination of inputs.\n\n**AND** (7408): **Y = A · B**. **OR** (7432): **Y = A + B**. **NOT** (7404): **Y = Ā**. **NAND** (7400): **Y = (A · B)‾**. **NOR** (7402): **Y = (A + B)‾**. **XOR** (7486): **Y = A ⊕ B**, 1 when the inputs differ.\n\n**NAND and NOR are universal gates**: any other gate can be built from them. In 14-pin TTL ICs, **pin 14 is +5 V** and **pin 7 is ground**. Each IC holds four 2-input gates, or six NOT gates.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Connect the IC",
+        "description": "Place the IC on the trainer with the notch towards pin 1. Connect pin 14 to +5 V and pin 7 to ground."
+      },
+      {
+        "order": 2,
+        "title": "Wire inputs and output",
+        "description": "Connect the gate's input pins to switches A and B and its output pin to the LED (check the pin diagram; on the 7402 the output is pin 1)."
+      },
+      {
+        "order": 3,
+        "title": "Fill the truth table",
+        "description": "Set every combination of A and B. For each, note whether the LED is on (Y = 1) or off (Y = 0)."
+      },
+      {
+        "order": 4,
+        "title": "Identify the expression",
+        "description": "Compare the completed table with the Boolean expressions and choose the one it matches."
+      },
+      {
+        "order": 5,
+        "title": "Mystery IC",
+        "description": "Find the truth table of an unlabelled IC and identify the gate inside it."
+      }
+    ],
+    "observation": "AND: 0 0 0 1. OR: 0 1 1 1. NAND: 1 1 1 0. NOR: 1 0 0 0. XOR: 0 1 1 0 (rows A B = 00, 01, 10, 11). NOT: 1 0 (A = 0, 1).",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "The output of an AND gate is 1 only when:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Any one input is 1"
+          },
+          {
+            "id": "b",
+            "text": "Both inputs are 1"
+          },
+          {
+            "id": "c",
+            "text": "Both inputs are 0"
+          },
+          {
+            "id": "d",
+            "text": "The inputs are different"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Y = A · B is 1 only for A = 1 and B = 1."
+      },
+      {
+        "id": "q2",
+        "question": "Which gate gives an output of 1 only when both inputs are 0?",
+        "options": [
+          {
+            "id": "a",
+            "text": "NOR"
+          },
+          {
+            "id": "b",
+            "text": "NAND"
+          },
+          {
+            "id": "c",
+            "text": "OR"
+          },
+          {
+            "id": "d",
+            "text": "XOR"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "NOR = NOT(A + B): A + B is 0 only when both inputs are 0, so the output is then 1."
+      },
+      {
+        "id": "q3",
+        "question": "The Boolean expression of a NAND gate is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Y = A + B"
+          },
+          {
+            "id": "b",
+            "text": "Y = A · B"
+          },
+          {
+            "id": "c",
+            "text": "Y = (A · B)‾"
+          },
+          {
+            "id": "d",
+            "text": "Y = A ⊕ B"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "NAND is AND followed by NOT: Y = (A · B)‾."
+      },
+      {
+        "id": "q4",
+        "question": "Which gates are called universal gates?",
+        "options": [
+          {
+            "id": "a",
+            "text": "AND and OR"
+          },
+          {
+            "id": "b",
+            "text": "NOT and XOR"
+          },
+          {
+            "id": "c",
+            "text": "AND and NOT"
+          },
+          {
+            "id": "d",
+            "text": "NAND and NOR"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "Any logic gate can be built using only NAND gates or only NOR gates."
+      },
+      {
+        "id": "q5",
+        "question": "An XOR gate gives Y = 1 when:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Both inputs are 1"
+          },
+          {
+            "id": "b",
+            "text": "The inputs are different"
+          },
+          {
+            "id": "c",
+            "text": "Both inputs are 0"
+          },
+          {
+            "id": "d",
+            "text": "Any input is 1"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Y = A ⊕ B is 1 for A = 0, B = 1 and for A = 1, B = 0."
+      },
+      {
+        "id": "q6",
+        "question": "In a 7400-series IC, the supply is connected to:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Pin 1 (+5 V) and pin 14 (ground)"
+          },
+          {
+            "id": "b",
+            "text": "Pin 7 (+5 V) and pin 14 (ground)"
+          },
+          {
+            "id": "c",
+            "text": "Pin 14 (+5 V) and pin 7 (ground)"
+          },
+          {
+            "id": "d",
+            "text": "Any two pins"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "For 14-pin TTL ICs, pin 14 is Vcc (+5 V) and pin 7 is ground."
+      },
+      {
+        "id": "q7",
+        "question": "How many rows does the truth table of a two-input gate have?",
+        "options": [
+          {
+            "id": "a",
+            "text": "2"
+          },
+          {
+            "id": "b",
+            "text": "4"
+          },
+          {
+            "id": "c",
+            "text": "8"
+          },
+          {
+            "id": "d",
+            "text": "3"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Each of the two inputs can be 0 or 1, giving 2² = 4 combinations."
+      },
+      {
+        "id": "q8",
+        "question": "The IC 7404 contains:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Six NOT gates"
+          },
+          {
+            "id": "b",
+            "text": "Four AND gates"
+          },
+          {
+            "id": "c",
+            "text": "Four NOR gates"
+          },
+          {
+            "id": "d",
+            "text": "Four XOR gates"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "The 7404 is a hex inverter: six NOT gates in one package."
+      }
+    ],
+    "tags": ["logic gates", "truth table", "AND", "OR", "NOT", "NAND", "NOR", "XOR", "digital electronics", "IC", "plus two", "kerala", "dhse", "practical"],
+    "isNew": true,
+    "estimatedDurationMinutes": 20,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

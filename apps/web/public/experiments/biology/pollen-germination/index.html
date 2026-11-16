@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pollen Germination on a Slide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body class="pinned" style="height:100%"><div class="scroller" id="scroller">
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Botany · Reproduction in Flowering Plants</div>
+    <h1 class="disp">Pollen germination on a slide: <span class="thin">effect of sucrose concentration</span></h1>
+    <p class="lede">Pollen grains sown in a sugar solution put out <b>pollen tubes</b>, as they would on a stigma. Count the germinated grains in different sucrose concentrations and find the one that suits them best: <b class="mono">% germination = germinated ÷ total × 100</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="pin-scope"><div class="pin-area">
+  <section class="bench" aria-label="Microscope field of view">
+    <svg id="apparatus" viewBox="0 0 640 420" role="img" aria-label="Pollen grains under the microscope, some with pollen tubes"><g id="app"></g></svg>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="ctl-h" style="margin-top:8px">Medium</div>
+    <div class="chips" id="concChips" role="group" aria-label="Sucrose concentration">
+      <button type="button" class="chip" data-c="0">0% (water)</button><button type="button" class="chip" data-c="5">5%</button><button type="button" class="chip" data-c="10">10%</button><button type="button" class="chip" data-c="15">15%</button><button type="button" class="chip" data-c="20">20%</button>
+    </div>
+    <div class="actrow">
+      <button type="button" class="btn sm" id="boricBtn">Boric acid: none</button>
+      <button type="button" class="btn" id="prepBtn">Prepare a slide</button>
+      <button type="button" class="btn primary" id="waitBtn">Wait 10 min and look</button>
+    </div>
+    <p class="mini">Tap each germinated grain to mark it (tap again to unmark).</p>
+    <div class="actrow"><button type="button" class="btn accent" id="recBtn">Record this field</button></div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <ul class="eqs mono">
+      <li>A grain has <b>germinated</b> when its pollen tube is at least as long as the grain is wide</li>
+      <li>% germination = <b>germinated grains ÷ total grains × 100</b></li>
+      <li>Sucrose: food for the growing tube and an osmotic balance for the grain</li>
+      <li>In water grains <b>burst</b> (water enters); in strong sugar solution water is drawn out</li>
+      <li>Boric acid (boron) helps the pollen tube to grow</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap"><table><thead><tr><th>No.</th><th>Medium</th><th>Time</th><th>Total grains</th><th>Germinated</th><th>% germination</th></tr></thead><tbody id="obsBody"></tbody></table></div>
+    <canvas id="graph" aria-label="Graph of percentage germination against sucrose concentration"></canvas>
+    <h3 class="checks-h" id="checksH" hidden>Check your readings</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="ctl" style="margin-top:12px">
+      <div class="ctl-h">Your calculation</div>
+      <div class="result"><label>% germination of the last field<input id="pcIn" inputmode="decimal"></label><button type="button" class="btn" id="pcBtn">Check</button></div>
+      <div class="mini" id="pcFb"></div>
+      <div class="result"><label>Best sucrose concentration (30 min, no boric acid)<select id="optSel"><option value="">Choose…</option><option value="0">0%</option><option value="5">5%</option><option value="10">10%</option><option value="15">15%</option><option value="20">20%</option></select></label><button type="button" class="btn" id="optBtn">Check</button></div>
+      <div class="mini" id="optFb"></div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn sm" id="newSet">Clear the table</button>
+    </div>
+  </section>
+  </div>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Use pollen from freshly opened flowers (for example Hibiscus, Balsam or Vinca).</li>
+      <li>Use clean slides and freshly prepared solutions.</li>
+      <li>Dust the pollen thinly so that grains do not overlap.</li>
+      <li>Keep the slide in a moist chamber (a Petri dish lined with wet blotting paper) so that it does not dry.</li>
+      <li>Count all the grains in a field, using the same rule for “germinated” every time.</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</div>
+</body>
+</html>

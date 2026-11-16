@@ -133,5 +133,14 @@
     "categoryId": "biology",
     "icon": "leaf",
     "color": "amber"
+  },
+  {
+    "id": "plant-reproduction",
+    "slug": "plant-reproduction",
+    "name": "Reproduction in Plants",
+    "description": "Pollen, pollination and fertilisation in flowering plants, studied in the lab.",
+    "categoryId": "biology",
+    "icon": "leaf",
+    "color": "yellow"
   }
 ]

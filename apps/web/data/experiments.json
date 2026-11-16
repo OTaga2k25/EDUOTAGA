@@ -6915,5 +6915,250 @@
     "estimatedDurationMinutes": 20,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "pollen-germination",
+    "slug": "pollen-germination",
+    "title": "Pollen Germination on a Slide: Effect of Sucrose",
+    "subjectId": "plant-reproduction",
+    "categoryId": "biology",
+    "difficulty": "beginner",
+    "summary": "Sow pollen in 0–20% sucrose (with or without boric acid), look under the microscope after 10, 20 and 30 minutes, mark the germinated grains yourself, and find the concentration that gives the highest percentage germination.",
+    "theory": "On the stigma, a compatible pollen grain absorbs water and sugars and **germinates**: the vegetative cell grows out through a germ pore as a **pollen tube**, which carries the male gametes to the ovule.\n\nThe same can be seen on a slide in a **sucrose solution**. Sucrose provides food for the growing tube and keeps the medium close to the grain’s own concentration. In **plain water** many grains **burst** because water enters them by osmosis; in a **strong** sugar solution water is drawn out and few grains germinate. A moderate concentration (about **10%** for many species) gives the highest germination. **Boric acid** (boron) improves germination and tube growth.\n\nA grain is counted as **germinated** when its pollen tube is at least as long as the diameter of the grain.\n\n**% germination = (number of germinated grains ÷ total number of grains in the field) × 100.**",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Prepare media",
+        "description": "Prepare sucrose solutions of 0, 5, 10, 15 and 20% (with a trace of boric acid if required)."
+      },
+      {
+        "order": 2,
+        "title": "Sow pollen",
+        "description": "Put a drop of medium on a clean cavity slide and dust pollen from a freshly opened flower onto it; cover with a coverslip."
+      },
+      {
+        "order": 3,
+        "title": "Incubate",
+        "description": "Keep the slide in a moist chamber at room temperature."
+      },
+      {
+        "order": 4,
+        "title": "Observe",
+        "description": "Observe under the microscope after 10, 20 and 30 minutes."
+      },
+      {
+        "order": 5,
+        "title": "Count",
+        "description": "In each field count the total grains and the germinated grains (tube at least as long as the grain is wide)."
+      },
+      {
+        "order": 6,
+        "title": "Calculate",
+        "description": "Calculate % germination and plot it against sucrose concentration."
+      }
+    ],
+    "observation": "Pollen tubes appear and grow longer with time. Germination is highest at a moderate sucrose concentration (about 10%), low in water (where many grains burst) and in strong sucrose. Boric acid increases germination.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "A pollen grain is counted as germinated when:",
+        "options": [
+          {
+            "id": "a",
+            "text": "It turns yellow"
+          },
+          {
+            "id": "b",
+            "text": "Its pollen tube is at least as long as the grain’s diameter"
+          },
+          {
+            "id": "c",
+            "text": "It bursts"
+          },
+          {
+            "id": "d",
+            "text": "It sinks in the medium"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "This simple rule is applied the same way to every grain."
+      },
+      {
+        "id": "q2",
+        "question": "In plain water many pollen grains burst because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Water enters them by osmosis"
+          },
+          {
+            "id": "b",
+            "text": "Water dissolves the exine"
+          },
+          {
+            "id": "c",
+            "text": "There is no oxygen"
+          },
+          {
+            "id": "d",
+            "text": "They are too old"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Water is hypotonic to the grain, so water moves in until the grain bursts."
+      },
+      {
+        "id": "q3",
+        "question": "Few grains germinate in 20% sucrose because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The solution is too dilute"
+          },
+          {
+            "id": "b",
+            "text": "Water is drawn out of the grains"
+          },
+          {
+            "id": "c",
+            "text": "Sucrose kills the generative cell"
+          },
+          {
+            "id": "d",
+            "text": "The tubes grow too fast"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "A strong solution is hypertonic and the grain loses water."
+      },
+      {
+        "id": "q4",
+        "question": "Boric acid is added to the medium because boron:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Prevents bursting"
+          },
+          {
+            "id": "b",
+            "text": "Helps pollen tube growth"
+          },
+          {
+            "id": "c",
+            "text": "Stains the tube"
+          },
+          {
+            "id": "d",
+            "text": "Acts as a fixative"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Boron is needed for normal pollen tube growth."
+      },
+      {
+        "id": "q5",
+        "question": "In a field of 40 grains, 26 have germinated. The % germination is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "26%"
+          },
+          {
+            "id": "b",
+            "text": "65%"
+          },
+          {
+            "id": "c",
+            "text": "35%"
+          },
+          {
+            "id": "d",
+            "text": "154%"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "26 ÷ 40 × 100 = 65%."
+      },
+      {
+        "id": "q6",
+        "question": "The pollen tube develops from the:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Generative cell"
+          },
+          {
+            "id": "b",
+            "text": "Vegetative (tube) cell"
+          },
+          {
+            "id": "c",
+            "text": "Exine"
+          },
+          {
+            "id": "d",
+            "text": "Antipodal cell"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The vegetative cell grows out as the pollen tube; the generative cell gives the male gametes."
+      },
+      {
+        "id": "q7",
+        "question": "The pollen tube emerges through the:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Germ pore"
+          },
+          {
+            "id": "b",
+            "text": "Micropyle"
+          },
+          {
+            "id": "c",
+            "text": "Hilum"
+          },
+          {
+            "id": "d",
+            "text": "Chalaza"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Germ pores are thin regions of the exine where sporopollenin is absent."
+      },
+      {
+        "id": "q8",
+        "question": "Why is the slide kept in a moist chamber?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To keep the pollen cool"
+          },
+          {
+            "id": "b",
+            "text": "To stop the medium from drying"
+          },
+          {
+            "id": "c",
+            "text": "To supply sucrose"
+          },
+          {
+            "id": "d",
+            "text": "To prevent germination"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "If the drop dries, the grains cannot germinate."
+      }
+    ],
+    "tags": ["pollen germination", "pollen tube", "sucrose", "boric acid", "osmosis", "flowering plants", "reproduction", "botany", "plus two", "kerala", "dhse", "practical", "biology"],
+    "isNew": true,
+    "estimatedDurationMinutes": 20,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

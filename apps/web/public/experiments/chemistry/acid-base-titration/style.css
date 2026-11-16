@@ -258,3 +258,11 @@ body.pinned{height:100%;overflow:hidden;}
 @keyframes swirlfade{from{opacity:.9}to{opacity:0}}
 #apparatus .flash{animation:swirlfade 1.1s ease-out forwards;}
 @media(max-width:640px){.rinse .row>span{min-width:0;width:100%;}.drops{grid-template-columns:repeat(2,1fr);}}
+
+/* steps are a progress indicator, not buttons */
+.steps li{cursor:default;user-select:none;}
+@media (max-width:999px){
+  .steps{gap:4px;margin:6px 0 10px;}
+  .steps li{flex:0 1 auto;min-width:0;padding:3px 9px;border-radius:999px;font-size:12px;border-width:1px;}
+  .steps li b{margin-right:2px;}
+}

@@ -282,3 +282,11 @@ html:has(body.pinned){height:100%;overflow:hidden;}
 body.pinned{height:100%;overflow:hidden;}
 .scroller{height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;scrollbar-width:none;}
 @media (max-width:640px){.pin-area>.stage .rotatehint{font-size:11px;bottom:6px;opacity:.9;}}
+
+/* steps are a progress indicator, not buttons */
+.steps li{cursor:default;user-select:none;}
+@media (max-width:999px){
+  .steps{gap:4px;margin:6px 0 10px;}
+  .steps li{flex:0 1 auto;min-width:0;padding:3px 9px;border-radius:999px;font-size:12px;border-width:1px;}
+  .steps li b{margin-right:2px;}
+}

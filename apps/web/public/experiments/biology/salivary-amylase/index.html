@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salivary Amylase — Effect of Temperature and pH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body class="pinned" style="height:100%"><div class="scroller" id="scroller">
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Zoology · Digestion and Enzymes</div>
+    <h1 class="disp">Salivary amylase: <span class="thin">effect of temperature and pH on starch digestion</span></h1>
+    <p class="lede">Salivary amylase digests starch into maltose. Iodine turns starch <b>blue-black</b>; when all the starch is digested the drop keeps the yellowish iodine colour: the <b>achromic point</b>. The sooner it is reached, the faster the enzyme works: <b class="mono">rate = 1/time</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="pin-scope"><div class="pin-area">
+  <section class="bench" aria-label="Test tubes and spot tile">
+    <svg id="apparatus" viewBox="0 0 640 420" role="img" aria-label="Six test tubes and a spot tile showing the iodine colour of drops taken every minute"><g id="app"></g></svg>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="chips" id="modeChips" role="group" aria-label="Experiment">
+      <button type="button" class="chip" data-m="temp">Effect of temperature</button>
+      <button type="button" class="chip" data-m="pH">Effect of pH</button>
+    </div>
+    <div class="given mono" id="given"></div>
+    <div class="actrow">
+      <button type="button" class="btn" id="startBtn">Add saliva to all tubes, start stopwatch</button>
+      <button type="button" class="btn primary" id="stepBtn">Wait 1 min, test a drop from each with iodine</button>
+    </div>
+    <div class="ctl-h" style="margin-top:12px">Mark the achromic point (the drop stays yellowish)</div>
+    <div id="markBtns"></div>
+    <div class="actrow"><button type="button" class="btn sm" id="warmBtn">Move the ice tube to 37 °C</button></div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <ul class="eqs mono">
+      <li>Starch <b>→ (salivary amylase) →</b> maltose</li>
+      <li>Iodine + starch: <b>blue-black</b>; partly digested (dextrins): violet to reddish brown; no starch: <b>yellowish</b></li>
+      <li>Achromic point: the first test in which iodine gives no blue colour</li>
+      <li>Rate of enzyme action ∝ <b>1 / time to the achromic point</b></li>
+      <li>Optimum: about <b>37 °C</b> and <b>pH 6.8</b>; heat denatures the enzyme, cold only slows it</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap"><table><thead><tr><th>Tube</th><th>Condition</th><th>Time to achromic point (min)</th><th>Rate 1/t (per min)</th></tr></thead><tbody id="obsBody"></tbody></table></div>
+    <canvas id="graph" aria-label="Bar graph of the rate of enzyme action"></canvas>
+    <h3 class="checks-h" id="checksH" hidden>Check your readings</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="ctl" style="margin-top:12px">
+      <div class="ctl-h" id="optLabel">Optimum from your results</div>
+      <div class="result"><select id="optSel" aria-label="Optimum condition"></select><button type="button" class="btn" id="optBtn">Check</button></div>
+      <div class="mini" id="optFb"></div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn sm" id="newSet">New experiment</button>
+    </div>
+  </section>
+  </div>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Rinse your mouth before collecting saliva, and dilute it with distilled water.</li>
+      <li>Keep each tube at its temperature for a few minutes before adding saliva, and add saliva to all tubes at the same time.</li>
+      <li>Use a clean dropper for each tube so that the solutions do not mix.</li>
+      <li>Take drops at regular, equal intervals and compare colours against a white background.</li>
+      <li>Use buffer solutions to keep the pH constant.</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</div>
+</body>
+</html>

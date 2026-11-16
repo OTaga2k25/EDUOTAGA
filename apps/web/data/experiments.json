@@ -5690,5 +5690,740 @@
     "estimatedDurationMinutes": 30,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "organic-functional-groups",
+    "slug": "organic-functional-groups",
+    "title": "Organic Analysis: Tests for Functional Groups",
+    "subjectId": "qualitative-analysis",
+    "categoryId": "chemistry",
+    "difficulty": "intermediate",
+    "summary": "Identify the functional group in an unknown organic compound (alcohol, phenol, aldehyde, ketone, carboxylic acid or primary aromatic amine) with preliminary and confirmatory tests, writing the observation and inference for each.",
+    "theory": "Each functional group has characteristic reactions.\n\n**Carboxylic acids** turn blue litmus red and liberate CO₂ from sodium bicarbonate (brisk effervescence). With ethanol and conc. H₂SO₄ they form fruity-smelling esters.\n\n**Phenols** give a **violet** colour with neutral FeCl₃ and a white precipitate (2,4,6-tribromophenol) with bromine water.\n\n**Aldehydes and ketones** (carbonyl compounds) give a yellow-orange precipitate with **2,4-DNP**. Aldehydes are reducing: they give a **silver mirror** with Tollens’ reagent and a pink colour with Schiff’s reagent; aliphatic aldehydes also give a brick-red precipitate with Fehling’s solution. Ketones do not; methyl ketones give a red colour in the **sodium nitroprusside** test.\n\n**Alcohols** liberate hydrogen with sodium and turn yellow **ceric ammonium nitrate** red.\n\n**Primary aromatic amines** (aniline) dissolve in dilute HCl, give an **orange-red azo dye** after diazotisation and coupling with β-naphthol, and an offensive smell in the **carbylamine test**.\n\nThe **iodoform test** (yellow precipitate) shows a CH₃CO– or CH₃CH(OH)– group.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Physical examination",
+        "description": "Note the state, colour and smell of the compound."
+      },
+      {
+        "order": 2,
+        "title": "Test for acid",
+        "description": "Test with blue litmus and sodium bicarbonate solution."
+      },
+      {
+        "order": 3,
+        "title": "Test for phenol",
+        "description": "Add neutral FeCl₃ solution; a violet colour shows a phenol. Bromine water gives a white precipitate."
+      },
+      {
+        "order": 4,
+        "title": "Test for carbonyl",
+        "description": "Add 2,4-DNP reagent. A yellow-orange precipitate shows an aldehyde or ketone; then use Tollens’ (aldehyde) or sodium nitroprusside (ketone)."
+      },
+      {
+        "order": 5,
+        "title": "Test for amine",
+        "description": "Shake with dil. HCl; confirm with the azo dye test or the carbylamine test."
+      },
+      {
+        "order": 6,
+        "title": "Test for alcohol",
+        "description": "Add ceric ammonium nitrate; a red colour shows an alcohol."
+      },
+      {
+        "order": 7,
+        "title": "Report",
+        "description": "Write the functional group, confirmed by its confirmatory test."
+      }
+    ],
+    "observation": "Only the tests for the functional group present are positive; its confirmatory test gives the characteristic colour, precipitate, mirror or smell.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "A compound gives brisk effervescence with NaHCO₃. The functional group is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Alcohol"
+          },
+          {
+            "id": "b",
+            "text": "Phenol"
+          },
+          {
+            "id": "c",
+            "text": "Carboxylic acid"
+          },
+          {
+            "id": "d",
+            "text": "Ketone"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Carboxylic acids are stronger acids than carbonic acid and liberate CO₂."
+      },
+      {
+        "id": "q2",
+        "question": "Neutral FeCl₃ gives a violet colour with:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Phenol"
+          },
+          {
+            "id": "b",
+            "text": "Ethanol"
+          },
+          {
+            "id": "c",
+            "text": "Acetone"
+          },
+          {
+            "id": "d",
+            "text": "Aniline"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Phenols form a coloured complex with Fe³⁺."
+      },
+      {
+        "id": "q3",
+        "question": "Both aldehydes and ketones give a yellow-orange precipitate with:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Tollens’ reagent"
+          },
+          {
+            "id": "b",
+            "text": "2,4-DNP"
+          },
+          {
+            "id": "c",
+            "text": "Fehling’s solution"
+          },
+          {
+            "id": "d",
+            "text": "Schiff’s reagent"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "2,4-DNP forms a 2,4-dinitrophenylhydrazone with any carbonyl group."
+      },
+      {
+        "id": "q4",
+        "question": "The silver mirror test (Tollens’ reagent) is given by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Ketones"
+          },
+          {
+            "id": "b",
+            "text": "Alcohols"
+          },
+          {
+            "id": "c",
+            "text": "Aldehydes"
+          },
+          {
+            "id": "d",
+            "text": "Carboxylic acids"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Aldehydes reduce Ag⁺ to metallic silver; ketones do not."
+      },
+      {
+        "id": "q5",
+        "question": "Benzaldehyde does not give a positive test with:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Tollens’ reagent"
+          },
+          {
+            "id": "b",
+            "text": "2,4-DNP"
+          },
+          {
+            "id": "c",
+            "text": "Schiff’s reagent"
+          },
+          {
+            "id": "d",
+            "text": "Fehling’s solution"
+          }
+        ],
+        "correctOptionId": "d",
+        "explanation": "Aromatic aldehydes do not reduce Fehling’s solution."
+      },
+      {
+        "id": "q6",
+        "question": "The carbylamine test is used to detect:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Primary amines"
+          },
+          {
+            "id": "b",
+            "text": "Secondary amines"
+          },
+          {
+            "id": "c",
+            "text": "Phenols"
+          },
+          {
+            "id": "d",
+            "text": "Ketones"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Primary amines with CHCl₃ and alcoholic KOH give isocyanides with an offensive smell."
+      },
+      {
+        "id": "q7",
+        "question": "Which of these gives the iodoform test?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Benzaldehyde"
+          },
+          {
+            "id": "b",
+            "text": "Acetone"
+          },
+          {
+            "id": "c",
+            "text": "Benzoic acid"
+          },
+          {
+            "id": "d",
+            "text": "Phenol"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Acetone has a CH₃CO– group, which gives yellow iodoform with I₂ and NaOH."
+      },
+      {
+        "id": "q8",
+        "question": "Aniline is converted into an orange-red dye by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Bromine water"
+          },
+          {
+            "id": "b",
+            "text": "Diazotisation, then coupling with alkaline β-naphthol"
+          },
+          {
+            "id": "c",
+            "text": "Neutral FeCl₃"
+          },
+          {
+            "id": "d",
+            "text": "Sodium bicarbonate"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The diazonium salt couples with β-naphthol to form an azo dye."
+      }
+    ],
+    "tags": ["organic analysis", "functional group", "alcohol", "phenol", "aldehyde", "ketone", "carboxylic acid", "amine", "tollens", "2,4-dnp", "plus two", "kerala", "dhse", "practical", "chemistry"],
+    "isNew": true,
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "quadrat-method",
+    "slug": "quadrat-method",
+    "title": "Quadrat Method: Population Density, Frequency and Abundance",
+    "subjectId": "ecology",
+    "categoryId": "biology",
+    "difficulty": "beginner",
+    "summary": "Place 1 m × 1 m quadrats at random in a field, count four plant species yourself in a close-up, and calculate density, frequency and abundance. Then compare your estimate with the whole field.",
+    "theory": "A **quadrat** is a square frame (here 1 m × 1 m) used to sample vegetation. Counting every plant in a field is impractical, so several quadrats are placed **at random** and the plants inside are counted.\n\n**Density** = total number of individuals of a species ÷ total number of quadrats studied. It is the number per unit area (per m² here).\n\n**Frequency (%)** = (number of quadrats in which the species occurs ÷ total number of quadrats studied) × 100. It shows how widely the species is spread.\n\n**Abundance** = total number of individuals ÷ number of quadrats in which the species occurs. It shows how plentiful the species is where it grows.\n\nA species growing in patches (clumped) has low frequency but high abundance; a species spread evenly has high frequency. Larger samples give estimates closer to the true values.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Place a quadrat",
+        "description": "Place a 1 m × 1 m quadrat at random in the study area."
+      },
+      {
+        "order": 2,
+        "title": "Count",
+        "description": "Identify the species inside it and count the individuals of each. Count a plant only if it is rooted inside the frame."
+      },
+      {
+        "order": 3,
+        "title": "Repeat",
+        "description": "Repeat for at least 10 quadrats spread at random over the area, without overlapping."
+      },
+      {
+        "order": 4,
+        "title": "Tabulate",
+        "description": "Record the counts in a table: quadrat number against the number of each species."
+      },
+      {
+        "order": 5,
+        "title": "Calculate",
+        "description": "For each species find the total number, the number of quadrats in which it occurs, and calculate density, frequency and abundance."
+      }
+    ],
+    "observation": "Common, evenly spread species have high density and high frequency; species in patches have low frequency but high abundance; rare species may be missed with few quadrats.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Population density is calculated as:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Total individuals ÷ quadrats of occurrence"
+          },
+          {
+            "id": "b",
+            "text": "Total individuals ÷ total quadrats studied"
+          },
+          {
+            "id": "c",
+            "text": "Quadrats of occurrence ÷ total quadrats × 100"
+          },
+          {
+            "id": "d",
+            "text": "Total quadrats ÷ total individuals"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Density is the average number per quadrat (per unit area) over all quadrats studied."
+      },
+      {
+        "id": "q2",
+        "question": "A species is found in 6 of 10 quadrats. Its frequency is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "6%"
+          },
+          {
+            "id": "b",
+            "text": "0.6%"
+          },
+          {
+            "id": "c",
+            "text": "60%"
+          },
+          {
+            "id": "d",
+            "text": "16%"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Frequency = 6/10 × 100 = 60%."
+      },
+      {
+        "id": "q3",
+        "question": "A species has 30 individuals in 5 of the 10 quadrats studied. Its abundance is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "3"
+          },
+          {
+            "id": "b",
+            "text": "6"
+          },
+          {
+            "id": "c",
+            "text": "0.5"
+          },
+          {
+            "id": "d",
+            "text": "50"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Abundance = 30 ÷ 5 quadrats of occurrence = 6."
+      },
+      {
+        "id": "q4",
+        "question": "Why are quadrats placed at random?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To save time"
+          },
+          {
+            "id": "b",
+            "text": "So that the sample represents the whole area without bias"
+          },
+          {
+            "id": "c",
+            "text": "To find the rarest species"
+          },
+          {
+            "id": "d",
+            "text": "To avoid counting grass"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Choosing places by hand tends to favour interesting spots and biases the estimate."
+      },
+      {
+        "id": "q5",
+        "question": "A species with low frequency but high abundance most likely:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Is evenly spread"
+          },
+          {
+            "id": "b",
+            "text": "Grows in patches (clumped distribution)"
+          },
+          {
+            "id": "c",
+            "text": "Is absent from the area"
+          },
+          {
+            "id": "d",
+            "text": "Has a density of zero"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "It is missing from many quadrats but plentiful where it occurs."
+      },
+      {
+        "id": "q6",
+        "question": "Increasing the number of quadrats studied generally:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Makes the estimate less reliable"
+          },
+          {
+            "id": "b",
+            "text": "Brings the estimate closer to the true value"
+          },
+          {
+            "id": "c",
+            "text": "Changes the true density"
+          },
+          {
+            "id": "d",
+            "text": "Has no effect"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "A larger random sample represents the area better."
+      },
+      {
+        "id": "q7",
+        "question": "The size of the quadrat used in this experiment is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "1 cm × 1 cm"
+          },
+          {
+            "id": "b",
+            "text": "10 cm × 10 cm"
+          },
+          {
+            "id": "c",
+            "text": "1 m × 1 m"
+          },
+          {
+            "id": "d",
+            "text": "10 m × 10 m"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "A 1 m² quadrat is suitable for herbaceous vegetation; density is then per m²."
+      },
+      {
+        "id": "q8",
+        "question": "If a species occurs in every quadrat studied, its frequency is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "0%"
+          },
+          {
+            "id": "b",
+            "text": "50%"
+          },
+          {
+            "id": "c",
+            "text": "100%"
+          },
+          {
+            "id": "d",
+            "text": "Equal to its density"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "It occurs in all quadrats, so frequency = 100%."
+      }
+    ],
+    "tags": ["quadrat", "ecology", "population density", "frequency", "abundance", "sampling", "vegetation", "botany", "plus two", "kerala", "dhse", "practical", "biology"],
+    "isNew": true,
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "salivary-amylase",
+    "slug": "salivary-amylase",
+    "title": "Salivary Amylase: Effect of Temperature and pH",
+    "subjectId": "human-physiology",
+    "categoryId": "biology",
+    "difficulty": "beginner",
+    "summary": "Add saliva to starch at six temperatures (or six pH values), test a drop from each tube with iodine every minute on a spot tile, mark the achromic point yourself, and find the optimum from the rate 1/t. Includes boiled saliva and an ice tube you can warm up.",
+    "theory": "**Salivary amylase** (ptyalin) is an enzyme in saliva that hydrolyses **starch** into **maltose**.\n\nThe progress of digestion is followed with **iodine**: starch gives a **blue-black** colour; as it is broken down into dextrins the colour changes through violet and reddish brown; when no starch is left, the drop keeps the **yellowish colour of iodine**. The first test that gives no blue colour is the **achromic point**.\n\nThe **rate** of enzyme action is taken as **1 / time to reach the achromic point**.\n\n**Temperature:** activity rises with temperature up to the **optimum (about 37 °C)**. At low temperature the enzyme is **inactive but not destroyed** (activity returns on warming). At high temperature, and on boiling, the enzyme (a protein) is **denatured** and permanently loses its activity.\n\n**pH:** salivary amylase works best near **pH 6.8**. Strongly acidic or alkaline conditions change the shape of the active site and stop its action, which is why salivary amylase stops working in the acidic stomach.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Prepare tubes",
+        "description": "Take 2 mL of 1% starch solution in each of six test tubes. Keep them at different temperatures (ice, 20, 37, 45, 60 °C) or in buffers of different pH at 37 °C."
+      },
+      {
+        "order": 2,
+        "title": "Boiled saliva",
+        "description": "For the control, boil some diluted saliva and cool it."
+      },
+      {
+        "order": 3,
+        "title": "Start",
+        "description": "Add 1 mL of diluted saliva to each tube at the same moment and start the stopwatch."
+      },
+      {
+        "order": 4,
+        "title": "Test every minute",
+        "description": "Every minute, put one drop from each tube into a cavity of a spot tile containing a drop of iodine solution."
+      },
+      {
+        "order": 5,
+        "title": "Achromic point",
+        "description": "Note the time at which the drop no longer gives a blue colour with iodine."
+      },
+      {
+        "order": 6,
+        "title": "Calculate",
+        "description": "Calculate the rate as 1/time, plot rate against temperature (or pH), and find the optimum."
+      }
+    ],
+    "observation": "The achromic point is reached fastest at about 37 °C and pH 6.8. At 0 °C, 60 °C, with boiled saliva, and at pH 4 or 9 the drops stay blue-black. The cold tube digests starch once warmed to 37 °C.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Salivary amylase converts starch into:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Glucose"
+          },
+          {
+            "id": "b",
+            "text": "Maltose"
+          },
+          {
+            "id": "c",
+            "text": "Sucrose"
+          },
+          {
+            "id": "d",
+            "text": "Amino acids"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Amylase hydrolyses starch to the disaccharide maltose."
+      },
+      {
+        "id": "q2",
+        "question": "With iodine, starch gives a:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Yellow colour"
+          },
+          {
+            "id": "b",
+            "text": "Brick-red precipitate"
+          },
+          {
+            "id": "c",
+            "text": "Blue-black colour"
+          },
+          {
+            "id": "d",
+            "text": "Violet colour with FeCl₃"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Starch forms a blue-black complex with iodine."
+      },
+      {
+        "id": "q3",
+        "question": "The achromic point is reached when:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Iodine turns blue-black"
+          },
+          {
+            "id": "b",
+            "text": "The drop no longer gives a blue colour with iodine"
+          },
+          {
+            "id": "c",
+            "text": "The saliva is boiled"
+          },
+          {
+            "id": "d",
+            "text": "The pH becomes 7"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "No starch is left, so iodine keeps its own colour."
+      },
+      {
+        "id": "q4",
+        "question": "If the achromic point is reached in 5 minutes, the rate of enzyme action is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "5 min⁻¹"
+          },
+          {
+            "id": "b",
+            "text": "0.2 min⁻¹"
+          },
+          {
+            "id": "c",
+            "text": "0.5 min⁻¹"
+          },
+          {
+            "id": "d",
+            "text": "2 min⁻¹"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Rate = 1/t = 1/5 = 0.2 per minute."
+      },
+      {
+        "id": "q5",
+        "question": "The optimum temperature of salivary amylase is about:",
+        "options": [
+          {
+            "id": "a",
+            "text": "0 °C"
+          },
+          {
+            "id": "b",
+            "text": "20 °C"
+          },
+          {
+            "id": "c",
+            "text": "37 °C"
+          },
+          {
+            "id": "d",
+            "text": "70 °C"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "It works best at body temperature."
+      },
+      {
+        "id": "q6",
+        "question": "Boiled saliva does not digest starch because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Starch is destroyed by boiling"
+          },
+          {
+            "id": "b",
+            "text": "The enzyme is denatured"
+          },
+          {
+            "id": "c",
+            "text": "Iodine does not work after boiling"
+          },
+          {
+            "id": "d",
+            "text": "Maltose is formed too fast"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Heat permanently destroys the 3D structure of the enzyme protein."
+      },
+      {
+        "id": "q7",
+        "question": "A tube kept in ice shows no digestion, but digests starch when warmed to 37 °C. This shows that low temperature:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Denatures the enzyme"
+          },
+          {
+            "id": "b",
+            "text": "Only inactivates the enzyme temporarily"
+          },
+          {
+            "id": "c",
+            "text": "Changes starch into glucose"
+          },
+          {
+            "id": "d",
+            "text": "Increases the pH"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "At low temperature molecules move slowly; the enzyme is not destroyed."
+      },
+      {
+        "id": "q8",
+        "question": "Salivary amylase stops working in the stomach because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The stomach is too warm"
+          },
+          {
+            "id": "b",
+            "text": "The stomach is strongly acidic"
+          },
+          {
+            "id": "c",
+            "text": "There is no starch in the stomach"
+          },
+          {
+            "id": "d",
+            "text": "Pepsin digests starch"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The optimum pH of salivary amylase is about 6.8; the stomach is about pH 2."
+      }
+    ],
+    "tags": ["salivary amylase", "enzyme", "starch", "iodine test", "achromic point", "temperature", "ph", "optimum", "digestion", "zoology", "plus two", "kerala", "dhse", "practical", "biology"],
+    "isNew": true,
+    "estimatedDurationMinutes": 20,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

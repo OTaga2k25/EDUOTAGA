@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quadrat Method — Density, Frequency and Abundance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body class="pinned" style="height:100%"><div class="scroller" id="scroller">
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Botany · Ecology</div>
+    <h1 class="disp">Quadrat method: <span class="thin">population density, frequency and abundance</span></h1>
+    <p class="lede">Counting every plant in a field is impossible, so ecologists sample it. Place 1 m × 1 m <b>quadrats</b> at random, count each species inside them, and estimate <b class="mono">density</b>, <b class="mono">frequency</b> and <b class="mono">abundance</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="pin-scope"><div class="pin-area">
+  <section class="bench" aria-label="Field and quadrat">
+    <svg id="apparatus" viewBox="0 0 640 420" role="img" aria-label="A field of plants with quadrats, and a close-up of the current quadrat"><g id="field"></g><g id="marks"></g><g id="zoom"></g></svg>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="actrow">
+      <button type="button" class="btn" id="throwBtn">Throw a quadrat at random</button>
+    </div>
+    <div class="ctl-h" style="margin-top:12px">Count the plants in the quadrat</div>
+    <div class="counts">
+      <label>Grass (A)<input id="nA" inputmode="numeric"></label>
+      <label>Clover (B)<input id="nB" inputmode="numeric"></label>
+      <label>Daisy (C)<input id="nC" inputmode="numeric"></label>
+      <label>Thistle (D)<input id="nD" inputmode="numeric"></label>
+    </div>
+    <div class="actrow"><button type="button" class="btn primary" id="recBtn">Record this quadrat</button></div>
+    <p class="mini">Count a plant only if its base (the dark dot) is inside the frame.</p>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The idea</h2>
+    <ul class="eqs mono">
+      <li>Density = <b>total number of individuals of the species ÷ total number of quadrats studied</b> (per m²)</li>
+      <li>Frequency (%) = <b>number of quadrats in which the species occurs ÷ total quadrats studied × 100</b></li>
+      <li>Abundance = <b>total number of individuals ÷ number of quadrats in which it occurs</b></li>
+      <li>Quadrats are placed <b>at random</b> so that the sample represents the whole area</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap"><table><thead><tr><th>Quadrat</th><th>Grass (A)</th><th>Clover (B)</th><th>Daisy (C)</th><th>Thistle (D)</th></tr></thead><tbody id="obsBody"></tbody></table></div>
+    <h3 class="checks-h" style="margin-top:14px">Results</h3>
+    <div class="tablewrap"><table><thead><tr><th>Species</th><th>Total individuals</th><th>Quadrats of occurrence</th><th>Density (per m²)</th><th>Frequency (%)</th><th>Abundance</th></tr></thead><tbody id="resBody"></tbody></table></div>
+    <h3 class="checks-h" id="checksH" hidden>Check your readings</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="ctl" style="margin-top:12px">
+      <div class="ctl-h">Your calculation</div>
+      <div class="chips" id="spChips" role="group" aria-label="Species">
+        <button type="button" class="chip" data-k="A">Grass</button><button type="button" class="chip" data-k="B">Clover</button><button type="button" class="chip" data-k="C">Daisy</button><button type="button" class="chip" data-k="D">Thistle</button>
+      </div>
+      <div class="readin">
+        <label>Density (per m²)<input id="cD" inputmode="decimal"></label>
+        <label>Frequency (%)<input id="cF" inputmode="decimal"></label>
+        <label>Abundance<input id="cA" inputmode="decimal"></label>
+      </div>
+      <button type="button" class="btn" id="checkCalc">Check my calculation</button>
+      <div class="mini" id="calcFb"></div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn sm" id="delLast">Delete last quadrat</button>
+      <button type="button" class="btn sm" id="newSet">New field</button>
+      <button type="button" class="btn sm accent" id="reveal">Compare with the whole field</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+  </div>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Place the quadrats at random over the whole area, not only where plants look interesting.</li>
+      <li>Study a sufficient number of quadrats (at least 10); quadrats must not overlap.</li>
+      <li>Count a plant only if it is rooted inside the quadrat; decide the rule for plants on the edge and follow it every time.</li>
+      <li>Identify each species carefully before counting; count each plant only once.</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</div>
+</body>
+</html>

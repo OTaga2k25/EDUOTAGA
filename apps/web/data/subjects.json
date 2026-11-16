@@ -97,5 +97,23 @@
     "categoryId": "chemistry",
     "icon": "flask",
     "color": "orange"
+  },
+  {
+    "id": "ecology",
+    "slug": "ecology",
+    "name": "Ecology",
+    "description": "Study organisms and populations in the field: sampling with quadrats, density, frequency and abundance.",
+    "categoryId": "biology",
+    "icon": "leaf",
+    "color": "green"
+  },
+  {
+    "id": "human-physiology",
+    "slug": "human-physiology",
+    "name": "Human Physiology",
+    "description": "Experiments on how the body works: enzymes, digestion and other physiological processes.",
+    "categoryId": "biology",
+    "icon": "flask",
+    "color": "cyan"
   }
 ]

@@ -70,6 +70,7 @@ function updateRider(prevL) {
   if (state.riderOn) {      // did we pass through the jump window since the last position?
     const a = Math.min(prevL, state.L), b = Math.max(prevL, state.L);
     for (let x = a; x <= b + 1e-9; x = round1(x + 0.1)) { if (P.riderJumps(x, lr)) { state.riderOn = false; break; } }
+    if (!state.riderOn && P.amplitude(state.L, lr) < 0.45) { state.riderOn = true; state.passed = true; }
   } else if (P.amplitude(state.L, lr) < 0.45) state.riderOn = true;   // rider is put back once we move away
 }
 
@@ -77,7 +78,7 @@ function setL(v) {
   const prev = state.L;
   state.L = round1(clamp(v, 0, 100));
   state.msg = null; state.revealed = false;
-  updateRider(prev);
+  state.passed = false; updateRider(prev); if (state.passed) state.msg = { kind: 'warn', text: 'The rider jumped as the bridge went past resonance, and you put it back. The resonant length is somewhere you just passed: go back slowly with the 0.1 cm buttons.' };
   render();
 }
 

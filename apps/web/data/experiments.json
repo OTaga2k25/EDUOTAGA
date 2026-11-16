@@ -7405,5 +7405,245 @@
     "estimatedDurationMinutes": 25,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "water-analysis",
+    "slug": "water-analysis",
+    "title": "Water Analysis: pH, Clarity and Living Organisms",
+    "subjectId": "ecology",
+    "categoryId": "biology",
+    "difficulty": "beginner",
+    "summary": "Compare tap, pond and drain water: match pH paper, pour water over a black cross until it just disappears to measure clarity, and identify organisms in a drop under the microscope (Paramecium, Euglena, Spirogyra, Volvox, Daphnia, diatoms, bacteria).",
+    "theory": "The quality of water can be judged from simple tests.\n\n**pH:** clean water is close to neutral (pH about 7). Decomposing organic matter in polluted water produces acids, lowering the pH.\n\n**Clarity (transparency):** suspended particles make water **turbid**. Looking down a tube at a black cross on a white card, the depth at which the cross just disappears measures transparency: the smaller this depth, the more turbid the water. Turbidity cuts off light for aquatic plants.\n\n**Living organisms:** a healthy pond holds many kinds of organisms: producers such as **Spirogyra**, **Volvox**, **Euglena** and **diatoms**, and consumers such as **Paramecium** and **Daphnia**. Water polluted with sewage is rich in organic matter that **bacteria** decompose, using up dissolved oxygen (a high **biochemical oxygen demand, BOD**); only a few tolerant kinds survive. Treated tap water contains no visible organisms.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Collect",
+        "description": "Collect water from different sources (tap, pond, drain) in clean, labelled bottles."
+      },
+      {
+        "order": 2,
+        "title": "pH",
+        "description": "Dip universal pH paper in each sample and compare its colour with the chart."
+      },
+      {
+        "order": 3,
+        "title": "Clarity",
+        "description": "Stand a tall tube on a white card with a black cross. Pour in the sample slowly while looking down, and note the depth at which the cross just disappears."
+      },
+      {
+        "order": 4,
+        "title": "Organisms",
+        "description": "Place a drop of each sample on a slide, cover it, and identify the organisms under the microscope."
+      },
+      {
+        "order": 5,
+        "title": "Compare",
+        "description": "Tabulate the results and decide which sample is clean and which is polluted."
+      }
+    ],
+    "observation": "Tap water is near neutral, clear and without visible organisms. Pond water is slightly turbid and has many kinds of algae and small animals. Drain water is acidic, very turbid, and has few kinds, mainly bacteria and Paramecium.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "In the clarity test, the cross disappears at a smaller depth in water that is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Clearer"
+          },
+          {
+            "id": "b",
+            "text": "More turbid"
+          },
+          {
+            "id": "c",
+            "text": "More alkaline"
+          },
+          {
+            "id": "d",
+            "text": "Colder"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Suspended particles scatter and absorb light, so the cross is hidden sooner."
+      },
+      {
+        "id": "q2",
+        "question": "Which organism is a green, spindle-shaped protist with a red eyespot?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Paramecium"
+          },
+          {
+            "id": "b",
+            "text": "Euglena"
+          },
+          {
+            "id": "c",
+            "text": "Daphnia"
+          },
+          {
+            "id": "d",
+            "text": "Volvox"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Euglena has chloroplasts, an eyespot (stigma) and a flagellum."
+      },
+      {
+        "id": "q3",
+        "question": "Spirogyra is recognised by its:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Spiral chloroplasts in a filament"
+          },
+          {
+            "id": "b",
+            "text": "Cilia"
+          },
+          {
+            "id": "c",
+            "text": "Silica wall"
+          },
+          {
+            "id": "d",
+            "text": "Branched antennae"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Its ribbon-like chloroplasts are arranged spirally."
+      },
+      {
+        "id": "q4",
+        "question": "Sewage-polluted water has a high BOD because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "It has many fish"
+          },
+          {
+            "id": "b",
+            "text": "Bacteria decomposing organic matter use up dissolved oxygen"
+          },
+          {
+            "id": "c",
+            "text": "It is very clear"
+          },
+          {
+            "id": "d",
+            "text": "It is alkaline"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "BOD measures oxygen used by microbes to break down organic matter."
+      },
+      {
+        "id": "q5",
+        "question": "Daphnia, the water flea, is a:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Green alga"
+          },
+          {
+            "id": "b",
+            "text": "Crustacean"
+          },
+          {
+            "id": "c",
+            "text": "Protozoan"
+          },
+          {
+            "id": "d",
+            "text": "Bacterium"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "It is a small transparent crustacean."
+      },
+      {
+        "id": "q6",
+        "question": "Polluted drain water usually has:",
+        "options": [
+          {
+            "id": "a",
+            "text": "More kinds of organisms than a clean pond"
+          },
+          {
+            "id": "b",
+            "text": "Fewer kinds, mainly tolerant ones"
+          },
+          {
+            "id": "c",
+            "text": "No bacteria"
+          },
+          {
+            "id": "d",
+            "text": "pH above 9"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Low oxygen eliminates sensitive species; tolerant bacteria and protozoa remain."
+      },
+      {
+        "id": "q7",
+        "question": "Diatoms have cell walls made of:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Cellulose"
+          },
+          {
+            "id": "b",
+            "text": "Chitin"
+          },
+          {
+            "id": "c",
+            "text": "Silica"
+          },
+          {
+            "id": "d",
+            "text": "Calcium carbonate"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Their glassy silica walls form diatomaceous earth."
+      },
+      {
+        "id": "q8",
+        "question": "Which of these is a producer in a pond?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Paramecium"
+          },
+          {
+            "id": "b",
+            "text": "Daphnia"
+          },
+          {
+            "id": "c",
+            "text": "Volvox"
+          },
+          {
+            "id": "d",
+            "text": "Bacteria that decompose sewage"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Volvox is a green alga that photosynthesises."
+      }
+    ],
+    "tags": ["water analysis", "ph", "turbidity", "transparency", "plankton", "paramecium", "euglena", "spirogyra", "pollution", "bod", "ecology", "plus two", "kerala", "dhse", "practical", "biology"],
+    "isNew": true,
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

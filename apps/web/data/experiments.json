@@ -6675,5 +6675,245 @@
     "estimatedDurationMinutes": 20,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "mendelian-inheritance",
+    "slug": "mendelian-inheritance",
+    "title": "Mendelian Inheritance: Monohybrid and Dihybrid Ratios",
+    "subjectId": "genetics",
+    "categoryId": "biology",
+    "difficulty": "beginner",
+    "summary": "Simulate Mendel’s crosses by drawing gamete beads from two bags: identify each zygote’s seed type, fill a Punnett square with your counts, and see the 3 : 1 and 9 : 3 : 3 : 1 ratios emerge from chance.",
+    "theory": "Mendel crossed pea plants differing in contrasting characters, such as round (R) and wrinkled (r) seeds, or yellow (Y) and green (y) seeds. **R** and **Y** are **dominant**: one dominant allele is enough to show the character.\n\n**Law of segregation:** the two alleles of a gene separate during gamete formation, so a heterozygote **Rr** produces **R** and **r** gametes in equal numbers. Random fertilisation of Rr × Rr gives genotypes **RR : Rr : rr = 1 : 2 : 1** and phenotypes **round : wrinkled = 3 : 1**.\n\n**Law of independent assortment:** in a dihybrid **RrYy** the genes for shape and colour segregate independently, giving four kinds of gametes (RY, Ry, rY, ry) in equal numbers. RrYy × RrYy gives **9 round yellow : 3 round green : 3 wrinkled yellow : 1 wrinkled green**.\n\nIn this model two bags of beads represent the gametes of the two parents. Drawing one bead from each bag at random is fertilisation. Because the process is random, small samples differ from the expected ratio; large samples come close to it.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Prepare the bags",
+        "description": "Put equal numbers of beads for R and r (or RY, Ry, rY, ry) into each of two bags: the gametes of the two heterozygous parents."
+      },
+      {
+        "order": 2,
+        "title": "Draw",
+        "description": "Without looking, draw one bead from each bag. The pair is the genotype of the zygote."
+      },
+      {
+        "order": 3,
+        "title": "Record",
+        "description": "Write the genotype and the phenotype it produces, and return the beads to their bags."
+      },
+      {
+        "order": 4,
+        "title": "Repeat",
+        "description": "Repeat many times (at least 50 for a monohybrid and 100 for a dihybrid cross)."
+      },
+      {
+        "order": 5,
+        "title": "Analyse",
+        "description": "Count each phenotype and genotype and compare the observed ratio with the expected 3 : 1 or 9 : 3 : 3 : 1."
+      }
+    ],
+    "observation": "Round and wrinkled seeds appear in about 3 : 1, genotypes RR : Rr : rr in about 1 : 2 : 1, and the dihybrid classes in about 9 : 3 : 3 : 1, closer to the expected ratio as the number of draws increases.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "A cross between two heterozygous round-seeded plants (Rr × Rr) gives a phenotypic ratio of:",
+        "options": [
+          {
+            "id": "a",
+            "text": "1 : 1"
+          },
+          {
+            "id": "b",
+            "text": "3 : 1"
+          },
+          {
+            "id": "c",
+            "text": "1 : 2 : 1"
+          },
+          {
+            "id": "d",
+            "text": "9 : 3 : 3 : 1"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "RR and Rr are round, rr is wrinkled: 3 round : 1 wrinkled."
+      },
+      {
+        "id": "q2",
+        "question": "The genotypic ratio of the monohybrid F₂ generation is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "3 : 1"
+          },
+          {
+            "id": "b",
+            "text": "1 : 2 : 1"
+          },
+          {
+            "id": "c",
+            "text": "9 : 3 : 3 : 1"
+          },
+          {
+            "id": "d",
+            "text": "1 : 1"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "RR : Rr : rr = 1 : 2 : 1."
+      },
+      {
+        "id": "q3",
+        "question": "Why is a seed with genotype Rr round?",
+        "options": [
+          {
+            "id": "a",
+            "text": "R is recessive"
+          },
+          {
+            "id": "b",
+            "text": "R is dominant over r"
+          },
+          {
+            "id": "c",
+            "text": "Both alleles are expressed equally"
+          },
+          {
+            "id": "d",
+            "text": "Rr is a pure line"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "One dominant allele is enough to show the dominant character."
+      },
+      {
+        "id": "q4",
+        "question": "The dihybrid F₂ phenotypic ratio is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "3 : 1"
+          },
+          {
+            "id": "b",
+            "text": "1 : 2 : 1"
+          },
+          {
+            "id": "c",
+            "text": "9 : 3 : 3 : 1"
+          },
+          {
+            "id": "d",
+            "text": "1 : 1 : 1 : 1"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Two independently assorting genes, each 3 : 1, give 9 : 3 : 3 : 1."
+      },
+      {
+        "id": "q5",
+        "question": "How many kinds of gametes does RrYy produce?",
+        "options": [
+          {
+            "id": "a",
+            "text": "1"
+          },
+          {
+            "id": "b",
+            "text": "2"
+          },
+          {
+            "id": "c",
+            "text": "4"
+          },
+          {
+            "id": "d",
+            "text": "16"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "RY, Ry, rY and ry in equal numbers."
+      },
+      {
+        "id": "q6",
+        "question": "Drawing one bead from each bag in this experiment represents:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Meiosis"
+          },
+          {
+            "id": "b",
+            "text": "Random fertilisation"
+          },
+          {
+            "id": "c",
+            "text": "Mutation"
+          },
+          {
+            "id": "d",
+            "text": "Dominance"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Each bead is a gamete; a pair drawn together forms a zygote."
+      },
+      {
+        "id": "q7",
+        "question": "Why are the beads returned to the bags after each draw?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To mix the colours"
+          },
+          {
+            "id": "b",
+            "text": "To keep the proportions of the two kinds of gametes equal"
+          },
+          {
+            "id": "c",
+            "text": "To make more wrinkled seeds"
+          },
+          {
+            "id": "d",
+            "text": "It is not necessary"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Without replacement the proportions change and the probabilities are no longer 1/2."
+      },
+      {
+        "id": "q8",
+        "question": "Out of 160 zygotes from a dihybrid cross, the expected number of wrinkled green seeds is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "10"
+          },
+          {
+            "id": "b",
+            "text": "30"
+          },
+          {
+            "id": "c",
+            "text": "90"
+          },
+          {
+            "id": "d",
+            "text": "40"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "1/16 × 160 = 10."
+      }
+    ],
+    "tags": ["mendel", "inheritance", "monohybrid cross", "dihybrid cross", "punnett square", "segregation", "independent assortment", "dominance", "genetics", "botany", "plus two", "kerala", "dhse", "practical", "biology"],
+    "isNew": true,
+    "estimatedDurationMinutes": 20,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

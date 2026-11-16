@@ -124,5 +124,14 @@
     "categoryId": "biology",
     "icon": "leaf",
     "color": "purple"
+  },
+  {
+    "id": "genetics",
+    "slug": "genetics",
+    "name": "Genetics",
+    "description": "Principles of inheritance: Mendel’s laws, Punnett squares and ratios from crosses.",
+    "categoryId": "biology",
+    "icon": "leaf",
+    "color": "amber"
   }
 ]

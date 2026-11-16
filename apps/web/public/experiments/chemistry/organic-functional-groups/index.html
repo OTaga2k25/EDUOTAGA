@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Organic Analysis — Functional Group Tests</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body class="pinned" style="height:100%"><div class="scroller" id="scroller">
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Chemistry · Organic Analysis</div>
+    <h1 class="disp">Organic analysis: <span class="thin">identify the functional group</span></h1>
+    <p class="lede">Do the preliminary tests, follow where they point, and confirm the <b>functional group</b>: alcohol, phenol, aldehyde, ketone, carboxylic acid or primary aromatic amine. Record each test as <b>experiment – observation – inference</b>.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="pin-scope"><div class="pin-area">
+  <section class="bench" aria-label="Test tube">
+    <svg id="apparatus" viewBox="0 0 640 420" role="img" aria-label="Test tube showing the result of the test"><g id="app"></g></svg>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="ctl-h" style="margin-top:10px">Experiment</div>
+    <div class="picker">
+      <select id="testSel" aria-label="Choose a test"></select>
+      <button type="button" class="btn primary" id="doTest" style="margin-top:0;width:auto">Do the test</button>
+    </div>
+    <div class="curtest" id="curTest"></div>
+    <div class="ctl-h">Inference</div>
+    <div id="infChips"></div>
+    <div class="ctl-h" style="margin-top:14px">Result</div>
+    <div class="result">
+      <select id="fgSel" aria-label="Functional group"></select>
+      <button type="button" class="btn accent" id="submit">Report the functional group</button>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The tests</h2>
+    <ul class="eqs mono">
+      <li><b>Carboxylic acid</b>: blue litmus → red; NaHCO₃ → brisk effervescence (CO₂); ester test → fruity smell</li>
+      <li><b>Phenol</b>: neutral FeCl₃ → violet; bromine water → white ppt</li>
+      <li><b>Aldehyde</b>: 2,4-DNP → yellow-orange ppt; Tollens’ → silver mirror; Schiff’s → pink; Fehling’s → brick-red ppt (aliphatic only)</li>
+      <li><b>Ketone</b>: 2,4-DNP → yellow-orange ppt; no silver mirror; sodium nitroprusside + NaOH → red</li>
+      <li><b>Alcohol</b>: sodium → H₂; ceric ammonium nitrate → yellow to red</li>
+      <li><b>Primary aromatic amine</b>: dissolves in dil. HCl; azo dye test → orange-red dye; carbylamine test → offensive smell</li>
+      <li>Iodoform test (yellow ppt) is shown by CH₃CO– and CH₃CH(OH)– compounds: ethanol, acetaldehyde, acetone</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap"><table><thead><tr><th>No.</th><th>Experiment</th><th>Observation</th><th>Inference</th></tr></thead><tbody id="obsBody"></tbody></table></div>
+    <p class="mini">✱ inference corrected after two tries.</p>
+    <h3 class="checks-h" id="checksH" hidden>Check your work</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="actions">
+      <button type="button" class="btn sm" id="newSalt">New compound</button>
+    </div>
+    <div class="reveal" id="revealBox" hidden></div>
+  </section>
+  </div>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Use small quantities of the compound and reagents, in clean, dry test tubes.</li>
+      <li>Organic compounds are often flammable: heat them in a water bath, not over a naked flame.</li>
+      <li>Handle sodium metal with forceps and use only a tiny piece, in a dry test tube.</li>
+      <li>Do the carbylamine test in a fume cupboard: the isocyanide is poisonous. Destroy it afterwards with conc. HCl.</li>
+      <li>Tollens’ reagent must be freshly prepared, and the silver mirror washed away with dil. HNO₃ afterwards.</li>
+      <li>Report the functional group only after its confirmatory test.</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</div>
+</body>
+</html>

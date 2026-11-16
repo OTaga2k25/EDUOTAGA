@@ -241,7 +241,7 @@ body.pinned{height:100%;overflow:hidden;}
 #infChips{display:flex;flex-wrap:wrap;gap:6px;}
 #infChips .chip{font-family:'Space Grotesk',sans-serif;font-size:14px;text-align:left;}
 .result{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;}
-.result select{flex:1 1 160px;font-family:'Space Mono',monospace;font-size:14px;padding:8px;border:1.5px solid #b9c6cc;border-radius:10px;background:#fff;}
+.result select{flex:1 1 160px;min-width:0;max-width:100%;font-family:'Space Mono',monospace;font-size:14px;padding:8px;border:1.5px solid #b9c6cc;border-radius:10px;background:#fff;}
 #apparatus .lbl{fill:#cfe0e8;font:600 13px 'Space Grotesk',sans-serif;}
 #apparatus .lblm{fill:#9fb3be;font:11px 'Space Mono',monospace;}
 #apparatus .obs{fill:#f4efe4;font:500 15px 'Space Grotesk',sans-serif;}

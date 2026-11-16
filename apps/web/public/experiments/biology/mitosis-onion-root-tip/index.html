@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mitosis in Onion Root Tip — Stages and Mitotic Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body class="pinned" style="height:100%"><div class="scroller" id="scroller">
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Botany · Cell Division</div>
+    <h1 class="disp">Mitosis in onion root tip: <span class="thin">stages and mitotic index</span></h1>
+    <p class="lede">Prepare an acetocarmine squash of an onion root tip, find cells in <b>prophase, metaphase, anaphase and telophase</b> under the microscope, and calculate the <b class="mono">mitotic index</b> = dividing cells ÷ total cells × 100.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="pin-scope"><div class="pin-area">
+  <section class="bench" aria-label="Microscope field of view">
+    <svg id="apparatus" viewBox="0 0 640 420" role="img" aria-label="Microscope field of view of onion root tip cells, and a magnified view of the selected cell"><g id="app"></g></svg>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div id="prepBox">
+      <div class="ctl-h" style="margin-top:10px">Prepare the slide: choose the next step</div>
+      <div id="prepBtns"></div>
+    </div>
+    <div id="idBox" hidden>
+      <div class="ctl-h" style="margin-top:10px">Name the stage of the selected cell</div>
+      <div id="stageBtns">
+        <button type="button" class="btn" data-s="I">Interphase</button><button type="button" class="btn" data-s="P">Prophase</button><button type="button" class="btn" data-s="M">Metaphase</button><button type="button" class="btn" data-s="A">Anaphase</button><button type="button" class="btn" data-s="T">Telophase</button>
+      </div>
+      <div class="actrow">
+        <button type="button" class="btn primary" id="countBtn">All other cells are in interphase: count this field</button>
+        <button type="button" class="btn" id="moveBtn">Move to a new field</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The stages</h2>
+    <ul class="eqs mono">
+      <li><b>Interphase</b>: round nucleus with a nucleolus; chromosomes not visible</li>
+      <li><b>Prophase</b>: chromosomes condense into visible threads; nucleus still round</li>
+      <li><b>Metaphase</b>: nuclear envelope gone; chromosomes line up at the equatorial plate</li>
+      <li><b>Anaphase</b>: sister chromatids separate; V-shaped chromosomes move to the poles</li>
+      <li><b>Telophase</b>: two nuclei form at the poles; a cell plate forms between them</li>
+      <li>Mitotic index = <b>(P + M + A + T) ÷ total cells × 100</b></li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap"><table><thead><tr><th>Field</th><th>Interphase</th><th>Prophase</th><th>Metaphase</th><th>Anaphase</th><th>Telophase</th><th>Total cells</th><th>Dividing cells</th></tr></thead><tbody id="obsBody"></tbody></table></div>
+    <h3 class="checks-h" id="checksH" hidden>Check your work</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="ctl" style="margin-top:12px">
+      <div class="ctl-h">Your calculation</div>
+      <div class="result"><label>Mitotic index (%) from all fields<input id="miIn" inputmode="decimal"></label><button type="button" class="btn" id="checkMI">Check</button></div>
+      <div class="mini" id="miFb"></div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn sm" id="newSet">New root tip</button>
+    </div>
+  </section>
+  </div>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Use only the tip (1–2 cm) of a healthy, actively growing root: the meristem is where cells divide.</li>
+      <li>Do not overheat in HCl; warm gently.</li>
+      <li>Squash gently and evenly, without letting the coverslip slide, so that the cells spread in one layer.</li>
+      <li>Remove excess stain with blotting paper; avoid air bubbles under the coverslip.</li>
+      <li>Count cells in several fields chosen at random.</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</div>
+</body>
+</html>

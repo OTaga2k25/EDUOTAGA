@@ -115,5 +115,14 @@
     "categoryId": "biology",
     "icon": "flask",
     "color": "cyan"
+  },
+  {
+    "id": "cell-biology",
+    "slug": "cell-biology",
+    "name": "Cell Biology",
+    "description": "Cells under the microscope: preparing slides, stages of cell division and the mitotic index.",
+    "categoryId": "biology",
+    "icon": "leaf",
+    "color": "purple"
   }
 ]

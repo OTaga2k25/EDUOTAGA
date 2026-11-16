@@ -6425,5 +6425,255 @@
     "estimatedDurationMinutes": 20,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "mitosis-onion-root-tip",
+    "slug": "mitosis-onion-root-tip",
+    "title": "Mitosis in Onion Root Tip: Stages and Mitotic Index",
+    "subjectId": "cell-biology",
+    "categoryId": "biology",
+    "difficulty": "beginner",
+    "summary": "Prepare an acetocarmine squash of an onion root tip step by step, examine cells under the microscope, identify interphase, prophase, metaphase, anaphase and telophase, and calculate the mitotic index from several fields.",
+    "theory": "Root tips grow by **mitosis** in the **meristem** just behind the tip, so a squash of an onion root tip shows cells at every stage of division.\n\n**Preparation:** root tips are **fixed** in Farmer’s fluid (acetic acid : alcohol = 1 : 3) to stop division and preserve the cells, **hydrolysed** in 1N HCl (dissolves the middle lamella so cells separate), **stained** with acetocarmine (stains chromosomes red), mounted and gently **squashed** into a single layer.\n\n**Stages:**\n- **Interphase:** round nucleus with nucleolus; chromosomes not visible.\n- **Prophase:** chromosomes condense into visible threads.\n- **Metaphase:** chromosomes line up at the equatorial plate.\n- **Anaphase:** sister chromatids separate and move to opposite poles (V-shaped).\n- **Telophase:** two daughter nuclei form; a cell plate forms between them (cytokinesis in plant cells).\n\n**Mitotic index** = (number of dividing cells ÷ total number of cells) × 100. Most cells are seen in interphase because it is the longest phase of the cell cycle; among the stages of mitosis, prophase is the longest and anaphase the shortest.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Grow roots",
+        "description": "Grow onion roots by keeping the bulb on a beaker of water for a few days."
+      },
+      {
+        "order": 2,
+        "title": "Cut and fix",
+        "description": "Cut 1–2 cm root tips and fix them in Farmer’s fluid."
+      },
+      {
+        "order": 3,
+        "title": "Hydrolyse",
+        "description": "Warm the tips in 1N HCl at about 60 °C for a few minutes and wash."
+      },
+      {
+        "order": 4,
+        "title": "Stain",
+        "description": "Stain with acetocarmine for about 10 minutes."
+      },
+      {
+        "order": 5,
+        "title": "Mount and squash",
+        "description": "Place a tip on a slide in a drop of glycerine, cover with a coverslip and squash gently."
+      },
+      {
+        "order": 6,
+        "title": "Observe",
+        "description": "Observe under low and then high power; identify the stages of mitosis."
+      },
+      {
+        "order": 7,
+        "title": "Count",
+        "description": "Count interphase and dividing cells in several fields and calculate the mitotic index."
+      }
+    ],
+    "observation": "Most cells are in interphase. Dividing cells show prophase (threads), metaphase (equatorial plate), anaphase (chromosomes moving to poles) and telophase (two nuclei, cell plate). Prophase cells are the commonest dividing cells and anaphase the rarest.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "Onion root tips are used to study mitosis because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "They contain meiotic cells"
+          },
+          {
+            "id": "b",
+            "text": "The meristem near the tip divides actively"
+          },
+          {
+            "id": "c",
+            "text": "They have no cell walls"
+          },
+          {
+            "id": "d",
+            "text": "They are easy to stain blue"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The root apical meristem divides continuously by mitosis."
+      },
+      {
+        "id": "q2",
+        "question": "Farmer’s fluid used for fixing contains:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Acetic acid and alcohol in 1 : 3"
+          },
+          {
+            "id": "b",
+            "text": "HCl and water"
+          },
+          {
+            "id": "c",
+            "text": "Acetocarmine and glycerine"
+          },
+          {
+            "id": "d",
+            "text": "Iodine and alcohol"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "It kills and preserves the cells at their stage of division."
+      },
+      {
+        "id": "q3",
+        "question": "The root tips are warmed in 1N HCl to:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Stain the chromosomes"
+          },
+          {
+            "id": "b",
+            "text": "Dissolve the middle lamella so that cells separate"
+          },
+          {
+            "id": "c",
+            "text": "Fix the cells"
+          },
+          {
+            "id": "d",
+            "text": "Make the cells divide"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Hydrolysis softens the tissue so that it spreads when squashed."
+      },
+      {
+        "id": "q4",
+        "question": "Chromosomes arranged at the equatorial plate are seen in:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Prophase"
+          },
+          {
+            "id": "b",
+            "text": "Metaphase"
+          },
+          {
+            "id": "c",
+            "text": "Anaphase"
+          },
+          {
+            "id": "d",
+            "text": "Telophase"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "At metaphase chromosomes align at the middle of the spindle."
+      },
+      {
+        "id": "q5",
+        "question": "V-shaped chromosomes moving towards opposite poles are seen in:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Interphase"
+          },
+          {
+            "id": "b",
+            "text": "Prophase"
+          },
+          {
+            "id": "c",
+            "text": "Anaphase"
+          },
+          {
+            "id": "d",
+            "text": "Telophase"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "In anaphase the centromeres split and chromatids are pulled to the poles."
+      },
+      {
+        "id": "q6",
+        "question": "In a field, 90 cells are in interphase and 10 cells are dividing. The mitotic index is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "10%"
+          },
+          {
+            "id": "b",
+            "text": "11.1%"
+          },
+          {
+            "id": "c",
+            "text": "90%"
+          },
+          {
+            "id": "d",
+            "text": "9%"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Mitotic index = 10 ÷ 100 × 100 = 10%."
+      },
+      {
+        "id": "q7",
+        "question": "Most cells in the squash are in interphase because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Interphase is the longest phase of the cell cycle"
+          },
+          {
+            "id": "b",
+            "text": "Interphase cells take up more stain"
+          },
+          {
+            "id": "c",
+            "text": "Dividing cells are destroyed by HCl"
+          },
+          {
+            "id": "d",
+            "text": "The meristem does not divide"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "Cells spend most of the cycle in interphase, so most are found there."
+      },
+      {
+        "id": "q8",
+        "question": "In plant cells, cytokinesis takes place by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Cleavage furrow"
+          },
+          {
+            "id": "b",
+            "text": "Cell plate formation"
+          },
+          {
+            "id": "c",
+            "text": "Budding"
+          },
+          {
+            "id": "d",
+            "text": "Fragmentation"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "A cell plate forms in the middle and grows outwards to separate the daughter cells."
+      }
+    ],
+    "tags": ["mitosis", "onion root tip", "cell division", "mitotic index", "prophase", "metaphase", "anaphase", "telophase", "acetocarmine", "squash", "botany", "plus two", "kerala", "dhse", "practical", "biology"],
+    "isNew": true,
+    "estimatedDurationMinutes": 20,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

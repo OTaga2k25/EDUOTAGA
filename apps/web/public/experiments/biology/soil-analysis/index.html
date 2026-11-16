@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soil Analysis — Texture, Moisture, pH, Water Holding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body class="pinned" style="height:100%"><div class="scroller" id="scroller">
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Botany · Ecology</div>
+    <h1 class="disp">Soil analysis: <span class="thin">texture, moisture, pH and water holding capacity</span></h1>
+    <p class="lede">Soils from a river bank, a kitchen garden and a paddy field are tested in four ways. Compare them, and connect what you find with the <b>plants</b> that grow at each site.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="pin-scope"><div class="pin-area">
+  <section class="bench" aria-label="Soil test apparatus">
+    <svg id="apparatus" viewBox="0 0 640 420" role="img" aria-label="Apparatus for the selected soil test"><g id="app"></g></svg>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="ctl-h" style="margin-top:8px">Soil sample</div>
+    <div class="chips" id="sampleChips" role="group" aria-label="Sample">
+      <button type="button" class="chip" data-i="0">A: River bank</button><button type="button" class="chip" data-i="1">B: Kitchen garden</button><button type="button" class="chip" data-i="2">C: Paddy field</button>
+    </div>
+    <div class="ctl-h" style="margin-top:10px">Test</div>
+    <div class="chips" id="testChips" role="group" aria-label="Test">
+      <button type="button" class="chip" data-t="tex">Texture</button><button type="button" class="chip" data-t="mo">Moisture</button><button type="button" class="chip" data-t="ph">pH</button><button type="button" class="chip" data-t="whc">Water holding</button>
+    </div>
+    <div id="testPanel"></div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">The tests</h2>
+    <ul class="eqs mono">
+      <li>Texture: sedimentation; % of each layer = <b>layer height ÷ total height × 100</b></li>
+      <li>Sand ≥ 70% → sandy; clay ≥ 40% → clayey; a mixture → loamy</li>
+      <li>Moisture (%) = <b>(W₁ − W₂) ÷ W₁ × 100</b> (fresh and oven-dry mass)</li>
+      <li>pH: universal indicator paper on the soil filtrate; below 7 acidic, above 7 alkaline</li>
+      <li>Water holding capacity (%) = <b>water held ÷ mass of dry soil × 100</b></li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap"><table><thead><tr><th>Sample</th><th>Texture</th><th>Moisture (%)</th><th>pH</th><th>Water holding (%)</th><th>Vegetation</th></tr></thead><tbody id="obsBody"></tbody></table></div>
+    <h3 class="checks-h" id="checksH" hidden>Check your readings</h3>
+    <ul class="checks" id="checks"></ul>
+    <div class="ctl" style="margin-top:12px">
+      <div class="ctl-h">Correlate soil and plants</div>
+      <div id="qBox"></div>
+      <div class="mini" id="qFb"></div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn sm" id="newSet">New samples</button>
+    </div>
+  </section>
+  </div>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Collect soil from about 10 cm below the surface, removing stones, roots and litter.</li>
+      <li>Weigh the fresh sample immediately in a closed container so that it does not lose moisture.</li>
+      <li>Dry to constant mass, and cool in a desiccator before weighing.</li>
+      <li>Use distilled water for the pH test and read the paper immediately.</li>
+      <li>Allow time for all the water to drain before reading the cylinder.</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</div>
+</body>
+</html>

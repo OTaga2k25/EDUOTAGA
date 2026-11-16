@@ -7160,5 +7160,250 @@
     "estimatedDurationMinutes": 20,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "soil-analysis",
+    "slug": "soil-analysis",
+    "title": "Soil Analysis: Texture, Moisture, pH and Water Holding Capacity",
+    "subjectId": "ecology",
+    "categoryId": "biology",
+    "difficulty": "beginner",
+    "summary": "Test soils from a river bank, a kitchen garden and a paddy field: read sedimentation layers for texture, weigh before and after oven drying for moisture, match pH paper, and measure water holding capacity. Then relate the soils to the plants that grow there.",
+    "theory": "Soil properties decide which plants can grow in a place.\n\n**Texture** depends on the proportions of sand (coarse), silt (medium) and clay (very fine) particles. When soil is shaken with water and allowed to settle, sand settles first, then silt, then clay; the thickness of each layer gives its percentage. **Sandy** soils are mostly sand, **clayey** soils have much clay, and **loamy** soils are a balanced mixture, best for most crops.\n\n**Moisture content (%) = (W₁ − W₂) ÷ W₁ × 100**, where W₁ is the fresh mass and W₂ the mass after drying at 105 °C.\n\n**pH** is found with universal indicator paper on a soil–water filtrate. Many Kerala soils are acidic.\n\n**Water holding capacity** is the amount of water a soil can retain against gravity: **water held ÷ mass of dry soil × 100**. Fine clay particles leave small pores that hold water by capillarity, so clayey soils hold much more water than sandy soils, through which water drains quickly.\n\nSandy soils support plants adapted to dryness; clayey, waterlogged soils suit plants such as rice; loamy soils suit most crops.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Collect samples",
+        "description": "Collect soil from different sites from about 10 cm depth and note the plants growing there."
+      },
+      {
+        "order": 2,
+        "title": "Texture",
+        "description": "Shake soil with water in a measuring cylinder, let it settle for a day, and measure the sand, silt and clay layers."
+      },
+      {
+        "order": 3,
+        "title": "Moisture",
+        "description": "Weigh 50 g of fresh soil, dry it in an oven at 105 °C, cool and weigh again; calculate the moisture %."
+      },
+      {
+        "order": 4,
+        "title": "pH",
+        "description": "Shake soil with distilled water, filter, and test the filtrate with universal pH paper."
+      },
+      {
+        "order": 5,
+        "title": "Water holding capacity",
+        "description": "Place 50 g of dry soil on a filter paper in a funnel, pour 100 mL of water, collect the water that drains, and calculate the water held."
+      },
+      {
+        "order": 6,
+        "title": "Correlate",
+        "description": "Compare the soils and relate their properties to the vegetation of each site."
+      }
+    ],
+    "observation": "The river-bank soil is sandy with low moisture and water holding capacity; the garden soil is loamy; the paddy-field soil is clayey, wettest, most acidic and holds the most water.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "When soil is shaken with water and left to settle, the layer at the bottom is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Clay"
+          },
+          {
+            "id": "b",
+            "text": "Silt"
+          },
+          {
+            "id": "c",
+            "text": "Sand"
+          },
+          {
+            "id": "d",
+            "text": "Humus"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "The largest, heaviest particles settle first."
+      },
+      {
+        "id": "q2",
+        "question": "Which soil has the highest water holding capacity?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Sandy"
+          },
+          {
+            "id": "b",
+            "text": "Loamy"
+          },
+          {
+            "id": "c",
+            "text": "Clayey"
+          },
+          {
+            "id": "d",
+            "text": "Gravel"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "Fine clay particles leave tiny pores that hold water by capillarity."
+      },
+      {
+        "id": "q3",
+        "question": "50.00 g of fresh soil weighs 42.00 g after drying. Its moisture content is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "8%"
+          },
+          {
+            "id": "b",
+            "text": "16%"
+          },
+          {
+            "id": "c",
+            "text": "19%"
+          },
+          {
+            "id": "d",
+            "text": "42%"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "(50 − 42) ÷ 50 × 100 = 16%."
+      },
+      {
+        "id": "q4",
+        "question": "Soil with pH 5.5 is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Alkaline"
+          },
+          {
+            "id": "b",
+            "text": "Neutral"
+          },
+          {
+            "id": "c",
+            "text": "Acidic"
+          },
+          {
+            "id": "d",
+            "text": "Saline"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "pH below 7 is acidic."
+      },
+      {
+        "id": "q5",
+        "question": "Which soil is generally best for most crops?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Sandy"
+          },
+          {
+            "id": "b",
+            "text": "Loamy"
+          },
+          {
+            "id": "c",
+            "text": "Clayey"
+          },
+          {
+            "id": "d",
+            "text": "Rocky"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Loam has a balance of drainage, aeration and water retention."
+      },
+      {
+        "id": "q6",
+        "question": "50 g of dry soil retains 30 mL of water. Its water holding capacity is:",
+        "options": [
+          {
+            "id": "a",
+            "text": "30%"
+          },
+          {
+            "id": "b",
+            "text": "60%"
+          },
+          {
+            "id": "c",
+            "text": "15%"
+          },
+          {
+            "id": "d",
+            "text": "80%"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "30 ÷ 50 × 100 = 60%."
+      },
+      {
+        "id": "q7",
+        "question": "Why is the soil dried at 105 °C for moisture determination?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To burn the humus"
+          },
+          {
+            "id": "b",
+            "text": "To remove all the water without burning organic matter"
+          },
+          {
+            "id": "c",
+            "text": "To kill microbes only"
+          },
+          {
+            "id": "d",
+            "text": "To change its pH"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Just above boiling point removes the water; higher temperatures would burn organic matter."
+      },
+      {
+        "id": "q8",
+        "question": "Farmers add lime to acidic soils to:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Lower the pH"
+          },
+          {
+            "id": "b",
+            "text": "Raise the pH"
+          },
+          {
+            "id": "c",
+            "text": "Increase clay"
+          },
+          {
+            "id": "d",
+            "text": "Remove water"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Lime (calcium carbonate/oxide) neutralises soil acidity."
+      }
+    ],
+    "tags": ["soil", "texture", "moisture", "ph", "water holding capacity", "sand", "silt", "clay", "loam", "ecology", "botany", "plus two", "kerala", "dhse", "practical", "biology"],
+    "isNew": true,
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

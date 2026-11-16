@@ -7645,5 +7645,250 @@
     "estimatedDurationMinutes": 25,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "dna-isolation",
+    "slug": "dna-isolation",
+    "title": "DNA Isolation from Plant Material",
+    "subjectId": "biotechnology",
+    "categoryId": "biology",
+    "difficulty": "beginner",
+    "summary": "Isolate DNA from spinach, green peas or papaya: choose how to grind, lyse, filter, remove proteins and precipitate with ethanol, watch what happens inside the cells at each step, and see how each choice changes the DNA you collect.",
+    "theory": "DNA is enclosed in the nucleus, inside the cell membrane and (in plants) the cell wall, and is wound around **histone proteins**. To isolate it:\n\n1. **Grinding** breaks the cell walls. A pinch of **salt** provides Na⁺ ions that neutralise the negative charges of DNA, so the strands can clump together.\n2. **Detergent** dissolves the lipids of the cell membrane and nuclear envelope, releasing DNA into solution. Mixing must be **gentle**, or the long DNA molecules break.\n3. **Filtering** removes cell debris.\n4. A **protease** (for example meat tenderiser or pineapple juice) digests the histones; RNase can remove RNA (cellulase can help break cell walls).\n5. **Ice-cold ethanol**, poured gently down the side, forms a layer on top. DNA is insoluble in alcohol and **precipitates** at the boundary as fine white threads.\n6. The threads are wound (**spooled**) onto a glass rod. What we see is a mass of millions of DNA molecules.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Grind",
+        "description": "Grind the plant material with a little water and a pinch of salt."
+      },
+      {
+        "order": 2,
+        "title": "Lyse",
+        "description": "Add a little detergent and stir gently for a few minutes."
+      },
+      {
+        "order": 3,
+        "title": "Filter",
+        "description": "Filter through muslin cloth into a test tube."
+      },
+      {
+        "order": 4,
+        "title": "Remove proteins",
+        "description": "Add a pinch of meat tenderiser (protease) and wait about 5 minutes."
+      },
+      {
+        "order": 5,
+        "title": "Precipitate",
+        "description": "Tilt the tube and pour ice-cold ethanol slowly down the side to form a layer."
+      },
+      {
+        "order": 6,
+        "title": "Spool",
+        "description": "After a few minutes, wind the white DNA threads onto a glass rod."
+      }
+    ],
+    "observation": "White, thread-like DNA appears at the boundary between the filtrate and the ethanol and can be wound onto a glass rod. Rough mixing, skipping salt or protease, warm ethanol or mixing the layers give less or poorer DNA.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "The detergent in DNA isolation:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Digests proteins"
+          },
+          {
+            "id": "b",
+            "text": "Dissolves the lipid membranes"
+          },
+          {
+            "id": "c",
+            "text": "Precipitates DNA"
+          },
+          {
+            "id": "d",
+            "text": "Breaks the cell wall"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Membranes are lipid bilayers, which detergents dissolve."
+      },
+      {
+        "id": "q2",
+        "question": "DNA precipitates on adding chilled ethanol because:",
+        "options": [
+          {
+            "id": "a",
+            "text": "DNA is insoluble in alcohol"
+          },
+          {
+            "id": "b",
+            "text": "Ethanol digests proteins"
+          },
+          {
+            "id": "c",
+            "text": "Ethanol is heavier than water"
+          },
+          {
+            "id": "d",
+            "text": "Ethanol breaks the DNA"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "DNA comes out of solution where ethanol meets the filtrate."
+      },
+      {
+        "id": "q3",
+        "question": "Meat tenderiser is used because it contains:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Lipase"
+          },
+          {
+            "id": "b",
+            "text": "Protease"
+          },
+          {
+            "id": "c",
+            "text": "Amylase"
+          },
+          {
+            "id": "d",
+            "text": "Ligase"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The protease digests the histone proteins bound to DNA."
+      },
+      {
+        "id": "q4",
+        "question": "Why is a pinch of salt added?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To kill bacteria"
+          },
+          {
+            "id": "b",
+            "text": "To neutralise the negative charges on DNA so it clumps"
+          },
+          {
+            "id": "c",
+            "text": "To dissolve membranes"
+          },
+          {
+            "id": "d",
+            "text": "To colour the DNA"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Na⁺ ions shield the phosphate groups."
+      },
+      {
+        "id": "q5",
+        "question": "Stirring very vigorously after adding detergent results in:",
+        "options": [
+          {
+            "id": "a",
+            "text": "More DNA"
+          },
+          {
+            "id": "b",
+            "text": "Broken (sheared) DNA in short pieces"
+          },
+          {
+            "id": "c",
+            "text": "No change"
+          },
+          {
+            "id": "d",
+            "text": "Protein removal"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Long DNA molecules break under strong mechanical force."
+      },
+      {
+        "id": "q6",
+        "question": "DNA collected on the glass rod looks like:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Green crystals"
+          },
+          {
+            "id": "b",
+            "text": "White, fine threads"
+          },
+          {
+            "id": "c",
+            "text": "A red liquid"
+          },
+          {
+            "id": "d",
+            "text": "A blue powder"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Precipitated DNA forms white, stringy threads."
+      },
+      {
+        "id": "q7",
+        "question": "In bacteria, the cell wall is broken with:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Lysozyme"
+          },
+          {
+            "id": "b",
+            "text": "Cellulase"
+          },
+          {
+            "id": "c",
+            "text": "Chitinase"
+          },
+          {
+            "id": "d",
+            "text": "Pectinase only"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "In NCERT terms: lysozyme (bacteria), cellulase (plant cells), chitinase (fungi)."
+      },
+      {
+        "id": "q8",
+        "question": "The ethanol is poured slowly down the side of the tube so that it:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Mixes well with the filtrate"
+          },
+          {
+            "id": "b",
+            "text": "Forms a separate layer on top"
+          },
+          {
+            "id": "c",
+            "text": "Becomes warm"
+          },
+          {
+            "id": "d",
+            "text": "Dissolves the DNA"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "DNA precipitates at the boundary between the two layers."
+      }
+    ],
+    "tags": ["dna isolation", "dna extraction", "detergent", "protease", "ethanol precipitation", "spooling", "histones", "biotechnology", "plus two", "kerala", "dhse", "practical", "biology"],
+    "isNew": true,
+    "estimatedDurationMinutes": 15,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]

@@ -142,5 +142,14 @@
     "categoryId": "biology",
     "icon": "leaf",
     "color": "yellow"
+  },
+  {
+    "id": "biotechnology",
+    "slug": "biotechnology",
+    "name": "Biotechnology",
+    "description": "Working with DNA: isolation, and the principles behind recombinant DNA technology.",
+    "categoryId": "biology",
+    "icon": "flask",
+    "color": "sky"
   }
 ]

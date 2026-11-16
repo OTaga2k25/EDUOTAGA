@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DNA Isolation from Plant Material</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2">
+</head>
+<body class="pinned" style="height:100%"><div class="scroller" id="scroller">
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plus Two Biology · Biotechnology</div>
+    <h1 class="disp">DNA isolation: <span class="thin">from spinach, peas or papaya</span></h1>
+    <p class="lede">Break the cells open, strip away membranes and proteins, and make the DNA come out of solution as white threads that you can wind onto a glass rod. Choose how to do each step: every choice changes what you get.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="pin-scope"><div class="pin-area">
+  <section class="bench" aria-label="DNA isolation apparatus">
+    <svg id="apparatus" viewBox="0 0 640 420" role="img" aria-label="The apparatus at the current step, and a diagram of what is happening inside the cells"><g id="app"></g></svg>
+  </section>
+
+  <section class="panel">
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="chips" id="matChips" role="group" aria-label="Material">
+      <button type="button" class="chip" data-m="spinach">Spinach leaves</button><button type="button" class="chip" data-m="pea">Green peas</button><button type="button" class="chip" data-m="papaya">Ripe papaya</button>
+    </div>
+    <div class="stepq" id="stepTitle"></div>
+    <div id="optBtns"></div>
+    <ol class="steps" id="steps" aria-label="Progress"></ol>
+    <div class="actrow"><button type="button" class="btn sm" id="againBtn">Start again</button></div>
+  </section>
+
+  <section class="card formula">
+    <h2 class="disp">What each step does</h2>
+    <ul class="eqs mono">
+      <li>Grinding: breaks the <b>cell walls</b>; salt neutralises DNA’s negative charge so it can clump</li>
+      <li>Detergent: dissolves the lipid <b>membranes</b> (cell and nuclear) to release DNA</li>
+      <li>Filtering: removes cell debris</li>
+      <li>Protease (meat tenderiser, pineapple juice): digests the <b>histone proteins</b> bound to DNA</li>
+      <li>Ice-cold ethanol: DNA is <b>insoluble in alcohol</b> and precipitates at the boundary as white threads</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2 class="disp">Observations</h2>
+    <div class="tablewrap"><table><thead><tr><th>Attempt</th><th>Material</th><th>Method</th><th>Result</th></tr></thead><tbody id="obsBody"></tbody></table></div>
+    <h3 class="checks-h" id="checksH" hidden>What went wrong (and right)</h3>
+    <ul class="checks" id="checks"></ul>
+  </section>
+  </div>
+
+  <section class="card">
+    <h2 class="disp">Precautions</h2>
+    <ul class="plain">
+      <li>Keep the ethanol in a freezer or on ice until you use it.</li>
+      <li>Stir gently after adding detergent; never blend or shake hard, or the DNA breaks.</li>
+      <li>Pour the ethanol slowly down the side of the tilted tube so that it forms a separate layer.</li>
+      <li>Do not disturb the tube while the DNA precipitates.</li>
+      <li>Ethanol is flammable: keep it away from flames.</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer class="foot wrap"><span class="mono">EDUOTAGA · Virtual Lab</span></footer>
+
+<script src="script.js?v=1"></script>
+</div>
+</body>
+</html>

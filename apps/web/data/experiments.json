@@ -7890,5 +7890,245 @@
     "estimatedDurationMinutes": 15,
     "createdAt": "2026-11-16T00:00:00.000Z",
     "updatedAt": "2026-11-16T00:00:00.000Z"
+  },
+  {
+    "id": "sonometer-tension-3d",
+    "slug": "sonometer-tension-3d",
+    "title": "Sonometer (3D): Resonant Length and Tension (Second Law)",
+    "subjectId": "waves-and-sound",
+    "categoryId": "physics",
+    "difficulty": "intermediate",
+    "summary": "Keep one tuning fork, change the tension with slotted weights, find each resonant length with the paper rider, verify that L ∝ √T (T/L² constant, L² against T a straight line), and find the linear density μ of the wire.",
+    "theory": "A wire of linear density **μ** stretched by tension **T** vibrates in its fundamental mode between two bridges with frequency **f = (1/2L) √(T/μ)**.\n\n**Second law of vibrating strings:** for a fixed frequency, the resonant length is proportional to the square root of the tension: **L ∝ √T**. So **T/L² = 4f²μ** is constant, and a graph of **L² against T** is a straight line through the origin with slope **1/(4f²μ)**.\n\nThe tension is set by a hanger and slotted weights: **T = Mg**. Rearranging, the linear density of the wire is **μ = T / (4f²L²)** (with L in metres).\n\nResonance is detected with a small paper rider placed at the middle of the vibrating length: at resonance the wire vibrates strongly and throws it off.",
+    "procedure": [
+      {
+        "order": 1,
+        "title": "Set up",
+        "description": "Stretch the wire over the bridges and pulley, and hang the hanger with a few slotted weights."
+      },
+      {
+        "order": 2,
+        "title": "Strike and adjust",
+        "description": "Strike the chosen tuning fork, press its stem on the sonometer box, and move bridge B₂ slowly until the paper rider is thrown off."
+      },
+      {
+        "order": 3,
+        "title": "Record",
+        "description": "Note the resonant length L and the total mass M (T = Mg)."
+      },
+      {
+        "order": 4,
+        "title": "Change tension",
+        "description": "Add weights and repeat, using the same fork, for at least five tensions."
+      },
+      {
+        "order": 5,
+        "title": "Analyse",
+        "description": "Calculate √T/L and T/L² for each reading, plot L² against T, and find μ = T/(4f²L²)."
+      }
+    ],
+    "observation": "The resonant length increases with tension. √T/L (and T/L²) is constant, and L² against T is a straight line through the origin, verifying L ∝ √T.",
+    "simulationEntry": "index.html",
+    "videoIds": [],
+    "downloads": [],
+    "quiz": [
+      {
+        "id": "q1",
+        "question": "For a fixed frequency, the resonant length of a sonometer wire is proportional to:",
+        "options": [
+          {
+            "id": "a",
+            "text": "T"
+          },
+          {
+            "id": "b",
+            "text": "√T"
+          },
+          {
+            "id": "c",
+            "text": "1/T"
+          },
+          {
+            "id": "d",
+            "text": "T²"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "From f = (1/2L)√(T/μ), L = (1/2f)√(T/μ)."
+      },
+      {
+        "id": "q2",
+        "question": "If the tension is made four times larger (same fork), the resonant length becomes:",
+        "options": [
+          {
+            "id": "a",
+            "text": "Four times"
+          },
+          {
+            "id": "b",
+            "text": "Twice"
+          },
+          {
+            "id": "c",
+            "text": "Half"
+          },
+          {
+            "id": "d",
+            "text": "Unchanged"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "L ∝ √T, and √4 = 2."
+      },
+      {
+        "id": "q3",
+        "question": "Which graph is a straight line through the origin?",
+        "options": [
+          {
+            "id": "a",
+            "text": "L against T"
+          },
+          {
+            "id": "b",
+            "text": "L² against T"
+          },
+          {
+            "id": "c",
+            "text": "L against 1/T"
+          },
+          {
+            "id": "d",
+            "text": "L² against 1/T"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "L² = T/(4f²μ), proportional to T."
+      },
+      {
+        "id": "q4",
+        "question": "The linear density of the wire is given by:",
+        "options": [
+          {
+            "id": "a",
+            "text": "μ = 4f²L²/T"
+          },
+          {
+            "id": "b",
+            "text": "μ = T/(4f²L²)"
+          },
+          {
+            "id": "c",
+            "text": "μ = T/(2fL)"
+          },
+          {
+            "id": "d",
+            "text": "μ = 2fL/T"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "Squaring f = (1/2L)√(T/μ) and rearranging."
+      },
+      {
+        "id": "q5",
+        "question": "A hanging mass of 2 kg gives a tension of (g = 9.8 m/s²):",
+        "options": [
+          {
+            "id": "a",
+            "text": "2 N"
+          },
+          {
+            "id": "b",
+            "text": "9.8 N"
+          },
+          {
+            "id": "c",
+            "text": "19.6 N"
+          },
+          {
+            "id": "d",
+            "text": "4.9 N"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanation": "T = Mg = 2 × 9.8 = 19.6 N."
+      },
+      {
+        "id": "q6",
+        "question": "Why must the same tuning fork be used for the whole set?",
+        "options": [
+          {
+            "id": "a",
+            "text": "To keep the tension constant"
+          },
+          {
+            "id": "b",
+            "text": "Because the law is for a fixed frequency"
+          },
+          {
+            "id": "c",
+            "text": "To keep the wire length constant"
+          },
+          {
+            "id": "d",
+            "text": "It does not matter"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanation": "The second law compares L and T at constant f."
+      },
+      {
+        "id": "q7",
+        "question": "The paper rider is thrown off when:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The wire is slack"
+          },
+          {
+            "id": "b",
+            "text": "The wire resonates with the fork"
+          },
+          {
+            "id": "c",
+            "text": "The fork stops vibrating"
+          },
+          {
+            "id": "d",
+            "text": "The bridges touch"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "At resonance the amplitude is large enough to throw off the rider."
+      },
+      {
+        "id": "q8",
+        "question": "The wave speed on the wire increases when:",
+        "options": [
+          {
+            "id": "a",
+            "text": "The tension increases"
+          },
+          {
+            "id": "b",
+            "text": "The tension decreases"
+          },
+          {
+            "id": "c",
+            "text": "The fork frequency increases"
+          },
+          {
+            "id": "d",
+            "text": "The bridge is moved"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanation": "v = √(T/μ): more tension gives a faster wave."
+      }
+    ],
+    "tags": ["sonometer", "second law", "tension", "resonance", "linear density", "vibrating string", "waves", "plus two", "kerala", "dhse", "practical", "3d"],
+    "isNew": true,
+    "estimatedDurationMinutes": 25,
+    "createdAt": "2026-11-16T00:00:00.000Z",
+    "updatedAt": "2026-11-16T00:00:00.000Z"
   }
 ]
